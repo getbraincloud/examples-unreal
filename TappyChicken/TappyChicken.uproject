@@ -1,0 +1,27 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "4.20",
+	"Category": "Samples",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "TappyChicken",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "BCClient",
+			"Enabled": true
+		}
+	],
+	"TargetPlatforms": [
+		"Android",
+		"IOS",
+		"MacNoEditor",
+		"WindowsNoEditor",
+		"HTML5"
+	],
+	"EpicSampleNameHash": "3204884328"
+}
