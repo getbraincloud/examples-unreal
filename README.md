@@ -18,7 +18,7 @@ This is a Unreal blueprint example. It demonstrates the following:
 Built on the Unreal example project:
 https://wiki.unrealengine.com/Tappy_Chicken_Sample_Game
 
-![Alt text](screenshots\InitializeBrainCloud.png?raw=true "Setting up brainCloud")
-![Alt text](screenshots\Authenticate.png?raw=true "Performing Authentication")
+![Setting up brainCloud](/screenshots/InitializeBrainCloud.png?raw=true "Setting up brainCloud")
+![Performing Authentication](/screenshots/Authenticate.png?raw=true "Performing Authentication")
 
 
