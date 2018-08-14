@@ -1,5 +1,24 @@
-tappychicken
+# Unreal Examples
 
+This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
+
+### Standalone Client Lib
+
+Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal).
+
+## Tappy Chicken
+
+This is a Unreal blueprint example. It demonstrates the following:
+
+- brainCloud Setup
+- Authentication
+- Achievements
+- Leaderboards
 
 Built on the Unreal example project:
 https://wiki.unrealengine.com/Tappy_Chicken_Sample_Game
+
+![Alt text](screenshots\InitializeBrainCloud.png?raw=true "Setting up brainCloud")
+![Alt text](screenshots\Authenticate.png?raw=true "Performing Authentication")
+
+
