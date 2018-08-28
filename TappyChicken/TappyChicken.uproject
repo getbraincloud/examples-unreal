@@ -16,12 +16,5 @@
 			"Enabled": true
 		}
 	],
-	"TargetPlatforms": [
-		"Android",
-		"IOS",
-		"MacNoEditor",
-		"WindowsNoEditor",
-		"HTML5"
-	],
 	"EpicSampleNameHash": "3204884328"
 }
