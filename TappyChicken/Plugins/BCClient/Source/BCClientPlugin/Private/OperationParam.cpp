@@ -45,7 +45,9 @@ const OperationParam OperationParam::TwitterServiceTweetPic = OperationParam("pi
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationType = OperationParam("authenticationType");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationToken = OperationParam("authenticationToken");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateExternalId = OperationParam("externalId");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateEmailAddress = OperationParam("emailAddress");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateGameId = OperationParam("gameId");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateServiceParams = OperationParam("serviceParams");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateDeviceId = OperationParam("deviceId");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateForceMergeFlag = OperationParam("forceMergeFlag");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateReleasePlatform = OperationParam("releasePlatform");
@@ -170,6 +172,15 @@ const OperationParam OperationParam::GamificationServiceMilestonesName = Operati
 const OperationParam OperationParam::PlayerStatisticEventServiceEventName = OperationParam("eventName");
 const OperationParam OperationParam::PlayerStatisticEventServiceEventMultiplier = OperationParam("eventMultiplier");
 const OperationParam OperationParam::PlayerStatisticEventServiceEvents = OperationParam("events");
+
+// Presence Params
+const OperationParam OperationParam::PresenceServicePlatform = OperationParam("platform");
+const OperationParam OperationParam::PresenceServiceIncludeOffline = OperationParam("includeOffline");
+const OperationParam OperationParam::PresenceServiceGroupId = OperationParam("groupId");
+const OperationParam OperationParam::PresenceServiceProfileIds = OperationParam("profileIds");
+const OperationParam OperationParam::PresenceServiceBidirectional = OperationParam("bidirectional");
+const OperationParam OperationParam::PresenceServiceVisible = OperationParam("visible");
+const OperationParam OperationParam::PresenceServiceActivity = OperationParam("activity");
 
 // Player State Service - Read Params
 const OperationParam OperationParam::PlayerStateServiceReadEntitySubtype = OperationParam("entitySubType");
@@ -363,12 +374,30 @@ const OperationParam OperationParam::Body = OperationParam("body");
 const OperationParam OperationParam::ServiceParams = OperationParam("serviceParams");
 
 const OperationParam OperationParam::LeaderboardId = OperationParam("leaderboardId");
+const OperationParam OperationParam::DivSetId = OperationParam("divSetId");
 const OperationParam OperationParam::VersionId = OperationParam("versionId");
 const OperationParam OperationParam::TournamentCode = OperationParam("tournamentCode");
 const OperationParam OperationParam::InitialScore = OperationParam("initialScore");
 const OperationParam OperationParam::Score = OperationParam("score");
 const OperationParam OperationParam::RoundStartedEpoch = OperationParam("roundStartedEpoch");
 const OperationParam OperationParam::Data = OperationParam("data");
+
+//virtual currency
+const OperationParam OperationParam::VirtualCurrencyVcId = OperationParam("vcId");
+const OperationParam OperationParam::VirtualCurrencyLevelName = OperationParam("levelName");
+const OperationParam OperationParam::VirtualCurrencyPeerCode = OperationParam("peerCode");
+const OperationParam OperationParam::VirtualCurrencyPriceInfoCriteria = OperationParam("priceInfoCriteria");
+const OperationParam OperationParam::VirtualCurrencyAmount = OperationParam("vcAmount");
+
+//app store
+const OperationParam OperationParam::AppStoreId = OperationParam("storeId");
+const OperationParam OperationParam::AppStoreJsonReceiptData = OperationParam("receiptData");
+const OperationParam OperationParam::AppStoreUserCurrency = OperationParam("userCurrency");
+const OperationParam OperationParam::AppStoreCategory = OperationParam("category");
+const OperationParam OperationParam::AppStoreJsonPurchaseData = OperationParam("purchaseData");
+const OperationParam OperationParam::AppStoreTransactionId = OperationParam("transactionId");
+const OperationParam OperationParam::AppStoreJsonTransactionData = OperationParam("transactionData");
+const OperationParam OperationParam::AppStorePriceInfoCriteria = OperationParam("priceInfoCriteria");
 
 // chat
 const OperationParam OperationParam::ChatChannelId = OperationParam("channelId");
@@ -388,13 +417,14 @@ const OperationParam OperationParam::GlobalChannelType = OperationParam("gl");
 const OperationParam OperationParam::GroupChannelType = OperationParam("gr");
 
 // messaging
-const OperationParam OperationParam::MessagingMessageBox = OperationParam("msgBox");
+const OperationParam OperationParam::MessagingMessageBox = OperationParam("msgbox");
 const OperationParam OperationParam::MessagingMessageIds = OperationParam("msgIds");
+const OperationParam OperationParam::MessagingMarkAsRead = OperationParam("markAsRead");
 const OperationParam OperationParam::MessagingContext = OperationParam("context");
 const OperationParam OperationParam::MessagingPageOffset = OperationParam("pageOffset");
 const OperationParam OperationParam::MessagingFromName = OperationParam("fromName");
 const OperationParam OperationParam::MessagingToProfileIds = OperationParam("toProfileIds");
-const OperationParam OperationParam::MessagingContent = OperationParam("content");
+const OperationParam OperationParam::MessagingContent = OperationParam("contentJson");
 const OperationParam OperationParam::MessagingSubject = OperationParam("subject");
 const OperationParam OperationParam::MessagingText = OperationParam("text");
 const OperationParam OperationParam::InboxMessageType = OperationParam("inbox");
