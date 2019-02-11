@@ -41,10 +41,29 @@ void BrainCloudComms::Initialize(const FString &serverURL, const FString &secret
 	_serverUrl = serverURL;
 	_secretKey = secretKey;
 	_appId = appId;
+	_secretMap.Emplace(appId, secretKey);
 
 	_uploadUrl = _serverUrl;
 	_uploadUrl.RemoveFromEnd(TEXT("/dispatcherv2"));
 	_uploadUrl += TEXT("/uploader");
+}
+
+void BrainCloudComms::InitializeWithApps(const FString &serverURL, const TMap<FString, FString> &secretMap, const FString &appId)
+{
+	//refresh the map 
+	_secretMap.Empty(); 
+	for(auto It = secretMap.CreateConstIterator(); It; ++It) 
+	{ 
+		_secretMap.Emplace(It.Key(), It.Value()); 
+	} 
+
+	FString secretKey = "MISSING";
+	if(_secretMap.Contains(appId))
+	{
+		secretKey = secretMap[appId];
+	}
+
+	Initialize(serverURL, secretKey, appId);
 }
 
 void BrainCloudComms::SetPacketTimeoutsToDefault()
@@ -320,7 +339,8 @@ void BrainCloudComms::CreateAndSendNextRequestBundle()
 		{
 			auto operation = itr->getOperation();
 			if (operation == ServiceOperation::Authenticate ||
-				operation == ServiceOperation::ResetEmailPassword)
+				operation == ServiceOperation::ResetEmailPassword||
+				operation == ServiceOperation::ResetEmailPasswordAdvanced)
 			{
 				isAuth = true;
 				break;
@@ -785,6 +805,20 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 		if (!profileIdOut.IsEmpty())
 		{
 			_client->getAuthenticationService()->setProfileId(profileIdOut);
+		}
+
+		FString appIdOut;
+		data->TryGetStringField(TEXT("switchToAppId"), appIdOut);
+		if(!appIdOut.IsEmpty())
+		{
+			_appId = data->GetStringField("switchToAppId");
+
+			//update the secret key
+			_secretKey = "MISSING";
+			if(_secretMap.Contains(_appId))
+			{
+				_secretKey = _secretMap[_appId];
+			}
 		}
 	}
 

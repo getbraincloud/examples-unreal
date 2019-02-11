@@ -78,6 +78,9 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_groupService);
 	destroyService(_mailService);
 	destroyService(_tournamentService);
+	destroyService(_presenceService);
+	destroyService(_virtualCurrencyService);
+	destroyService(_appStoreService);
 	destroyService(_rttService);
 	destroyService(_lobbyService);
 	destroyService(_chatService);
@@ -140,6 +143,44 @@ void BrainCloudClient::initialize(
 		_brainCloudComms = new BrainCloudComms(this);
 
 	_brainCloudComms->Initialize(serverUrl, secretKey, appId);
+	determineReleasePlatform();
+
+	_appId = appId;
+	_appVersion = appVersion;
+
+	if (_language.IsEmpty())
+		_language = FInternationalization::Get().GetCurrentCulture()->GetTwoLetterISOLanguageName();
+	if (_country.IsEmpty())
+		_country = FInternationalization::Get().GetCurrentCulture()->GetRegion();
+}
+
+void BrainCloudClient::initializeWithApps(
+	const FString &serverUrl,
+	const FString &appId,
+	const TMap<FString, FString> &secretMap,
+	const FString &appVersion)
+{
+	const FString &newAppId = secretMap[appId];
+	FString error = "";
+	if (serverUrl.IsEmpty())
+		error = "serverURL was null or empty";
+	else if (appId.IsEmpty())
+		error = "appId was null or empty";
+	else if (newAppId.IsEmpty())
+		error = "no matching secret for appId";
+	else if (appVersion.IsEmpty())
+		error = "appVersion was null or empty";
+
+	if (!error.IsEmpty())
+	{
+		UE_LOG(LogTemp, Error, TEXT("ERROR | Failed to initialize brainCloud - %s"), *error);
+		return;
+	}
+
+	if (!_brainCloudComms)
+		_brainCloudComms = new BrainCloudComms(this);
+
+	_brainCloudComms->InitializeWithApps(serverUrl, secretMap, appId);
 	determineReleasePlatform();
 
 	_appId = appId;
@@ -311,6 +352,11 @@ void BrainCloudClient::disableRTT()
 	_brainCloudRTTComms->disableRTT();
 }
 
+bool BrainCloudClient::getRTTEnabled()
+{
+	return _brainCloudRTTComms->isRTTEnabled();
+}
+
 void BrainCloudClient::setRTTHeartBeatSeconds(int32 in_value)
 {
 	_brainCloudRTTComms->setRTTHeartBeatSeconds(in_value);
@@ -364,6 +410,21 @@ void BrainCloudClient::registerRTTMessagingCallback(IRTTCallback *in_callback)
 void BrainCloudClient::deregisterRTTMessagingCallback()
 {
 	_brainCloudRTTComms->deregisterRTTCallback(ServiceName::Messaging);
+}
+
+void BrainCloudClient::registerRTTPresenceCallback(UBCBlueprintRTTCallProxyBase *in_callback)
+{
+	_brainCloudRTTComms->registerRTTCallback(ServiceName::Presence, in_callback);
+}
+
+void BrainCloudClient::registerRTTPresenceCallback(IRTTCallback *in_callback)
+{
+	_brainCloudRTTComms->registerRTTCallback(ServiceName::Presence, in_callback);
+}
+
+void BrainCloudClient::deregisterRTTPresenceCallback()
+{
+	_brainCloudRTTComms->deregisterRTTCallback(ServiceName::Presence);
 }
 
 void BrainCloudClient::registerRTTLobbyCallback(UBCBlueprintRTTCallProxyBase *in_callback)
@@ -551,6 +612,15 @@ BrainCloudPlayerStatisticsEvent *BrainCloudClient::getPlayerStatisticsEventServi
 	return _playerStatisticsEventService;
 }
 
+BrainCloudPresence *BrainCloudClient::getPresenceService()
+{
+	if(_presenceService == nullptr)
+	{
+		_presenceService = new BrainCloudPresence(this);
+	}
+	return _presenceService;
+}
+
 BrainCloudProduct *BrainCloudClient::getProductService()
 {
 	if (_productService == nullptr)
@@ -720,6 +790,24 @@ BrainCloudTournament *BrainCloudClient::getTournamentService()
 		_tournamentService = new BrainCloudTournament(this);
 	}
 	return _tournamentService;
+}
+
+BrainCloudVirtualCurrency *BrainCloudClient::getVirtualCurrencyService()
+{
+	if (_virtualCurrencyService == nullptr)
+	{
+		_virtualCurrencyService = new BrainCloudVirtualCurrency(this);
+	}
+	return _virtualCurrencyService;
+}
+
+BrainCloudAppStore *BrainCloudClient::getAppStoreService()
+{
+	if (_appStoreService == nullptr)
+	{
+		_appStoreService = new BrainCloudAppStore(this);
+	}
+	return _appStoreService;
 }
 
 BrainCloudRTT *BrainCloudClient::getRTTService()

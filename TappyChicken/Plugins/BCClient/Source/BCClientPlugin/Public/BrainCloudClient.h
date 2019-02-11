@@ -35,6 +35,9 @@
 #include "BrainCloudLobby.h"
 #include "BrainCloudChat.h"
 #include "BrainCloudMessaging.h"
+#include "BrainCloudPresence.h"
+#include "BrainCloudVirtualCurrency.h"
+#include "BrainCloudAppStore.h"
 
 class BrainCloudComms;
 class BrainCloudRTTComms;
@@ -101,6 +104,19 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 					const FString &secretKey,
 					const FString &appId,
 					const FString &appVersion);
+	/**
+	* Method initializes the BrainCloudClient with multiple app/secret.
+	* Used when needed to switch between child and parent apps
+	*
+	* @param serverURL The url to the brainCloud server
+	* @param appId The app's id
+	* @param appIdSecretMap is the map of <appId, secretKey>
+	* @param appVersion The app's version
+	*/
+	void initializeWithApps(const FString &serverUrl,
+							const FString &appId,
+							const TMap<FString, FString> &secretMap,
+							const FString &appVersion);
 
 	/**
 	* Initialize - initializes the identity service with the saved
@@ -254,6 +270,11 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	*/
 	void disableRTT();
 
+	/*
+	*Returns true id RTT is enabled
+	*/
+	bool getRTTEnabled();
+
 	/**
 	* 
 	*/
@@ -312,6 +333,20 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	/**
 	* 
 	*/
+	void registerRTTPresenceCallback(UBCBlueprintRTTCallProxyBase *in_callback);
+
+	/**
+	* 
+	*/
+	void registerRTTPresenceCallback(IRTTCallback *in_callback);
+
+	/**
+	* 
+	*/
+	void deregisterRTTPresenceCallback();
+	/**
+	* 
+	*/
 	void registerRTTLobbyCallback(UBCBlueprintRTTCallProxyBase *in_callback);
 
 	/**
@@ -354,6 +389,9 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudGroup *getGroupService();
 	BrainCloudMail *getMailService();
 	BrainCloudTournament *getTournamentService();
+	BrainCloudPresence *getPresenceService();
+	BrainCloudVirtualCurrency *getVirtualCurrencyService();
+	BrainCloudAppStore *getAppStoreService();
 
 	BrainCloudRTT *getRTTService();
 	BrainCloudLobby *getLobbyService();
@@ -568,6 +606,8 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	void overrideLanguageCode(const FString &languageCode) { _language = languageCode; }
 
   protected:
+
+	void initializeComms(const char* serverUrl, const char* appId, const TMap<FString, FString>& secretMap);
 	static BrainCloudClient *_instance;
 
 	BrainCloudComms *_brainCloudComms = nullptr;
@@ -602,6 +642,9 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudGroup *_groupService = nullptr;
 	BrainCloudMail *_mailService = nullptr;
 	BrainCloudTournament *_tournamentService = nullptr;
+	BrainCloudPresence *_presenceService = nullptr;
+	BrainCloudVirtualCurrency *_virtualCurrencyService = nullptr;
+	BrainCloudAppStore *_appStoreService = nullptr;
 
 	BrainCloudRTT *_rttService = nullptr;
 	BrainCloudLobby *_lobbyService = nullptr;

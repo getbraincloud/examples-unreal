@@ -64,6 +64,11 @@ void UBCWrapperProxy::Initialize(UBrainCloudWrapper *brainCloudWrapper, FString 
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->initialize(serverUrl, secretKey, appId, version);
 }
 
+void UBCWrapperProxy::InitializeWithApps(UBrainCloudWrapper *brainCloudWrapper, FString serverUrl, FString appId, TMap<FString, FString> secretMap, FString version, FString company, FString appName)
+{
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->initializeWithApps(serverUrl, appId, secretMap, version, company, appName);
+}
+
 UBCWrapperProxy *UBCWrapperProxy::AuthenticateAnonymous(UBrainCloudWrapper *brainCloudWrapper)
 {
 	UBCWrapperProxy *Proxy = NewObject<UBCWrapperProxy>();
@@ -181,6 +186,20 @@ UBCWrapperProxy *UBCWrapperProxy::SmartSwitchAuthenticateUniversal(UBrainCloudWr
 	UBCWrapperProxy *Proxy = NewObject<UBCWrapperProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->smartSwitchAuthenticateUniversal(userid, password, forceCreate, Proxy);
 	return Proxy;
+}
+
+UBCWrapperProxy* UBCWrapperProxy::ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email)
+{
+    UBCWrapperProxy* Proxy = NewObject<UBCWrapperProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->resetEmailPassword(in_email, Proxy);
+    return Proxy;
+}
+
+UBCWrapperProxy* UBCWrapperProxy::ResetEmailPasswordAdvanced(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email, const FString& in_serviceParams)
+{
+    UBCWrapperProxy* Proxy = NewObject<UBCWrapperProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->resetEmailPasswordAdvanced(in_email, in_serviceParams, Proxy);
+    return Proxy;
 }
 
 void UBCWrapperProxy::SetStoredProfileId(UBrainCloudWrapper *brainCloudWrapper, FString profileId)

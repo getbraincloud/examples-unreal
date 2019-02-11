@@ -37,6 +37,9 @@ class BrainCloudClient;
 #include "BrainCloudGroup.h"
 #include "BrainCloudMail.h"
 #include "BrainCloudTournament.h"
+#include "BrainCloudPresence.h"
+#include "BrainCloudVirtualCurrency.h"
+#include "BrainCloudAppStore.h"
 #include "BrainCloudWrapper.generated.h"
 
 class ServiceName;
@@ -78,6 +81,20 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      * @param version The app's version
      */
     void initialize(FString serverUrl, FString secretKey, FString appId, FString version);
+
+    /**
+     * Method initializes the BrainCloudClient with multiple app/secret
+     * Used when needed to switch between child and parent apps
+     *
+     * @param serverURL The url to the brainCloud server
+     * @param appIdSecretMap The map of <appid, secretKey>
+     * @param defaultAppId the default app id we start with
+     * @param version The app's version
+     * @param companyName company name used in the keycheain for storing anonymous and profile ids. Pick anything
+     * @param appName app name used in the keychain for storing anonymous and profile ids. Pick anything
+     * 
+     */
+    void initializeWithApps(FString serverUrl, FString appId, TMap<FString, FString> secretMap, FString appVersion, FString companyName, FString appName);
 
     /**
      * Authenticate a user anonymously with brainCloud - used for apps that don't want to bother
@@ -358,6 +375,54 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      */
     void smartSwitchAuthenticateUniversal(const FString &userid, const FString &password, bool forceCreate, IServerCallback *callback = NULL);
 
+    /**
+    * Reset Email password - Sends a password reset email to the specified address
+    *
+    * Service Name - Wrapper
+    * Operation - ResetEmailPassword
+    *
+    * @param email The email address to send the reset email to.
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    * Note the follow error reason codes:
+    *
+    * SECURITY_ERROR (40209) - If the email address cannot be found.
+    */
+    void resetEmailPassword(const FString& email, IServerCallback * callback);
+
+    /**
+    * Reset Email password with service parameters- Sends a password reset email to the specified address
+    *
+    * Service Name - Wrapper
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param emailAddress The email address to send the reset email to.
+    * @param serviceParams parameters to send to the email service see the doc for a full 
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    * Note the follow error reason codes:
+    *
+    * SECURITY_ERROR (40209) - If the email address cannot be found.
+    */
+    void resetEmailPasswordAdvanced(const FString& emailAddress, const FString& in_serviceParams, IServerCallback * callback);
+
+    const FString & getAnonymousId() const;
+    const FString & getProfileId() const;
+    void setAnonymousId(const FString& anonymousId);
+    void setProfileId(const FString& profileId);
+
     /*
 	* Re-authenticates the user with brainCloud
 	* 
@@ -402,6 +467,9 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     BrainCloudGroup *getGroupService() { return _client->getGroupService(); }
     BrainCloudMail *getMailService() { return _client->getMailService(); }
     BrainCloudTournament *getTournamentService() { return _client->getTournamentService(); }
+    BrainCloudPresence *getPresenceService() { return _client->getPresenceService(); }
+    BrainCloudVirtualCurrency *getVirtualCurrencyService() { return _client->getVirtualCurrencyService(); }
+    BrainCloudAppStore *getAppStoreService() { return _client->getAppStoreService(); }
 
     BrainCloudRTT *getRTTService() { return _client->getRTTService(); }
     BrainCloudLobby *getLobbyService() { return _client->getLobbyService(); }
@@ -502,6 +570,13 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
 
     static UBrainCloudWrapper *_instance;
     BrainCloudClient *_client = nullptr;
+
+    FString _lastUrl;
+    FString _lastSecretKey;
+    FString _lastGameId;
+    FString _lastGameVersion;
+    FString _company;
+    FString _appName;
 
     FString _authenticationType;
 
