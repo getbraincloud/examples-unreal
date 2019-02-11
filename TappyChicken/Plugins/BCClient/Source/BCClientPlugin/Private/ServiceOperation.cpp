@@ -15,6 +15,7 @@ const ServiceOperation ServiceOperation::Attach = ServiceOperation(TEXT("ATTACH"
 const ServiceOperation ServiceOperation::Merge = ServiceOperation(TEXT("MERGE"));
 const ServiceOperation ServiceOperation::Detach = ServiceOperation(TEXT("DETACH"));
 const ServiceOperation ServiceOperation::ResetEmailPassword = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD"));
+const ServiceOperation ServiceOperation::ResetEmailPasswordAdvanced = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD_ADVANCED"));
 const ServiceOperation ServiceOperation::SwitchToChildProfile = ServiceOperation(TEXT("SWITCH_TO_CHILD_PROFILE"));
 const ServiceOperation ServiceOperation::SwitchToParentProfile = ServiceOperation(TEXT("SWITCH_TO_PARENT_PROFILE"));
 const ServiceOperation ServiceOperation::GetChildProfiles = ServiceOperation(TEXT("GET_CHILD_PROFILES"));
@@ -94,7 +95,11 @@ const ServiceOperation ServiceOperation::AddFriends = ServiceOperation(TEXT("ADD
 const ServiceOperation ServiceOperation::GetUsersOnlineStatus = ServiceOperation(TEXT("GET_USERS_ONLINE_STATUS"));
 const ServiceOperation ServiceOperation::RemoveFriends = ServiceOperation(TEXT("REMOVE_FRIENDS"));
 const ServiceOperation ServiceOperation::FindPlayerByUniversalId = ServiceOperation(TEXT("FIND_PLAYER_BY_UNIVERSAL_ID"));
+const ServiceOperation ServiceOperation::FindUserByExactUniversalId = ServiceOperation(TEXT("FIND_USER_BY_EXACT_UNIVERSAL_ID"));
+const ServiceOperation ServiceOperation::FindUsersByUniversalIdStartingWith = ServiceOperation(TEXT("FIND_USERS_BY_UNIVERSAL_ID_STARTING_WITH"));
+const ServiceOperation ServiceOperation::FindUsersByNameStartingWith = ServiceOperation(TEXT("FIND_USERS_BY_NAME_STARTING_WITH"));
 const ServiceOperation ServiceOperation::GetSocialLeaderboard = ServiceOperation(TEXT("GET_SOCIAL_LEADERBOARD"));
+const ServiceOperation ServiceOperation::GetSocialLeaderboardByVersion = ServiceOperation(TEXT("GET_SOCIAL_LEADERBOARD_BY_VERSION"));
 const ServiceOperation ServiceOperation::GetMultiSocialLeaderboard = ServiceOperation(TEXT("GET_MULTI_SOCIAL_LEADERBOARD"));
 const ServiceOperation ServiceOperation::GetGlobalLeaderboard = ServiceOperation(TEXT("GET_GLOBAL_LEADERBOARD"));
 const ServiceOperation ServiceOperation::GetGlobalLeaderboardPage = ServiceOperation(TEXT("GET_GLOBAL_LEADERBOARD_PAGE"));
@@ -105,8 +110,10 @@ const ServiceOperation ServiceOperation::RewardTournament = ServiceOperation(TEX
 const ServiceOperation ServiceOperation::PostScore = ServiceOperation(TEXT("POST_SCORE"));
 const ServiceOperation ServiceOperation::PostScoreDynamic = ServiceOperation(TEXT("POST_SCORE_DYNAMIC"));
 const ServiceOperation ServiceOperation::GetGroupSocialLeaderboard = ServiceOperation(TEXT("GET_GROUP_SOCIAL_LEADERBOARD"));
+const ServiceOperation ServiceOperation::GetGroupSocialLeaderboardByVersion = ServiceOperation(TEXT("GET_GROUP_SOCIAL_LEADERBOARD_BY_VERSION"));
 const ServiceOperation ServiceOperation::GetSummaryDataForProfileId = ServiceOperation(TEXT("GET_SUMMARY_DATA_FOR_PROFILE_ID"));
 const ServiceOperation ServiceOperation::GetPlayersSocialLeaderboard = ServiceOperation(TEXT("GET_PLAYERS_SOCIAL_LEADERBOARD"));
+const ServiceOperation ServiceOperation::GetPlayersSocialLeaderboardByVersion = ServiceOperation(TEXT("GET_PLAYERS_SOCIAL_LEADERBOARD_BY_VERSION"));
 const ServiceOperation ServiceOperation::ListAllLeaderboards = ServiceOperation(TEXT("LIST_ALL_LEADERBOARDS"));
 const ServiceOperation ServiceOperation::GetGlobalLeaderboardEntryCount = ServiceOperation(TEXT("GET_GLOBAL_LEADERBOARD_ENTRY_COUNT"));
 const ServiceOperation ServiceOperation::RemovePlayerScore = ServiceOperation(TEXT("REMOVE_PLAYER_SCORE"));
@@ -303,20 +310,51 @@ const ServiceOperation ServiceOperation::UpdateGroupData = ServiceOperation(TEXT
 const ServiceOperation ServiceOperation::UpdateGroupEntity = ServiceOperation(TEXT("UPDATE_GROUP_ENTITY_DATA"));
 const ServiceOperation ServiceOperation::UpdateGroupMember = ServiceOperation(TEXT("UPDATE_GROUP_MEMBER"));
 const ServiceOperation ServiceOperation::UpdateGroupName = ServiceOperation(TEXT("UPDATE_GROUP_NAME"));
+const ServiceOperation ServiceOperation::SetGroupOpen = ServiceOperation(TEXT("SET_GROUP_OPEN"));
 
 //mail
 const ServiceOperation ServiceOperation::SendBasicEmail = ServiceOperation(TEXT("SEND_BASIC_EMAIL"));
 const ServiceOperation ServiceOperation::SendAdvancedEmail = ServiceOperation(TEXT("SEND_ADVANCED_EMAIL"));
-const ServiceOperation ServiceOperation::SendAdvancedEmailByAddress = ServiceOperation(TEXT("SEND_ADVANCED_EMAIL_BY_EMAIL"));
+const ServiceOperation ServiceOperation::SendAdvancedEmailByAddress = ServiceOperation(TEXT("SEND_ADVANCED_EMAIL_BY_ADDRESS"));
+
+//presence
+const ServiceOperation ServiceOperation::ForcePush = ServiceOperation(TEXT("FORCE_PUSH"));
+const ServiceOperation ServiceOperation::GetPresenceOfFriends = ServiceOperation(TEXT("GET_PRESENCE_OF_FRIENDS"));
+const ServiceOperation ServiceOperation::GetPresenceOfGroup = ServiceOperation(TEXT("GET_PRESENCE_OF_GROUP"));
+const ServiceOperation ServiceOperation::GetPresenceOfUsers = ServiceOperation(TEXT("GET_PRESENCE_OF_USERS"));
+const ServiceOperation ServiceOperation::RegisterListenersForFriends = ServiceOperation(TEXT("REGISTER_LISTENERS_FOR_FRIENDS"));
+const ServiceOperation ServiceOperation::RegisterListenersForGroup = ServiceOperation(TEXT("REGISTER_LISTENERS_FOR_GROUP"));
+const ServiceOperation ServiceOperation::RegisterListenersForProfiles = ServiceOperation(TEXT("REGISTER_LISTENERS_FOR_PROFILES"));
+const ServiceOperation ServiceOperation::SetVisibility = ServiceOperation(TEXT("SET_VISIBILITY"));
+const ServiceOperation ServiceOperation::StopListening = ServiceOperation(TEXT("STOP_LISTENING"));
+const ServiceOperation ServiceOperation::UpdateActivity = ServiceOperation(TEXT("UPDATE_ACTIVITY"));
 
 //tournament
 const ServiceOperation ServiceOperation::GetTournamentStatus = ServiceOperation(TEXT("GET_TOURNAMENT_STATUS"));
+const ServiceOperation ServiceOperation::GetDivisionInfo = ServiceOperation(TEXT("GET_DIVISION_INFO"));
+const ServiceOperation ServiceOperation::GetMyDivisions = ServiceOperation(TEXT("GET_MY_DIVISIONS"));
 const ServiceOperation ServiceOperation::JoinTournament = ServiceOperation(TEXT("JOIN_TOURNAMENT"));
+const ServiceOperation ServiceOperation::JoinDivision = ServiceOperation(TEXT("JOIN_DIVISION"));
 const ServiceOperation ServiceOperation::LeaveTournament = ServiceOperation(TEXT("LEAVE_TOURNAMENT"));
+const ServiceOperation ServiceOperation::LeaveDivisionInstance = ServiceOperation(TEXT("LEAVE_DIVISION_INSTANCE"));
 const ServiceOperation ServiceOperation::PostTournamentScore = ServiceOperation(TEXT("POST_TOURNAMENT_SCORE"));
 const ServiceOperation ServiceOperation::ViewCurrentReward = ServiceOperation(TEXT("VIEW_CURRENT_REWARD"));
 const ServiceOperation ServiceOperation::ViewReward = ServiceOperation(TEXT("VIEW_REWARD"));
 const ServiceOperation ServiceOperation::ClaimTournamentReward = ServiceOperation(TEXT("CLAIM_TOURNAMENT_REWARD"));
+
+//virtual currency
+const ServiceOperation ServiceOperation::GetPlayerCurrency = ServiceOperation(TEXT("GET_PLAYER_VC"));
+const ServiceOperation ServiceOperation::GetParentCurrency = ServiceOperation(TEXT("GET_PARENT_VC"));
+const ServiceOperation ServiceOperation::GetPeerCurrency = ServiceOperation(TEXT("GET_PEER_VC"));
+const ServiceOperation ServiceOperation::AwardVirtualCurrency = ServiceOperation(TEXT("AWARD_VC"));
+const ServiceOperation ServiceOperation::ConsumeVirtualCurrency = ServiceOperation(TEXT("CONSUME_VC"));
+
+//App Store
+const ServiceOperation ServiceOperation::VerifyPurchase = ServiceOperation(TEXT("VERIFY_PURCHASE"));
+const ServiceOperation ServiceOperation::GetEligiblePromotions = ServiceOperation(TEXT("ELIGIBLE_PROMOTIONS"));
+const ServiceOperation ServiceOperation::GetSalesInventory = ServiceOperation(TEXT("GET_INVENTORY"));
+const ServiceOperation ServiceOperation::StartPurchase = ServiceOperation(TEXT("START_PURCHASE"));
+const ServiceOperation ServiceOperation::FinalizePurchase = ServiceOperation(TEXT("FINALIZE_PURCHASE"));
 
 // rtt
 const ServiceOperation ServiceOperation::RequestClientConnection = ServiceOperation(TEXT("REQUEST_CLIENT_CONNECTION"));

@@ -90,6 +90,13 @@ UBCAuthenticationProxy* UBCAuthenticationProxy::AuthenticateParse(UBrainCloudWra
     return Proxy;
 }
 
+UBCAuthenticationProxy* UBCAuthenticationProxy::AuthenticateHandoff(UBrainCloudWrapper *brainCloudWrapper, FString handoffId, FString securityToken)
+{
+    UBCAuthenticationProxy* Proxy = NewObject<UBCAuthenticationProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getClient()->getAuthenticationService()->authenticateHandoff(handoffId, securityToken, Proxy);
+    return Proxy;
+}
+
 UBCAuthenticationProxy* UBCAuthenticationProxy::AuthenticateExternal(UBrainCloudWrapper *brainCloudWrapper, FString userId, FString token, FString externalAuthName, bool forceCreate)
 {
     UBCAuthenticationProxy* Proxy = NewObject<UBCAuthenticationProxy>();
@@ -97,10 +104,17 @@ UBCAuthenticationProxy* UBCAuthenticationProxy::AuthenticateExternal(UBrainCloud
     return Proxy;
 }
 
-UBCAuthenticationProxy* UBCAuthenticationProxy::ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString& email)
+UBCAuthenticationProxy* UBCAuthenticationProxy::ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email)
 {
     UBCAuthenticationProxy* Proxy = NewObject<UBCAuthenticationProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getClient()->getAuthenticationService()->resetEmailPassword(email, Proxy);
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getClient()->getAuthenticationService()->resetEmailPassword(in_email, Proxy);
+    return Proxy;
+}
+
+UBCAuthenticationProxy* UBCAuthenticationProxy::ResetEmailPasswordAdvanced(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email, const FString& in_serviceParams)
+{
+    UBCAuthenticationProxy* Proxy = NewObject<UBCAuthenticationProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getClient()->getAuthenticationService()->resetEmailPasswordAdvanced(in_email, in_serviceParams, Proxy);
     return Proxy;
 }
 
