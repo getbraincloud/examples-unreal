@@ -49,7 +49,7 @@ UBCLobbyProxy *UBCLobbyProxy::GetLobbyData(UBrainCloudWrapper *brainCloud, const
 }
 
 UBCLobbyProxy *UBCLobbyProxy::UpdateReady(UBrainCloudWrapper *brainCloud, const FString &in_lobbyID, bool in_isReady,
-                                      const FString &in_extraJson)
+										  const FString &in_extraJson)
 {
 	UBCLobbyProxy *Proxy = NewObject<UBCLobbyProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloud)->getLobbyService()->updateReady(in_lobbyID, in_isReady, in_extraJson, Proxy);
@@ -70,6 +70,13 @@ UBCLobbyProxy *UBCLobbyProxy::SendSignal(UBrainCloudWrapper *brainCloud, const F
 	return Proxy;
 }
 
+UBCLobbyProxy *UBCLobbyProxy::JoinLobby(UBrainCloudWrapper *brainCloud, const FString &in_lobbyID, bool in_isReady, const FString &in_extraJson, const FString &in_teamCode, const TArray<FString> &in_otherUserCxIds)
+{
+	UBCLobbyProxy *Proxy = NewObject<UBCLobbyProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloud)->getLobbyService()->joinLobby(in_lobbyID, in_isReady, in_extraJson, in_teamCode, in_otherUserCxIds, Proxy);
+	return Proxy;
+}
+
 UBCLobbyProxy *UBCLobbyProxy::LeaveLobby(UBrainCloudWrapper *brainCloud, const FString &in_lobbyID)
 {
 	UBCLobbyProxy *Proxy = NewObject<UBCLobbyProxy>();
@@ -84,9 +91,16 @@ UBCLobbyProxy *UBCLobbyProxy::RemoveMember(UBrainCloudWrapper *brainCloud, const
 	return Proxy;
 }
 
-UBCLobbyProxy *UBCLobbyProxy::UpdateLobbyConfig(UBrainCloudWrapper *brainCloud, const FString &in_lobbyID, const FString &in_configJson)
+UBCLobbyProxy *UBCLobbyProxy::UpdateSettings(UBrainCloudWrapper *brainCloud, const FString &in_lobbyID, const FString &in_configJson)
 {
 	UBCLobbyProxy *Proxy = NewObject<UBCLobbyProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloud)->getLobbyService()->updateLobbyConfig(in_lobbyID, in_configJson, Proxy);
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloud)->getLobbyService()->updateSettings(in_lobbyID, in_configJson, Proxy);
+	return Proxy;
+}
+
+UBCLobbyProxy *UBCLobbyProxy::CancelFindRequest(UBrainCloudWrapper *brainCloud, const FString &in_lobbyType)
+{
+	UBCLobbyProxy *Proxy = NewObject<UBCLobbyProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloud)->getLobbyService()->cancelFindRequest(in_lobbyType, Proxy);
 	return Proxy;
 }

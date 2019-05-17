@@ -50,15 +50,15 @@ void BrainCloudComms::Initialize(const FString &serverURL, const FString &secret
 
 void BrainCloudComms::InitializeWithApps(const FString &serverURL, const TMap<FString, FString> &secretMap, const FString &appId)
 {
-	//refresh the map 
-	_secretMap.Empty(); 
-	for(auto It = secretMap.CreateConstIterator(); It; ++It) 
-	{ 
-		_secretMap.Emplace(It.Key(), It.Value()); 
-	} 
+	//refresh the map
+	_secretMap.Empty();
+	for (auto It = secretMap.CreateConstIterator(); It; ++It)
+	{
+		_secretMap.Emplace(It.Key(), It.Value());
+	}
 
 	FString secretKey = "MISSING";
-	if(_secretMap.Contains(appId))
+	if (_secretMap.Contains(appId))
 	{
 		secretKey = secretMap[appId];
 	}
@@ -314,8 +314,6 @@ FString BrainCloudComms::GetDataString(PacketRef packet, uint64 packetId)
 	jsonDataObject->SetNumberField(TEXT("packetId"), packetId);
 
 	FJsonSerializer::Serialize(jsonDataObject, writer);
-
-	jsonStr += TEXT("\r\n\r\n");
 	return jsonStr;
 }
 
@@ -339,7 +337,7 @@ void BrainCloudComms::CreateAndSendNextRequestBundle()
 		{
 			auto operation = itr->getOperation();
 			if (operation == ServiceOperation::Authenticate ||
-				operation == ServiceOperation::ResetEmailPassword||
+				operation == ServiceOperation::ResetEmailPassword ||
 				operation == ServiceOperation::ResetEmailPasswordAdvanced)
 			{
 				isAuth = true;
@@ -362,7 +360,7 @@ void BrainCloudComms::CreateAndSendNextRequestBundle()
 	}
 	else
 	{
-		FakeErrorResponse(900, ReasonCode::CLIENT_DISABLED, "Client disabled due to repeated errors from a single API call");
+		FakeErrorResponse(900, ReasonCodes::CLIENT_DISABLED, "Client disabled due to repeated errors from a single API call");
 	}
 
 	_retryCount = 0;
@@ -453,7 +451,7 @@ void BrainCloudComms::RunCallbacks()
 							ReportError(
 								_currentPacket.ToSharedRef(),
 								HttpCode::CLIENT_NETWORK_ERROR,
-								ReasonCode::CLIENT_NETWORK_ERROR_TIMEOUT,
+								ReasonCodes::CLIENT_NETWORK_ERROR_TIMEOUT,
 								"Timeout trying to reach brainCloud server");
 						}
 					}
@@ -499,7 +497,7 @@ void BrainCloudComms::HandleResponse(int32 statusCode, FString responseBody)
 		}
 		else //couldnt deserialize the response body
 		{
-			ReportError(_currentPacket.ToSharedRef(), HttpCode::CLIENT_NETWORK_ERROR, ReasonCode::JSON_PARSING_ERROR, TEXT("Unable to parse response"));
+			ReportError(_currentPacket.ToSharedRef(), HttpCode::CLIENT_NETWORK_ERROR, ReasonCodes::JSON_PARSING_ERROR, TEXT("Unable to parse response"));
 		}
 	}
 	else
@@ -531,7 +529,7 @@ void BrainCloudComms::FlushCachedMessages(bool sendApiErrorCallbacks)
 		ReportError(
 			_currentPacket.ToSharedRef(),
 			HttpCode::CLIENT_NETWORK_ERROR,
-			ReasonCode::CLIENT_NETWORK_ERROR_TIMEOUT,
+			ReasonCodes::CLIENT_NETWORK_ERROR_TIMEOUT,
 			"Timeout trying to reach brainCloud server");
 	}
 
@@ -666,7 +664,7 @@ void BrainCloudComms::ReportResults(PacketRef requestPacket, TSharedRef<FJsonObj
 			if (respObj->HasField(TEXT("reason_code")))
 			{
 				reasonCode = respObj->GetNumberField(TEXT("reason_code"));
-				if (reasonCode == ReasonCode::PLAYER_SESSION_EXPIRED || reasonCode == ReasonCode::NO_SESSION || reasonCode == ReasonCode::PLAYER_SESSION_LOGGED_OUT || sc->getOperation() == ServiceOperation::Logout || sc->getOperation() == ServiceOperation::FullReset)
+				if (reasonCode == ReasonCodes::PLAYER_SESSION_EXPIRED || reasonCode == ReasonCodes::NO_SESSION || reasonCode == ReasonCodes::PLAYER_SESSION_LOGGED_OUT || sc->getOperation() == ServiceOperation::Logout || sc->getOperation() == ServiceOperation::FullReset)
 				{
 					_isAuthenticated = false;
 					_sessionId = TEXT("");
@@ -707,17 +705,19 @@ void BrainCloudComms::ReportResults(PacketRef requestPacket, TSharedRef<FJsonObj
 			// authenticate
 			if (service == ServiceName::AuthenticateV2 && operation == ServiceOperation::Authenticate)
 			{
-				if (respObj->GetObjectField(TEXT("data"))->GetObjectField(TEXT("rewards"))->GetObjectField(TEXT("rewards"))->Values.Num() > 0)
+				TSharedPtr<FJsonObject> rewardData = respObj->GetObjectField(TEXT("data"))->GetObjectField(TEXT("rewards"));
+				if (rewardData->GetObjectField(TEXT("rewards"))->Values.Num() > 0)
 				{
-					rewards = respObj->GetObjectField(TEXT("data"))->GetObjectField(TEXT("rewards"));
+					rewards = rewardData;
 				}
 			}
 			// player stat increment or statistics event trigger
 			else if ((service == ServiceName::PlayerStatistics && operation == ServiceOperation::Update) || (service == ServiceName::PlayerStatisticsEvent && (operation == ServiceOperation::Trigger || operation == ServiceOperation::TriggerMultiple)))
 			{
-				if (respObj->GetObjectField(TEXT("data"))->GetObjectField(TEXT("rewards"))->Values.Num() > 0)
+				TSharedPtr<FJsonObject> data = respObj->GetObjectField(TEXT("data"));
+				if (data->GetObjectField(TEXT("rewards"))->Values.Num() > 0)
 				{
-					rewards = respObj->GetObjectField(TEXT("data"));
+					rewards = data;
 				}
 			}
 
@@ -792,15 +792,16 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 	ServiceName service = servercall->getService();
 	ServiceOperation operation = servercall->getOperation();
 
-	TSharedPtr<FJsonObject> data = response->GetObjectField(TEXT("data"));
-
+	TSharedPtr<FJsonValue> Field = response->TryGetField(TEXT("data"));
+	const TSharedPtr<FJsonObject>* data = nullptr;
+	bool isDataValid = Field->TryGetObject(data);
 	// A session id or a profile id could potentially come back in any messages
-	if (data.IsValid())
+	if ( isDataValid )
 	{
-		data->TryGetStringField(TEXT("sessionId"), _sessionId);
+		(*data)->TryGetStringField(TEXT("sessionId"), _sessionId);
 
 		FString profileIdOut;
-		data->TryGetStringField(TEXT("profileId"), profileIdOut);
+		(*data)->TryGetStringField(TEXT("profileId"), profileIdOut);
 
 		if (!profileIdOut.IsEmpty())
 		{
@@ -808,14 +809,14 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 		}
 
 		FString appIdOut;
-		data->TryGetStringField(TEXT("switchToAppId"), appIdOut);
-		if(!appIdOut.IsEmpty())
+		(*data)->TryGetStringField(TEXT("switchToAppId"), appIdOut);
+		if (!appIdOut.IsEmpty())
 		{
-			_appId = data->GetStringField("switchToAppId");
+			_appId = (*data)->GetStringField("switchToAppId");
 
 			//update the secret key
 			_secretKey = "MISSING";
-			if(_secretMap.Contains(_appId))
+			if (_secretMap.Contains(_appId))
 			{
 				_secretKey = _secretMap[_appId];
 			}
@@ -827,11 +828,11 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 		_isAuthenticated = true;
 		ResetErrorCache();
 
-		if (data.IsValid())
+		if (isDataValid)
 		{
 			if (_heartbeatInterval == 0)
 			{
-				int32 sessionTimeout = data->GetIntegerField(TEXT("playerSessionExpiry"));
+				int32 sessionTimeout = (*data)->GetIntegerField(TEXT("playerSessionExpiry"));
 				sessionTimeout = (int32)((double)sessionTimeout * 0.85);
 
 				// minimum 30 secs
@@ -839,13 +840,13 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 				_heartbeatInterval *= 1000; //to ms
 			}
 
-			_maxBundleMessages = data->GetNumberField(TEXT("maxBundleMsgs"));
+			_maxBundleMessages = (*data)->GetNumberField(TEXT("maxBundleMsgs"));
 
-			if (data->HasField("maxKillCount"))
-				_killSwitchThreshold = data->GetNumberField(TEXT("maxKillCount"));
+			if ((*data)->HasField("maxKillCount"))
+				_killSwitchThreshold = (*data)->GetNumberField(TEXT("maxKillCount"));
 
 			//set player name
-			FString name = data->GetStringField(TEXT("playerName"));
+			FString name = (*data)->GetStringField(TEXT("playerName"));
 			_client->getPlayerStateService()->setUserName(name);
 		}
 	}
@@ -860,17 +861,17 @@ void BrainCloudComms::FilterIncomingMessages(TSharedRef<ServerCall> servercall, 
 	}
 	else if (service == ServiceName::PlayerState && operation == ServiceOperation::UpdateName)
 	{
-		if (data.IsValid())
+		if (isDataValid)
 		{
-			FString name = data->GetStringField(TEXT("playerName"));
+			FString name = (*data)->GetStringField(TEXT("playerName"));
 			_client->getPlayerStateService()->setUserName(name);
 		}
 	}
 	else if (service == ServiceName::File && operation == ServiceOperation::PrepareUserUpload)
 	{
-		if (data.IsValid())
+		if (isDataValid)
 		{
-			TSharedPtr<FJsonObject> fileInfo = data->GetObjectField(TEXT("fileDetails"));
+			TSharedPtr<FJsonObject> fileInfo = (*data)->GetObjectField(TEXT("fileDetails"));
 
 			TSharedRef<BCFileUploader> uploader = MakeShareable(
 				new BCFileUploader(
@@ -909,7 +910,7 @@ void BrainCloudComms::ResetCommunication()
 void BrainCloudComms::ResetErrorCache()
 {
 	_statusCodeCache = HttpCode::FORBIDDEN;
-	_reasonCodeCache = ReasonCode::NO_SESSION;
+	_reasonCodeCache = ReasonCodes::NO_SESSION;
 	_statusMessageCache = TEXT("No session");
 }
 

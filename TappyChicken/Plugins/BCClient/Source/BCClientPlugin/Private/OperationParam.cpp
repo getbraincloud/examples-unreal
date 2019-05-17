@@ -411,7 +411,7 @@ const OperationParam OperationParam::ChatText = OperationParam("text");
 const OperationParam OperationParam::ChatRich = OperationParam("rich");
 const OperationParam OperationParam::ChatRecordInHistory = OperationParam("recordInHisory");
 
-// chat channel types 
+// chat channel types
 const OperationParam OperationParam::AllChannelType = OperationParam("all");
 const OperationParam OperationParam::GlobalChannelType = OperationParam("gl");
 const OperationParam OperationParam::GroupChannelType = OperationParam("gr");
@@ -444,7 +444,7 @@ const OperationParam OperationParam::LobbyTimeoutSeconds = OperationParam("timeo
 const OperationParam OperationParam::LobbyIsReady = OperationParam("isReady");
 const OperationParam OperationParam::LobbyOtherUserCxIds = OperationParam("otherUserCxIds");
 const OperationParam OperationParam::LobbyExtraJson = OperationParam("extraJson");
-const OperationParam OperationParam::LobbyTeamCode = OperationParam("teamCode");
+const OperationParam OperationParam::LobbyTeamCode = OperationParam("toTeamCode");
 const OperationParam OperationParam::LobbyIdentifier = OperationParam("lobbyId");
 const OperationParam OperationParam::LobbyToTeamName = OperationParam("toTeamCode");
 const OperationParam OperationParam::LobbySignalData = OperationParam("signalData");

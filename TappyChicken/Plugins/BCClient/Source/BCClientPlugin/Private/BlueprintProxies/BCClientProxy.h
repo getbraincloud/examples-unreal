@@ -14,26 +14,6 @@ class UBCClientProxy : public UBCBlueprintCallProxyBase
 	UBCClientProxy(const FObjectInitializer &ObjectInitializer);
 
 	/**
-	* Set Soft Error Handling Mode. Disabled by default
-	* If enabled, brainCloud will Log errors without an editor crash 
-	*
-	* Param - isEnabled The state of the soft error handling
-	*/
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
-	static void SoftErrorHandlingMode(
-		const bool isEnabled);
-
-	/**
-	* Set whether the brainCloud singleton should be able to be used
-	* Disabling it will log a Error or Fatal log based on SoftErrorHandlingMode
-	*
-	* Param - isEnabled The state of the singleton usage mode
-	*/
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
-	static void SingletonMode(
-		const bool isEnabled);
-
-	/**
 	* Method initializes the BrainCloudClient.
 	*
 	* Param - serverURL The url to the brainCloud server
@@ -108,35 +88,6 @@ class UBCClientProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
 	static void ResetCommunication(UBrainCloudWrapper *brainCloudWrapper);
-
-	/*
-	* Enables Real Time event for this session.
-	* Real Time events are disabled by default. Usually events
-	* need to be polled using GET_EVENTS. By enabling this, events will
-	* be received instantly when they happen through a TCP connection to an Event Server.
-	*
-	* This function will first call requestClientConnection, then connect to the address
-	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Client")
-	static UBCClientProxy *EnableRTT(UBrainCloudWrapper *brainCloudWrapper, eBCRTTConnectionType in_type);
-
-	/*
-	* Disables Real Time event for this session.
-	*/
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
-	static void DisableRTT(UBrainCloudWrapper *brainCloudWrapper);
-
-	/**
-	* 
-	*/
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
-	static void SetRTTHeartBeatSeconds(UBrainCloudWrapper *brainCloudWrapper, int32 in_value);
-
-	/**
-	* 
-	*/
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Client")
-	static void DeregisterAllRTTCallbacks(UBrainCloudWrapper *brainCloudWrapper);
 
 	/**
 	* Send an empty message to the server, which essentially polls the
