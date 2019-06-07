@@ -11,6 +11,7 @@
 UBCRTTProxy::UBCRTTProxy(const FObjectInitializer &ObjectInitializer)
     : Super(ObjectInitializer)
 {
+	_bIsOneResponse = false;
 }
 
 UBCRTTProxy *UBCRTTProxy::EnableRTT(UBrainCloudWrapper *brainCloudWrapper, BCRTTConnectionType in_type)
@@ -23,6 +24,11 @@ UBCRTTProxy *UBCRTTProxy::EnableRTT(UBrainCloudWrapper *brainCloudWrapper, BCRTT
 void UBCRTTProxy::DisableRTT(UBrainCloudWrapper *brainCloudWrapper)
 {
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getRTTService()->disableRTT();
+}
+
+bool UBCRTTProxy::IsRTTEnabled(UBrainCloudWrapper *brainCloudWrapper)
+{
+	return UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getRTTService()->isRTTEnabled();
 }
 
 void UBCRTTProxy::SetRTTHeartBeatSeconds(UBrainCloudWrapper *brainCloudWrapper, int32 in_value)

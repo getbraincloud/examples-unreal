@@ -28,6 +28,8 @@ class FJsonObject;
 class UWebSocketBase;
 class UBCRelayCommsProxy;
 class UBCBlueprintRelayCallProxyBase;
+class UBCRelayProxy;
+struct RelayMessage;
 
 class BrainCloudRelayComms
 {
@@ -50,17 +52,18 @@ public:
 	BrainCloudRelayComms(BrainCloudClient *client);
 	~BrainCloudRelayComms();
 
-	int64 ping();
+	int32 ping();
 	uint8 netId();
 
 	void connect(BCRelayConnectionType in_connectionType, const FString &in_connectOptionsJson, IServerCallback *callback);
+	void connect(BCRelayConnectionType in_connectionType, const FString &in_connectOptionsJson, UBCRelayProxy *callback);
 	void disconnect();
 	bool isConnected();
 	void registerDataCallback(IRelayCallback *callback);
 	void registerDataCallback(UBCBlueprintRelayCallProxyBase *callback);
 	void deregisterDataCallback();
 
-	bool send(TArray<uint8> in_message, const uint8 in_target, bool in_reliable = true, bool in_ordered = true, int in_channel = 0);
+	bool send(const TArray<uint8> &in_message, const uint8 in_target, bool in_reliable = true, bool in_ordered = true, int in_channel = 0);
 	void setPingInterval(float in_interval);
 
 	void RunCallbacks();
@@ -78,6 +81,7 @@ public:
 	void webSocket_OnError(const FString &in_error);
 
 private:
+	void connectHelper(BCRelayConnectionType in_connectionType, const FString &in_connectOptionsJson);
 	void startReceivingRSConnectionAsync();
 	TArray<uint8> concatenateByteArrays(TArray<uint8> in_bufferA, TArray<uint8> in_bufferB);
 	TArray<uint8> stripByteArray(TArray<uint8> in_data, int in_numFromLeft);
@@ -90,10 +94,12 @@ private:
 	FString buildRSRequestError(FString in_statusMessage);
 	void setupWebSocket(const FString &in_url);
 	void sendPing();
-	void appendHeaderData();
+	TArray<uint8> appendHeaderData(uint8 in_controlByte);
+	TArray<uint8> fromShortBE(int16 number);
 
 	BrainCloudClient *m_client;
 	IServerCallback *m_appCallback;
+	UBCRelayProxy *m_appCallbackBP;
 
 	UBCRelayCommsProxy *m_commsPtr;
 
@@ -105,12 +111,14 @@ private:
 	bool m_bIsConnected;
 	float m_pingInterval;
 	float m_timeSinceLastPingRequest;
-	int64 m_lastNowMS;
-	int64 m_sentPing;
-	int64 m_ping;
+	double m_lastNowMS;
+	double m_sentPing;
+	int16 m_ping;
 	short m_netId = -1;
 
 	const int SIZE_OF_LENGTH_PREFIX_BYTE_ARRAY = 2;
+    const int CONTROL_BYTE_HEADER_LENGTH = 1;
+    const int SIZE_OF_RELIABLE_FLAGS = 2;
 
 	BCRelayConnectionType m_connectionType;
 	TMap<FString, FString> m_connectOptions;
