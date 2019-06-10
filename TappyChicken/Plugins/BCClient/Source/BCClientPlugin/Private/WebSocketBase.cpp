@@ -496,33 +496,26 @@ void UWebSocketBase::ProcessWriteable()
 #elif PLATFORM_HTML5
 #else
 	// write data
-	int location = LWS_PRE;
-	while (mSendQueueData.Num() > 0)
+	if (mSendQueueData.Num() > 0)
 	{
 		uint8 *data = mSendQueueData[0].GetData();
 		int sizeOfData = mSendQueueData[0].Num();
 
 		unsigned char *buf = (unsigned char*)FMemory::Malloc(LWS_PRE + sizeOfData);
-		FString parsedMessage = BrainCloudRelay::BCBytesToString(data, sizeOfData);
-		std::string strData = std::string(TCHAR_TO_ANSI(*parsedMessage));
-		sizeOfData = strData.size();
-		UE_LOG(WebSocket, Log, TEXT("ProcessWriteable %d %d %d %s"), mSendQueueData.Num(), sizeOfData, location, *parsedMessage);
-
-		FMemory::Memcpy(&buf[location], data, sizeOfData);
-		lws_write(mlws, &buf[location], sizeOfData, LWS_WRITE_TEXT);
+		FMemory::Memcpy(&buf[LWS_PRE], data, sizeOfData);
+		lws_write(mlws, &buf[LWS_PRE], sizeOfData, LWS_WRITE_BINARY);
 
 		mSendQueueData.RemoveAt(0);	
 	}
 		
 	// write text
-	while (mSendQueue.Num() > 0)
+	if (mSendQueue.Num() > 0)
 	{
 		std::string strData = TCHAR_TO_ANSI(*mSendQueue[0]);
 
 		unsigned char *buf = (unsigned char*)FMemory::Malloc(LWS_PRE + strData.size());
-		FMemory::Memcpy(&buf[location], strData.c_str(), strData.size());
-		lws_write(mlws, &buf[location], strData.size(), LWS_WRITE_TEXT);
-		
+		FMemory::Memcpy(&buf[LWS_PRE], strData.c_str(), strData.size());
+		lws_write(mlws, &buf[LWS_PRE], strData.size(), LWS_WRITE_TEXT);
 		mSendQueue.RemoveAt(0);
 	}
 #endif
