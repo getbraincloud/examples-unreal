@@ -317,6 +317,8 @@ const ServiceOperation ServiceOperation::UpdateGroupEntity = ServiceOperation(TE
 const ServiceOperation ServiceOperation::UpdateGroupMember = ServiceOperation(TEXT("UPDATE_GROUP_MEMBER"));
 const ServiceOperation ServiceOperation::UpdateGroupName = ServiceOperation(TEXT("UPDATE_GROUP_NAME"));
 const ServiceOperation ServiceOperation::SetGroupOpen = ServiceOperation(TEXT("SET_GROUP_OPEN"));
+const ServiceOperation ServiceOperation::UpdateGroupSummaryData = ServiceOperation(TEXT("UPDATE_GROUP_SUMMARY_DATA"));
+const ServiceOperation ServiceOperation::GetRandomGroupsMatching = ServiceOperation(TEXT("GET_RANDOM_GROUPS_MATCHING"));
 
 //mail
 const ServiceOperation ServiceOperation::SendBasicEmail = ServiceOperation(TEXT("SEND_BASIC_EMAIL"));
@@ -393,17 +395,23 @@ const ServiceOperation ServiceOperation::SendMessageSimple = ServiceOperation("S
 
 // lobby
 const ServiceOperation ServiceOperation::FindLobby = ServiceOperation("FIND_LOBBY");
+const ServiceOperation ServiceOperation::FindLobbyWithPingData = ServiceOperation("FIND_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::CreateLobby = ServiceOperation("CREATE_LOBBY");
+const ServiceOperation ServiceOperation::CreateLobbyWithPingData = ServiceOperation("CREATE_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::FindOrCreateLobby = ServiceOperation("FIND_OR_CREATE_LOBBY");
+const ServiceOperation ServiceOperation::FindOrCreateLobbyWithPingData = ServiceOperation("FIND_OR_CREATE_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::GetLobbyData = ServiceOperation("GET_LOBBY_DATA");
 const ServiceOperation ServiceOperation::UpdateReady = ServiceOperation("UPDATE_READY");
 const ServiceOperation ServiceOperation::UpdateSettings = ServiceOperation("UPDATE_SETTINGS");
 const ServiceOperation ServiceOperation::SwitchTeam = ServiceOperation("SWITCH_TEAM");
 const ServiceOperation ServiceOperation::SendSignal = ServiceOperation("SEND_SIGNAL");
 const ServiceOperation ServiceOperation::JoinLobby = ServiceOperation("JOIN_LOBBY");
+const ServiceOperation ServiceOperation::JoinLobbyWithPingData = ServiceOperation("JOIN_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::LeaveLobby = ServiceOperation("LEAVE_LOBBY");
 const ServiceOperation ServiceOperation::RemoveMember = ServiceOperation("REMOVE_MEMBER");
 const ServiceOperation ServiceOperation::CancelFindRequest = ServiceOperation("CANCEL_FIND_REQUEST");
+const ServiceOperation ServiceOperation::GetRegionsForLobbies = ServiceOperation("GET_REGIONS_FOR_LOBBIES");
+const ServiceOperation ServiceOperation::PingData = ServiceOperation("PING_DATA");	// not an official API, but need it for proper calback
 
 bool ServiceOperation::operator==(const ServiceOperation &s) const
 {
