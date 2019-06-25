@@ -388,7 +388,6 @@ void BrainCloudLobby::onPingResponseReceived(FHttpRequestPtr Request, FHttpRespo
     // update it to be the diff
     _cachedPingResponses[region][index] = (FPlatformTime::Seconds() - origValue) * 1000;
     
-    UE_LOG(LogBrainCloudComms, Log, TEXT("onPingResponseReceived %s %d orig: %f now:%f diff:%f"), *region, index, origValue, FPlatformTime::Seconds(), _cachedPingResponses[region][index]);
     if (index == MAX_PING_CALLS - 1)
     {
         double totalAccumulated = 0;
