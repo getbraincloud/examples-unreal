@@ -172,10 +172,13 @@ void BrainCloudRelayComms::RunCallbacks()
 #if PLATFORM_UWP
 #elif PLATFORM_HTML5
 #else
-	if (m_lwsContext != nullptr)
 	{
-		lws_callback_on_writable_all_protocol(m_lwsContext, &protocolsRS[0]);
-		lws_service(m_lwsContext, 0);
+    	FScopeLock Lock(&m_relayMutex);
+		if (m_lwsContext != nullptr)
+		{
+			lws_callback_on_writable_all_protocol(m_lwsContext, &protocolsRS[0]);
+			lws_service(m_lwsContext, 0);
+		}
 	}
 #endif
 }
@@ -257,7 +260,7 @@ void BrainCloudRelayComms::disconnectImpl()
 		m_connectedSocket->OnConnectComplete.RemoveDynamic(m_commsPtr, &UBCRelayCommsProxy::Websocket_OnOpen);
 		m_connectedSocket->OnReceiveData.RemoveDynamic(m_commsPtr, &UBCRelayCommsProxy::WebSocket_OnMessage);
 	}
-	
+
 	// lock 
 	{
     	FScopeLock Lock(&m_relayMutex);
