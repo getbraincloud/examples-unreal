@@ -20,6 +20,8 @@ class BrainCloudClient;
 #include "BrainCloudPlayerStatisticsEvent.h"
 #include "BrainCloudProduct.h"
 #include "BrainCloudIdentity.h"
+#include "BrainCloudItemCatalog.h"
+#include "BrainCloudUserItems.h"
 #include "BrainCloudEvent.h"
 #include "BrainCloudS3Handling.h"
 #include "BrainCloudScript.h"
@@ -37,9 +39,11 @@ class BrainCloudClient;
 #include "BrainCloudGroup.h"
 #include "BrainCloudMail.h"
 #include "BrainCloudTournament.h"
+#include "BrainCloudCustomEntity.h"
 #include "BrainCloudPresence.h"
 #include "BrainCloudVirtualCurrency.h"
 #include "BrainCloudAppStore.h"
+#include "BrainCloudRelay.h"
 #include "BrainCloudWrapper.generated.h"
 
 class ServiceName;
@@ -62,15 +66,6 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     UBrainCloudWrapper();
     UBrainCloudWrapper(FString wrapperName);
     virtual void BeginDestroy() override;
-
-    /**
-     * Method returns a singleton instance of the UBrainCloudWrapper.
-     * @return A singleton instance of the UBrainCloudWrapper.
-	 *
-	 * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the UBrainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/
-     */
-    DEPRECATED("3.6.5", "Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the UBrainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/")
-    static UBrainCloudWrapper *getInstance();
 
     /**
      * Method initializes the BrainCloudClient.
@@ -393,7 +388,7 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     *
     * SECURITY_ERROR (40209) - If the email address cannot be found.
     */
-    void resetEmailPassword(const FString& email, IServerCallback * callback);
+    void resetEmailPassword(const FString &email, IServerCallback *callback);
 
     /**
     * Reset Email password with service parameters- Sends a password reset email to the specified address
@@ -416,12 +411,12 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     *
     * SECURITY_ERROR (40209) - If the email address cannot be found.
     */
-    void resetEmailPasswordAdvanced(const FString& emailAddress, const FString& in_serviceParams, IServerCallback * callback);
+    void resetEmailPasswordAdvanced(const FString &emailAddress, const FString &in_serviceParams, IServerCallback *callback);
 
-    const FString & getAnonymousId() const;
-    const FString & getProfileId() const;
-    void setAnonymousId(const FString& anonymousId);
-    void setProfileId(const FString& profileId);
+    const FString &getAnonymousId() const;
+    const FString &getProfileId() const;
+    void setAnonymousId(const FString &anonymousId);
+    void setProfileId(const FString &profileId);
 
     /*
 	* Re-authenticates the user with brainCloud
@@ -450,6 +445,8 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     BrainCloudPlayerStatisticsEvent *getPlayerStatisticsEventService() { return _client->getPlayerStatisticsEventService(); }
     BrainCloudProduct *getProductService() { return _client->getProductService(); }
     BrainCloudIdentity *getIdentityService() { return _client->getIdentityService(); }
+    BrainCloudItemCatalog *getItemCatalogService() { return _client->getItemCatalogService(); }
+    BrainCloudUserItems *getUserItemsService() { return _client->getUserItemsService(); }
     BrainCloudEvent *getEventService() { return _client->getEventService(); }
     BrainCloudS3Handling *getS3HandlingService() { return _client->getS3HandlingService(); }
     BrainCloudScript *getScriptService() { return _client->getScriptService(); }
@@ -467,24 +464,19 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     BrainCloudGroup *getGroupService() { return _client->getGroupService(); }
     BrainCloudMail *getMailService() { return _client->getMailService(); }
     BrainCloudTournament *getTournamentService() { return _client->getTournamentService(); }
+    BrainCloudCustomEntity *getCustomEntityService() { return _client->getCustomEntityService(); }
     BrainCloudPresence *getPresenceService() { return _client->getPresenceService(); }
     BrainCloudVirtualCurrency *getVirtualCurrencyService() { return _client->getVirtualCurrencyService(); }
     BrainCloudAppStore *getAppStoreService() { return _client->getAppStoreService(); }
-
     BrainCloudRTT *getRTTService() { return _client->getRTTService(); }
     BrainCloudLobby *getLobbyService() { return _client->getLobbyService(); }
     BrainCloudChat *getChatService() { return _client->getChatService(); }
     BrainCloudMessaging *getMessagingService() { return _client->getMessagingService(); }
+    BrainCloudRelay *getRelayService() { return _client->getRelayService(); }
 
     /**
-     * Returns a singleton instance of the BrainCloudClient.
-     * @return A singleton instance of the BrainCloudClient.
-     */
-    static BrainCloudClient *getBC() { return getInstance()->_client; }
-
-    /**
-     * Returns a singleton instance of the BrainCloudClient.
-     * @return A singleton instance of the BrainCloudClient.
+     * Returns the instance of the BrainCloudClient.
+     * @return The instance of the BrainCloudClient.
      */
     BrainCloudClient *getBCClient() { return _client; }
 
@@ -562,13 +554,15 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     virtual void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, FString const &jsonData);
     virtual void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString &message);
 
+    static FString buildErrorJson(int32 statusCode, int32 reasonCode, const FString &message);
+	static FString GetJsonString(TSharedRef<FJsonObject> jsonDataObject);
+
   protected:
     UBrainCloudWrapper(BrainCloudClient *client);
 
     void loadData();
     void saveData();
 
-    static UBrainCloudWrapper *_instance;
     BrainCloudClient *_client = nullptr;
 
     FString _lastUrl;

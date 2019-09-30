@@ -28,7 +28,6 @@ public:
 
   /**
 	* Set a default brainCloud instance to be used when none is provided.
-	* When not set, the brainCloud Singleton will be used
 	* @param brainCloud - The brainCloud Wrapper
 	*/
   UFUNCTION(BlueprintCallable, Category = "BrainCloud")
@@ -346,7 +345,7 @@ public:
   UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Wrapper")
   static UBCWrapperProxy *SmartSwitchAuthenticateUniversal(UBrainCloudWrapper *brainCloudWrapper, const FString &userid, const FString &password, bool forceCreate);
 
-    /**
+  /**
     * Reset Email password - Sends a password reset email to the specified address
     *
     * Service Name - Authenticate
@@ -358,10 +357,10 @@ public:
     * Note the follow error reason codes:
     * SECURITY_ERROR (40209) - If the email address cannot be found.
     */
-    UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Wrapper")
-    static UBCWrapperProxy *ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString &email);
-    
-    /**
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Wrapper")
+  static UBCWrapperProxy *ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString &email);
+
+  /**
     * Reset Email password with service parameters- Sends a password reset email to the specified address
     *
     * Service Name - Authenticate
@@ -385,12 +384,11 @@ public:
     UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Wrapper")
     static UBCWrapperProxy *ResetEmailPasswordAdvanced(UBrainCloudWrapper *brainCloudWrapper, const FString &email, const FString &serviceParams);
 
-
   /**
      * Sets the stored profile id, saves it as well
      * @param profileId The profile id to set
      */
-  UFUNCTION(BlueprintCallable,  Category = "BrainCloud|Wrapper")
+  UFUNCTION(BlueprintCallable, Category = "BrainCloud|Wrapper")
   static void SetStoredProfileId(UBrainCloudWrapper *brainCloudWrapper, FString profileId);
 
   /**

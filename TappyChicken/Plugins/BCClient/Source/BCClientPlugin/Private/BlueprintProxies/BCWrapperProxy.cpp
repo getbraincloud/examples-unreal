@@ -15,7 +15,7 @@ UBCWrapperProxy::UBCWrapperProxy(const FObjectInitializer &ObjectInitializer)
 
 UBrainCloudWrapper *UBCWrapperProxy::CreateBrainCloudWrapper(const FString &wrapperName)
 {
-	UBrainCloudWrapper* wrapper = NewObject<UBrainCloudWrapper>();
+	UBrainCloudWrapper *wrapper = NewObject<UBrainCloudWrapper>();
 	wrapper->setWrapperName(wrapperName);
 	return wrapper;
 }
@@ -23,7 +23,7 @@ UBrainCloudWrapper *UBCWrapperProxy::CreateBrainCloudWrapper(const FString &wrap
 void UBCWrapperProxy::SetDefaultBrainCloudInstance(UBrainCloudWrapper *brainCloudWrapper)
 {
 	ClearDefaultBrainCloudInstance();
-	
+
 	DefaultBrainCloudInstance = brainCloudWrapper;
 	DefaultBrainCloudInstance->AddToRoot();
 }
@@ -47,10 +47,10 @@ UBrainCloudWrapper *UBCWrapperProxy::GetBrainCloudInstance(UBrainCloudWrapper *b
 	{
 		return DefaultBrainCloudInstance;
 	}
-	// Using the brainCloud singleton (not recommended)
+	// nullptr! wrapper isn't set!
 	else
 	{
-		return UBrainCloudWrapper::getInstance();
+		return nullptr;
 	}
 }
 
@@ -188,18 +188,18 @@ UBCWrapperProxy *UBCWrapperProxy::SmartSwitchAuthenticateUniversal(UBrainCloudWr
 	return Proxy;
 }
 
-UBCWrapperProxy* UBCWrapperProxy::ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email)
+UBCWrapperProxy *UBCWrapperProxy::ResetEmailPassword(UBrainCloudWrapper *brainCloudWrapper, const FString &in_email)
 {
-    UBCWrapperProxy* Proxy = NewObject<UBCWrapperProxy>();
+	UBCWrapperProxy *Proxy = NewObject<UBCWrapperProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->resetEmailPassword(in_email, Proxy);
-    return Proxy;
+	return Proxy;
 }
 
-UBCWrapperProxy* UBCWrapperProxy::ResetEmailPasswordAdvanced(UBrainCloudWrapper *brainCloudWrapper, const FString& in_email, const FString& in_serviceParams)
+UBCWrapperProxy *UBCWrapperProxy::ResetEmailPasswordAdvanced(UBrainCloudWrapper *brainCloudWrapper, const FString &in_email, const FString &in_serviceParams)
 {
-    UBCWrapperProxy* Proxy = NewObject<UBCWrapperProxy>();
+	UBCWrapperProxy *Proxy = NewObject<UBCWrapperProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->resetEmailPasswordAdvanced(in_email, in_serviceParams, Proxy);
-    return Proxy;
+	return Proxy;
 }
 
 void UBCWrapperProxy::SetStoredProfileId(UBrainCloudWrapper *brainCloudWrapper, FString profileId)

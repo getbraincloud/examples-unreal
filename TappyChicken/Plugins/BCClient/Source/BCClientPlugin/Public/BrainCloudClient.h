@@ -14,6 +14,8 @@
 #include "BrainCloudPlayerStatisticsEvent.h"
 #include "BrainCloudProduct.h"
 #include "BrainCloudIdentity.h"
+#include "BrainCloudItemCatalog.h"
+#include "BrainCloudUserItems.h"
 #include "BrainCloudEvent.h"
 #include "BrainCloudS3Handling.h"
 #include "BrainCloudScript.h"
@@ -31,6 +33,7 @@
 #include "BrainCloudGroup.h"
 #include "BrainCloudMail.h"
 #include "BrainCloudTournament.h"
+#include "BrainCloudCustomEntity.h"
 #include "BrainCloudRTT.h"
 #include "BrainCloudLobby.h"
 #include "BrainCloudChat.h"
@@ -38,9 +41,11 @@
 #include "BrainCloudPresence.h"
 #include "BrainCloudVirtualCurrency.h"
 #include "BrainCloudAppStore.h"
+#include "BrainCloudRelay.h"
 
 class BrainCloudComms;
 class BrainCloudRTTComms;
+class BrainCloudRelayComms;
 class ServerCall;
 class IEventCallback;
 class IRewardCallback;
@@ -56,14 +61,22 @@ enum class eBCUpdateType : uint8
 {
 	ALL UMETA(DisplayName = "ALL"),
 	REST UMETA(DisplayName = "REST"),
-	RTT UMETA(DisplayName = "RTT")
+	RTT UMETA(DisplayName = "RTT"),
+	RS UMETA(DisplayName = "RS")
 };
 
 UENUM(BlueprintType)
-enum class eBCRTTConnectionType : uint8
+enum class BCRTTConnectionType : uint8
+{
+	WEBSOCKET UMETA(DisplayName = "WEBSOCKET")
+};
+
+UENUM(BlueprintType)
+enum class BCRelayConnectionType : uint8
 {
 	WEBSOCKET UMETA(DisplayName = "WEBSOCKET"),
-	TCP UMETA(DisplayName = "TCP")
+	TCP UMETA(DisplayName = "TCP"),
+	UDP UMETA(DisplayName = "UDP"),
 };
 
 class BCCLIENTPLUGIN_API BrainCloudClient
@@ -73,24 +86,9 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	/** Public constants */
 	static bool SINGLE_THREADED;
 
-	static bool EnableSoftErrorMode;
-	static bool EnableSingletonMode;
-	static const wchar_t SINGLETON_USE_ERROR_MESSAGE[123];
-
 	BrainCloudClient();
 	//  void BeginDestroy() override;
 	~BrainCloudClient();
-
-	/**
-	 * BrainCloudClient is a singleton object. This method gives the caller access
-	 * to the singleton object in order to use the class.
-	 *
-	 * @return BrainCloudClient * - pointer to the singleton BrainCloudClient object
-	 *
-	 * @deprecated Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the UBrainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/
-	 */
-	DEPRECATED("3.6.5", "Use of the *singleton* has been deprecated. We recommend that you create your own *variable* to hold an instance of the UBrainCloudWrapper. Explanation here: http://getbraincloud.com/apidocs/release-3-6-5/")
-	static BrainCloudClient *getInstance();
 
 	/**
 	* Method initializes the BrainCloudClient.
@@ -152,7 +150,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	*   }
 	*/
 	void registerEventCallback(IEventCallback *eventCallback);
-	void registerEventCallback(UBCBlueprintRestCallProxyBase *eventCallback);	// blueprint support
+	void registerEventCallback(UBCBlueprintRestCallProxyBase *eventCallback); // blueprint support
 
 	/**
 	* Deregisters the event callback
@@ -166,7 +164,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	* @see The brainCloud apidocs site for more information on the return JSON
 	*/
 	void registerRewardCallback(IRewardCallback *rewardCallback);
-	void registerRewardCallback(UBCBlueprintRestCallProxyBase *rewardCallback);	// blueprint support
+	void registerRewardCallback(UBCBlueprintRestCallProxyBase *rewardCallback); // blueprint support
 
 	/**
 	* Deregisters the reward callback
@@ -179,7 +177,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	* @param fileUploadCallback The file upload callback handler.
 	*/
 	void registerFileUploadCallback(IFileUploadCallback *fileUploadCallback);
-	void registerFileUploadCallback(UBCBlueprintRestCallProxyBase *fileUploadCallback);	// blueprint support
+	void registerFileUploadCallback(UBCBlueprintRestCallProxyBase *fileUploadCallback); // blueprint support
 
 	/**
 	* Deregisters the file upload callback
@@ -192,7 +190,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	* @param globalErrorCallback The global error callback handler.
 	*/
 	void registerGlobalErrorCallback(IGlobalErrorCallback *globalErrorCallback);
-	void registerGlobalErrorCallback(UBCBlueprintRestCallProxyBase *globalErrorCallback);	// blueprint support
+	void registerGlobalErrorCallback(UBCBlueprintRestCallProxyBase *globalErrorCallback); // blueprint support
 
 	/**
 	* Registers a callback that is invoked for network errors.
@@ -202,7 +200,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	* @param networkErrorCallback The network error callback handler.
 	*/
 	void registerNetworkErrorCallback(INetworkErrorCallback *networkErrorCallback);
-	void registerNetworkErrorCallback(UBCBlueprintRestCallProxyBase *networkErrorCallback);	// blueprint support
+	void registerNetworkErrorCallback(UBCBlueprintRestCallProxyBase *networkErrorCallback); // blueprint support
 
 	/**
 	* Deregisters the network error callback
@@ -255,110 +253,6 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	*/
 	void resetCommunication();
 
-	/*
-	* Enables Real Time event for this session.
-	* Real Time events are disabled by default. Usually events
-	* need to be polled using GET_EVENTS. By enabling this, events will
-	* be received instantly when they happen through a TCP connection to an Event Server.
-	*
-	* This function will first call requestClientConnection, then connect to the address
-	*/
-	void enableRTT(eBCRTTConnectionType in_type, IServerCallback *in_callback);
-
-	/*
-	* Disables Real Time event for this session.
-	*/
-	void disableRTT();
-
-	/*
-	*Returns true id RTT is enabled
-	*/
-	bool getRTTEnabled();
-
-	/**
-	* 
-	*/
-	void setRTTHeartBeatSeconds(int32 in_value);
-
-	/**
-	* 
-	*/
-	void deregisterAllRTTCallbacks();
-
-	/**
-	* 
-	*/
-	void registerRTTEventCallback(UBCBlueprintRTTCallProxyBase *in_callback);
-
-	/**
-	* 
-	*/
-	void registerRTTEventCallback(IRTTCallback *in_callback);
-
-	/**
-	* 
-	*/
-	void deregisterRTTEventCallback();
-
-	/**
-	* 
-	*/
-	void registerRTTChatCallback(UBCBlueprintRTTCallProxyBase *in_callback);
-
-	/**
-	* 
-	*/
-	void registerRTTChatCallback(IRTTCallback *in_callback);
-
-	/**
-	* 
-	*/
-	void deregisterRTTChatCallback();
-
-	/**
-	* 
-	*/
-	void registerRTTMessagingCallback(UBCBlueprintRTTCallProxyBase *in_callback);
-
-	/**
-	* 
-	*/
-	void registerRTTMessagingCallback(IRTTCallback *in_callback);
-
-	/**
-	* 
-	*/
-	void deregisterRTTMessagingCallback();
-
-	/**
-	* 
-	*/
-	void registerRTTPresenceCallback(UBCBlueprintRTTCallProxyBase *in_callback);
-
-	/**
-	* 
-	*/
-	void registerRTTPresenceCallback(IRTTCallback *in_callback);
-
-	/**
-	* 
-	*/
-	void deregisterRTTPresenceCallback();
-	/**
-	* 
-	*/
-	void registerRTTLobbyCallback(UBCBlueprintRTTCallProxyBase *in_callback);
-
-	/**
-	* 
-	*/
-	void registerRTTLobbyCallback(IRTTCallback *in_callback);
-
-	/**
-	* 
-	*/
-	void deregisterRTTLobbyCallback();
-
 	//Getters
 	BrainCloudAuthentication *getAuthenticationService();
 	BrainCloudLeaderboard *getLeaderboardService();
@@ -372,6 +266,8 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudPlayerStatisticsEvent *getPlayerStatisticsEventService();
 	BrainCloudProduct *getProductService();
 	BrainCloudIdentity *getIdentityService();
+	BrainCloudItemCatalog *getItemCatalogService();
+	BrainCloudUserItems *getUserItemsService();
 	BrainCloudEvent *getEventService();
 	BrainCloudS3Handling *getS3HandlingService();
 	BrainCloudScript *getScriptService();
@@ -389,14 +285,15 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudGroup *getGroupService();
 	BrainCloudMail *getMailService();
 	BrainCloudTournament *getTournamentService();
+	BrainCloudCustomEntity *getCustomEntityService();
 	BrainCloudPresence *getPresenceService();
 	BrainCloudVirtualCurrency *getVirtualCurrencyService();
 	BrainCloudAppStore *getAppStoreService();
-
 	BrainCloudRTT *getRTTService();
 	BrainCloudLobby *getLobbyService();
 	BrainCloudChat *getChatService();
 	BrainCloudMessaging *getMessagingService();
+	BrainCloudRelay *getRelayService();
 
 	/**
 	* @deprecated Use getAppId instead - removal after September 1 2017
@@ -424,7 +321,6 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	const TArray<int32> &getPacketTimeouts();
 
 	BrainCloudComms *getBrainCloudComms() { return _brainCloudComms; }
-	BrainCloudRTTComms *getBrainCloudRTTComms() { return _brainCloudRTTComms; }
 
 	/**
 	* Gets the authentication packet timeout which is tracked separately
@@ -606,12 +502,10 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	void overrideLanguageCode(const FString &languageCode) { _language = languageCode; }
 
   protected:
-
-	void initializeComms(const char* serverUrl, const char* appId, const TMap<FString, FString>& secretMap);
-	static BrainCloudClient *_instance;
-
+	void initializeComms(const char *serverUrl, const char *appId, const TMap<FString, FString> &secretMap);
 	BrainCloudComms *_brainCloudComms = nullptr;
 	BrainCloudRTTComms *_brainCloudRTTComms = nullptr;
+	BrainCloudRelayComms *_brainCloudRelayComms = nullptr;
 
 	BrainCloudAuthentication *_authenticationService = nullptr;
 	BrainCloudLeaderboard *_leaderboardService = nullptr;
@@ -625,6 +519,8 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudPlayerStatisticsEvent *_playerStatisticsEventService = nullptr;
 	BrainCloudProduct *_productService = nullptr;
 	BrainCloudIdentity *_identityService = nullptr;
+	BrainCloudItemCatalog *_itemCatalogService = nullptr;
+	BrainCloudUserItems *_userItemsService = nullptr;
 	BrainCloudEvent *_eventService = nullptr;
 	BrainCloudS3Handling *_s3HandlingService = nullptr;
 	BrainCloudScript *_scriptService = nullptr;
@@ -642,6 +538,7 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudGroup *_groupService = nullptr;
 	BrainCloudMail *_mailService = nullptr;
 	BrainCloudTournament *_tournamentService = nullptr;
+	BrainCloudCustomEntity *_customEntityService = nullptr;
 	BrainCloudPresence *_presenceService = nullptr;
 	BrainCloudVirtualCurrency *_virtualCurrencyService = nullptr;
 	BrainCloudAppStore *_appStoreService = nullptr;
@@ -650,6 +547,8 @@ class BCCLIENTPLUGIN_API BrainCloudClient
 	BrainCloudLobby *_lobbyService = nullptr;
 	BrainCloudChat *_chatService = nullptr;
 	BrainCloudMessaging *_messagingService = nullptr;
+
+	BrainCloudRelay *_relayService = nullptr;
 
 	static FString s_brainCloudClientVersion;
 

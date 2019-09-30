@@ -2,16 +2,22 @@
 
 #pragma once
 
-#include "ServiceName.h"
 #include "IServerCallback.h"
 
 #if PLATFORM_UWP
 #elif PLATFORM_HTML5
 #else
-#include "libwebsockets.h"
-struct lws_context;
+ #define UI UI_ST
+ THIRD_PARTY_INCLUDES_START
+ #include "libwebsockets.h"
+ THIRD_PARTY_INCLUDES_END
+ #undef UI
 #endif
 
+enum class BCRTTConnectionType : uint8;
+class IRTTCallback;
+class ServiceOperation;
+class ServiceName;
 class INetworkErrorCallback;
 class ServerCall;
 class BCFileUploader;
@@ -20,6 +26,7 @@ class FJsonObject;
 class UWebSocketBase;
 class UBCRTTCommsProxy;
 class UBCBlueprintRTTCallProxyBase;
+class UBCRTTProxy;
 
 class BrainCloudRTTComms : public IServerCallback
 {
@@ -27,13 +34,14 @@ class BrainCloudRTTComms : public IServerCallback
 	BrainCloudRTTComms(BrainCloudClient *client);
 	~BrainCloudRTTComms();
 
-	void enableRTT(eBCRTTConnectionType in_connectionType, IServerCallback *callback);
+	void enableRTT(BCRTTConnectionType in_connectionType, IServerCallback *callback);
+	void enableRTT(BCRTTConnectionType in_connectionType, UBCRTTProxy *callback);
 	void disableRTT();
 	bool isRTTEnabled();
 	void RunCallbacks();
 
-	void registerRTTCallback(ServiceName in_serviceName, UBCBlueprintRTTCallProxyBase *callback);
 	void registerRTTCallback(ServiceName in_serviceName, IRTTCallback *callback);
+	void registerRTTCallback(ServiceName in_serviceName, UBCBlueprintRTTCallProxyBase *callback);
 	void deregisterRTTCallback(ServiceName in_serviceName);
 	void deregisterAllRTTCallbacks();
 
@@ -51,17 +59,16 @@ class BrainCloudRTTComms : public IServerCallback
 
 	void webSocket_OnClose();
 	void websocket_OnOpen();
-	void webSocket_OnMessage(const FString &in_data);
+	void webSocket_OnMessage(TArray<uint8> in_data);
 	void webSocket_OnError(const FString &in_error);
 
   private:
 	void connectWebSocket();
 	void disconnect();
-	void connect();
 
 	FString buildConnectionRequest();
 	FString buildHeartbeatRequest();
-	bool send(const FString &in_message);
+	bool send(const FString &in_message, bool in_allowLogging = true);
 
 	void startReceivingWebSocket();
 
@@ -72,6 +79,9 @@ class BrainCloudRTTComms : public IServerCallback
 
 	void setEndpointFromType(TArray<TSharedPtr<FJsonValue>> in_endpoints, FString in_socketType);
 	void onRecv(const FString &in_message);
+
+	FString buildRTTRequestError(FString in_statusMessage);
+	
 	// IServerCallback
 	void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, const FString &jsonData);
 	void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString &jsonError);
@@ -79,6 +89,7 @@ class BrainCloudRTTComms : public IServerCallback
 	// private vars
 	BrainCloudClient *m_client = nullptr;
 	IServerCallback *m_appCallback;
+	UBCRTTProxy *m_appCallbackBP;
 
 	TMap<FString, IRTTCallback *> m_registeredRTTCallbacks;
 	TMap<FString, UBCBlueprintRTTCallProxyBase *> m_registeredRTTBluePrintCallbacks;
@@ -97,8 +108,10 @@ class BrainCloudRTTComms : public IServerCallback
 	float m_timeSinceLastRequest;
 	float m_lastNowMS;
 
-	eBCRTTConnectionType m_connectionType;
+	BCRTTConnectionType m_connectionType;
 	bool m_bIsConnected;
 
 	struct lws_context *m_lwsContext;
+
+	FString BCBytesToString(const uint8* in, int32 count);
 };

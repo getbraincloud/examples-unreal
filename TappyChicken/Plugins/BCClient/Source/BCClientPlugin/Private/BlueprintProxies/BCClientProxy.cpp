@@ -5,20 +5,11 @@
 #include "ServerCall.h"
 #include "BrainCloudWrapper.h"
 #include "BCClientProxy.h"
+#include "BCWrapperProxy.h"
 
 UBCClientProxy::UBCClientProxy(const FObjectInitializer &ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-}
-
-void UBCClientProxy::SoftErrorHandlingMode(const bool isEnabled)
-{
-	BrainCloudClient::EnableSoftErrorMode = isEnabled;
-}
-
-void UBCClientProxy::SingletonMode(const bool isEnabled)
-{
-	BrainCloudClient::EnableSingletonMode = isEnabled;
 }
 
 void UBCClientProxy::Initialize(
@@ -69,28 +60,6 @@ bool UBCClientProxy::IsInitialized(UBrainCloudWrapper *brainCloudWrapper)
 void UBCClientProxy::ResetCommunication(UBrainCloudWrapper *brainCloudWrapper)
 {
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getBCClient()->resetCommunication();
-}
-
-UBCClientProxy *UBCClientProxy::EnableRTT(UBrainCloudWrapper *brainCloudWrapper, eBCRTTConnectionType in_type)
-{
-	UBCClientProxy *Proxy = NewObject<UBCClientProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getBCClient()->enableRTT(in_type, Proxy);
-	return Proxy;
-}
-
-void UBCClientProxy::DisableRTT(UBrainCloudWrapper *brainCloudWrapper)
-{
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getBCClient()->disableRTT();
-}
-
-void UBCClientProxy::SetRTTHeartBeatSeconds(UBrainCloudWrapper *brainCloudWrapper, int32 in_value)
-{
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getBCClient()->setRTTHeartBeatSeconds(in_value);
-}
-
-void UBCClientProxy::DeregisterAllRTTCallbacks(UBrainCloudWrapper *brainCloudWrapper)
-{
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getBCClient()->deregisterAllRTTCallbacks();
 }
 
 void UBCClientProxy::Heartbeat(UBrainCloudWrapper *brainCloudWrapper)

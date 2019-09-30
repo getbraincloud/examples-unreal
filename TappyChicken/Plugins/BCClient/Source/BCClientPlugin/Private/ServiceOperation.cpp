@@ -28,6 +28,8 @@ const ServiceOperation ServiceOperation::DetachParent = ServiceOperation(TEXT("D
 const ServiceOperation ServiceOperation::AttachPeerProfile = ServiceOperation(TEXT("ATTACH_PEER_PROFILE"));
 const ServiceOperation ServiceOperation::DetachPeer = ServiceOperation(TEXT("DETACH_PEER"));
 const ServiceOperation ServiceOperation::GetPeerProfiles = ServiceOperation(TEXT("GET_PEER_PROFILES"));
+const ServiceOperation ServiceOperation::AttachNonLoginUniversalId = ServiceOperation(TEXT("ATTACH_NONLOGIN_UNIVERSAL"));
+const ServiceOperation ServiceOperation::UpdateUniversalIdLogin = ServiceOperation(TEXT("UPDATE_UNIVERSAL_LOGIN"));
 
 const ServiceOperation ServiceOperation::Create = ServiceOperation(TEXT("CREATE"));
 const ServiceOperation ServiceOperation::CreateWithIndexedId = ServiceOperation(TEXT("CREATE_WITH_INDEXED_ID"));
@@ -62,6 +64,7 @@ const ServiceOperation ServiceOperation::TriggerGrantExperience = ServiceOperati
 
 const ServiceOperation ServiceOperation::FullReset = ServiceOperation(TEXT("FULL_PLAYER_RESET"));
 const ServiceOperation ServiceOperation::DataReset = ServiceOperation(TEXT("GAME_DATA_RESET"));
+const ServiceOperation ServiceOperation::SubmitCrashReport = ServiceOperation(TEXT("SEND_CRASH_REPORT"));
 
 const ServiceOperation ServiceOperation::Update = ServiceOperation(TEXT("UPDATE"));
 const ServiceOperation ServiceOperation::UpdatePartial = ServiceOperation(TEXT("UPDATE_PARTIAL"));
@@ -75,6 +78,7 @@ const ServiceOperation ServiceOperation::UpdateSummary = ServiceOperation(TEXT("
 const ServiceOperation ServiceOperation::UpdateSetMinimum = ServiceOperation(TEXT("UPDATE_SET_MINIMUM"));
 const ServiceOperation ServiceOperation::UpdateIncrementToMaximum = ServiceOperation(TEXT("UPDATE_INCREMENT_TO_MAXIMUM"));
 const ServiceOperation ServiceOperation::ProcessStatistics = ServiceOperation(TEXT("PROCESS_STATISTICS"));
+const ServiceOperation ServiceOperation::UpdateEntityIndexedId = ServiceOperation(TEXT("UPDATE_INDEXED_ID"));
 const ServiceOperation ServiceOperation::UpdateEntityOwnerAndAcl = ServiceOperation(TEXT("UPDATE_ENTITY_OWNER_AND_ACL"));
 const ServiceOperation ServiceOperation::MakeSystemEntity = ServiceOperation(TEXT("MAKE_SYSTEM_ENTITY"));
 
@@ -119,6 +123,9 @@ const ServiceOperation ServiceOperation::GetGlobalLeaderboardEntryCount = Servic
 const ServiceOperation ServiceOperation::RemovePlayerScore = ServiceOperation(TEXT("REMOVE_PLAYER_SCORE"));
 const ServiceOperation ServiceOperation::GetPlayerScore = ServiceOperation(TEXT("GET_PLAYER_SCORE"));
 const ServiceOperation ServiceOperation::GetPlayerScoresFromLeaderboards = ServiceOperation(TEXT("GET_PLAYER_SCORES_FROM_LEADERBOARDS"));
+const ServiceOperation ServiceOperation::PostScoreToGroupLeaderboard = ServiceOperation(TEXT("POST_GROUP_SCORE"));
+const ServiceOperation ServiceOperation::RemoveGroupScore = ServiceOperation(TEXT("REMOVE_GROUP_SCORE"));
+const ServiceOperation ServiceOperation::GetGroupLeaderboardView = ServiceOperation(TEXT("GET_GROUP_LEADERBOARD_VIEW"));
 
 const ServiceOperation ServiceOperation::InitThirdParty = ServiceOperation(TEXT("initThirdParty"));
 const ServiceOperation ServiceOperation::PostThirdPartyLeaderboardScore = ServiceOperation(TEXT("postThirdPartyLeaderboardScore"));
@@ -241,12 +248,22 @@ const ServiceOperation ServiceOperation::IncrementUserEntityData = ServiceOperat
 const ServiceOperation ServiceOperation::IncrementSharedUserEntityData = ServiceOperation(TEXT("INCREMENT_SHARED_USER_ENTITY_DATA"));
 const ServiceOperation ServiceOperation::IncrementGlobalEntityData = ServiceOperation(TEXT("INCREMENT_GLOBAL_ENTITY_DATA"));
 const ServiceOperation ServiceOperation::GetRandomEntitiesMatching = ServiceOperation(TEXT("GET_RANDOM_ENTITIES_MATCHING"));
+const ServiceOperation ServiceOperation::AbandonMatchWithSummaryData = ServiceOperation(TEXT("ABANDON_MATCH_WITH_SUMMARY_DATA"));
+const ServiceOperation ServiceOperation::CompleteMatchWithSummaryData = ServiceOperation(TEXT("COMPLETE_MATCH_WITH_SUMMARY_DATA"));
+
+const ServiceOperation ServiceOperation::AttachBlockchainIdentity = ServiceOperation(TEXT("ATTACH_BLOCKCHAIN_IDENTITY"));
+const ServiceOperation ServiceOperation::DetachBlockchainIdentity = ServiceOperation(TEXT("DETACH_BLOCKCHAIN_IDENTITY")); 
+const ServiceOperation ServiceOperation::RemoveUserItemFromBlockchain = ServiceOperation(TEXT("REMOVE_USER_ITEM_FROM_BLOCKCHAIN"));
 
 const ServiceOperation ServiceOperation::GetAttributes = ServiceOperation(TEXT("GET_ATTRIBUTES"));
 const ServiceOperation ServiceOperation::UpdateAttributes = ServiceOperation(TEXT("UPDATE_ATTRIBUTES"));
 const ServiceOperation ServiceOperation::RemoveAttributes = ServiceOperation(TEXT("REMOVE_ATTRIBUTES"));
 const ServiceOperation ServiceOperation::UpdatePlayerPicture = ServiceOperation(TEXT("UPDATE_PICTURE_URL"));
 const ServiceOperation ServiceOperation::UpdateContactEmail = ServiceOperation(TEXT("UPDATE_CONTACT_EMAIL"));
+const ServiceOperation ServiceOperation::ClearUserStatus = ServiceOperation(TEXT("CLEAR_USER_STATUS"));
+const ServiceOperation ServiceOperation::ExtendUserStatus = ServiceOperation(TEXT("EXTEND_USER_STATUS"));
+const ServiceOperation ServiceOperation::GetUserStatus = ServiceOperation(TEXT("GET_USER_STATUS"));
+const ServiceOperation ServiceOperation::SetUserStatus = ServiceOperation(TEXT("SET_USER_STATUS"));
 
 const ServiceOperation ServiceOperation::ReadProperties = ServiceOperation(TEXT("READ_PROPERTIES"));
 
@@ -311,6 +328,8 @@ const ServiceOperation ServiceOperation::UpdateGroupEntity = ServiceOperation(TE
 const ServiceOperation ServiceOperation::UpdateGroupMember = ServiceOperation(TEXT("UPDATE_GROUP_MEMBER"));
 const ServiceOperation ServiceOperation::UpdateGroupName = ServiceOperation(TEXT("UPDATE_GROUP_NAME"));
 const ServiceOperation ServiceOperation::SetGroupOpen = ServiceOperation(TEXT("SET_GROUP_OPEN"));
+const ServiceOperation ServiceOperation::UpdateGroupSummaryData = ServiceOperation(TEXT("UPDATE_GROUP_SUMMARY_DATA"));
+const ServiceOperation ServiceOperation::GetRandomGroupsMatching = ServiceOperation(TEXT("GET_RANDOM_GROUPS_MATCHING"));
 
 //mail
 const ServiceOperation ServiceOperation::SendBasicEmail = ServiceOperation(TEXT("SEND_BASIC_EMAIL"));
@@ -338,6 +357,7 @@ const ServiceOperation ServiceOperation::JoinDivision = ServiceOperation(TEXT("J
 const ServiceOperation ServiceOperation::LeaveTournament = ServiceOperation(TEXT("LEAVE_TOURNAMENT"));
 const ServiceOperation ServiceOperation::LeaveDivisionInstance = ServiceOperation(TEXT("LEAVE_DIVISION_INSTANCE"));
 const ServiceOperation ServiceOperation::PostTournamentScore = ServiceOperation(TEXT("POST_TOURNAMENT_SCORE"));
+const ServiceOperation ServiceOperation::PostTournamentScoreWithResults = ServiceOperation(TEXT("POST_TOURNAMENT_SCORE_WITH_RESULTS"));
 const ServiceOperation ServiceOperation::ViewCurrentReward = ServiceOperation(TEXT("VIEW_CURRENT_REWARD"));
 const ServiceOperation ServiceOperation::ViewReward = ServiceOperation(TEXT("VIEW_REWARD"));
 const ServiceOperation ServiceOperation::ClaimTournamentReward = ServiceOperation(TEXT("CLAIM_TOURNAMENT_REWARD"));
@@ -386,16 +406,53 @@ const ServiceOperation ServiceOperation::SendMessageSimple = ServiceOperation("S
 
 // lobby
 const ServiceOperation ServiceOperation::FindLobby = ServiceOperation("FIND_LOBBY");
+const ServiceOperation ServiceOperation::FindLobbyWithPingData = ServiceOperation("FIND_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::CreateLobby = ServiceOperation("CREATE_LOBBY");
+const ServiceOperation ServiceOperation::CreateLobbyWithPingData = ServiceOperation("CREATE_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::FindOrCreateLobby = ServiceOperation("FIND_OR_CREATE_LOBBY");
+const ServiceOperation ServiceOperation::FindOrCreateLobbyWithPingData = ServiceOperation("FIND_OR_CREATE_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::GetLobbyData = ServiceOperation("GET_LOBBY_DATA");
 const ServiceOperation ServiceOperation::UpdateReady = ServiceOperation("UPDATE_READY");
-const ServiceOperation ServiceOperation::UpdateLobbyConfig = ServiceOperation("UPDATE_SETTINGS");
+const ServiceOperation ServiceOperation::UpdateSettings = ServiceOperation("UPDATE_SETTINGS");
 const ServiceOperation ServiceOperation::SwitchTeam = ServiceOperation("SWITCH_TEAM");
 const ServiceOperation ServiceOperation::SendSignal = ServiceOperation("SEND_SIGNAL");
 const ServiceOperation ServiceOperation::JoinLobby = ServiceOperation("JOIN_LOBBY");
+const ServiceOperation ServiceOperation::JoinLobbyWithPingData = ServiceOperation("JOIN_LOBBY_WITH_PING_DATA");
 const ServiceOperation ServiceOperation::LeaveLobby = ServiceOperation("LEAVE_LOBBY");
 const ServiceOperation ServiceOperation::RemoveMember = ServiceOperation("REMOVE_MEMBER");
+const ServiceOperation ServiceOperation::CancelFindRequest = ServiceOperation("CANCEL_FIND_REQUEST");
+const ServiceOperation ServiceOperation::GetRegionsForLobbies = ServiceOperation("GET_REGIONS_FOR_LOBBIES");
+const ServiceOperation ServiceOperation::PingData = ServiceOperation("PING_DATA");	// not an official API, but need it for proper calback
+
+// user inventory management
+const ServiceOperation ServiceOperation::AwardUserItem = ServiceOperation("AWARD_USER_ITEM");
+const ServiceOperation ServiceOperation::DropUserItem = ServiceOperation("DROP_USER_ITEM");
+const ServiceOperation ServiceOperation::GetUserItemsPage = ServiceOperation("GET_USER_ITEMS_PAGE");
+const ServiceOperation ServiceOperation::GetUserItemsPageOffset = ServiceOperation("GET_USER_ITEMS_PAGE_OFFSET");
+const ServiceOperation ServiceOperation::GetUserItem = ServiceOperation("GET_USER_ITEM");
+const ServiceOperation ServiceOperation::GiveUserItemTo = ServiceOperation("GIVE_USER_ITEM_TO");
+const ServiceOperation ServiceOperation::PurchaseUserItem = ServiceOperation("PURCHASE_USER_ITEM");
+const ServiceOperation ServiceOperation::ReceiveUserItemFrom = ServiceOperation("RECEIVE_USER_ITEM_FROM");
+const ServiceOperation ServiceOperation::SellUserItem = ServiceOperation("SELL_USER_ITEM");
+const ServiceOperation ServiceOperation::UpdateUserItemData = ServiceOperation("UPDATE_USER_ITEM_DATA");
+const ServiceOperation ServiceOperation::UseUserItem = ServiceOperation("USE_USER_ITEM");
+const ServiceOperation ServiceOperation::PublishUserItemToBlackchain = ServiceOperation("PUBLISH_USER_ITEM_TO_BLOCKCHAIN");
+const ServiceOperation ServiceOperation::RefreshBlockchainUserItems = ServiceOperation("REFRESH_BLOCKCHAIN_USER_ITEMS");
+
+//item catalog
+const ServiceOperation ServiceOperation::GetCatalogItemDefinition = ServiceOperation("GET_CATALOG_ITEM_DEFINITION");
+const ServiceOperation ServiceOperation::GetCatalogItemsPage = ServiceOperation("GET_CATALOG_ITEMS_PAGE");
+const ServiceOperation ServiceOperation::GetCatalogItemsPageOffset = ServiceOperation("GET_CATALOG_ITEMS_PAGE_OFFSET");
+
+//custom entities
+const ServiceOperation ServiceOperation::CreateEntity = ServiceOperation("CREATE_ENTITY");
+const ServiceOperation ServiceOperation::DeleteEntity = ServiceOperation("DELETE_ENTITY");
+const ServiceOperation ServiceOperation::GetCount = ServiceOperation("GET_COUNT");
+const ServiceOperation ServiceOperation::CustomEntityGetPage = ServiceOperation("GET_PAGE");
+const ServiceOperation ServiceOperation::CustomEntityGetPageOffset = ServiceOperation("GET_PAGE_BY_OFFSET");
+const ServiceOperation ServiceOperation::ReadEntity = ServiceOperation("READ_ENTITY");
+const ServiceOperation ServiceOperation::UpdateEntity = ServiceOperation("UPDATE_ENTITY");
+const ServiceOperation ServiceOperation::UpdateEntityFields = ServiceOperation("UPDATE_ENTITY_FIELDS");
 
 bool ServiceOperation::operator==(const ServiceOperation &s) const
 {

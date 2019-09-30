@@ -3,7 +3,7 @@
 #include "BCClientPluginPrivatePCH.h"
 #include "ServiceName.h"
 
-ServiceName::ServiceName(const FString& name)
+ServiceName::ServiceName(const FString &name)
 {
     _value = name;
 }
@@ -12,6 +12,8 @@ const ServiceName ServiceName::None = ServiceName("None");
 
 const ServiceName ServiceName::AuthenticateV2 = ServiceName("authenticationV2");
 const ServiceName ServiceName::Identity = ServiceName("identity");
+const ServiceName ServiceName::ItemCatalog = ServiceName("itemCatalog");
+const ServiceName ServiceName::UserItems = ServiceName("userItems");
 const ServiceName ServiceName::Currency = ServiceName("currency");
 const ServiceName ServiceName::FriendData = ServiceName("friendData");
 const ServiceName ServiceName::HeartBeat = ServiceName("heartbeat");
@@ -29,8 +31,9 @@ const ServiceName ServiceName::GlobalEntity = ServiceName("globalEntity");
 const ServiceName ServiceName::Friend = ServiceName("friend");
 const ServiceName ServiceName::Time = ServiceName("time");
 const ServiceName ServiceName::Tournament = ServiceName("tournament");
+const ServiceName ServiceName::CustomEntity = ServiceName("customEntity");
 const ServiceName ServiceName::VirtualCurrency = ServiceName("virtualCurrency");
-const ServiceName ServiceName::AppStore = ServiceName("appStore");                       
+const ServiceName ServiceName::AppStore = ServiceName("appStore");
 
 const ServiceName ServiceName::Leaderboard = ServiceName("leaderboard");
 const ServiceName ServiceName::Event = ServiceName("event");
@@ -61,12 +64,20 @@ const ServiceName ServiceName::Chat = ServiceName("chat");
 const ServiceName ServiceName::Messaging = ServiceName("messaging");
 const ServiceName ServiceName::Lobby = ServiceName("lobby");
 
-bool ServiceName::operator== (const ServiceName& s) const
+// Relay
+const ServiceName ServiceName::Relay = ServiceName("relay");
+
+bool ServiceName::operator==(const ServiceName &s) const
 {
     return _value == s.getValue();
 }
 
-void ServiceName::operator= (const ServiceName& s)
+bool ServiceName::operator!=(const ServiceName &s) const
+{
+    return _value != s.getValue();
+}
+
+void ServiceName::operator=(const ServiceName &s)
 {
     _value = s.getValue();
 }

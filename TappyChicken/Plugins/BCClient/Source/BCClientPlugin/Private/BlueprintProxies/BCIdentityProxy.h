@@ -15,6 +15,31 @@ class UBCIdentityProxy : public UBCBlueprintCallProxyBase
 	UBCIdentityProxy(const FObjectInitializer &ObjectInitializer);
 
 	/*
+	 * Attaches the given block chain public key identity to the current profile.
+	 *
+	 * Service Name - Identity
+	 * Service Operation - AttachBlockchainIdentity
+	 *
+	 * @param blockchainConfig The block chains configuration
+	 * @param publicKey The key associated with the config
+	 * @param callback The method to be invoked when the server response is received
+	 */
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Identity")
+	static UBCIdentityProxy *AttachBlockchainIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &blockchainConfig, const FString &publicKey);
+	
+	/*
+	 * Detach the Facebook identity from this profile.
+	 *
+	 * Service Name - Identity
+	 * Service Operation - DetachBlockchainIdentity
+	 *
+	 * @param blockchainId The facebook id of the user
+	 * @param callback The method to be invoked when the server response is received
+	 */
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Identity")
+	static UBCIdentityProxy *DetachBlockchainIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &blockchainId);
+
+	/*
 	* Attach the user's Facebook credentials to the current profile.
 	*
 	* Service Name - identity
@@ -550,4 +575,28 @@ class UBCIdentityProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Identity")
 	static UBCIdentityProxy *GetPeerProfiles(UBrainCloudWrapper *brainCloud);
+
+	/**
+	* Attachs universal id to current profile with no login
+	*
+	* Service Name - identity
+	* Service Operation - ATTACH_NON_LOGIN_UNIVERSAL_ID
+	*
+	* @param externalId the id connected with 
+	* @param callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Identity")
+	static UBCIdentityProxy *AttachNonLoginUniversalId(UBrainCloudWrapper *brainCloudWrapper, const FString &externalId);
+
+	/**
+	* update universal id of current profile
+	*
+	* Service Name - identity
+	* Service Operation - UPDATE_UNIVERSAL_ID_LOGIN
+	*
+	* @param externalId the id connected with 
+	* @param callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Identity")
+	static UBCIdentityProxy *UpdateUniversalIdLogin(UBrainCloudWrapper *brainCloudWrapper, const FString &externalId);
 };

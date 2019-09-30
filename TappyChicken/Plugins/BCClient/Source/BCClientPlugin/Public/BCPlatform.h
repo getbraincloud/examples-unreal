@@ -9,7 +9,7 @@ enum class EBCPlatform : uint8
     BLACKBERRY UMETA(DisplayName = "BlackBerry"),
     FACEBOOK UMETA(DisplayName = "Facebook"),
     IOS UMETA(DisplayName = "iOS"),
-    LINUX UMETA(DisplayName = "Linux"),
+    LINUX_PLATFORM UMETA(DisplayName = "Linux"),
     MAC UMETA(DisplayName = "Mac"),
     WEB UMETA(DisplayName = "Web"),
     WINDOWS UMETA(DisplayName = "Windows"),
@@ -28,8 +28,9 @@ enum class EBCPlatform : uint8
 
 class BCCLIENTPLUGIN_API BCPlatform
 {
-public:
+  public:
     static FString EnumToString(EBCPlatform platform);
-private:
-    BCPlatform() {};
+
+  private:
+    BCPlatform(){};
 };
