@@ -15,8 +15,6 @@
 #include "SmartSwitchAuthenticateCallback.h"
 #include "BrainCloudComms.h"
 
-UBrainCloudWrapper *UBrainCloudWrapper::_instance = nullptr;
-
 UBrainCloudWrapper::UBrainCloudWrapper()
 {
     _client = new BrainCloudClient();
@@ -43,46 +41,24 @@ void UBrainCloudWrapper::BeginDestroy()
         delete _client;
 }
 
-UBrainCloudWrapper *UBrainCloudWrapper::getInstance()
-{
-    if (BrainCloudClient::EnableSingletonMode == false)
-    {
-        if (BrainCloudClient::EnableSoftErrorMode)
-        {
-            UE_LOG(LogTemp, Warning, TEXT("%s"), BrainCloudClient::SINGLETON_USE_ERROR_MESSAGE);
-        }
-        else
-        {
-            UE_LOG(LogTemp, Fatal, TEXT("%s"), BrainCloudClient::SINGLETON_USE_ERROR_MESSAGE);
-        }
-    }
-
-    if (_instance == nullptr)
-    {
-        _instance = NewObject<UBrainCloudWrapper>();
-    }
-    return _instance;
-}
-
 void UBrainCloudWrapper::initialize(FString url, FString secretKey, FString appId, FString appVersion)
 {
     // initialize the client with our app info
     _client->initialize(url, secretKey, appId, appVersion);
-
     loadData();
 }
 
 void UBrainCloudWrapper::initializeWithApps(FString url, FString appId, TMap<FString, FString> secretMap, FString appVersion, FString company, FString appName)
 {
-    if(_client == nullptr)
+    if (_client == nullptr)
     {
         _client = new BrainCloudClient();
     }
 
     FString defaultSecretKey = "MISSING";
-    if(secretMap.Contains(appId))
+    if (secretMap.Contains(appId))
     {
-            defaultSecretKey = secretMap[appId];
+        defaultSecretKey = secretMap[appId];
     }
 
     _lastUrl = url;
@@ -91,7 +67,7 @@ void UBrainCloudWrapper::initializeWithApps(FString url, FString appId, TMap<FSt
     _lastGameVersion = appVersion;
     _company = company;
     _appName = appName;
-    
+
     // initialize the client with our app info
     _client->initializeWithApps(url, appId, secretMap, appVersion);
 
@@ -106,7 +82,8 @@ void UBrainCloudWrapper::initializeIdentity(bool isAnonymousAuth)
 
     if ((!anonId.IsEmpty() && profileId.IsEmpty()) || anonId.IsEmpty())
     {
-        setStoredAnonymousId(_client->getAuthenticationService()->generateAnonymousId());
+        anonId = _client->getAuthenticationService()->generateAnonymousId();
+        setStoredAnonymousId(anonId);
         setStoredProfileId(TEXT(""));
     }
 
@@ -124,7 +101,12 @@ void UBrainCloudWrapper::reauthenticate()
 {
     // send our saved game info to brainCloud
     // company and game name can be nullptr since they are already set
-    initialize(_client->getBrainCloudComms()->GetServerUrl(), _client->getBrainCloudComms()->GetSecretKey(), _client->getAppId(), _client->getAppVersion());
+    const FString &serverURL = _client->getBrainCloudComms()->GetServerUrl();
+    const FString &secretKey = _client->getBrainCloudComms()->GetSecretKey();
+    const FString &appId = _client->getAppId();
+    const FString &appVersion = _client->getAppVersion();
+
+    initialize(serverURL, secretKey, appId, appVersion);
     authenticateAnonymous();
 }
 
@@ -254,12 +236,12 @@ void UBrainCloudWrapper::getIdentitiesCallback(IServerCallback *success)
     }
 }
 
-void UBrainCloudWrapper::resetEmailPassword(const FString& in_email, IServerCallback * in_callback)
+void UBrainCloudWrapper::resetEmailPassword(const FString &in_email, IServerCallback *in_callback)
 {
     _client->getAuthenticationService()->resetEmailPassword(in_email, in_callback);
 }
 
-void UBrainCloudWrapper::resetEmailPasswordAdvanced(const FString& in_emailAddress, const FString& in_serviceParams, IServerCallback * in_callback)
+void UBrainCloudWrapper::resetEmailPasswordAdvanced(const FString &in_emailAddress, const FString &in_serviceParams, IServerCallback *in_callback)
 {
     _client->getAuthenticationService()->resetEmailPasswordAdvanced(in_emailAddress, in_serviceParams, in_callback);
 }
@@ -318,6 +300,26 @@ void UBrainCloudWrapper::serverError(ServiceName serviceName, ServiceOperation s
     {
         _authenticateCallback->serverError(serviceName, serviceOperation, statusCode, reasonCode, message);
     }
+}
+
+FString UBrainCloudWrapper::buildErrorJson(int32 statusCode, int32 reasonCode, const FString &statusMessage)
+{
+    TSharedRef<FJsonObject> jsonObj = MakeShareable(new FJsonObject());
+	jsonObj->SetNumberField(TEXT("status"), statusCode);
+	jsonObj->SetNumberField(TEXT("reason_code"), reasonCode);
+	jsonObj->SetStringField(TEXT("statusMessage"), statusMessage);
+	jsonObj->SetStringField(TEXT("severity"), TEXT("ERROR"));
+
+    FString errorStr = UBrainCloudWrapper::GetJsonString(jsonObj);
+	return errorStr;
+}
+
+FString UBrainCloudWrapper::GetJsonString(TSharedRef<FJsonObject> jsonDataObject)
+{
+	FString jsonStr;
+	TSharedRef<TJsonWriter<>> writer = TJsonWriterFactory<>::Create(&jsonStr);
+	FJsonSerializer::Serialize(jsonDataObject, writer);
+	return jsonStr;
 }
 
 void UBrainCloudWrapper::loadData()

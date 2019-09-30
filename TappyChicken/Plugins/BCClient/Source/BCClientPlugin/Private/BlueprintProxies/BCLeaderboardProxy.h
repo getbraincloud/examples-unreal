@@ -57,8 +57,8 @@ class UBCLeaderboardProxy : public UBCBlueprintCallProxyBase
 	* Param - versionId the version
 	* by the string "You".
 	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard") 
-	static UBCLeaderboardProxy *GetSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, FString leaderboardId, bool replaceName, int32 versionId); 
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *GetSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, FString leaderboardId, bool replaceName, int32 versionId);
 
 	/**
 	* Reads multiple social leaderboards.
@@ -249,9 +249,9 @@ class UBCLeaderboardProxy : public UBCBlueprintCallProxyBase
 	* Param - groupId The ID of the group
 	* Param - versionId the version
 	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard") 
-	static UBCLeaderboardProxy *GetGroupSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, int32 versionId); 
-	
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *GetGroupSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, int32 versionId);
+
 	/**
 	* Retrieve the social leaderboard for a list of players.
 	*
@@ -268,8 +268,8 @@ class UBCLeaderboardProxy : public UBCBlueprintCallProxyBase
 	* Param - profileIds The IDs of the players
 	* Param - versionId the version
 	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard") 
-	static UBCLeaderboardProxy *GetPlayersSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const TArray<FString> profileIds, int32 versionId); 
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *GetPlayersSocialLeaderboardByVersion(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const TArray<FString> profileIds, int32 versionId);
 
 	/**
 	* Retrieve a list of all leaderboards
@@ -301,5 +301,68 @@ class UBCLeaderboardProxy : public UBCBlueprintCallProxyBase
 	* @Param - leaderboardIds A collection of leaderboardIds to retrieve scores from
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
-	static UBCLeaderboardProxy *GetPlayerScoresFromLeaderboards(UBrainCloudWrapper *brainCloud, const TArray<FString> leaderboardIds);
+	static UBCLeaderboardProxy *GetPlayerScoresFromLeaderboards(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> leaderboardIds);
+
+		/**
+	* Posts score to groups leaderboard - Note the user must be a member of the group
+	*
+	* Service Name - leaderboard
+	* Service Operation - POST_GROUP_SCORE
+	*
+	* @param in_leaderboardId A collection of leaderboardIds to retrieve scores from
+	* @param in_groupId the groups Id
+	* @param in_score the score you wish to post
+	* @param in_jsonData extra json Data
+	* @param in_callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *PostScoreToGroupLeaderboard(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, int32 score, const FString &jsonOtherData);
+
+	/**
+	* Removes score from group leaderboard
+	*
+	* Service Name - leaderboard
+	* Service Operation - REMOVE_GROUP_SCORE
+	*
+	* @param in_leaderboardId A collection of leaderboardIds to retrieve scores from
+	* @param in_groupId the groups Id
+	* @param in_versionId the score you wish to post
+	* @param in_callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *RemoveGroupScore(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, int32 score, int32 versionId);
+
+	/**
+	* Retrieve a view of the group leaderboardsurrounding the current group.
+	*
+	* Service Name - leaderboard
+	* Service Operation - GET_GROUP_LEADERBOARD_VIEW
+	*
+	* @param in_leaderboardId A collection of leaderboardIds to retrieve scores from
+	* @param in_groupId the groups Id
+	* @param in_sortOrder the sort order
+	* @param in_beforeCount count of players before current player to include
+	* @param in_afterCount count of players after current player to include
+	* @param in_callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *GetGroupLeaderboardView(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, ESortOrder sortOrder, int32 beforeCount, int32 afterCount);
+
+	/**
+	* Retrieve a view of the group leaderboard surrounding the current group by the version
+	*
+	* Service Name - leaderboard
+	* Service Operation - GET_GROUP_LEADERBOARD_VIEW
+	*
+	* @param in_leaderboardId A collection of leaderboardIds to retrieve scores from
+	* @param in_groupId the groups Id
+	* @param in_versionId the version
+	* @param in_sortOrder the sort order
+	* @param in_beforeCount count of players before current player to include
+	* @param in_afterCount count of players after current player to include
+	* @param in_callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Leaderboard")
+	static UBCLeaderboardProxy *GetGroupLeaderboardViewByVersion(UBrainCloudWrapper *brainCloudWrapper, const FString &leaderboardId, const FString &groupId, int32 versionId, ESortOrder sortOrder, int32 beforeCount, int32 afterCount);
+
 };
