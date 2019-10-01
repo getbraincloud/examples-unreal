@@ -22,14 +22,6 @@
 // Define all static member variables.
 FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.2.0");
 
-bool BrainCloudClient::EnableSoftErrorMode = false;
-bool BrainCloudClient::EnableSingletonMode = false;
-
-const wchar_t BrainCloudClient::SINGLETON_USE_ERROR_MESSAGE[123] = TEXT("Singleton usage is disabled. If called by mistake, use your own variable that holds an instance of the bcWrapper/bcClient.");
-
-BrainCloudClient *BrainCloudClient::_instance = nullptr;
-
-
 ////////////////////////////////////////////////////
 // (De)Constructors
 ////////////////////////////////////////////////////
