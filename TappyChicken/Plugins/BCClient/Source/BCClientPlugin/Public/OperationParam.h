@@ -41,6 +41,8 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam TwitterServiceTweetPic;
 
 	// Authenticate Service - Authenticate Params
+	static const OperationParam AuthenticateServiceAuthenticateUniversalId;
+	static const OperationParam AuthenticateServiceAuthenticateTokenTtlInMinutes;
 	static const OperationParam AuthenticateServiceAuthenticateAuthenticationType;
 	static const OperationParam AuthenticateServiceAuthenticateAuthenticationToken;
 	static const OperationParam AuthenticateServiceAuthenticateExternalId;
@@ -206,6 +208,8 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam PlayerStateServiceAdditionalSecs;
 	static const OperationParam PlayerStateServiceDetails;
 	static const OperationParam PlayerStateServiceDurationSecs;
+	static const OperationParam PlayerStateServiceTimeZoneOffset;
+	static const OperationParam PlayerStateServiceLanguageCode;
 
 	// Player Statistics Service - Update Increment Params
 	static const OperationParam PlayerStatisticsServiceStats;
@@ -387,6 +391,7 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam GroupAttributes;
 	static const OperationParam GroupName;
 	static const OperationParam GroupType;
+	static const OperationParam GroupTypes;
 	static const OperationParam GroupIsOpenGroup;
 	static const OperationParam GroupAcl;
 	static const OperationParam GroupData;

@@ -13,6 +13,12 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation Detach;
 	static const ServiceOperation ResetEmailPassword;
 	static const ServiceOperation ResetEmailPasswordAdvanced;
+	static const ServiceOperation ResetEmailPasswordWithExpiry;
+	static const ServiceOperation ResetEmailPasswordAdvancedWithExpiry;
+	static const ServiceOperation ResetUniversalIdPassword;
+	static const ServiceOperation ResetUniversalIdPasswordAdvanced;
+	static const ServiceOperation ResetUniversalIdPasswordWithExpiry;
+	static const ServiceOperation ResetUniversalIdPasswordAdvancedWithExpiry;
 	static const ServiceOperation SwitchToChildProfile;
 	static const ServiceOperation SwitchToParentProfile;
 	static const ServiceOperation GetChildProfiles;
@@ -85,6 +91,11 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation DetachBlockchainIdentity;
 	static const ServiceOperation RemoveUserItemFromBlockchain;
 
+	static const ServiceOperation UpdateTimeZoneOffset;
+	static const ServiceOperation UpdateLanguageCode;
+	static const ServiceOperation GetScheduledCloudSripts;
+	static const ServiceOperation GetRunningOrQueuedCloudScripts;
+
 	static const ServiceOperation GetFriendProfileInfoForExternalId;
 	static const ServiceOperation GetProfileInfoForCredential;
 	static const ServiceOperation GetProfileInfoForExternalAuthId;
@@ -128,6 +139,7 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetPlayerScore;
 	static const ServiceOperation GetPlayerScoresFromLeaderboards;
 	static const ServiceOperation PostScoreToGroupLeaderboard;
+	static const ServiceOperation PostScoreToDynamicGroupLeaderboard;
 	static const ServiceOperation RemoveGroupScore;
 	static const ServiceOperation GetGroupLeaderboardView;
 
@@ -249,6 +261,8 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetListCount;
 	static const ServiceOperation CustomEntityGetPage;
 	static const ServiceOperation CustomEntityGetPageOffset;
+	static const ServiceOperation CustomEntityGetEntityPage;
+	static const ServiceOperation CustomEntityGetEntityPageOffset;
 	static const ServiceOperation IncrementUserEntityData;
 	static const ServiceOperation IncrementSharedUserEntityData;
 	static const ServiceOperation IncrementGlobalEntityData;
@@ -298,6 +312,7 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation AddGroupMember;
 	static const ServiceOperation ApproveGroupJoinRequest;
 	static const ServiceOperation AutoJoinGroup;
+	static const ServiceOperation AutoJoinGroupMulti;
 	static const ServiceOperation CancelGroupInvitation;
 	static const ServiceOperation CreateGroup;
 	static const ServiceOperation CreateGroupEntity;
@@ -355,6 +370,8 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetCount;
 	static const ServiceOperation GetPage;
 	static const ServiceOperation GetPageOffset;
+	static const ServiceOperation GetEntityPage;
+	static const ServiceOperation GetEntityPageOffset;
 	static const ServiceOperation ReadEntity;
 	static const ServiceOperation UpdateEntity;
 	static const ServiceOperation UpdateEntityFields;
