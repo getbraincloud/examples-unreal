@@ -1,12 +1,12 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCScriptProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
 #include "BrainCloudWrapper.h"
-#include "BCScriptProxy.h"
 
 UBCScriptProxy::UBCScriptProxy(const FObjectInitializer &ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -24,6 +24,13 @@ UBCScriptProxy *UBCScriptProxy::ScheduleRunScriptUTC(UBrainCloudWrapper *brainCl
 {
 	UBCScriptProxy *Proxy = NewObject<UBCScriptProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getScriptService()->scheduleRunScriptUTC(scriptName, jsonScriptData, startDateInUTC, Proxy);
+	return Proxy;
+}
+
+UBCScriptProxy *UBCScriptProxy::ScheduleRunScriptMillisUTC(UBrainCloudWrapper *brainCloudWrapper, FString scriptName, FString jsonScriptData, int64 startDateInUTC)
+{
+	UBCScriptProxy *Proxy = NewObject<UBCScriptProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getScriptService()->scheduleRunScriptMillisUTC(scriptName, jsonScriptData, startDateInUTC, Proxy);
 	return Proxy;
 }
 
@@ -59,5 +66,19 @@ UBCScriptProxy *UBCScriptProxy::RunPeerScriptAsync(UBrainCloudWrapper *brainClou
 {
 	UBCScriptProxy *Proxy = NewObject<UBCScriptProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getScriptService()->runPeerScriptAsync(scriptName, jsonScriptData, peer, Proxy);
+	return Proxy;
+}
+
+UBCScriptProxy *UBCScriptProxy::GetRunningOrQueuedCloudScripts(UBrainCloudWrapper *brainCloudWrapper)
+{
+	UBCScriptProxy *Proxy = NewObject<UBCScriptProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getScriptService()->getRunningOrQueuedCloudScripts(Proxy);
+	return Proxy;
+}
+
+UBCScriptProxy *UBCScriptProxy::GetScheduledCloudScripts(UBrainCloudWrapper *brainCloudWrapper, FDateTime startDateInUTC)
+{
+	UBCScriptProxy *Proxy = NewObject<UBCScriptProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getScriptService()->getScheduledCloudScripts(startDateInUTC, Proxy);
 	return Proxy;
 }

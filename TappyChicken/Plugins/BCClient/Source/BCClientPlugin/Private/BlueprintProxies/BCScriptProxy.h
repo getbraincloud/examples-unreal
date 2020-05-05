@@ -48,6 +48,21 @@ class UBCScriptProxy : public UBCBlueprintCallProxyBase
 	*
 	* Param - scriptName The name of the script to be run
 	* Param - jsonScriptData Data to be sent to the script in json format
+	* Param - startDateInUTC The start date as a time struct
+	* @see The API documentation site for more details on cloud code
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Cloud Script")
+	static UBCScriptProxy *ScheduleRunScriptMillisUTC(UBrainCloudWrapper *brainCloudWrapper, FString scriptName, FString jsonScriptData, int64 startDateInUTC);
+
+
+	/**
+	* Allows cloud script executions to be scheduled
+	*
+	* Service Name - Script
+	* Service Operation - ScheduleCloudScript
+	*
+	* Param - scriptName The name of the script to be run
+	* Param - jsonScriptData Data to be sent to the script in json format
 	* Param - minutesFromNow Number of minutes from now to run script
 	* @see The API documentation site for more details on cloud code
 	*/
@@ -105,4 +120,26 @@ class UBCScriptProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Cloud Script")
 	static UBCScriptProxy *RunPeerScriptAsync(UBrainCloudWrapper *brainCloudWrapper, const FString &scriptName, const FString &jsonScriptData, const FString &peer);
+
+  	/**
+	* Retrieves scripts currently running or queued.
+	*
+	* Service Name - Script
+	* Service Operation - GET_RUNNING_OR_QUEUED_CLOUD_SCRIPTS
+	*
+	* @param callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Cloud Script")
+	static UBCScriptProxy *GetRunningOrQueuedCloudScripts(UBrainCloudWrapper *brainCloudWrapper);
+
+  	/**
+	* Retrieves scripts scheduled to run up to and including the specified start time (UTC in ms).
+	*
+	* Service Name - Script
+	* Service Operation - GET_SCHEDULED_CLOUD_SCRIPTS
+	* @param startDateUTC 
+	* @param callback The method to be invoked when the server response is received
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Cloud Script")
+	static UBCScriptProxy *GetScheduledCloudScripts(UBrainCloudWrapper *brainCloudWrapper, FDateTime startDateInUTC);
 };

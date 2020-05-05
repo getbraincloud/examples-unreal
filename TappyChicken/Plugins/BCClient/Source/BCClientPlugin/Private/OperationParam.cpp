@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "OperationParam.h"
+#include "BCClientPluginPrivatePCH.h"
 
 OperationParam::OperationParam(const FString &operation)
 {
@@ -42,6 +42,8 @@ const OperationParam OperationParam::TwitterServiceTweetTweet = OperationParam("
 const OperationParam OperationParam::TwitterServiceTweetPic = OperationParam("pic");
 
 // Authenticate Service - Authenticate Params
+const OperationParam OperationParam::AuthenticateServiceAuthenticateUniversalId = OperationParam("universalId");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateTokenTtlInMinutes = OperationParam("tokenTtlInMinutes");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationType = OperationParam("authenticationType");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationToken = OperationParam("authenticationToken");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateExternalId = OperationParam("externalId");
@@ -223,10 +225,12 @@ const OperationParam OperationParam::PlayerStateServiceWipeExisting = OperationP
 const OperationParam OperationParam::PlayerStateServicePictureUrl = OperationParam("playerPictureUrl");
 const OperationParam OperationParam::PlayerStateServiceContactEmail = OperationParam("contactEmail");
 
-const OperationParam OperationParam::PlayerStateServiceStatusName = OperationParam("statusName");;
-const OperationParam OperationParam::PlayerStateServiceAdditionalSecs = OperationParam("additionalSecs");;
-const OperationParam OperationParam::PlayerStateServiceDetails = OperationParam("details");;
-const OperationParam OperationParam::PlayerStateServiceDurationSecs = OperationParam("durationSecs");;
+const OperationParam OperationParam::PlayerStateServiceStatusName = OperationParam("statusName");
+const OperationParam OperationParam::PlayerStateServiceAdditionalSecs = OperationParam("additionalSecs");
+const OperationParam OperationParam::PlayerStateServiceDetails = OperationParam("details");
+const OperationParam OperationParam::PlayerStateServiceDurationSecs = OperationParam("durationSecs");
+const OperationParam OperationParam::PlayerStateServiceTimeZoneOffset = OperationParam("timeZoneOffset");
+const OperationParam OperationParam::PlayerStateServiceLanguageCode = OperationParam("languageCode"); 
 
 // Player Statistics Service - Update Increment Params
 const OperationParam OperationParam::PlayerStatisticsServiceStats = OperationParam("statistics");
@@ -390,6 +394,7 @@ const OperationParam OperationParam::GroupRole = OperationParam("role");
 const OperationParam OperationParam::GroupAttributes = OperationParam("attributes");
 const OperationParam OperationParam::GroupName = OperationParam("name");
 const OperationParam OperationParam::GroupType = OperationParam("groupType");
+const OperationParam OperationParam::GroupTypes = OperationParam("groupTypes");
 const OperationParam OperationParam::GroupIsOpenGroup = OperationParam("isOpenGroup");
 const OperationParam OperationParam::GroupAcl = OperationParam("acl");
 const OperationParam OperationParam::GroupData = OperationParam("data");
@@ -420,6 +425,12 @@ const OperationParam OperationParam::InitialScore = OperationParam("initialScore
 const OperationParam OperationParam::Score = OperationParam("score");
 const OperationParam OperationParam::RoundStartedEpoch = OperationParam("roundStartedEpoch");
 const OperationParam OperationParam::Data = OperationParam("data");
+
+//Global File
+const OperationParam OperationParam::GlobalFileFileName = OperationParam("filename");
+const OperationParam OperationParam::GlobalFileFileId = OperationParam("fileId");
+const OperationParam OperationParam::GlobalFileFolderPath = OperationParam("folderPath");
+const OperationParam OperationParam::GlobalFileRecurse = OperationParam("recurse");
 
 //virtual currency
 const OperationParam OperationParam::VirtualCurrencyVcId = OperationParam("vcId");
