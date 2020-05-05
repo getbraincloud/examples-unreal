@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudComms.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "IServerCallback.h"
 #include "IEventCallback.h"
@@ -45,7 +45,16 @@ void BrainCloudComms::Initialize(const FString &serverURL, const FString &secret
 	_secretMap.Emplace(appId, secretKey);
 
 	_uploadUrl = _serverUrl;
-	_uploadUrl.RemoveFromEnd(TEXT("/dispatcherv2"));
+	FString suffix = "/dispatcherv2";
+	if(_uploadUrl.EndsWith(suffix))
+	{
+		_uploadUrl.RemoveFromEnd(TEXT("/dispatcherv2"));
+	}
+	while(_uploadUrl.Len() > 0 && _uploadUrl.EndsWith("/"))                         
+	{
+		_uploadUrl = _uploadUrl.Mid(0, _uploadUrl.Len() - 1);
+	}
+
 	_uploadUrl += TEXT("/uploader");
 }
 

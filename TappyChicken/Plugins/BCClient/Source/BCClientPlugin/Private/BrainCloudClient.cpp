@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "GameDelegates.h"
 #include "BrainCloudComms.h"
@@ -20,7 +20,7 @@
 #include "BCPlatform.h"
 
 // Define all static member variables.
-FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.2.0");
+FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.4.1");
 
 ////////////////////////////////////////////////////
 // (De)Constructors
@@ -44,6 +44,7 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_brainCloudComms);
 	destroyService(_brainCloudRTTComms);
 	destroyService(_brainCloudRelayComms);
+	destroyService(_brainCloudTimeUtils);
 
 	destroyService(_authenticationService);
 	destroyService(_leaderboardService);
@@ -76,6 +77,7 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_groupService);
 	destroyService(_mailService);
 	destroyService(_tournamentService);
+	destroyService(_globalFileService);
 	destroyService(_customEntityService);
 	destroyService(_presenceService);
 	destroyService(_virtualCurrencyService);
@@ -406,6 +408,15 @@ void BrainCloudClient::insertEndOfMessageBundleMarker()
 	_brainCloudComms->InsertEndOfMessageBundleMarker();
 }
 
+BrainCloudTimeUtils *BrainCloudClient::getUtil()
+{
+	if (_brainCloudTimeUtils == nullptr)
+	{
+		_brainCloudTimeUtils = new BrainCloudTimeUtils(this);
+	}
+	return _brainCloudTimeUtils;
+}
+
 BrainCloudAuthentication *BrainCloudClient::getAuthenticationService()
 {
 	if (_authenticationService == nullptr)
@@ -692,6 +703,15 @@ BrainCloudTournament *BrainCloudClient::getTournamentService()
 		_tournamentService = new BrainCloudTournament(this);
 	}
 	return _tournamentService;
+}
+
+BrainCloudGlobalFile *BrainCloudClient::getGlobalFileService()
+{
+	if (_globalFileService == nullptr)
+	{
+		_globalFileService = new BrainCloudGlobalFile(this);
+	}
+	return _globalFileService;
 }
 
 BrainCloudCustomEntity *BrainCloudClient::getCustomEntityService()
