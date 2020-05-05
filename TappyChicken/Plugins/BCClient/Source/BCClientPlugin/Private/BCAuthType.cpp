@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BCAuthType.h"
+#include "BCClientPluginPrivatePCH.h"
 
 FString BCAuthType::EnumToString(EBCAuthType type)
 {
@@ -21,12 +21,18 @@ FString BCAuthType::EnumToString(EBCAuthType type)
         return TEXT("Steam");
     case EBCAuthType::Google:
         return TEXT("Google");
+    case EBCAuthType::GoogleOpenId:
+        return TEXT("GoogleOpenId");
+    case EBCAuthType::Apple:
+        return TEXT("Apple");
     case EBCAuthType::Twitter:
         return TEXT("Twitter");
     case EBCAuthType::Parse:
         return TEXT("Parse");
     case EBCAuthType::Handoff:
         return TEXT("Handoff");
+    case EBCAuthType::SettopHandoff:
+        return TEXT("SettopHandoff");
     case EBCAuthType::External:
         return TEXT("External");
     case EBCAuthType::Unknown:

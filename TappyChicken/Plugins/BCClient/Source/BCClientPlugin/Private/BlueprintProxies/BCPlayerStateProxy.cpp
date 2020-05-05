@@ -1,11 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCPlayerStateProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
-#include "BCPlayerStateProxy.h"
 #include "BrainCloudWrapper.h"
 
 UBCPlayerStateProxy::UBCPlayerStateProxy(const FObjectInitializer &ObjectInitializer)
@@ -153,5 +153,19 @@ UBCPlayerStateProxy *UBCPlayerStateProxy::SetUserStatus(UBrainCloudWrapper *brai
 {
     UBCPlayerStateProxy *Proxy = NewObject<UBCPlayerStateProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlayerStateService()->setUserStatus(statusName, durationSecs, details, Proxy);
+    return Proxy;
+}
+
+UBCPlayerStateProxy *UBCPlayerStateProxy::UpdateTimeZoneOffset(UBrainCloudWrapper *brainCloudWrapper, int32 timeZoneOffset)
+{
+    UBCPlayerStateProxy *Proxy = NewObject<UBCPlayerStateProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlayerStateService()->updateTimeZoneOffset(timeZoneOffset, Proxy);
+    return Proxy;
+}
+
+UBCPlayerStateProxy *UBCPlayerStateProxy::UpdateLanguageCode(UBrainCloudWrapper *brainCloudWrapper, const FString &languageCode)
+{
+    UBCPlayerStateProxy *Proxy = NewObject<UBCPlayerStateProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlayerStateService()->updateLanguageCode(languageCode, Proxy);
     return Proxy;
 }

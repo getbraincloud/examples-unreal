@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudPlayerState.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -198,6 +198,25 @@ void BrainCloudPlayerState::setUserStatus(const FString &statusName, int duratio
     ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::SetUserStatus, message, callback);
     _client->sendRequest(sc);
 }
+
+void BrainCloudPlayerState::updateTimeZoneOffset(int32 timeZoneOffset, IServerCallback *callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetNumberField(OperationParam::PlayerStateServiceTimeZoneOffset.getValue(), timeZoneOffset);
+
+    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdateTimeZoneOffset, message, callback);
+    _client->sendRequest(sc);
+}
+
+void BrainCloudPlayerState::updateLanguageCode(const FString &languageCode, IServerCallback *callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetStringField(OperationParam::PlayerStateServiceLanguageCode.getValue(), languageCode);
+
+    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdateLanguageCode, message, callback);
+    _client->sendRequest(sc);
+}
+
 
 const FString &BrainCloudPlayerState::getPlayerName()
 {
