@@ -565,6 +565,22 @@ void BrainCloudRTTComms::onRecv(const FString &in_message)
 	processRegisteredListeners(service.ToLower(), operation.ToLower(), in_message);
 }
 
+FString BrainCloudRTTComms::buildRTTRequestError(FString in_statusMessage)
+{
+	TSharedRef<FJsonObject> json = MakeShareable(new FJsonObject());
+	
+    json->SetNumberField("status", 403);
+	json->SetNumberField("reason_code", ReasonCodes::RTT_CLIENT_ERROR);
+	json->SetStringField("status_message", in_statusMessage);
+	json->SetStringField("severity", "ERROR");
+
+	FString response;
+    TSharedRef<TJsonWriter<>> writer = TJsonWriterFactory<>::Create(&response);
+    FJsonSerializer::Serialize(json, writer);
+
+	return response;
+}
+
 void BrainCloudRTTComms::setEndpointFromType(TArray<TSharedPtr<FJsonValue>> in_endpoints, FString in_socketType)
 {
 	TSharedPtr<FJsonObject> tempObj = nullptr;
