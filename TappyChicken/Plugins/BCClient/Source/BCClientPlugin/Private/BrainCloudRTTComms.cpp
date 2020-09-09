@@ -286,8 +286,6 @@ void BrainCloudRTTComms::disconnect()
 		m_connectedSocket->OnClosed.RemoveDynamic(m_commsPtr, &UBCRTTCommsProxy::WebSocket_OnClose);
 		m_connectedSocket->OnConnectComplete.RemoveDynamic(m_commsPtr, &UBCRTTCommsProxy::Websocket_OnOpen);
 		m_connectedSocket->OnReceiveData.RemoveDynamic(m_commsPtr, &UBCRTTCommsProxy::WebSocket_OnMessage);
-		m_commsPtr->ConditionalBeginDestroy();
-		m_connectedSocket->ConditionalBeginDestroy();
 	}
 
 	if (m_commsPtr)
