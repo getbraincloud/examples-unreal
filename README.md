@@ -2,6 +2,10 @@
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
 
+### Instructions
+
+Clone the repo, run the uproject file, run the project to play it in the editor!
+
 ### Standalone Client Lib
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal).
