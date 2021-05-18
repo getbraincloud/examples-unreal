@@ -77,3 +77,4 @@ DerivedDataCache/*
 RelayTestApp/.idea/*
 RelayTestApp/Intermediate/*
 RelayTestApp/Saved/*
+RelayTestApp/Plugins/Developer/RiderLink/*
