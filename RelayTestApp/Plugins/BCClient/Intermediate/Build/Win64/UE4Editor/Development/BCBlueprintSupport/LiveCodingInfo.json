@@ -1,0 +1,13 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.BCBlueprintSupport.cpp.obj": [
+			"BCBlueprintSupportModule.cpp.obj",
+			"K2Node_BrainCloudCall.cpp.obj"
+		],
+		"Module.BCBlueprintSupport.gen.cpp.obj": [
+			"BCBlueprintSupport.init.gen.cpp.obj",
+			"K2Node_BrainCloudCall.gen.cpp.obj"
+		]
+	}
+}

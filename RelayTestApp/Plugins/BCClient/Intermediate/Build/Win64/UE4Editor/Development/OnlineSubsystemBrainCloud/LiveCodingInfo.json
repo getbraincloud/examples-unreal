@@ -1,0 +1,19 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.OnlineSubsystemBrainCloud.cpp.obj": [
+			"OnlineAchievementsInterfaceBrainCloud.cpp.obj",
+			"AchievementCallback.cpp.obj",
+			"AssignableServerCallback.cpp.obj",
+			"LeaderboardCallback.cpp.obj",
+			"MessageCallback.cpp.obj",
+			"OnlineIdentityInterfaceBrainCloud.cpp.obj",
+			"OnlineLeaderboardInterfaceBrainCloud.cpp.obj",
+			"OnlineMessageInterfaceBrainCloud.cpp.obj",
+			"OnlineSubsystemBrainCloud.cpp.obj",
+			"OnlineSubsystemBrainCloudModule.cpp.obj",
+			"OnlineTimeInterfaceBrainCloud.cpp.obj",
+			"OnlineTitleFileInterfaceBrainCloud.cpp.obj"
+		]
+	}
+}

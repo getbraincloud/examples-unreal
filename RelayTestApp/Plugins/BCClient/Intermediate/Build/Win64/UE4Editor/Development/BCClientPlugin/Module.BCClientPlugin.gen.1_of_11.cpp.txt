@@ -1,0 +1,18 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCAppStoreProxy.gen.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCAppStoreProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceName.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceOperation.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAppStoreProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCAsyncMatchProxy.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCAsyncMatchProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAsyncMatchProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCAuthenticationProxy.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCAuthenticationProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAuthenticationProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCAuthType.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Public/BCAuthType.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCBlueprintCallProxyBase.gen.cpp

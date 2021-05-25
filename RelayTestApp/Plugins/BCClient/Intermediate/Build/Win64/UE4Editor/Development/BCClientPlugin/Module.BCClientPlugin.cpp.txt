@@ -1,0 +1,538 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BCAuthType.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCAuthType.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BCClientPlugin.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BCFileUploader.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BCFileUploader.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudWrapper.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/NoExportTypes.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.inl
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/PolyglotTextData.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\AssetRegistry/ARFilter.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudClient.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAuthentication.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLeaderboard.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerState.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGamification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTime.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatisticsEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudIdentity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudItemCatalog.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudUserItems.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudS3Handling.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudScript.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAsyncMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFriend.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalApp.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMatchmaking.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudOneWayMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlaybackStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPushNotification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRedemptionCode.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudDataStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudProfanity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGroup.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMail.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTournament.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudCustomEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRTT.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLobby.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudChat.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMessaging.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPresence.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudVirtualCurrency.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAppStore.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRelay.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTimeUtils.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudWrapper.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ReasonCodes.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\HttpCodes.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BCIdentityCallback.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BCIdentityCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServerCall.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceName.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceOperation.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\OperationParam.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BCPlatform.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCPlatform.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCAppStoreProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCAppStoreProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAppStoreProxy.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCWrapperProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudACL.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IAcl.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudACL.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCWrapperProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCAsyncMatchProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCAsyncMatchProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAsyncMatchProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCAuthenticationProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCAuthenticationProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCAuthenticationProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCChatProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCChatProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCChatProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCClientProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCClientProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCClientProxy.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IRTTCallback.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCCustomEntityProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCCustomEntityProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCCustomEntityProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCDataStreamProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCDataStreamProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCDataStreamProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCEntityProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCEntityProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCEntityProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCEventProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCEventProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCEventProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCFileProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCFileProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCFileProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCFriendProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCFriendProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCFriendProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGamificationProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGamificationProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGamificationProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGlobalAppProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGlobalAppProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGlobalAppProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGlobalEntityProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGlobalEntityProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGlobalEntityProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGlobalErrorCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGlobalErrorCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintRestCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IEventCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IRewardCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\INetworkErrorCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IGlobalErrorCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IFileUploadCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintRestCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGlobalErrorCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGlobalFileProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGlobalFileProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGlobalFileProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGlobalStatisticsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGlobalStatisticsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGlobalStatisticsProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCGroupProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCGroupProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCGroupProxy.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGroupACL.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudGroupACL.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCIdentityProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCIdentityProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCIdentityProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCItemCatalogProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCItemCatalogProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCItemCatalogProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCLeaderboardProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCLeaderboardProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCLeaderboardProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCLobbyProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCLobbyProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCLobbyProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCMailProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCMailProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCMailProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCMatchmakingProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCMatchmakingProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCMatchmakingProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCMessagingProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCMessagingProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCMessagingProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCNetworkErrorCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCNetworkErrorCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCNetworkErrorCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCOneWayMatchProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCOneWayMatchProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCOneWayMatchProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPlaybackStreamProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPlaybackStreamProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPlaybackStreamProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPlayerStateProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPlayerStateProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPlayerStateProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPlayerStatisticsEventProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPlayerStatisticsEventProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPlayerStatisticsEventProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPlayerStatisticsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPlayerStatisticsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPlayerStatisticsProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPresenceProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPresenceProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPresenceProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCProfanityProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCProfanityProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCProfanityProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCPushNotificationProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCPushNotificationProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCPushNotificationProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRedemptionCodeProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRedemptionCodeProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRedemptionCodeProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRelayCommsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRelayCommsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRelayCommsProxy.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BrainCloudRelayComms.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\libWebSockets\libwebsockets\include\Win64\VS2015\libwebsockets.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\cstdarg
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\libWebSockets\libwebsockets\include\Win64\VS2015\lws_config.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winsock2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\windows.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\sdkddkver.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\excpt.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\windef.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\minwindef.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winnt.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\kernelspecs.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\basetsd.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\guiddef.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack4.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack4.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack4.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack8.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack1.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack1.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\apiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\ktmtypes.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winbase.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\apisetcconv.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\minwinbase.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\apiquery2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\processenv.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\fileapifromapp.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\fileapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\debugapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\utilapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\handleapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\errhandlingapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\fibersapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\namedpipeapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\profileapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\heapapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\ioapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\synchapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\interlockedapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\processthreadsapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\sysinfoapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\memoryapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\enclaveapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\threadpoollegacyapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\threadpoolapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\jobapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\jobapi2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\wow64apiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\libloaderapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\securitybaseapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\namespaceapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\systemtopologyapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\processtopologyapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\securityappcontainer.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\realtimeapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\winerror.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\timezoneapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\wingdi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack1.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack4.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack4.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winuser.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\pshpack2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\poppack.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\tvout.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winnls.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\datetimeapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\stringapiset.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winnls.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\wincon.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\wincontypes.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\consoleapi.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\consoleapi2.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\consoleapi3.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winver.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\verrsrc.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winreg.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\reason.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winnetwk.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\wnnc.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\stralign.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\winsvc.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\mcx.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\imm.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\ime_cmodes.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\ws2def.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\inaddr.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\qos.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um\ws2tcpip.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\ws2ipdef.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared\in6addr.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt\io.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt\corecrt_io.h
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt\fcntl.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ssl.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/e_os2.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslv.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/comp.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/crypto.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/safestack.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/stack.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ossl_typ.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/cryptoerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/symhacks.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/comperr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/bio.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/bioerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/x509.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/buffer.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/buffererr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/evp.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/evperr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/objects.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/obj_mac.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/asn1.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/asn1err.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/bn.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/bnerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/objectserr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ec.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ecerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/rsa.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/rsaerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/dsa.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/dh.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/dherr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/dsaerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/sha.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/x509err.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/x509_vfy.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/lhash.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/pkcs7.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/pkcs7err.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/pem.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/pemerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/hmac.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/async.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/asyncerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ct.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/cterr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/opensslconf.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/sslerr.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ssl2.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ssl3.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ssl.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/tls1.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/dtls1.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/srtp.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/ssl.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\ThirdParty\OpenSSL\1.1.1\include\Win64\VS2015\openssl/err.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRelayDataCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRelayDataCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintRelayCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IRelayCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintRelayCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRelayDataCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRelayProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRelayProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRelayProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRestEventCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRestEventCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRestEventCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRestFileCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRestFileCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRestFileCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRestRewardCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRestRewardCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRestRewardCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTChatCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTChatCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintRTTCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintRTTCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTChatCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTCommsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTCommsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTCommsProxy.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BrainCloudRTTComms.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTEventCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTEventCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTEventCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTLobbyCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTLobbyCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTLobbyCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTMessagingCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTMessagingCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTMessagingCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTPresenceCallbackProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTPresenceCallbackProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTPresenceCallbackProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCRTTProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCRTTProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCRTTProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCS3HandlingProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCS3HandlingProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCS3HandlingProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCScriptProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCScriptProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCScriptProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCTimeProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCTimeProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCTimeProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCTimeUtilsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCTimeUtilsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCTimeUtilsProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCTournamentProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCTournamentProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCTournamentProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCUserItemsProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCUserItemsProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCUserItemsProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCVirtualCurrencyProxy.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BlueprintProxies\BCVirtualCurrencyProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCVirtualCurrencyProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BlueprintProxies/BCWrapperProxy.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudACL.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudAppStore.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\JsonUtil.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudAsyncMatch.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudAuthentication.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudChat.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudClient.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Engine\Public\GameDelegates.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BrainCloudComms.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudComms.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudCustomEntity.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudDataStream.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudEntity.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudEvent.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudFile.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudFriend.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGamification.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGlobalApp.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGlobalEntity.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGlobalFile.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGlobalStatistics.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGroup.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudGroupACL.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudIdentity.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudItemCatalog.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudLeaderboard.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudLobby.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectConverter.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\JsonUtilities\Public\JsonObjectWrapper.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Intermediate\Build\Win64\UE4Editor\Inc\JsonUtilities\JsonObjectWrapper.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudMail.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudMatchmaking.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudMessaging.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudOneWayMatch.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPlaybackStream.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPlayerState.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPlayerStatistics.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPlayerStatisticsEvent.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPresence.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudProfanity.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudPushNotification.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudRedemptionCode.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudRelay.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudRelayComms.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\WebSocketBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\WebSocketBase.generated.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\iostream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\istream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\ostream
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\ios
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xlocnum
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\cmath
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\iterator
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\iosfwd
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xutility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\utility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\streambuf
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xiosbase
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt\share.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\system_error
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\__msvc_system_error_abi.hpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\cerrno
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\stdexcept
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xstring
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xmemory
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xcall_once.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xerrc.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xlocale
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\memory
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xfacet
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xlocinfo
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xlocinfo.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\cctype
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\clocale
+C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt\locale.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudRTT.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudRTTComms.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudS3Handling.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudSave.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\BrainCloudSave.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudSave.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudScript.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudTime.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudTimeUtils.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudTournament.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudUserItems.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudVirtualCurrency.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/BrainCloudWrapper.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Private\SmartSwitchAuthenticateCallback.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/JsonUtil.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/OperationParam.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/ServerCall.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/ServiceName.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/ServiceOperation.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/SmartSwitchAuthenticateCallback.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/BCClientPlugin/Private/WebSocketBase.cpp

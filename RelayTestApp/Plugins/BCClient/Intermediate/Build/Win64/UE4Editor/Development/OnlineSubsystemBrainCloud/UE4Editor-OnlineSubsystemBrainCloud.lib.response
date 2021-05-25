@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-OnlineSubsystemBrainCloud.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\OnlineSubsystemBrainCloud\PCH.OnlineSubsystemBrainCloud.h.obj"
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\OnlineSubsystemBrainCloud\Module.OnlineSubsystemBrainCloud.cpp.obj"
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\OnlineSubsystemBrainCloud\Default.rc2.res"
+/OUT:"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\OnlineSubsystemBrainCloud\UE4Editor-OnlineSubsystemBrainCloud.lib"
+/INCLUDE:IMPLEMENT_MODULE_OnlineSubsystemBrainCloud

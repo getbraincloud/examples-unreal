@@ -1,0 +1,68 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudClient.gen.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Public/BrainCloudClient.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAuthentication.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCAuthType.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLeaderboard.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerState.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGamification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTime.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatisticsEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudIdentity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudItemCatalog.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudUserItems.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudS3Handling.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudScript.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAsyncMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFriend.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalApp.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMatchmaking.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudOneWayMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlaybackStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPushNotification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRedemptionCode.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudDataStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudProfanity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGroup.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMail.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTournament.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudCustomEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRTT.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLobby.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudChat.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMessaging.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPresence.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudVirtualCurrency.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAppStore.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRelay.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTimeUtils.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudFriend.gen.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudGroup.gen.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudGroupACL.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Public/BrainCloudGroupACL.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IAcl.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudGroupACL.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudLeaderboard.gen.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudSave.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BrainCloudSave.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudSave.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudWrapper.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Public/BrainCloudWrapper.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/NoExportTypes.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.inl
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/PolyglotTextData.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\AssetRegistry/ARFilter.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudWrapper.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/IAcl.gen.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/WebSocketBase.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/WebSocketBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\WebSocketBase.generated.h

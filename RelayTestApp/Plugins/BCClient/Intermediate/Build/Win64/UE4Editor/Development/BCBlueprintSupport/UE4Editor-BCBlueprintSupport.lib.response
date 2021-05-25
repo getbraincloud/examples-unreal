@@ -1,0 +1,14 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-BCBlueprintSupport.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\BCBlueprintSupport\PCH.BCBlueprintSupport.h.obj"
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\BCBlueprintSupport\Module.BCBlueprintSupport.cpp.obj"
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\BCBlueprintSupport\Module.BCBlueprintSupport.gen.cpp.obj"
+"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\BCBlueprintSupport\Default.rc2.res"
+/OUT:"D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Development\BCBlueprintSupport\UE4Editor-BCBlueprintSupport.lib"
+/INCLUDE:IMPLEMENT_MODULE_BCBlueprintSupport

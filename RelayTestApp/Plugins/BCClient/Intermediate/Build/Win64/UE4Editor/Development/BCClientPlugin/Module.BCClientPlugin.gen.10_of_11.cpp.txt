@@ -1,0 +1,16 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCVirtualCurrencyProxy.gen.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCVirtualCurrencyProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceName.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceOperation.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCVirtualCurrencyProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCWrapperProxy.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCWrapperProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudACL.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IAcl.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudACL.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCWrapperProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BrainCloudACL.gen.cpp

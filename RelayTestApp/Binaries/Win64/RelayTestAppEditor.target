@@ -28,6 +28,42 @@
 			"Type": "Executable"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-BCClientPlugin.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-BCClientPlugin.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-BCBlueprintSupport.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-BCBlueprintSupport.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-OnlineSubsystemBrainCloud.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor-OnlineSubsystemBrainCloud.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/Binaries/Win64/UE4Editor-OnlineSubsystem.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor-OnlineSubsystemUtils.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor-OnlineBlueprintSupport.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
 			"Path": "$(ProjectDir)/Plugins/Developer/RiderLink/Binaries/Win64/UE4Editor-RD.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -608,23 +644,11 @@
 			"Type": "DynamicLibrary"
 		},
 		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/Binaries/Win64/UE4Editor-OnlineSubsystem.dll",
-			"Type": "DynamicLibrary"
-		},
-		{
 			"Path": "$(EngineDir)/Plugins/Runtime/AndroidPermission/Binaries/Win64/UE4Editor-AndroidPermission.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemNull/Binaries/Win64/UE4Editor-OnlineSubsystemNull.dll",
-			"Type": "DynamicLibrary"
-		},
-		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor-OnlineSubsystemUtils.dll",
-			"Type": "DynamicLibrary"
-		},
-		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor-OnlineBlueprintSupport.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
@@ -2208,6 +2232,10 @@
 			"Type": "DynamicLibrary"
 		},
 		{
+			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor-Voice.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
 			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor-TreeMap.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -2229,10 +2257,6 @@
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor-InputDevice.dll",
-			"Type": "DynamicLibrary"
-		},
-		{
-			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor-Voice.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
@@ -2277,6 +2301,18 @@
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/Win64/UE4Editor.version",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -2576,19 +2612,11 @@
 			"Type": "RequiredResource"
 		},
 		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/Binaries/Win64/UE4Editor.modules",
-			"Type": "RequiredResource"
-		},
-		{
 			"Path": "$(EngineDir)/Plugins/Runtime/AndroidPermission/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemNull/Binaries/Win64/UE4Editor.modules",
-			"Type": "RequiredResource"
-		},
-		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -2715,6 +2743,18 @@
 	"RuntimeDependencies": [
 		{
 			"Path": "$(ProjectDir)/RelayTestApp.uproject",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/BCClient/BCClient.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/OnlineSubsystem.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/OnlineSubsystemUtils.uplugin",
 			"Type": "UFS"
 		},
 		{
@@ -3022,10 +3062,6 @@
 			"Type": "UFS"
 		},
 		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystem/OnlineSubsystem.uplugin",
-			"Type": "UFS"
-		},
-		{
 			"Path": "$(EngineDir)/Plugins/Runtime/AndroidPermission/AndroidPermission.uplugin",
 			"Type": "UFS"
 		},
@@ -3035,10 +3071,6 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemNull/OnlineSubsystemNull.uplugin",
-			"Type": "UFS"
-		},
-		{
-			"Path": "$(EngineDir)/Plugins/Online/OnlineSubsystemUtils/OnlineSubsystemUtils.uplugin",
 			"Type": "UFS"
 		},
 		{

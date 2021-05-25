@@ -1,0 +1,128 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineAchievementsInterfaceBrainCloud.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineAchievementsInterfaceBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineAchievementsInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineStats.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineKeyValuePair.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSubsystemPackage.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Public\OnlineSubsystemBrainCloudPackage.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Public\OnlineSubsystemBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSubsystemImpl.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSubsystemPackage.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Public\OnlineSubsystemBrainCloudPackage.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudClient.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAuthentication.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCAuthType.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLeaderboard.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerState.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGamification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatistics.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTime.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlayerStatisticsEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudIdentity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudItemCatalog.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudUserItems.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudEvent.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudS3Handling.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudScript.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAsyncMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFriend.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalApp.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMatchmaking.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudOneWayMatch.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPlaybackStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPushNotification.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRedemptionCode.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudDataStream.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudProfanity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGroup.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMail.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTournament.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudGlobalFile.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudCustomEntity.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRTT.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLobby.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime/Online/HTTP/Public/Http.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\HttpModule.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpRequest.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpBase.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Interfaces/IHttpResponse.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\PlatformHttp.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\Windows/WindowsPlatformHttp.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Online\HTTP\Public\GenericPlatform/GenericPlatformHttp.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudChat.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudMessaging.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudPresence.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudVirtualCurrency.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudAppStore.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudRelay.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudTimeUtils.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineCallbacks\AchievementCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineCallbacks\AssignableServerCallback.h
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\functional
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\tuple
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xutility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\utility
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\INCLUDE\xmemory
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineCallbacks/AchievementCallback.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceOperation.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceName.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineCallbacks/AssignableServerCallback.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineCallbacks/LeaderboardCallback.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineCallbacks\LeaderboardCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineLeaderboardInterfaceBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineLeaderboardInterface.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineCallbacks/MessageCallback.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineCallbacks\MessageCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineMessageInterfaceBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineMessageInterface.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineIdentityInterfaceBrainCloud.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineIdentityInterfaceBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineIdentityInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineIdentityErrors.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineError.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineErrorMacros.inl
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Sockets\Public\SocketSubsystem.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Sockets\Public\AddressInfoTypes.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineLeaderboardInterfaceBrainCloud.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Online.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSessionSettings.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSubsystemPackage.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineChatInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineFriendsInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineEventsInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineSessionInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlinePartyInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineExternalUIInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/VoiceInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineSubsystemPackage.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\SignalProcessing\Public\DSP/MultithreadedPatching.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineTitleFileInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlinePresenceInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlinePurchaseInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineEntitlementsInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineStoreInterfaceV2.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\OnlineJsonSerializer.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineUserCloudInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineUserInterface.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineStatsInterface.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineMessageInterfaceBrainCloud.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineSubsystemBrainCloud.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudWrapper.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/NoExportTypes.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Math/UnitConversion.inl
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\Core\Public\Internationalization/PolyglotTextData.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\AssetRegistry/ARFilter.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BrainCloudWrapper.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineTimeInterfaceBrainCloud.h
+C:\Program Files\Epic Games\UE_4.26\Engine\Plugins\Online\OnlineSubsystem\Source\Public\Interfaces/OnlineTimeInterface.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Public\OnlineSubsystemBrainCloudPackage.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\OnlineSubsystemBrainCloud\Private\OnlineTitleFileInterfaceBrainCloud.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineSubsystemBrainCloudModule.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineTimeInterfaceBrainCloud.cpp
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Source/OnlineSubsystemBrainCloud/Private/OnlineTitleFileInterfaceBrainCloud.cpp

@@ -1,0 +1,17 @@
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCItemCatalogProxy.gen.cpp
+C:\Program Files\Epic Games\UE_4.26\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCItemCatalogProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCBlueprintCallProxyBase.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\IServerCallback.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceName.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\ServiceOperation.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCBlueprintCallProxyBase.generated.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BCAuthType.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCItemCatalogProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCLeaderboardProxy.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCLeaderboardProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin\Public\BrainCloudLeaderboard.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCLeaderboardProxy.generated.h
+D:/GitHub/examples-unreal/RelayTestApp/Plugins/BCClient/Intermediate/Build/Win64/UE4Editor/Inc/BCClientPlugin/BCLobbyProxy.gen.cpp
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Source\BCClientPlugin/Private/BlueprintProxies/BCLobbyProxy.h
+D:\GitHub\examples-unreal\RelayTestApp\Plugins\BCClient\Intermediate\Build\Win64\UE4Editor\Inc\BCClientPlugin\BCLobbyProxy.generated.h
