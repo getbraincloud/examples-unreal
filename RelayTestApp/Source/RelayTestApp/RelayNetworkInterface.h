@@ -3,16 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
-#include "IRTTCallback.h"
 #include "GameFramework/Actor.h"
 #include "BrainCloudWrapper.h"
-#include "IServerCallback.h"
+#include "RelayGameInstance.h"
 
-#include "BraincloudInterface.generated.h"
+#include "RelayNetworkInterface.generated.h"
 
 UCLASS()
-class RELAYTESTAPP_API ABraincloudInterface : public AActor, public IServerCallback, public IRTTCallback
+class RELAYTESTAPP_API ARelayNetworkInterface : public AActor
 {
 	GENERATED_BODY()
 
@@ -20,7 +18,7 @@ class RELAYTESTAPP_API ABraincloudInterface : public AActor, public IServerCallb
 	
 public:	
 	// Sets default values for this actor's properties
-	ABraincloudInterface();
+	ARelayNetworkInterface();
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,17 +35,24 @@ public:
 	void LoginUniversal(FString username,FString password);
 
 	UFUNCTION(BlueprintCallable)
-	void FindLobby();
+	void LookForLobby();
+
+	//Braincloud interaction functions
+	void OnLobbyEvent(const FString& jsonData);
+	//Helpers
+	FString FJsonValueToString(const FString &jsonData,FString valueToGet);
+	uint8 FJsonValueToInt(const FString &jsonData,FString valueToGet);
+	FLobby parseLobby(const FString& jsonData);
+
+	URelayGameInstance* GetInstance();
+	static ARelayNetworkInterface* GetInterface();
+	void SubmitPlayerName();
+	
 private:
 
+	//RTT callback interface
+	//virtual void rttCallback(const FString &jsonData) override;
 	
-	// IServerCallback interface
-	virtual void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, const FString& jsonData) override;
-	virtual void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString& jsonError) override;
-	// End of IServerCallback interface
-
-	virtual void rttCallback(const FString &jsonData) override;
-
 	/*Variables*/
 	public:
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
@@ -57,15 +62,28 @@ private:
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString AppID;
 
+	//Watched bool for Loading Screen
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	bool IsLoading;
+	//Watched bool for pop up error dialog
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	bool ErrorOccured;
+	//Message to send to pop up error dialog
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString ErrorMessage;
-	
-	private:
-	UBrainCloudWrapper *_bcWrapper;
 
 	
+	ServerBCCallback* serverCallback;
+	
+	RTTCallback* bcRTTCallback;
+	//RelayCallback relayCallback;
+	
+	private:
+	UPROPERTY()
+	UBrainCloudWrapper *_bcWrapper;
+	UPROPERTY()
+	FString _username;
 };
+
+
+
