@@ -73,3 +73,8 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+RelayTestApp/Intermediate/*
+RelayTestApp/Plugins/*
+RelayTestApp/Saved/*
+RelayTestApp/.idea/*
