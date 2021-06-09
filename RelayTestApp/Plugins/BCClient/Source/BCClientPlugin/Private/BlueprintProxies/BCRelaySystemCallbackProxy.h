@@ -2,16 +2,16 @@
 
 #pragma once
 
-#include "BCRelaySystemCallProxyBase.h"
+#include "BCBlueprintRelaySystemCallProxyBase.h"
 #include "BCRelaySystemCallbackProxy.generated.h"
 
 UCLASS(MinimalAPI)
-class UBCRelaySystemCallbackProxy : public UBCRelaySystemCallProxyBase
+class UBCRelaySystemCallbackProxy : public UBCBlueprintRelaySystemCallProxyBase
 {
 	GENERATED_BODY()
 public:
 	UBCRelaySystemCallbackProxy(const FObjectInitializer &ObjectInitializer);
 
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Relay")
 	static UBCRelaySystemCallbackProxy *RegisterRelaySystemCallback(UBrainCloudWrapper *brainCloudWrapper);
 };

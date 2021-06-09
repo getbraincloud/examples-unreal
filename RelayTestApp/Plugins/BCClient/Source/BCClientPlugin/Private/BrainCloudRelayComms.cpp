@@ -65,6 +65,8 @@ BrainCloudRelayComms::BrainCloudRelayComms(BrainCloudClient *client)
 	, m_commsPtr(nullptr)
 	, m_registeredRelayCallback(nullptr)
 	, m_registeredRelayBluePrintCallback(nullptr)
+	, m_registeredRelaySystemCallback(nullptr)
+	, m_registeredRelaySystemBlueprintCallback(nullptr)
 	, m_connectedSocket(nullptr)
 	, m_bIsConnected(false)
 	, m_pingInterval(1.0f)
@@ -149,14 +151,16 @@ void BrainCloudRelayComms::deregisterDataCallback()
 	m_registeredRelayBluePrintCallback = nullptr;
 }
 
-void BrainCloudRelayComms::registerRelaySystemCallback(IRelaySystemCallback* callback)
+void BrainCloudRelayComms::registerRelaySystemCallback(IRelaySystemCallback *callback)
 {
+	// must ensure data callbacks are all removed first, since a blueprint one may be added without being removed properly
 	deregisterRelaySystemCallback();
 	m_registeredRelaySystemCallback = callback;
 }
 
-void BrainCloudRelayComms::registerRelaySystemCallback(UBCRelaySystemCallProxyBase* callback)
+void BrainCloudRelayComms::registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *callback)
 {
+	// must ensure data callbacks are all removed first, since a blueprint one may be added without being removed properly
 	deregisterRelaySystemCallback();
 	m_registeredRelaySystemBlueprintCallback = callback;
 }
@@ -670,13 +674,23 @@ void BrainCloudRelayComms::processRegisteredListeners(const FString &in_service,
 		// does this go to one of our registered service listeners?
 		if (m_registeredRelayCallback != nullptr)
 		{
-			
 			m_registeredRelayCallback->relayCallback(netId(),in_data);
 		}
 		
 		if (m_registeredRelayBluePrintCallback != nullptr && m_registeredRelayBluePrintCallback->IsValidLowLevel())
 		{
 			m_registeredRelayBluePrintCallback->relayCallback(netId(),in_data);
+		}
+	}
+	if(in_operation==TEXT("System"))
+	{
+		if(m_registeredRelaySystemCallback != nullptr)
+		{
+			m_registeredRelaySystemCallback->relaySystemCallback(in_jsonMessage);
+		}
+		if(m_registeredRelaySystemBlueprintCallback != nullptr)
+		{
+			m_registeredRelaySystemBlueprintCallback->relaySystemCallback(in_jsonMessage);
 		}
 	}
 }
