@@ -2,23 +2,23 @@
 #pragma once
 
 #include "IRelaySystemCallback.h"
-#include "BCRelaySystemCallProxyBase.generated.h"
+#include "BCBlueprintRelaySystemCallProxyBase.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBrainCloudRelaySystemCallbackDelegate, FString, jsonResponse);
 
 UCLASS(MinimalAPI)
-class UBCRelaySystemCallProxyBase : public UObject, public IRelaySystemCallback
+class UBCBlueprintRelaySystemCallProxyBase : public UObject, public IRelaySystemCallback
 {
 	GENERATED_BODY()
 public:
-	UBCRelaySystemCallProxyBase(const FObjectInitializer &ObjectInitializer) { this->AddToRoot(); }
+	UBCBlueprintRelaySystemCallProxyBase(const FObjectInitializer &ObjectInitializer) { this->AddToRoot(); }
 
 	//Response delegates
 	UPROPERTY(BlueprintAssignable)
 	FBrainCloudRelaySystemCallbackDelegate OnRelaySystemCallback;
 
 	//callback
-	void relaySystemCallback(const FString& jsonResponse)
+	virtual void relaySystemCallback(const FString& jsonResponse) override
 	{
 		OnRelaySystemCallback.Broadcast(jsonResponse);
 	}

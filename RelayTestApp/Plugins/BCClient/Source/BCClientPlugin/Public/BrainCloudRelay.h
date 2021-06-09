@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
 #pragma once
-#include "BCRelaySystemCallProxyBase.h"
+#include "BCBlueprintRelaySystemCallProxyBase.h"
 #include "IRelaySystemCallback.h"
 enum class BCRelayConnectionType : uint8;
 class BrainCloudClient;
@@ -86,7 +86,7 @@ public:
 	* Register callback for RelayServer system messages, support for Blueprint
 	* @param callback Called whenever a system message was received. function(json)
 	*/
-	void registerRelaySystemCallback(UBCRelaySystemCallProxyBase *in_callback);
+	void registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *in_callback);
 	/** 
 	*  Deregister the relay system callback
 	*/

@@ -54,7 +54,7 @@ void BrainCloudRelay::registerRelaySystemCallback(IRelaySystemCallback* in_callb
 	_relayComms->registerRelaySystemCallback(in_callback);
 }
 
-void BrainCloudRelay::registerRelaySystemCallback(UBCRelaySystemCallProxyBase* in_callback)
+void BrainCloudRelay::registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase* in_callback)
 {
 	_relayComms->registerRelaySystemCallback(in_callback);
 }

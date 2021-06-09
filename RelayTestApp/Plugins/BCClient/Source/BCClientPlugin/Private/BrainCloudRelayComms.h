@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "BCRelaySystemCallProxyBase.h"
+#include "BCBlueprintRelaySystemCallProxyBase.h"
 #include "IServerCallback.h"
 #include "Runtime/Launch/Resources/Version.h"
 
@@ -83,7 +83,7 @@ public:
 	void deregisterDataCallback();
 
 	void registerRelaySystemCallback(IRelaySystemCallback *callback);
-	void registerRelaySystemCallback(UBCRelaySystemCallProxyBase *callback);
+	void registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *callback);
 	void deregisterRelaySystemCallback();
 	
 	void sendRelay(const TArray<uint8> &in_data, const uint64 in_playerMask, bool in_reliable = true, bool in_ordered = true, int in_channel = 0);
@@ -133,7 +133,7 @@ private:
 	UBCBlueprintRelayCallProxyBase *m_registeredRelayBluePrintCallback;
 
 	IRelaySystemCallback *m_registeredRelaySystemCallback;
-	UBCRelaySystemCallProxyBase *m_registeredRelaySystemBlueprintCallback;
+	UBCBlueprintRelaySystemCallProxyBase *m_registeredRelaySystemBlueprintCallback;
 	
 	UWebSocketBase *m_connectedSocket;
 
