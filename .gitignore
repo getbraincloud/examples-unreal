@@ -75,7 +75,8 @@ Plugins/*/Intermediate/*
 DerivedDataCache/*
 
 RelayTestApp/Intermediate/*
-RelayTestApp/Plugins/*
+RelayTestApp/Plugins/BCClient/Binaries/*
+RelayTestApp/Plugins/BCClient/Intermediate/*
 RelayTestApp/Saved/*
 RelayTestApp/.idea/*
 RelayTestApp/Binaries/*
