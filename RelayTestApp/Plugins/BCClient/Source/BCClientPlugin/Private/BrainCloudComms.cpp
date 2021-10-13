@@ -1,8 +1,8 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+
 #include "BrainCloudComms.h"
 #include "BCClientPluginPrivatePCH.h"
-
 #include "IServerCallback.h"
 #include "IEventCallback.h"
 #include "IRewardCallback.h"
@@ -281,7 +281,9 @@ TSharedRef<IHttpRequest> BrainCloudComms::SendPacket(PacketRef packet)
 	if (_secretKey.Len() > 0)
 	{
 		FString secret = dataString + _secretKey;
-		FString secretHeader = FMD5::HashAnsiString(*secret);
+		FTCHARToUTF8 utf8_str(*secret);
+		int32 len = utf8_str.Length();
+		FString secretHeader = FMD5::HashBytes((const uint8 *)utf8_str.Get(),(uint64)len);
 		httpRequest->SetHeader(TEXT("X-SIG"), secretHeader);
 	}
 

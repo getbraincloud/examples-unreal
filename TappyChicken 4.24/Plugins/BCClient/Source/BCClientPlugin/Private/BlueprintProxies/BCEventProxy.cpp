@@ -1,12 +1,12 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCEventProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
 #include "BrainCloudWrapper.h"
-#include "BCEventProxy.h"
 
 UBCEventProxy::UBCEventProxy(const FObjectInitializer &ObjectInitializer)
     : Super(ObjectInitializer)
@@ -31,6 +31,28 @@ UBCEventProxy *UBCEventProxy::DeleteIncomingEvent(UBrainCloudWrapper *brainCloud
 {
     UBCEventProxy *Proxy = NewObject<UBCEventProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEventService()->deleteIncomingEvent(evId, Proxy);
+    return Proxy;
+}
+
+UBCEventProxy* UBCEventProxy::DeleteIncomingEvents(UBrainCloudWrapper* brainCloudWrapper, const TArray<FString>& evIds)
+{
+    UBCEventProxy *Proxy = NewObject<UBCEventProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEventService()->deleteIncomingEvents(evIds, Proxy);
+    return Proxy;
+}
+
+UBCEventProxy* UBCEventProxy::DeleteIncomingEventsOlderThan(UBrainCloudWrapper* brainCloudWrapper, int64 dateMillis)
+{
+    UBCEventProxy *Proxy = NewObject<UBCEventProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEventService()->deleteIncomingEventsOlderThan(dateMillis, Proxy);
+    return Proxy;
+}
+
+UBCEventProxy* UBCEventProxy::DeleteIncomingEventsByTypeOlderThan(UBrainCloudWrapper* brainCloudWrapper,
+    const FString& eventType, int64 dateMillis)
+{
+    UBCEventProxy *Proxy = NewObject<UBCEventProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEventService()->deleteIncomingEventsByTypeOlderThan(eventType, dateMillis, Proxy);
     return Proxy;
 }
 

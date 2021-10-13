@@ -1,15 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
 #pragma once
-#include "BCBlueprintRelaySystemCallProxyBase.h"
-#include "IRelaySystemCallback.h"
 enum class BCRelayConnectionType : uint8;
 class BrainCloudClient;
 class BrainCloudRelayComms;
 class UBCBlueprintRelayCallProxyBase;
-class UBCRelaySystemProxyBase;
 class IRelayCallback;
-class IRelaySystemCallback;
 class IServerCallback;
 
 class BCCLIENTPLUGIN_API BrainCloudRelay
@@ -77,21 +73,7 @@ public:
  	*  Deregister the data callback
  	*/
 	void deregisterDataCallback();
-	/**
-	* Register callback for RelayServer system messages.
-	* @param callback Called whenever a system message was received. function(json)
-	*/
-	void registerRelaySystemCallback(IRelaySystemCallback *in_callback);
-	/**
-	* Register callback for RelayServer system messages, support for Blueprint
-	* @param callback Called whenever a system message was received. function(json)
-	*/
-	void registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *in_callback);
-	/** 
-	*  Deregister the relay system callback
-	*/
-	void deregisterRelaySystemCallback();
-	
+
 	/** 
  	* Send byte array representation of data
 	* @param in_data : message to be sent

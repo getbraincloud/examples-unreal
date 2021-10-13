@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudGamification.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -199,13 +199,4 @@ void BrainCloudGamification::checkForAchievementsToAward(ServiceName serviceName
             m_achievementsDelegate->serverCallback(serviceName, serviceOperation, *JsonUtil::jsonValueToString(data.ToSharedRef()));
         }
     }
-}
-
-void BrainCloudGamification::resetMilestones(const TArray<FString> &milestoneIds, IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-    message->SetArrayField(OperationParam::GamificationServiceMilestonesName.getValue(), JsonUtil::arrayToJsonArray(milestoneIds));
-
-    ServerCall *sc = new ServerCall(ServiceName::Gamification, ServiceOperation::AwardAchievements, message, callback);
-    _client->sendRequest(sc);
 }

@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "BCBlueprintRelaySystemCallProxyBase.h"
 #include "IServerCallback.h"
 #include "Runtime/Launch/Resources/Version.h"
 
@@ -23,7 +22,6 @@ THIRD_PARTY_INCLUDES_END
 
 enum class BCRelayConnectionType : uint8;
 class IRelayCallback;
-class IRelaySystemCallback;
 class ServiceOperation;
 class ServiceName;
 class INetworkErrorCallback;
@@ -34,7 +32,6 @@ class FJsonObject;
 class UWebSocketBase;
 class UBCRelayCommsProxy;
 class UBCBlueprintRelayCallProxyBase;
-class UBCRelaySystemProxyBase;
 class UBCRelayProxy;
 struct RelayMessage;
 
@@ -82,10 +79,6 @@ public:
 	void registerDataCallback(UBCBlueprintRelayCallProxyBase *callback);
 	void deregisterDataCallback();
 
-	void registerRelaySystemCallback(IRelaySystemCallback *callback);
-	void registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *callback);
-	void deregisterRelaySystemCallback();
-	
 	void sendRelay(const TArray<uint8> &in_data, const uint64 in_playerMask, bool in_reliable = true, bool in_ordered = true, int in_channel = 0);
 	void setPingInterval(float in_interval);
 
@@ -132,9 +125,6 @@ private:
 	IRelayCallback *m_registeredRelayCallback;
 	UBCBlueprintRelayCallProxyBase *m_registeredRelayBluePrintCallback;
 
-	IRelaySystemCallback *m_registeredRelaySystemCallback;
-	UBCBlueprintRelaySystemCallProxyBase *m_registeredRelaySystemBlueprintCallback;
-	
 	UWebSocketBase *m_connectedSocket;
 
 	bool m_bIsConnected;

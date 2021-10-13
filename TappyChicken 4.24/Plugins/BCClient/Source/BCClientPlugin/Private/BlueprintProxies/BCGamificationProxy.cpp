@@ -1,11 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCGamificationProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
-#include "BCGamificationProxy.h"
 #include "BrainCloudWrapper.h"
 
 UBCGamificationProxy::UBCGamificationProxy(const FObjectInitializer &ObjectInitializer)
@@ -73,13 +73,6 @@ UBCGamificationProxy *UBCGamificationProxy::AwardAchievements(UBrainCloudWrapper
 {
     UBCGamificationProxy *Proxy = NewObject<UBCGamificationProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getGamificationService()->awardAchievements(achievements, Proxy);
-    return Proxy;
-}
-
-UBCGamificationProxy *UBCGamificationProxy::ResetMilestones(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> &milestoneIds)
-{
-    UBCGamificationProxy *Proxy = NewObject<UBCGamificationProxy>();
-    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getGamificationService()->resetMilestones(milestoneIds, Proxy);
     return Proxy;
 }
 

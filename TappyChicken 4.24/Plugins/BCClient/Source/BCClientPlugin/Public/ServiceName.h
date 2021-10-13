@@ -28,13 +28,13 @@ public:
   static const ServiceName Friend;
   static const ServiceName Time;
   static const ServiceName Tournament;
+  static const ServiceName GlobalFile;
   static const ServiceName CustomEntity;
   static const ServiceName VirtualCurrency;
   static const ServiceName AppStore;
 
   static const ServiceName Leaderboard;
   static const ServiceName Event;
-  static const ServiceName Product;
   static const ServiceName PlayerStatistics;
   static const ServiceName GlobalStatistics;
   static const ServiceName AsyncMatch;

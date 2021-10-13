@@ -2,7 +2,6 @@
 
 #include "BrainCloudRelayComms.h"
 #include "BCClientPluginPrivatePCH.h"
-
 #include "Serialization/JsonTypes.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
@@ -24,8 +23,6 @@
 #include "BCRelayCommsProxy.h"
 #include "WebSocketBase.h"
 #include <iostream>
-#include <string>
-
 #include "Runtime/Launch/Resources/Version.h"
 
 #if PLATFORM_UWP
@@ -67,8 +64,6 @@ BrainCloudRelayComms::BrainCloudRelayComms(BrainCloudClient *client)
 	, m_commsPtr(nullptr)
 	, m_registeredRelayCallback(nullptr)
 	, m_registeredRelayBluePrintCallback(nullptr)
-	, m_registeredRelaySystemCallback(nullptr)
-	, m_registeredRelaySystemBlueprintCallback(nullptr)
 	, m_connectedSocket(nullptr)
 	, m_bIsConnected(false)
 	, m_pingInterval(1.0f)
@@ -151,32 +146,6 @@ void BrainCloudRelayComms::deregisterDataCallback()
 
 	m_registeredRelayCallback = nullptr;
 	m_registeredRelayBluePrintCallback = nullptr;
-}
-
-void BrainCloudRelayComms::registerRelaySystemCallback(IRelaySystemCallback *callback)
-{
-	// must ensure data callbacks are all removed first, since a blueprint one may be added without being removed properly
-	deregisterRelaySystemCallback();
-	m_registeredRelaySystemCallback = callback;
-}
-
-void BrainCloudRelayComms::registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase *callback)
-{
-	// must ensure data callbacks are all removed first, since a blueprint one may be added without being removed properly
-	deregisterRelaySystemCallback();
-	m_registeredRelaySystemBlueprintCallback = callback;
-}
-
-void BrainCloudRelayComms::deregisterRelaySystemCallback()
-{
-	if(m_registeredRelaySystemBlueprintCallback->IsValidLowLevel())
-	{
-		m_registeredRelaySystemBlueprintCallback->RemoveFromRoot();
-		m_registeredRelaySystemBlueprintCallback->ConditionalBeginDestroy();
-	}
-
-	m_registeredRelaySystemCallback = nullptr;
-	m_registeredRelaySystemBlueprintCallback = nullptr;
 }
 
 void BrainCloudRelayComms::RunCallbacks()
@@ -672,36 +641,16 @@ void BrainCloudRelayComms::processRegisteredListeners(const FString &in_service,
 	}
 
 	if (in_data.Num() > 0)
-	{
-		TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(in_jsonMessage);
-		TSharedPtr<FJsonObject> jsonPacket;
-
-		bool res = FJsonSerializer::Deserialize(reader, jsonPacket);
-		int curNetId = -1;
-		if (res && jsonPacket->HasField("netId"))
-		{
-			curNetId = (int)jsonPacket->GetNumberField("netId");
-		}
+	{	
 		// does this go to one of our registered service listeners?
 		if (m_registeredRelayCallback != nullptr)
-		{			
-			m_registeredRelayCallback->relayCallback(curNetId,in_data);
+		{
+			m_registeredRelayCallback->relayCallback(in_data);
 		}
 		
 		if (m_registeredRelayBluePrintCallback != nullptr && m_registeredRelayBluePrintCallback->IsValidLowLevel())
 		{
-			m_registeredRelayBluePrintCallback->relayCallback(curNetId,in_data);
-		}
-	}
-	if(in_operation==TEXT("System"))
-	{
-		if(m_registeredRelaySystemCallback != nullptr)
-		{
-			m_registeredRelaySystemCallback->relaySystemCallback(in_jsonMessage);
-		}
-		if(m_registeredRelaySystemBlueprintCallback != nullptr)
-		{
-			m_registeredRelaySystemBlueprintCallback->relaySystemCallback(in_jsonMessage);
+			m_registeredRelayBluePrintCallback->relayCallback(in_data);
 		}
 	}
 }
@@ -846,16 +795,16 @@ void BrainCloudRelayComms::onRecv(TArray<uint8> in_data)
 	// the length prefix should be removed already [dsl] TODO, keep it all here. Too many array manipulation
 	if (in_data.Num() < 1)
 	{
-		FScopeLock Lock(&m_relayMutex);
-		m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "error", UBrainCloudWrapper::buildErrorJson(403, ReasonCodes::RS_CLIENT_ERROR, "Relay: Packet should be at least 3 bytes"), TArray<uint8>()));
+    	FScopeLock Lock(&m_relayMutex);
+    	m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "error", UBrainCloudWrapper::buildErrorJson(403, ReasonCodes::RS_CLIENT_ERROR, "Relay: Packet should be at least 3 bytes"), TArray<uint8>()));
 		return;
 	}
 
 	uint8 controlByte = in_data[0]; // first should be the control byte
 	if (controlByte == RS2CL_DISCONNECT)
 	{
-		FScopeLock Lock(&m_relayMutex);
-		m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "error", UBrainCloudWrapper::buildErrorJson(403, ReasonCodes::RS_CLIENT_ERROR, "Relay: Disconnected by server"), TArray<uint8>()));
+    	FScopeLock Lock(&m_relayMutex);
+    	m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "error", UBrainCloudWrapper::buildErrorJson(403, ReasonCodes::RS_CLIENT_ERROR, "Relay: Disconnected by server"), TArray<uint8>()));
 	}
 	else if (controlByte == RS2CL_PONG)
 	{
@@ -863,21 +812,12 @@ void BrainCloudRelayComms::onRecv(TArray<uint8> in_data)
 		if (m_client->isLoggingEnabled())
 			UE_LOG(LogBrainCloudComms, Log, TEXT("Relay OnRecv Ping: %d"), ping());
 	}
-	else if(controlByte == RS2CL_RELAY)
-	{
-		uint8 netId = in_data[8];
-		TArray<uint8> data = stripByteArray(in_data, 9);
-		FScopeLock Lock(&m_relayMutex);
-		FString jsonMessage;
-		jsonMessage = TEXT("{\"netId\":" + netId);
-		jsonMessage = jsonMessage + TEXT("}");
-		m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "onrecv", jsonMessage, data));
-	}
 	else
 	{
 		int headerLength = CONTROL_BYTE_HEADER_LENGTH;
 
-		if (controlByte == RS2CL_RELAY) headerLength += 9;
+		if (controlByte == RS2CL_RSMG) headerLength += 2;
+		else if (controlByte == RS2CL_RELAY) headerLength += 8;
 			
 		TArray<uint8> data = stripByteArray(in_data, headerLength);
 
@@ -915,23 +855,9 @@ void BrainCloudRelayComms::onRecv(TArray<uint8> in_data)
 		}
 		// lock 
 		{
-			/*FScopeLock Lock(&m_relayMutex);
-			FString jsonMessage;
-			if(res && jsonPacket->HasField("netId"))
-			{
-				const char ansi = in_data[12]; 
-				FString netId=ANSI_TO_TCHAR(&ansi);
-				jsonMessage = TEXT("{\"netId\":" + netId + "}");	
-			}
-			else
-			{
-				const char ansi = in_data[12]; 
-				FString netId=ANSI_TO_TCHAR(&ansi);
-				jsonMessage = TEXT("{\"netId\":" + netId + "}");
-			}*/
-			
+			FScopeLock Lock(&m_relayMutex);
 			// finally pass this onwards, no parsed data
-			m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "onrecv", "" , in_data));
+			m_relayResponse.Add(RelayMessage(ServiceName::Relay.getValue().ToLower(), "onrecv", "", data));
 		}
 	}
 }

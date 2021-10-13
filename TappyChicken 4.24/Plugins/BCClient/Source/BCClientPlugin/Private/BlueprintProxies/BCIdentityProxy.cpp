@@ -1,11 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCIdentityProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
-#include "BCIdentityProxy.h"
 #include "BrainCloudWrapper.h"
 
 UBCIdentityProxy::UBCIdentityProxy(const FObjectInitializer &ObjectInitializer)
@@ -45,6 +45,69 @@ UBCIdentityProxy *UBCIdentityProxy::DetachFacebookIdentity(UBrainCloudWrapper *b
 {
 	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachFacebookIdentity(facebookId, continueAnon, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::AttachFacebookLimitedIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &facebookLimitedId, const FString &authenticationToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachFacebookLimitedIdentity(facebookLimitedId, authenticationToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::MergeFacebookLimitedIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &facebookLimitedId, const FString &authenticationToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeFacebookLimitedIdentity(facebookLimitedId, authenticationToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::DetachFacebookLimitedIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &facebookLimitedId, bool continueAnon)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachFacebookLimitedIdentity(facebookLimitedId, continueAnon, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::AttachOculusIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &oculusId, const FString &oculusNonce)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachOculusIdentity(oculusId, oculusNonce, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::MergeOculusIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &oculusId, const FString &oculusNonce)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeOculusIdentity(oculusId, oculusNonce, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::DetachOculusIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &oculusId, bool continueAnon)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachOculusIdentity(oculusId, continueAnon, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::AttachPlaystationNetworkIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &psnAccountId, const FString &authenticationToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachPlaystationNetworkIdentity(psnAccountId, authenticationToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::MergePlaystationNetworkIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &psnAccountId, const FString &authenticationToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergePlaystationNetworkIdentity(psnAccountId, authenticationToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::DetachPlaystationNetworkIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &psnAccountId, bool continueAnon)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachPlaystationNetworkIdentity(psnAccountId, continueAnon, Proxy);
 	return Proxy;
 }
 
@@ -132,24 +195,66 @@ UBCIdentityProxy *UBCIdentityProxy::DetachSteamIdentity(UBrainCloudWrapper *brai
 	return Proxy;
 }
 
-UBCIdentityProxy *UBCIdentityProxy::AttachGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleId, const FString &authenticationToken)
+UBCIdentityProxy *UBCIdentityProxy::AttachGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserId, const FString &serverAuthCode)
 {
 	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachGoogleIdentity(googleId, authenticationToken, Proxy);
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachGoogleIdentity(googleUserId, serverAuthCode, Proxy);
 	return Proxy;
 }
 
-UBCIdentityProxy *UBCIdentityProxy::MergeGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleId, const FString &authenticationToken)
+UBCIdentityProxy *UBCIdentityProxy::MergeGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserId, const FString &serverAuthCode)
 {
 	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeGoogleIdentity(googleId, authenticationToken, Proxy);
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeGoogleIdentity(googleUserId, serverAuthCode, Proxy);
 	return Proxy;
 }
 
-UBCIdentityProxy *UBCIdentityProxy::DetachGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleId, bool continueAnon)
+UBCIdentityProxy *UBCIdentityProxy::DetachGoogleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserId, bool continueAnon)
 {
 	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
-	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachGoogleIdentity(googleId, continueAnon, Proxy);
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachGoogleIdentity(googleUserId, continueAnon, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::AttachGoogleOpenIdIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserAccountEmail, const FString &IdToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachGoogleOpenIdIdentity(googleUserAccountEmail, IdToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::MergeGoogleOpenIdIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserAccountEmail, const FString &IdToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeGoogleOpenIdIdentity(googleUserAccountEmail, IdToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::DetachGoogleOpenIdIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &googleUserAccountEmail, bool continueAnon)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachGoogleOpenIdIdentity(googleUserAccountEmail, continueAnon, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::AttachAppleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &appleUserId, const FString &identityToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->attachAppleIdentity(appleUserId, identityToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::MergeAppleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &appleUserId, const FString &identityToken)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->mergeAppleIdentity(appleUserId, identityToken, Proxy);
+	return Proxy;
+}
+
+UBCIdentityProxy *UBCIdentityProxy::DetachAppleIdentity(UBrainCloudWrapper *brainCloudWrapper, const FString &appleUserId, bool continueAnon)
+{
+	UBCIdentityProxy *Proxy = NewObject<UBCIdentityProxy>();
+	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getIdentityService()->detachAppleIdentity(appleUserId, continueAnon, Proxy);
 	return Proxy;
 }
 

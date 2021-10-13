@@ -203,6 +203,14 @@ class BCCLIENTPLUGIN_API BrainCloudLeaderboard
 	 */
 	void postScore(const FString &leaderboardId, int32 score, const FString &jsonOtherData, IServerCallback *callback = nullptr);
 
+
+	/**
+	 * @deprecated Please use PostScoreToDynamicLeaderboardUTC instead. Will be removed March 2021
+	 */
+	void postScoreToDynamicLeaderboard(const FString &leaderboardId, int32 score, const FString &jsonData,
+									   ESocialLeaderboardType leaderboardType, ERotationType rotationType, const FDateTime &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+
+
 	/**
 	 * Post the players score to the given social leaderboard.
 	 * Pass leaderboard config data to dynamically create if necessary.
@@ -222,8 +230,14 @@ class BCCLIENTPLUGIN_API BrainCloudLeaderboard
 	 * @param retainedCount How many rotations to keep
 	 * @param callback The method to be invoked when the server response is received
 	 */
-	void postScoreToDynamicLeaderboard(const FString &leaderboardId, int32 score, const FString &jsonData,
-									   ESocialLeaderboardType leaderboardType, ERotationType rotationType, const FDateTime &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+	void postScoreToDynamicLeaderboardUTC(const FString &leaderboardId, int32 score, const FString &jsonData,
+									   ESocialLeaderboardType leaderboardType, ERotationType rotationType, const int64 &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+
+	/**
+	 * @deprecated Please use PostScoreToDynamicLeaderboardDaysUTC instead. Will be removed March 2021
+	 */
+	void postScoreToDynamicLeaderboardDays(const FString &leaderboardId, int32 score, const FString &jsonData,
+										   ESocialLeaderboardType leaderboardType, const FDateTime &rotationStart, int32 retainedCount, int32 numDaysToRotate, IServerCallback *callback = nullptr);
 
 	/**
 	* Post the players score to the given social leaderboard.
@@ -242,10 +256,32 @@ class BCCLIENTPLUGIN_API BrainCloudLeaderboard
 	* @param rotationStart Date to start rotation calculations (Date is converted to "dd-mm-yyyy" format)
 	* @param retainedCount How many rotations to keep
 	* @param numDaysToRotate How many days between each rotation
-	* @param callback The method to be invoked when the server response is received
+	* @param callback The method to be invoked when the server response is received/
 	*/
-	void postScoreToDynamicLeaderboardDays(const FString &leaderboardId, int32 score, const FString &jsonData,
-										   ESocialLeaderboardType leaderboardType, const FDateTime &rotationStart, int32 retainedCount, int32 numDaysToRotate, IServerCallback *callback = nullptr);
+	void postScoreToDynamicLeaderboardDaysUTC(const FString &leaderboardId, int32 score, const FString &jsonData,
+										   ESocialLeaderboardType leaderboardType, const int64 &rotationStart, int32 retainedCount, int32 numDaysToRotate, IServerCallback *callback = nullptr);
+	
+	/**
+	* Post the players score to the given social group leaderboard with a
+	* rotation type of DAYS. You can optionally send a user-defined
+	* JSON string of data with the posted score.
+	* This string could include information relevant to the posted score.
+	*
+	* Service Name - SocialLeaderboard
+	* Service Operation - PostScoreDynamic
+	*
+	* @param leaderboardId The leaderboard to post to
+	* @param groupId The ID of the group
+	* @param score The score to post
+	* @param data Optional user-defined data to post with the score
+	* @param leaderboardType leaderboard type
+	* @param rotationResetUTC Date to start rotation calculations (Date is converted to "dd-mm-yyyy" format)
+	* @param retainedCount How many rotations to keep
+	* @param numDaysToRotate How many days between each rotation
+	* @param callback The method to be invoked when the server response is received/
+	*/
+	void postScoreToDynamicGroupLeaderboardDaysUTC(const FString &leaderboardId, const FString &groupId, int32 score, const FString &jsonData,
+                                           ESocialLeaderboardType leaderboardType, const FDateTime &rotationStart, int32 retainedCount, int32 numDaysToRotate, IServerCallback *callback = nullptr);
 
 	/**
 	* Removes a player's score from the leaderboard
@@ -340,6 +376,19 @@ class BCCLIENTPLUGIN_API BrainCloudLeaderboard
 	*/
 	void getPlayerScore(const FString &leaderboardId, int32 versionId, IServerCallback *callback = nullptr);
 
+		/**
+	* Gets a player's top scores from a leaderboard
+	*
+	* Service Name - leaderboard
+	* Service Operation - GET_PLAYER_SCORES
+	*
+	* @param leaderboardId The leaderboard ID
+	* @param versionId The version of the leaderboard. Use -1 for current.
+	* @param maxResults the maximum number of returned results
+	* @param callback The method to be invoked when the server response is received
+	*/
+	void getPlayerScores(const FString &leaderboardId, int32 versionId, int32 maxResults, IServerCallback *callback = nullptr);
+
 	/**
 	* Gets a player's score from multiple leaderboards
 	*
@@ -366,6 +415,33 @@ class BCCLIENTPLUGIN_API BrainCloudLeaderboard
 	*/
 	void postScoreToGroupLeaderboard(const FString &leaderboardId, const FString &groupId, int32 score, const FString &jsonOtherData, IServerCallback *callback = nullptr);
 	
+	/**
+	 * @deprecated Please use PostScoreToDynamicGroupLeaderboardUTC instead. Will be removed March 2021
+	 */
+	void postScoreToDynamicGroupLeaderboard(const FString &leaderboardId, const FString &groupId, int32 score, const FString &jsonOtherData,ESocialLeaderboardType leaderboardType, ERotationType rotationType, const FDateTime &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+
+	/**
+	* Post the group score to the given group leaderboard and dynamically create if necessary. LeaderboardType, rotationType, rotationReset, and retainedCount are required.
+	*
+	* Service Name - leaderboard
+	* Service Operation - POST_GROUP_SCORE
+	*
+	* @param in_leaderboardId A collection of leaderboardIds to retrieve scores from
+	* @param in_groupId the groups Id
+	* @param in_score the score you wish to post
+	* @param rotationType Type of rotation
+	* @param rotationStart Date to start rotation calculations (Date is converted to "dd-mm-yyyy" format)
+	* @param retainedCount How many rotations to keep
+	* @param callback The method to be invoked when the server response is received
+	* @param in_jsonData extra json Data
+	* @param in_callback The method to be invoked when the server response is received
+	*/
+	void postScoreToDynamicGroupLeaderboardUTC(const FString &leaderboardId, const FString &groupId, int32 score, const FString &jsonOtherData,ESocialLeaderboardType leaderboardType, ERotationType rotationType, const int64 &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+
+
+	//void postScoreToDynamicLeaderboard(const FString &leaderboardId, int32 score, const FString &jsonData,
+									   //ESocialLeaderboardType leaderboardType, ERotationType rotationType, const FDateTime &rotationStart, int32 retainedCount, IServerCallback *callback = nullptr);
+
 	/**
 	* Removes score from group leaderboard
 	*

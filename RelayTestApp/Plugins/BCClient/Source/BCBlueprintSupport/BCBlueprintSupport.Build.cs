@@ -17,8 +17,9 @@ public class BCBlueprintSupport : ModuleRules
 #endif
     {
         PrivatePCHHeaderFile = "Private/BCBlueprintSupportPrivatePCH.h";
-
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         MinFilesUsingPrecompiledHeaderOverride = 1;
+
 #if WITH_FORWARDED_MODULE_RULES_CTOR
     #if UE_4_23_OR_EARLIER
         bFasterWithoutUnity=true;

@@ -58,21 +58,19 @@ class UBCCustomEntityProxy : public UBCBlueprintCallProxyBase
   static UBCCustomEntityProxy *GetCount(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &whereJson);
 
     /**
-     * Retrieves first page of custom entities from the server based on the custom entity type and specified query context
+     * Gets a list of up to maxReturn randomly selected custom entities from the server based on the entity type and where condition.
      *
      * Service Name - CustomEntity
-     * Service Operation - GetPage
+     * Service Operation - GetRandomEntitiesMatching
      *
      * @param entityType The entity type as defined by the user
-     * @param rowsPerPage num rows
-     * @param searchJson what to search
-     * @param doCount whether to count
+     * @param whereJson Mongostyle query string
+     * @param maxReturn number of max returns
      * @param callback The method to be invoked when the server response is received
      */
-  //UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
-   UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", DeprecatedFunction,DeprecatedMessage="Use GetEntityPage() instead"), Category = "BrainCloud|CustomEntity")
-  static UBCCustomEntityProxy *GetPage(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, int rowsPerPage, const FString &searchJson, const FString &sortJson, bool doCount);
-
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *GetRandomEntitiesMatching(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &whereJson, const int64 &maxReturn);
+    
 	/**
 	* Method uses a paging system to iterate through Custom Entities
 	* After retrieving a page of Custom Entities with this method,
@@ -85,21 +83,6 @@ class UBCCustomEntityProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Custom Entity")
 	static UBCCustomEntityProxy *GetEntityPage(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &context);
-
-    /**
-     * Gets the page of custom entities from the server based on the encoded context and specified page offset.
-     * 
-     * Service Name - CustomEntity
-     * Service Operation - GetPageOffset
-     *
-     * @param entityType The entity type as defined by the user
-     * @param context the page context
-     * @param pageOffset number
-     * @param callback The method to be invoked when the server response is received
-     */
-
-  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", DeprecatedFunction,DeprecatedMessage="Use GetEntityPageOffset() instead"), Category = "BrainCloud|CustomEntity")
-  static UBCCustomEntityProxy *GetPageOffset(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &context, int pageOffset);
 
   	/**
 	* Method to retrieve previous or next pages after having called the GetEntityPage method.
@@ -133,6 +116,21 @@ class UBCCustomEntityProxy : public UBCBlueprintCallProxyBase
      * Reads a custom entity.
      * 
      * Service Name - CustomEntity
+     * Service Operation - ReadEntity
+     *
+     * @param entityType The entity type as defined by the user
+     * @param entityId
+     * @param fieldsJson
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *IncrementData(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &entityId, const FString &fieldsJson);
+
+
+    /**
+     * Reads a custom entity.
+     * 
+     * Service Name - CustomEntity
      * Service Operation - UpdateEntity
      *
      * @param entityType The entity type as defined by the user
@@ -160,5 +158,77 @@ class UBCCustomEntityProxy : public UBCBlueprintCallProxyBase
      */
   UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
   static UBCCustomEntityProxy *UpdateEntityFields(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &entityId, int version, const FString &fieldsJson);
+
+    /**
+     * deletes entities based on the deleteCriteria
+     * 
+     * Service Name - CustomEntity
+     * Service Operation - DeleteEntities
+     *
+     * @param entityType The entity type as defined by the user
+     * @param deleteCriteria
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *DeleteEntities(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, const FString &deleteCriteria);
+
+    /**
+     * Reads the custom entity singleton owned by the session's user.
+     * 
+     * Service Name - CustomEntity
+     * Service Operation - readSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *ReadSingleton(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType);
+
+
+    /**
+     * Updates the singleton owned by the user for the specified custom entity type on the server, creating the singleton if it does not exist. This operation results in the owned singleton's data being completely replaced by the passed in JSON object.
+     * 
+     * Service Name - CustomEntity
+     * Service Operation - updateSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version
+     * @param dataJson
+     * @param jsonEntityAcl
+     * @param timeToLive
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *UpdateSingleton(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, int version, const FString &dataJson, UBrainCloudACL *jsonEntityAcl, const FString &timeToLive);
+
+
+    /**
+     * Partially updates the data, of the singleton owned by the user for the specified custom entity type, with the specified fields, on the server
+     * 
+     * Service Name - CustomEntity
+     * Service Operation - updateSingletonFields
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version
+     * @param fieldsJson
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *UpdateSingletonFields(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, int version, const FString &fieldsJson);
+
+    /**
+     * Deletes the specified custom entity singleton, owned by the session's user, for the specified entity type, on the server.
+     * 
+     * Service Name - CustomEntity
+     * Service Operation - deleteSingleton
+     *
+     * @param entityType The entity type as defined by the user
+     * @param version
+     * @param callback The method to be invoked when the server response is received
+     */
+  UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|CustomEntity")
+  static UBCCustomEntityProxy *DeleteSingleton(UBrainCloudWrapper *brainCloudWrapper, const FString &entityType, int version);
+
+
 
 };

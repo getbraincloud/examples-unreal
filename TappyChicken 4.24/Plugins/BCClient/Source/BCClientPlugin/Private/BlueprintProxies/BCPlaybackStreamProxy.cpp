@@ -1,11 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCPlaybackStreamProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
-#include "BCPlaybackStreamProxy.h"
 #include "BrainCloudWrapper.h"
 
 UBCPlaybackStreamProxy::UBCPlaybackStreamProxy(const FObjectInitializer &ObjectInitializer)
@@ -46,20 +46,6 @@ UBCPlaybackStreamProxy *UBCPlaybackStreamProxy::AddEvent(UBrainCloudWrapper *bra
 {
     UBCPlaybackStreamProxy *Proxy = NewObject<UBCPlaybackStreamProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlaybackStreamService()->addEvent(playbackStreamId, jsonEventData, jsonSummary, Proxy);
-    return Proxy;
-}
-
-UBCPlaybackStreamProxy *UBCPlaybackStreamProxy::GetStreamSummariesForInitiatingPlayer(UBrainCloudWrapper *brainCloudWrapper, const FString &targetPlayerId)
-{
-    UBCPlaybackStreamProxy *Proxy = NewObject<UBCPlaybackStreamProxy>();
-    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlaybackStreamService()->getStreamSummariesForInitiatingPlayer(targetPlayerId, Proxy);
-    return Proxy;
-}
-
-UBCPlaybackStreamProxy *UBCPlaybackStreamProxy::GetStreamSummariesForTargetPlayer(UBrainCloudWrapper *brainCloudWrapper, const FString &targetPlayerId)
-{
-    UBCPlaybackStreamProxy *Proxy = NewObject<UBCPlaybackStreamProxy>();
-    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getPlaybackStreamService()->getStreamSummariesForTargetPlayer(targetPlayerId, Proxy);
     return Proxy;
 }
 

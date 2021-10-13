@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BCPlatform.h"
+#include "BCClientPluginPrivatePCH.h"
 
 FString BCPlatform::EnumToString(EBCPlatform platform)
 {
@@ -9,10 +9,14 @@ FString BCPlatform::EnumToString(EBCPlatform platform)
     {
     case EBCPlatform::GOOGLE_PLAY_ANDROID:
         return TEXT("ANG");
+    case EBCPlatform::AMAZON_ANDROID:
+        return TEXT("Amazon");
     case EBCPlatform::BLACKBERRY:
         return TEXT("BB");
     case EBCPlatform::FACEBOOK:
         return TEXT("FB");
+    case EBCPlatform::OCULUS:
+        return TEXT("Oculus");
     case EBCPlatform::IOS:
         return TEXT("IOS");
     case EBCPlatform::LINUX_PLATFORM:

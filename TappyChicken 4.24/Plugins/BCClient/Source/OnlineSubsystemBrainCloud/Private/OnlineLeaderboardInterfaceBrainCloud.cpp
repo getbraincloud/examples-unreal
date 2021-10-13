@@ -1,7 +1,7 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 
-#include "OnlineSubsystemBrainCloudPrivatePCH.h"
 #include "OnlineLeaderboardInterfaceBrainCloud.h"
+#include "OnlineSubsystemBrainCloudPrivatePCH.h"
 #include "Online.h"
 
 #include "BrainCloudClient.h"
@@ -42,7 +42,7 @@ bool FOnlineLeaderboardsBrainCloud::ReadLeaderboardsForFriends(int32 LocalUserNu
     return false;
 }
 
-#if ENGINE_MINOR_VERSION >= 16
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION >= 16
 bool FOnlineLeaderboardsBrainCloud::ReadLeaderboardsAroundRank(int32 Rank, uint32 Range, FOnlineLeaderboardReadRef& ReadObject)
 {
 	UE_LOG(LogOnline, Warning, TEXT("ReadLeaderboardsAroundRank is not supported"));

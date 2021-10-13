@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "ServiceOperation.h"
+#include "BCClientPluginPrivatePCH.h"
 
 ServiceOperation::ServiceOperation(const FString &operation)
 {
@@ -16,6 +16,12 @@ const ServiceOperation ServiceOperation::Merge = ServiceOperation(TEXT("MERGE"))
 const ServiceOperation ServiceOperation::Detach = ServiceOperation(TEXT("DETACH"));
 const ServiceOperation ServiceOperation::ResetEmailPassword = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD"));
 const ServiceOperation ServiceOperation::ResetEmailPasswordAdvanced = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD_ADVANCED"));
+const ServiceOperation ServiceOperation::ResetEmailPasswordWithExpiry = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD_WITH_EXPIRY"));
+const ServiceOperation ServiceOperation::ResetEmailPasswordAdvancedWithExpiry = ServiceOperation(TEXT("RESET_EMAIL_PASSWORD_ADVANCED_WITH_EXPIRY"));
+const ServiceOperation ServiceOperation::ResetUniversalIdPassword = ServiceOperation(TEXT("RESET_UNIVERSAL_ID_PASSWORD"));
+const ServiceOperation ServiceOperation::ResetUniversalIdPasswordAdvanced = ServiceOperation(TEXT("RESET_UNIVERSAL_ID_PASSWORD_ADVANCED"));
+const ServiceOperation ServiceOperation::ResetUniversalIdPasswordWithExpiry = ServiceOperation(TEXT("RESET_UNIVERSAL_ID_PASSWORD_WITH_EXPIRY"));
+const ServiceOperation ServiceOperation::ResetUniversalIdPasswordAdvancedWithExpiry = ServiceOperation(TEXT("RESET_UNiVERSAL_ID_PASSWORD_ADVANCED_WITH_EXPIRY"));
 const ServiceOperation ServiceOperation::SwitchToChildProfile = ServiceOperation(TEXT("SWITCH_TO_CHILD_PROFILE"));
 const ServiceOperation ServiceOperation::SwitchToParentProfile = ServiceOperation(TEXT("SWITCH_TO_PARENT_PROFILE"));
 const ServiceOperation ServiceOperation::GetChildProfiles = ServiceOperation(TEXT("GET_CHILD_PROFILES"));
@@ -82,6 +88,9 @@ const ServiceOperation ServiceOperation::UpdateEntityIndexedId = ServiceOperatio
 const ServiceOperation ServiceOperation::UpdateEntityOwnerAndAcl = ServiceOperation(TEXT("UPDATE_ENTITY_OWNER_AND_ACL"));
 const ServiceOperation ServiceOperation::MakeSystemEntity = ServiceOperation(TEXT("MAKE_SYSTEM_ENTITY"));
 
+const ServiceOperation ServiceOperation::GetScheduledCloudSripts = ServiceOperation(TEXT("GET_SCHEDULED_CLOUD_SCRIPTS"));
+const ServiceOperation ServiceOperation::GetRunningOrQueuedCloudScripts = ServiceOperation(TEXT("GET_RUNNING_OR_QUEUED_CLOUD_SCRIPTS"));
+
 const ServiceOperation ServiceOperation::GetFriendProfileInfoForExternalId = ServiceOperation(TEXT("GET_FRIEND_PROFILE_INFO_FOR_EXTERNAL_ID"));
 const ServiceOperation ServiceOperation::GetProfileInfoForCredential = ServiceOperation(TEXT("GET_PROFILE_INFO_FOR_CREDENTIAL"));
 const ServiceOperation ServiceOperation::GetProfileInfoForExternalAuthId = ServiceOperation(TEXT("GET_PROFILE_INFO_FOR_EXTERNAL_AUTH_ID"));
@@ -91,11 +100,15 @@ const ServiceOperation ServiceOperation::ReadFriendsEntities = ServiceOperation(
 const ServiceOperation ServiceOperation::ReadFriendsWithApplication = ServiceOperation(TEXT("READ_FRIENDS_WITH_APPLICATION"));
 const ServiceOperation ServiceOperation::ReadFriends = ServiceOperation(TEXT("READ_FRIENDS"));
 const ServiceOperation ServiceOperation::ReadFriendsPlayerState = ServiceOperation(TEXT("READ_FRIEND_PLAYER_STATE"));
+const ServiceOperation ServiceOperation::UpdateTimeZoneOffset = ServiceOperation(TEXT("UPDATE_TIMEZONE_OFFSET"));
+const ServiceOperation ServiceOperation::UpdateLanguageCode = ServiceOperation(TEXT("UPDATE_LANGUAGE_CODE"));
 const ServiceOperation ServiceOperation::FindPlayerByName = ServiceOperation(TEXT("FIND_PLAYER_BY_NAME"));
 const ServiceOperation ServiceOperation::FindUsersByExactName = ServiceOperation(TEXT("FIND_USERS_BY_EXACT_NAME"));
 const ServiceOperation ServiceOperation::FindUsersBySubstrName = ServiceOperation(TEXT("FIND_USERS_BY_SUBSTR_NAME"));
 const ServiceOperation ServiceOperation::ListFriends = ServiceOperation(TEXT("LIST_FRIENDS"));
+const ServiceOperation ServiceOperation::GetMySocialInfo = ServiceOperation(TEXT("GET_MY_SOCIAL_INFO"));
 const ServiceOperation ServiceOperation::AddFriends = ServiceOperation(TEXT("ADD_FRIENDS"));
+const ServiceOperation ServiceOperation::AddFriendsFromPlatform = ServiceOperation(TEXT("ADD_FRIENDS_FROM_PLATFORM"));
 const ServiceOperation ServiceOperation::GetUsersOnlineStatus = ServiceOperation(TEXT("GET_USERS_ONLINE_STATUS"));
 const ServiceOperation ServiceOperation::RemoveFriends = ServiceOperation(TEXT("REMOVE_FRIENDS"));
 const ServiceOperation ServiceOperation::FindPlayerByUniversalId = ServiceOperation(TEXT("FIND_PLAYER_BY_UNIVERSAL_ID"));
@@ -122,10 +135,18 @@ const ServiceOperation ServiceOperation::ListAllLeaderboards = ServiceOperation(
 const ServiceOperation ServiceOperation::GetGlobalLeaderboardEntryCount = ServiceOperation(TEXT("GET_GLOBAL_LEADERBOARD_ENTRY_COUNT"));
 const ServiceOperation ServiceOperation::RemovePlayerScore = ServiceOperation(TEXT("REMOVE_PLAYER_SCORE"));
 const ServiceOperation ServiceOperation::GetPlayerScore = ServiceOperation(TEXT("GET_PLAYER_SCORE"));
+const ServiceOperation ServiceOperation::GetPlayerScores = ServiceOperation(TEXT("GET_PLAYER_SCORES"));
 const ServiceOperation ServiceOperation::GetPlayerScoresFromLeaderboards = ServiceOperation(TEXT("GET_PLAYER_SCORES_FROM_LEADERBOARDS"));
 const ServiceOperation ServiceOperation::PostScoreToGroupLeaderboard = ServiceOperation(TEXT("POST_GROUP_SCORE"));
+const ServiceOperation ServiceOperation::PostScoreToDynamicGroupLeaderboard = ServiceOperation(TEXT("POST_GROUP_SCORE_DYNAMIC"));
 const ServiceOperation ServiceOperation::RemoveGroupScore = ServiceOperation(TEXT("REMOVE_GROUP_SCORE"));
 const ServiceOperation ServiceOperation::GetGroupLeaderboardView = ServiceOperation(TEXT("GET_GROUP_LEADERBOARD_VIEW"));
+
+//Global File
+const ServiceOperation ServiceOperation::GetFileInfo = ServiceOperation(TEXT("GET_FILE_INFO"));
+const ServiceOperation ServiceOperation::GetFileInfoSimple = ServiceOperation(TEXT("GET_FILE_INFO_SIMPLE"));
+const ServiceOperation ServiceOperation::GetGlobalCDNUrl = ServiceOperation(TEXT("GET_GLOBAL_CDN_URL"));
+const ServiceOperation ServiceOperation::GetGlobalFileList = ServiceOperation(TEXT("GET_GLOBAL_FILE_LIST"));
 
 const ServiceOperation ServiceOperation::InitThirdParty = ServiceOperation(TEXT("initThirdParty"));
 const ServiceOperation ServiceOperation::PostThirdPartyLeaderboardScore = ServiceOperation(TEXT("postThirdPartyLeaderboardScore"));
@@ -152,6 +173,9 @@ const ServiceOperation ServiceOperation::Send = ServiceOperation(TEXT("SEND"));
 const ServiceOperation ServiceOperation::UpdateEventData = ServiceOperation(TEXT("UPDATE_EVENT_DATA"));
 const ServiceOperation ServiceOperation::DeleteSent = ServiceOperation(TEXT("DELETE_SENT"));
 const ServiceOperation ServiceOperation::DeleteIncoming = ServiceOperation(TEXT("DELETE_INCOMING"));
+const ServiceOperation ServiceOperation::DeleteIncomingEvents = ServiceOperation("DELETE_INCOMING_EVENTS");
+const ServiceOperation ServiceOperation::DeleteIncomingEventsOlderThan = ServiceOperation("DELETE_INCOMING_EVENTS_OLDER_THAN");
+const ServiceOperation ServiceOperation::DeleteIncomingEventsByTypeOlderThan = ServiceOperation("DELETE_INCOMING_EVENTS_BY_TYPE_OLDER_THAN");
 const ServiceOperation ServiceOperation::GetEvents = ServiceOperation(TEXT("GET_EVENTS"));
 
 const ServiceOperation ServiceOperation::UpdateIncrement = ServiceOperation(TEXT("UPDATE_INCREMENT"));
@@ -266,6 +290,8 @@ const ServiceOperation ServiceOperation::GetUserStatus = ServiceOperation(TEXT("
 const ServiceOperation ServiceOperation::SetUserStatus = ServiceOperation(TEXT("SET_USER_STATUS"));
 
 const ServiceOperation ServiceOperation::ReadProperties = ServiceOperation(TEXT("READ_PROPERTIES"));
+const ServiceOperation ServiceOperation::ReadSelectedProperties = ServiceOperation(TEXT("READ_SELECTED_PROPERTIES"));
+const ServiceOperation ServiceOperation::ReadPropertiesInCategories = ServiceOperation(TEXT("READ_PROPERTIES_IN_CATEGORIES"));
 
 const ServiceOperation ServiceOperation::GetUpdatedFiles = ServiceOperation(TEXT("GET_UPDATED_FILES"));
 const ServiceOperation ServiceOperation::GetFileList = ServiceOperation(TEXT("GET_FILE_LIST"));
@@ -299,6 +325,7 @@ const ServiceOperation ServiceOperation::AcceptGroupInvitation = ServiceOperatio
 const ServiceOperation ServiceOperation::AddGroupMember = ServiceOperation(TEXT("ADD_GROUP_MEMBER"));
 const ServiceOperation ServiceOperation::ApproveGroupJoinRequest = ServiceOperation(TEXT("APPROVE_GROUP_JOIN_REQUEST"));
 const ServiceOperation ServiceOperation::AutoJoinGroup = ServiceOperation(TEXT("AUTO_JOIN_GROUP"));
+const ServiceOperation ServiceOperation::AutoJoinGroupMulti = ServiceOperation(TEXT("AUTO_JOIN_GROUP_MULTI"));
 const ServiceOperation ServiceOperation::CancelGroupInvitation = ServiceOperation(TEXT("CANCEL_GROUP_INVITATION"));
 const ServiceOperation ServiceOperation::CreateGroup = ServiceOperation(TEXT("CREATE_GROUP"));
 const ServiceOperation ServiceOperation::CreateGroupEntity = ServiceOperation(TEXT("CREATE_GROUP_ENTITY"));
@@ -375,6 +402,7 @@ const ServiceOperation ServiceOperation::GetEligiblePromotions = ServiceOperatio
 const ServiceOperation ServiceOperation::GetSalesInventory = ServiceOperation(TEXT("GET_INVENTORY"));
 const ServiceOperation ServiceOperation::StartPurchase = ServiceOperation(TEXT("START_PURCHASE"));
 const ServiceOperation ServiceOperation::FinalizePurchase = ServiceOperation(TEXT("FINALIZE_PURCHASE"));
+const ServiceOperation ServiceOperation::RefreshPromotions = ServiceOperation(TEXT("REFRESH_PROMOTIONS"));
 
 // rtt
 const ServiceOperation ServiceOperation::RequestClientConnection = ServiceOperation(TEXT("REQUEST_CLIENT_CONNECTION"));
@@ -423,6 +451,8 @@ const ServiceOperation ServiceOperation::RemoveMember = ServiceOperation("REMOVE
 const ServiceOperation ServiceOperation::CancelFindRequest = ServiceOperation("CANCEL_FIND_REQUEST");
 const ServiceOperation ServiceOperation::GetRegionsForLobbies = ServiceOperation("GET_REGIONS_FOR_LOBBIES");
 const ServiceOperation ServiceOperation::PingData = ServiceOperation("PING_DATA");	// not an official API, but need it for proper calback
+const ServiceOperation ServiceOperation::GetLobbyInstances = ServiceOperation("GET_LOBBY_INSTANCES");
+const ServiceOperation ServiceOperation::GetLobbyInstancesWithPingData = ServiceOperation("GET_LOBBY_INSTANCES_WITH_PING_DATA");
 
 // user inventory management
 const ServiceOperation ServiceOperation::AwardUserItem = ServiceOperation("AWARD_USER_ITEM");
@@ -453,8 +483,11 @@ const ServiceOperation ServiceOperation::CustomEntityGetPageOffset = ServiceOper
 const ServiceOperation ServiceOperation::CustomEntityGetEntityPage = ServiceOperation("GET_ENTITY_PAGE");
 const ServiceOperation ServiceOperation::CustomEntityGetEntityPageOffset = ServiceOperation("GET_ENTITY_PAGE_OFFSET");
 const ServiceOperation ServiceOperation::ReadEntity = ServiceOperation("READ_ENTITY");
+const ServiceOperation ServiceOperation::IncrementData = ServiceOperation("INCREMENT_DATA");
 const ServiceOperation ServiceOperation::UpdateEntity = ServiceOperation("UPDATE_ENTITY");
 const ServiceOperation ServiceOperation::UpdateEntityFields = ServiceOperation("UPDATE_ENTITY_FIELDS");
+const ServiceOperation ServiceOperation::DeleteEntities = ServiceOperation("DELETE_ENTITIES");
+const ServiceOperation ServiceOperation::UpdateSingletonFields = ServiceOperation("UPDATE_SINGLETON_FIELDS");
 
 bool ServiceOperation::operator==(const ServiceOperation &s) const
 {

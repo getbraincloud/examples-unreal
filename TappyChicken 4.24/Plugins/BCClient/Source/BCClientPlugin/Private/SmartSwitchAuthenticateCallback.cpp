@@ -1,6 +1,6 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
-#include "BCClientPluginPrivatePCH.h"
 #include "SmartSwitchAuthenticateCallback.h"
+#include "BCClientPluginPrivatePCH.h"
 #include "ServerCall.h"
 
 #include "BrainCloudWrapper.h"
@@ -53,6 +53,24 @@ void SmartSwitchAuthenticateCallback::serverCallback(ServiceName serviceName, Se
     case EBCAuthType::Facebook:
     {
         m_wrapper->getBCClient()->getAuthenticationService()->authenticateFacebook(m_userId, m_token, m_forceCreate, m_callback);
+    }
+    break;
+
+    case EBCAuthType::FacebookLimited:
+    {
+        m_wrapper->getBCClient()->getAuthenticationService()->authenticateFacebookLimited(m_userId, m_token, m_forceCreate, m_callback);
+    }
+    break;
+
+    case EBCAuthType::Oculus:
+    {
+        m_wrapper->getBCClient()->getAuthenticationService()->authenticateOculus(m_userId, m_token, m_forceCreate, m_callback);
+    }
+    break;
+
+    case EBCAuthType::PlaystationNetwork:
+    {
+        m_wrapper->getBCClient()->getAuthenticationService()->authenticatePlaystationNetwork(m_userId, m_token, m_forceCreate, m_callback);
     }
     break;
 

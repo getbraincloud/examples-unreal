@@ -1,8 +1,8 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
-#include "BrainCloudComms.h"
 
+#include "BrainCloudComms.h"
+#include "BCClientPluginPrivatePCH.h"
 #include "IServerCallback.h"
 #include "IEventCallback.h"
 #include "IRewardCallback.h"
@@ -45,7 +45,16 @@ void BrainCloudComms::Initialize(const FString &serverURL, const FString &secret
 	_secretMap.Emplace(appId, secretKey);
 
 	_uploadUrl = _serverUrl;
-	_uploadUrl.RemoveFromEnd(TEXT("/dispatcherv2"));
+	FString suffix = "/dispatcherv2";
+	if(_uploadUrl.EndsWith(suffix))
+	{
+		_uploadUrl.RemoveFromEnd(TEXT("/dispatcherv2"));
+	}
+	while(_uploadUrl.Len() > 0 && _uploadUrl.EndsWith("/"))                         
+	{
+		_uploadUrl = _uploadUrl.Mid(0, _uploadUrl.Len() - 1);
+	}
+
 	_uploadUrl += TEXT("/uploader");
 }
 
@@ -69,10 +78,11 @@ void BrainCloudComms::InitializeWithApps(const FString &serverURL, const TMap<FS
 
 void BrainCloudComms::SetPacketTimeoutsToDefault()
 {
-	_packetTimeouts.Empty();
+    _packetTimeouts.Empty();
 	_packetTimeouts.Add(15);
-	_packetTimeouts.Add(10);
-	_packetTimeouts.Add(10);
+	_packetTimeouts.Add(20);
+	_packetTimeouts.Add(35);
+	_packetTimeouts.Add(50);
 }
 
 void BrainCloudComms::AddToQueue(ServerCall *serverCall)
@@ -241,9 +251,18 @@ BrainCloudComms::PacketRef BrainCloudComms::BuildPacket(TSharedRef<ServerCall> s
 	return packet;
 }
 
+#if ENGINE_MINOR_VERSION > 25
+TSharedRef<IHttpRequest,ESPMode::ThreadSafe> BrainCloudComms::SendPacket(PacketRef packet)
+#else
 TSharedRef<IHttpRequest> BrainCloudComms::SendPacket(PacketRef packet)
+#endif
 {
+	#if ENGINE_MINOR_VERSION > 25
+	TSharedRef<IHttpRequest,ESPMode::ThreadSafe> httpRequest = FHttpModule::Get().CreateRequest();
+	#else
 	TSharedRef<IHttpRequest> httpRequest = FHttpModule::Get().CreateRequest();
+	#endif
+
 
 	FString packetIdStr = FString::FormatAsNumber(_packetId);
 	_currentPacket = packet;
@@ -262,7 +281,9 @@ TSharedRef<IHttpRequest> BrainCloudComms::SendPacket(PacketRef packet)
 	if (_secretKey.Len() > 0)
 	{
 		FString secret = dataString + _secretKey;
-		FString secretHeader = FMD5::HashAnsiString(*secret);
+		FTCHARToUTF8 utf8_str(*secret);
+		int32 len = utf8_str.Length();
+		FString secretHeader = FMD5::HashBytes((const uint8 *)utf8_str.Get(),(uint64)len);
 		httpRequest->SetHeader(TEXT("X-SIG"), secretHeader);
 	}
 
@@ -277,7 +298,11 @@ void BrainCloudComms::ResendActivePacket()
 {
 	if (!_activeRequest.IsValid())
 		return;
+	#if ENGINE_MINOR_VERSION > 25
+	TSharedRef<IHttpRequest,ESPMode::ThreadSafe> httpRequest = FHttpModule::Get().CreateRequest();
+	#else
 	TSharedRef<IHttpRequest> httpRequest = FHttpModule::Get().CreateRequest();
+	#endif
 
 	httpRequest->SetURL(_serverUrl);
 	httpRequest->SetVerb(TEXT("POST"));
@@ -891,6 +916,7 @@ void BrainCloudComms::ResetCommunication()
 	_queueMutex.Unlock();
 	_isAuthenticated = false;
 	_sessionId = TEXT("");
+	_packetId = 0;
 	ResetErrorCache();
 	_waitingForRetry = false;
 

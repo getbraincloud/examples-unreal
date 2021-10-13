@@ -41,6 +41,8 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam TwitterServiceTweetPic;
 
 	// Authenticate Service - Authenticate Params
+	static const OperationParam AuthenticateServiceAuthenticateUniversalId;
+	static const OperationParam AuthenticateServiceAuthenticateTokenTtlInMinutes;
 	static const OperationParam AuthenticateServiceAuthenticateAuthenticationType;
 	static const OperationParam AuthenticateServiceAuthenticateAuthenticationToken;
 	static const OperationParam AuthenticateServiceAuthenticateExternalId;
@@ -53,7 +55,10 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam AuthenticateServiceAuthenticateGameVersion;
 	static const OperationParam AuthenticateServiceAuthenticateBrainCloudVersion;
 	static const OperationParam AuthenticateServiceAuthenticateAuthFacebook;
+	static const OperationParam AuthenticateServiceAuthenticateAuthFacebookLimited;
+	static const OperationParam AuthenticateServiceAuthenticateAuthOculus;
 	static const OperationParam AuthenticateServiceAuthenticateAuthEmail;
+	static const OperationParam AuthenticateServiceAuthenticateAuthPlaystationNetwork;
 	static const OperationParam AuthenticateServiceAuthenticateAuthGameCenter;
 	static const OperationParam AuthenticateServiceAuthenticateAuthUniversal;
 	static const OperationParam AuthenticateServiceAuthenticateAuthSteam;
@@ -137,6 +142,9 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam EventServiceUpdateEventDataEventId;
 	static const OperationParam EventServiceUpdateEventDataData;
 	static const OperationParam EvId;
+	static const OperationParam EventServiceEvIds;	
+	static const OperationParam EventServiceDateMillis;	
+	static const OperationParam EventServiceEventType;
 
 	// Event Service - Delete Incoming Params
 	static const OperationParam EventServiceDeleteIncomingEventId;
@@ -152,7 +160,9 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam FriendServiceAuthenticationType;
 	static const OperationParam FriendServiceEntityId;
 	static const OperationParam FriendServiceExternalId;
+	static const OperationParam FriendServiceExternalIds;
 	static const OperationParam FriendServiceProfileId;
+	static const OperationParam FriendServiceMode;
 	static const OperationParam FriendServiceFriendId;
 	static const OperationParam FriendServiceEntityType;
 	static const OperationParam FriendServiceIncludeSummaryData;
@@ -206,6 +216,8 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam PlayerStateServiceAdditionalSecs;
 	static const OperationParam PlayerStateServiceDetails;
 	static const OperationParam PlayerStateServiceDurationSecs;
+	static const OperationParam PlayerStateServiceTimeZoneOffset;
+	static const OperationParam PlayerStateServiceLanguageCode;
 
 	// Player Statistics Service - Update Increment Params
 	static const OperationParam PlayerStatisticsServiceStats;
@@ -274,6 +286,7 @@ class BCCLIENTPLUGIN_API OperationParam
 
 	static const OperationParam ReleasePlatformIos;
 	static const OperationParam ReleasePlatformFacebook;
+		static const OperationParam ReleasePlatformOculus;
 	static const OperationParam ReleasePlatformBlackberry;
 	static const OperationParam ReleasePlatformGoogleAndroid;
 	static const OperationParam ReleasePlatformWindowsPhone;
@@ -387,6 +400,7 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam GroupAttributes;
 	static const OperationParam GroupName;
 	static const OperationParam GroupType;
+	static const OperationParam GroupTypes;
 	static const OperationParam GroupIsOpenGroup;
 	static const OperationParam GroupAcl;
 	static const OperationParam GroupData;
@@ -418,6 +432,12 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam Score;
 	static const OperationParam RoundStartedEpoch;
 	static const OperationParam Data;
+
+	//Global File
+	static const OperationParam GlobalFileFileName;
+	static const OperationParam GlobalFileFileId;
+	static const OperationParam GlobalFileFolderPath;
+	static const OperationParam GlobalFileRecurse;
 
 	//virtual currency
 	static const OperationParam VirtualCurrencyVcId;
@@ -484,7 +504,10 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam LobbySignalData;
 	static const OperationParam LobbyConnectionId;
 	static const OperationParam PingData;
-
+	static const OperationParam LobbyMinRating;
+	static const OperationParam LobbyMaxRating;
+	static const OperationParam LobbyCriteria;
+	
 	//customEntity
 	static const OperationParam CustomEntityServiceEntityType;
 	static const OperationParam CustomEntityServiceJsonEntityData;
@@ -493,6 +516,7 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam CustomEntityServiceEntityId;
 	static const OperationParam CustomEntityServiceVersion;
 	static const OperationParam CustomEntityServiceWhereJson;
+	static const OperationParam CustomEntityServiceMaxReturn;
 	static const OperationParam CustomEntityServiceRowsPerPage;
 	static const OperationParam CustomEntityServiceSearchJson;
 	static const OperationParam CustomEntityServiceSortJson;
@@ -501,6 +525,11 @@ class BCCLIENTPLUGIN_API OperationParam
 	static const OperationParam CustomEntityServicePageOffset;
 	static const OperationParam CustomEntityServiceFieldsJson;
 	static const OperationParam CustomEntityServiceDataJson;
+	static const OperationParam CustomEntityServiceDeleteCriteria;
+
+	//global app
+	static const OperationParam GlobalAppReadSelectedProperties;
+	static const OperationParam GlobalAppReadPropertiesInCategories;
 
 	FString getValue() const { return _value; }
 

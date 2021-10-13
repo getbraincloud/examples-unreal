@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudIdentity.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -41,6 +41,51 @@ void BrainCloudIdentity::mergeFacebookIdentity(const FString &facebookId, const 
 void BrainCloudIdentity::detachFacebookIdentity(const FString &facebookId, bool continueAnon, IServerCallback *callback)
 {
 	detachIdentity(facebookId, EBCAuthType::Facebook, continueAnon, callback);
+}
+
+void BrainCloudIdentity::attachFacebookLimitedIdentity(const FString &facebookLimitedId, const FString &authenticationToken, IServerCallback *callback)
+{
+	attachIdentity(facebookLimitedId, authenticationToken, EBCAuthType::FacebookLimited, callback);
+}
+
+void BrainCloudIdentity::mergeFacebookLimitedIdentity(const FString &facebookLimitedId, const FString &authenticationToken, IServerCallback *callback)
+{
+	mergeIdentity(facebookLimitedId, authenticationToken, EBCAuthType::FacebookLimited, callback);
+}
+
+void BrainCloudIdentity::detachFacebookLimitedIdentity(const FString &facebookLimitedId, bool continueAnon, IServerCallback *callback)
+{
+	detachIdentity(facebookLimitedId, EBCAuthType::FacebookLimited, continueAnon, callback);
+}
+
+void BrainCloudIdentity::attachOculusIdentity(const FString &oculusId, const FString &oculusNonce, IServerCallback *callback)
+{
+	attachIdentity(oculusId, oculusNonce, EBCAuthType::Oculus, callback);
+}
+
+void BrainCloudIdentity::mergeOculusIdentity(const FString &oculusId, const FString &oculusNonce, IServerCallback *callback)
+{
+	mergeIdentity(oculusId, oculusNonce, EBCAuthType::Oculus, callback);
+}
+
+void BrainCloudIdentity::detachOculusIdentity(const FString &oculusId, bool continueAnon, IServerCallback *callback)
+{
+	detachIdentity(oculusId, EBCAuthType::Oculus, continueAnon, callback);
+}
+
+void BrainCloudIdentity::attachPlaystationNetworkIdentity(const FString &accountId, const FString &authenticationToken, IServerCallback *callback)
+{
+	attachIdentity(accountId, authenticationToken, EBCAuthType::Facebook, callback);
+}
+
+void BrainCloudIdentity::mergePlaystationNetworkIdentity(const FString &accountId, const FString &authenticationToken, IServerCallback *callback)
+{
+	mergeIdentity(accountId, authenticationToken, EBCAuthType::Facebook, callback);
+}
+
+void BrainCloudIdentity::detachPlaystationNetworkIdentity(const FString &accountId, bool continueAnon, IServerCallback *callback)
+{
+	detachIdentity(accountId, EBCAuthType::PlaystationNetwork, continueAnon, callback);
 }
 
 void BrainCloudIdentity::attachEmailIdentity(const FString &email, const FString &password, IServerCallback *callback)
@@ -103,19 +148,49 @@ void BrainCloudIdentity::detachSteamIdentity(const FString &steamId, bool contin
 	detachIdentity(steamId, EBCAuthType::Steam, continueAnon, callback);
 }
 
-void BrainCloudIdentity::attachGoogleIdentity(const FString &googleId, const FString &authenticationToken, IServerCallback *callback)
+void BrainCloudIdentity::attachGoogleIdentity(const FString &googleUserId, const FString &serverAuthCode, IServerCallback *callback)
 {
-	attachIdentity(googleId, authenticationToken, EBCAuthType::Google, callback);
+	attachIdentity(googleUserId, serverAuthCode, EBCAuthType::Google, callback);
 }
 
-void BrainCloudIdentity::mergeGoogleIdentity(const FString &googleId, const FString &authenticationToken, IServerCallback *callback)
+void BrainCloudIdentity::mergeGoogleIdentity(const FString &googleUserId, const FString &serverAuthCode, IServerCallback *callback)
 {
-	mergeIdentity(googleId, authenticationToken, EBCAuthType::Google, callback);
+	mergeIdentity(googleUserId, serverAuthCode, EBCAuthType::Google, callback);
 }
 
-void BrainCloudIdentity::detachGoogleIdentity(const FString &googleId, bool continueAnon, IServerCallback *callback)
+void BrainCloudIdentity::detachGoogleIdentity(const FString &googleUserId, bool continueAnon, IServerCallback *callback)
 {
-	detachIdentity(googleId, EBCAuthType::Google, continueAnon, callback);
+	detachIdentity(googleUserId, EBCAuthType::Google, continueAnon, callback);
+}
+
+void BrainCloudIdentity::attachGoogleOpenIdIdentity(const FString &googleUserAccountEmail, const FString &IdToken, IServerCallback *callback)
+{
+	attachIdentity(googleUserAccountEmail, IdToken, EBCAuthType::GoogleOpenId, callback);
+}
+
+void BrainCloudIdentity::mergeGoogleOpenIdIdentity(const FString &googleUserAccountEmail, const FString &IdToken, IServerCallback *callback)
+{
+	mergeIdentity(googleUserAccountEmail, IdToken, EBCAuthType::GoogleOpenId, callback);
+}
+
+void BrainCloudIdentity::detachGoogleOpenIdIdentity(const FString &googleUserAccountEmail, bool continueAnon, IServerCallback *callback)
+{
+	detachIdentity(googleUserAccountEmail, EBCAuthType::GoogleOpenId, continueAnon, callback);
+}
+
+void BrainCloudIdentity::attachAppleIdentity(const FString &appleUserId, const FString &identityToken, IServerCallback *callback)
+{
+	attachIdentity(appleUserId, identityToken, EBCAuthType::Apple, callback);
+}
+
+void BrainCloudIdentity::mergeAppleIdentity(const FString &appleUserId, const FString &identityToken, IServerCallback *callback)
+{
+	mergeIdentity(appleUserId, identityToken, EBCAuthType::Apple, callback);
+}
+
+void BrainCloudIdentity::detachAppleIdentity(const FString &appleUserId, bool continueAnon, IServerCallback *callback)
+{
+	detachIdentity(appleUserId, EBCAuthType::Apple, continueAnon, callback);
 }
 
 void BrainCloudIdentity::attachTwitterIdentity(const FString &twitterId, const FString &authenticationToken, const FString &secret, IServerCallback *callback)

@@ -1,8 +1,8 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+
 #include "BrainCloudClient.h"
 #include "BCClientPluginPrivatePCH.h"
-
 #include "GameDelegates.h"
 #include "BrainCloudComms.h"
 #include "BrainCloudRTTComms.h"
@@ -20,7 +20,7 @@
 #include "BCPlatform.h"
 
 // Define all static member variables.
-FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.7.0");
+FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.6.1");
 
 ////////////////////////////////////////////////////
 // (De)Constructors

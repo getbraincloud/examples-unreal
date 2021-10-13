@@ -1,8 +1,8 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
-#include "BrainCloudClient.h"
 
+#include "BrainCloudClient.h"
+#include "BCClientPluginPrivatePCH.h"
 #include "GameDelegates.h"
 #include "BrainCloudComms.h"
 #include "BrainCloudRTTComms.h"
@@ -20,7 +20,7 @@
 #include "BCPlatform.h"
 
 // Define all static member variables.
-FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.2.0");
+FString BrainCloudClient::s_brainCloudClientVersion = TEXT("4.6.1");
 
 ////////////////////////////////////////////////////
 // (De)Constructors
@@ -44,6 +44,7 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_brainCloudComms);
 	destroyService(_brainCloudRTTComms);
 	destroyService(_brainCloudRelayComms);
+	destroyService(_brainCloudTimeUtils);
 
 	destroyService(_authenticationService);
 	destroyService(_leaderboardService);
@@ -55,7 +56,6 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_playerStatisticsService);
 	destroyService(_timeService);
 	destroyService(_playerStatisticsEventService);
-	destroyService(_productService);
 	destroyService(_identityService);
 	destroyService(_itemCatalogService);
 	destroyService(_userItemsService);
@@ -76,6 +76,7 @@ BrainCloudClient::~BrainCloudClient()
 	destroyService(_groupService);
 	destroyService(_mailService);
 	destroyService(_tournamentService);
+	destroyService(_globalFileService);
 	destroyService(_customEntityService);
 	destroyService(_presenceService);
 	destroyService(_virtualCurrencyService);
@@ -96,6 +97,7 @@ void BrainCloudClient::initialize(
 	const FString &appId,
 	const FString &appVersion)
 {
+	resetCommunication();
 	FString error = "";
 	if (serverUrl.IsEmpty())
 		error = "serverURL was null or empty";
@@ -133,6 +135,7 @@ void BrainCloudClient::initializeWithApps(
 	const TMap<FString, FString> &secretMap,
 	const FString &appVersion)
 {
+	resetCommunication();
 	const FString &newAppId = secretMap[appId];
 	FString error = "";
 	if (serverUrl.IsEmpty())
@@ -406,6 +409,15 @@ void BrainCloudClient::insertEndOfMessageBundleMarker()
 	_brainCloudComms->InsertEndOfMessageBundleMarker();
 }
 
+BrainCloudTimeUtils *BrainCloudClient::getUtil()
+{
+	if (_brainCloudTimeUtils == nullptr)
+	{
+		_brainCloudTimeUtils = new BrainCloudTimeUtils(this);
+	}
+	return _brainCloudTimeUtils;
+}
+
 BrainCloudAuthentication *BrainCloudClient::getAuthenticationService()
 {
 	if (_authenticationService == nullptr)
@@ -503,15 +515,6 @@ BrainCloudPresence *BrainCloudClient::getPresenceService()
 		_presenceService = new BrainCloudPresence(this);
 	}
 	return _presenceService;
-}
-
-BrainCloudProduct *BrainCloudClient::getProductService()
-{
-	if (_productService == nullptr)
-	{
-		_productService = new BrainCloudProduct(this);
-	}
-	return _productService;
 }
 
 BrainCloudIdentity *BrainCloudClient::getIdentityService()
@@ -694,6 +697,15 @@ BrainCloudTournament *BrainCloudClient::getTournamentService()
 	return _tournamentService;
 }
 
+BrainCloudGlobalFile *BrainCloudClient::getGlobalFileService()
+{
+	if (_globalFileService == nullptr)
+	{
+		_globalFileService = new BrainCloudGlobalFile(this);
+	}
+	return _globalFileService;
+}
+
 BrainCloudCustomEntity *BrainCloudClient::getCustomEntityService()
 {
 	if (_customEntityService == nullptr)
@@ -762,7 +774,7 @@ BrainCloudRelay *BrainCloudClient::getRelayService()
 {
 	if (_relayService == nullptr)
 	{
-		_relayService = new BrainCloudRelay(_brainCloudRelayComms);
+		_relayService = new BrainCloudRelay(this, _brainCloudRelayComms);
 	}
 	return _relayService;
 }
@@ -797,7 +809,17 @@ void BrainCloudClient::determineReleasePlatform()
 	else if (platform == TEXT("IOS"))
 		_releasePlatform = BCPlatform::EnumToString(EBCPlatform::IOS);
 	else if (platform == TEXT("Android"))
-		_releasePlatform = BCPlatform::EnumToString(EBCPlatform::GOOGLE_PLAY_ANDROID);
+	{
+		#if PLATFORM_ANDROID
+		if(FAndroidMisc::GetDeviceMake() == TEXT("Amazon"))
+		{
+			_releasePlatform = BCPlatform::EnumToString(EBCPlatform::AMAZON_ANDROID);
+		}
+		else{
+			_releasePlatform = BCPlatform::EnumToString(EBCPlatform::GOOGLE_PLAY_ANDROID);
+		}
+		#endif
+	}
 	else if (platform == TEXT("Linux"))
 		_releasePlatform = BCPlatform::EnumToString(EBCPlatform::LINUX_PLATFORM);
 	else if (platform == TEXT("HTML5"))

@@ -49,21 +49,6 @@ void BrainCloudRelay::deregisterDataCallback()
     _relayComms->deregisterDataCallback();
 }
 
-void BrainCloudRelay::registerRelaySystemCallback(IRelaySystemCallback* in_callback)
-{
-	_relayComms->registerRelaySystemCallback(in_callback);
-}
-
-void BrainCloudRelay::registerRelaySystemCallback(UBCBlueprintRelaySystemCallProxyBase* in_callback)
-{
-	_relayComms->registerRelaySystemCallback(in_callback);
-}
-
-void BrainCloudRelay::deregisterRelaySystemCallback()
-{
-	_relayComms->deregisterRelaySystemCallback();
-}
-
 void BrainCloudRelay::send(const TArray<uint8> &in_data, const uint64 in_target, bool in_reliable, bool in_ordered, int in_channel)
 {
 	if (in_target == BrainCloudRelayComms::TO_ALL_PLAYERS)

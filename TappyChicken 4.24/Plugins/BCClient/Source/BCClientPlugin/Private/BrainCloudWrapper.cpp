@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudWrapper.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BCAuthType.h"
 #include "BrainCloudClient.h"
@@ -139,6 +139,27 @@ void UBrainCloudWrapper::authenticateFacebook(FString fbUserId, FString fbAuthTo
     _client->getAuthenticationService()->authenticateFacebook(fbUserId, fbAuthToken, forceCreate, this);
 }
 
+void UBrainCloudWrapper::authenticateFacebookLimited(FString fbLimitedUserId, FString fbAuthToken, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+    _client->getAuthenticationService()->authenticateFacebookLimited(fbLimitedUserId, fbAuthToken, forceCreate, this);
+}
+
+void UBrainCloudWrapper::authenticateOculus(FString oculusUserId, FString oculusNonce, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+    _client->getAuthenticationService()->authenticateOculus(oculusUserId, oculusNonce, forceCreate, this);
+}
+
+void UBrainCloudWrapper::authenticatePlaystationNetwork(FString psnAccountId, FString psnAuthToken, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+    _client->getAuthenticationService()->authenticatePlaystationNetwork(psnAccountId, psnAuthToken, forceCreate, this);
+}
+
 void UBrainCloudWrapper::authenticateGameCenter(FString gameCenterId, bool forceCreate, IServerCallback *callback)
 {
     _authenticateCallback = callback;
@@ -151,6 +172,20 @@ void UBrainCloudWrapper::authenticateGoogle(FString userid, FString token, bool 
     _authenticateCallback = callback;
     initializeIdentity();
     _client->getAuthenticationService()->authenticateGoogle(userid, token, forceCreate, this);
+}
+
+void UBrainCloudWrapper::authenticateGoogleOpenId(FString googleUserAccountEmail, FString IdToken, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+	_client->getAuthenticationService()->authenticateGoogleOpenId(googleUserAccountEmail, IdToken, forceCreate, this);
+}
+
+void UBrainCloudWrapper::authenticateApple(FString appleUserId, FString identityToken, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+	_client->getAuthenticationService()->authenticateApple(appleUserId, identityToken, forceCreate, this);
 }
 
 void UBrainCloudWrapper::authenticateSteam(FString userid, FString sessionticket, bool forceCreate, IServerCallback *callback)
@@ -174,6 +209,20 @@ void UBrainCloudWrapper::authenticateUniversal(FString userid, FString password,
     _client->getAuthenticationService()->authenticateUniversal(userid, password, forceCreate, this);
 }
 
+void UBrainCloudWrapper::authenticateHandoff(FString &handoffId, FString &securityToken, bool forceCreate, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+    _client->getAuthenticationService()->authenticateHandoff(handoffId, securityToken, forceCreate, this);
+}
+
+void UBrainCloudWrapper::authenticateSettopHandoff(FString &handoffCode, IServerCallback *callback)
+{
+    _authenticateCallback = callback;
+    initializeIdentity();
+    _client->getAuthenticationService()->authenticateSettopHandoff(handoffCode, this);
+}
+
 void UBrainCloudWrapper::smartSwitchAuthenticateEmailPassword(const FString &in_email, const FString &in_password, bool in_forceCreate, IServerCallback *in_callback)
 {
     SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::Email, in_email, in_password, in_forceCreate, in_callback);
@@ -192,6 +241,24 @@ void UBrainCloudWrapper::smartSwitchAuthenticateFacebook(const FString &fbUserId
     getIdentitiesCallback(smartCallback);
 }
 
+void UBrainCloudWrapper::smartSwitchAuthenticateFacebookLimited(const FString &fbLimitedUserId, const FString &fbAuthToken, bool in_forceCreate, IServerCallback *in_callback)
+{
+    SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::FacebookLimited, fbLimitedUserId, fbAuthToken, in_forceCreate, in_callback);
+    getIdentitiesCallback(smartCallback);
+}
+
+void UBrainCloudWrapper::smartSwitchAuthenticateOculus(const FString &oculusUserId, const FString &oculusNonce, bool in_forceCreate, IServerCallback *in_callback)
+{
+    SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::Oculus, oculusUserId, oculusNonce, in_forceCreate, in_callback);
+    getIdentitiesCallback(smartCallback);
+}
+
+void UBrainCloudWrapper::smartSwitchAuthenticatePlaystationNetwork(const FString &psnAccountId, const FString &psnAuthToken, bool in_forceCreate, IServerCallback *in_callback)
+{
+    SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::PlaystationNetwork, psnAccountId, psnAuthToken, in_forceCreate, in_callback);
+    getIdentitiesCallback(smartCallback);
+}
+
 void UBrainCloudWrapper::smartSwitchAuthenticateGameCenter(const FString &gameCenterId, bool in_forceCreate, IServerCallback *in_callback)
 {
     FString emptyToken = TEXT("");
@@ -202,6 +269,18 @@ void UBrainCloudWrapper::smartSwitchAuthenticateGameCenter(const FString &gameCe
 void UBrainCloudWrapper::smartSwitchAuthenticateGoogle(const FString &userid, const FString &token, bool in_forceCreate, IServerCallback *in_callback)
 {
     SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::Google, userid, token, in_forceCreate, in_callback);
+    getIdentitiesCallback(smartCallback);
+}
+
+void UBrainCloudWrapper::smartSwitchAuthenticateGoogleOpenId(const FString &googleUserAccountEmail, const FString &IdToken, bool in_forceCreate, IServerCallback *in_callback)
+{
+    SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::GoogleOpenId, googleUserAccountEmail, IdToken, in_forceCreate, in_callback);
+    getIdentitiesCallback(smartCallback);
+}
+
+void UBrainCloudWrapper::smartSwitchAuthenticateApple(const FString &appleUserId, const FString &identityToken, bool in_forceCreate, IServerCallback *in_callback)
+{
+    SmartSwitchAuthenticateCallback *smartCallback = new SmartSwitchAuthenticateCallback(this, EBCAuthType::Apple, appleUserId, identityToken, in_forceCreate, in_callback);
     getIdentitiesCallback(smartCallback);
 }
 
@@ -244,6 +323,36 @@ void UBrainCloudWrapper::resetEmailPassword(const FString &in_email, IServerCall
 void UBrainCloudWrapper::resetEmailPasswordAdvanced(const FString &in_emailAddress, const FString &in_serviceParams, IServerCallback *in_callback)
 {
     _client->getAuthenticationService()->resetEmailPasswordAdvanced(in_emailAddress, in_serviceParams, in_callback);
+}
+
+void UBrainCloudWrapper::resetEmailPasswordWithExpiry(const FString &in_email, int32 in_tokenTtlInMinutes, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetEmailPasswordWithExpiry(in_email, in_tokenTtlInMinutes, in_callback);
+}
+
+void UBrainCloudWrapper::resetEmailPasswordAdvancedWithExpiry(const FString &in_emailAddress, const FString &in_serviceParams, int32 in_tokenTtlInMinutes, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetEmailPasswordAdvancedWithExpiry(in_emailAddress, in_serviceParams, in_tokenTtlInMinutes, in_callback);
+}
+
+void UBrainCloudWrapper::resetUniversalIdPassword(const FString &in_universalId, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetUniversalIdPassword(in_universalId, in_callback);
+}
+
+void UBrainCloudWrapper::resetUniversalIdPasswordAdvanced(const FString &in_universalId, const FString &in_serviceParams, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetUniversalIdPasswordAdvanced(in_universalId, in_serviceParams, in_callback);
+}
+
+void UBrainCloudWrapper::resetUniversalIdPasswordWithExpiry(const FString &in_universalId, int32 in_tokenTtlInMinutes, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetUniversalIdPasswordWithExpiry(in_universalId, in_tokenTtlInMinutes, in_callback);
+}
+
+void UBrainCloudWrapper::resetUniversalIdPasswordAdvancedWithExpiry(const FString &in_universalId, const FString &in_serviceParams, int32 in_tokenTtlInMinutes, IServerCallback *in_callback)
+{
+    _client->getAuthenticationService()->resetUniversalIdPasswordAdvancedWithExpiry(in_universalId, in_serviceParams, in_tokenTtlInMinutes, in_callback);
 }
 
 void UBrainCloudWrapper::reconnect(IServerCallback *callback)
@@ -331,7 +440,10 @@ void UBrainCloudWrapper::loadData()
 
     LoadGameInstance = Cast<UBrainCloudSave>(UGameplayStatics::LoadGameFromSlot(slotName, LoadGameInstance->UserIndex));
     if (LoadGameInstance == nullptr)
+    {
+        saveData();
         return;
+    }
 
     _client->getAuthenticationService()->setProfileId(LoadGameInstance->ProfileId);
     _client->getAuthenticationService()->setAnonymousId(LoadGameInstance->AnonymousId);
