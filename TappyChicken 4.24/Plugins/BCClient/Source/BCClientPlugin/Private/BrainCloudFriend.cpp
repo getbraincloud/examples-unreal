@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudFriend.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -78,15 +78,6 @@ void BrainCloudFriend::readFriendsEntities(const FString &entityType, IServerCal
 	_client->sendRequest(sc);
 }
 
-void BrainCloudFriend::readFriendPlayerState(const FString &friendId, IServerCallback *callback)
-{
-	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-	message->SetStringField(OperationParam::FriendServiceReadPlayerStateFriendId.getValue(), friendId);
-
-	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::ReadFriendsPlayerState, message, callback);
-	_client->sendRequest(sc);
-}
-
 void BrainCloudFriend::readFriendUserState(const FString &friendId, IServerCallback *callback)
 {
 	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
@@ -113,16 +104,6 @@ void BrainCloudFriend::findUsersBySubstrName(const FString &searchText, int32 ma
 	message->SetNumberField(OperationParam::FriendServiceMaxResults.getValue(), maxResults);
 
 	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::FindUsersBySubstrName, message, callback);
-	_client->sendRequest(sc);
-}
-
-void BrainCloudFriend::findPlayerByUniversalId(const FString &searchText, int32 maxResults, IServerCallback *callback)
-{
-	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-	message->SetStringField(OperationParam::FriendServiceSearchText.getValue(), searchText);
-	message->SetNumberField(OperationParam::FriendServiceMaxResults.getValue(), maxResults);
-
-	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::FindPlayerByUniversalId, message, callback);
 	_client->sendRequest(sc);
 }
 
@@ -155,16 +136,6 @@ void BrainCloudFriend::findUsersByNameStartingWith(const FString &searchText, in
 	_client->sendRequest(sc);
 }
 
-void BrainCloudFriend::findUserByUniversalId(const FString &searchText, int32 maxResults, IServerCallback *callback)
-{
-	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-	message->SetStringField(OperationParam::FriendServiceSearchText.getValue(), searchText);
-	message->SetNumberField(OperationParam::FriendServiceMaxResults.getValue(), maxResults);
-
-	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::FindPlayerByUniversalId, message, callback);
-	_client->sendRequest(sc);
-}
-
 void BrainCloudFriend::listFriends(EFriendPlatform friendPlatform, bool includeSummaryData, IServerCallback *callback)
 {
 	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
@@ -175,12 +146,35 @@ void BrainCloudFriend::listFriends(EFriendPlatform friendPlatform, bool includeS
 	_client->sendRequest(sc);
 }
 
+void BrainCloudFriend::getMySocialInfo(EFriendPlatform friendPlatform, bool includeSummaryData, IServerCallback *callback)
+{
+	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+	message->SetBoolField(OperationParam::FriendServiceIncludeSummaryData.getValue(), includeSummaryData);
+	message->SetStringField(OperationParam::FriendServiceFriendPlatform.getValue(), _platformStrings[friendPlatform]);
+
+	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::GetMySocialInfo, message, callback);
+	_client->sendRequest(sc);
+}
+
 void BrainCloudFriend::addFriends(const TArray<FString> &profileIds, IServerCallback *callback)
 {
 	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
 	message->SetArrayField(OperationParam::FriendServiceProfileIds.getValue(), JsonUtil::arrayToJsonArray(profileIds));
 
 	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::AddFriends, message, callback);
+	_client->sendRequest(sc);
+}
+
+void BrainCloudFriend::addFriendsFromPlatform(const EFriendPlatform& friendPlatform, FString mode,
+	const TArray<FString>& externalIds, IServerCallback* callback)
+{
+	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+
+	message->SetStringField(OperationParam::FriendServiceFriendPlatform.getValue(),_platformStrings[friendPlatform]);
+	message->SetStringField(OperationParam::FriendServiceMode.getValue(), mode);
+	message->SetArrayField(OperationParam::FriendServiceExternalIds.getValue(), JsonUtil::arrayToJsonArray(externalIds));
+
+	ServerCall *sc = new ServerCall(ServiceName::Friend, ServiceOperation::AddFriendsFromPlatform, message, callback);
 	_client->sendRequest(sc);
 }
 

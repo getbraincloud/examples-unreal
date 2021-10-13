@@ -1,12 +1,12 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCEntityProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
 #include "BrainCloudWrapper.h"
-#include "BCEntityProxy.h"
 
 UBCEntityProxy::UBCEntityProxy(const FObjectInitializer &ObjectInitializer)
     : Super(ObjectInitializer)
@@ -69,20 +69,6 @@ UBCEntityProxy *UBCEntityProxy::GetEntitiesByType(UBrainCloudWrapper *brainCloud
     return Proxy;
 }
 
-UBCEntityProxy *UBCEntityProxy::GetSharedEntityForPlayerId(UBrainCloudWrapper *brainCloudWrapper, const FString &profileId, const FString &entityId)
-{
-    UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
-    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEntityService()->getSharedEntityForProfileId(profileId, entityId, Proxy);
-    return Proxy;
-}
-
-UBCEntityProxy *UBCEntityProxy::GetSharedEntitiesForPlayerId(UBrainCloudWrapper *brainCloudWrapper, const FString &profileId)
-{
-    UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
-    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEntityService()->getSharedEntitiesForProfileId(profileId, Proxy);
-    return Proxy;
-}
-
 UBCEntityProxy *UBCEntityProxy::UpdateSharedEntity(UBrainCloudWrapper *brainCloudWrapper, const FString &entityId, const FString &targetProfileId, const FString &entityType, const FString &jsonEntityData)
 {
     UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
@@ -132,7 +118,21 @@ UBCEntityProxy *UBCEntityProxy::IncrementSharedUserEntityData(UBrainCloudWrapper
     return Proxy;
 }
 
-UBCEntityProxy *UBCEntityProxy::GetSharedEntitiesListForPlayerId(UBrainCloudWrapper *brainCloudWrapper, const FString &profileId, const FString &whereJson, const FString &orderByJson, int32 maxReturn)
+UBCEntityProxy *UBCEntityProxy::GetSharedEntityForProfileId(UBrainCloudWrapper *brainCloudWrapper, const FString &entityId, const FString &profileId)
+{
+    UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEntityService()->getSharedEntityForProfileId(entityId, profileId, Proxy);
+    return Proxy;
+}
+
+UBCEntityProxy *UBCEntityProxy::GetSharedEntitiesForProfileId(UBrainCloudWrapper *brainCloudWrapper, const FString &profileId)
+{
+    UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEntityService()->getSharedEntitiesForProfileId(profileId, Proxy);
+    return Proxy;
+}
+
+UBCEntityProxy *UBCEntityProxy::GetSharedEntitiesListForProfileId(UBrainCloudWrapper *brainCloudWrapper, const FString &profileId, const FString &whereJson, const FString &orderByJson, int32 maxReturn)
 {
     UBCEntityProxy *Proxy = NewObject<UBCEntityProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getEntityService()->getSharedEntitiesListForProfileId(profileId, whereJson, orderByJson, maxReturn, Proxy);

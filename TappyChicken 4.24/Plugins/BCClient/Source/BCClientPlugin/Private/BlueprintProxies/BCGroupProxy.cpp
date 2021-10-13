@@ -1,11 +1,11 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCGroupProxy.h"
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
-#include "BCGroupProxy.h"
 #include "BrainCloudGroupACL.h"
 #include "BrainCloudWrapper.h"
 
@@ -39,6 +39,13 @@ UBCGroupProxy *UBCGroupProxy::AutoJoinGroup(UBrainCloudWrapper *brainCloudWrappe
 {
     UBCGroupProxy *Proxy = NewObject<UBCGroupProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getGroupService()->autoJoinGroup(groupType, autoJoinStrategy, dataQueryJson, Proxy);
+    return Proxy;
+}
+
+UBCGroupProxy *UBCGroupProxy::AutoJoinGroupMulti(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> &groupTypes, EAutoJoinStrategy autoJoinStrategy, const FString &dataQueryJson)
+{
+    UBCGroupProxy *Proxy = NewObject<UBCGroupProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getGroupService()->autoJoinGroupMulti(groupTypes, autoJoinStrategy, dataQueryJson, Proxy);
     return Proxy;
 }
 

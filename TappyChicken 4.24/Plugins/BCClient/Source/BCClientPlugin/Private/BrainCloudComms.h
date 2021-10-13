@@ -1,6 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
 #pragma once
+#include "Interfaces/IHttpRequest.h"
 
 class IEventCallback;
 class IRewardCallback;
@@ -11,7 +12,6 @@ class ServerCall;
 class BCFileUploader;
 class BrainCloudClient;
 class UBCBlueprintRestCallProxyBase;
-
 class BrainCloudComms
 {
 	typedef TSharedRef<TArray<TSharedRef<ServerCall>>> PacketRef;
@@ -99,7 +99,11 @@ class BrainCloudComms
 	void CreateAndSendNextRequestBundle();
 	PacketRef BuildPacket();
 	PacketRef BuildPacket(TSharedRef<ServerCall> sc);
+	#if ENGINE_MINOR_VERSION > 25
+	TSharedRef<IHttpRequest,ESPMode::ThreadSafe> SendPacket(PacketRef packet);
+	#else
 	TSharedRef<IHttpRequest> SendPacket(PacketRef packet);
+	#endif
 	void ResendActivePacket();
 	void FilterIncomingMessages(TSharedRef<ServerCall> servercall, TSharedRef<FJsonObject> response);
 

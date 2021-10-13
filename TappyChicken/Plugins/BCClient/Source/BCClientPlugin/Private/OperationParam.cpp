@@ -162,6 +162,9 @@ const OperationParam OperationParam::EventServiceUpdateEventDataFromId = Operati
 const OperationParam OperationParam::EventServiceUpdateEventDataEventId = OperationParam("eventId");
 const OperationParam OperationParam::EventServiceUpdateEventDataData = OperationParam("eventData");
 const OperationParam OperationParam::EvId = OperationParam("evId");
+const OperationParam OperationParam::EventServiceEvIds = OperationParam("evIds");
+const OperationParam OperationParam::EventServiceDateMillis = OperationParam("dateMillis");
+const OperationParam OperationParam::EventServiceEventType = OperationParam("eventType");
 
 // Event Service - Delete Incoming Params
 const OperationParam OperationParam::EventServiceDeleteIncomingEventId = OperationParam("eventId");
@@ -177,7 +180,9 @@ const OperationParam OperationParam::EventServiceIncludeSentEvents = OperationPa
 const OperationParam OperationParam::FriendServiceAuthenticationType = OperationParam("authenticationType");
 const OperationParam OperationParam::FriendServiceEntityId = OperationParam("entityId");
 const OperationParam OperationParam::FriendServiceExternalId = OperationParam("externalId");
+const OperationParam OperationParam::FriendServiceExternalIds = OperationParam("externalIds");
 const OperationParam OperationParam::FriendServiceProfileId = OperationParam("profileId");
+const OperationParam OperationParam::FriendServiceMode = OperationParam("mode");
 const OperationParam OperationParam::FriendServiceFriendId = OperationParam("friendId");
 const OperationParam OperationParam::FriendServiceEntityType = OperationParam("entityType");
 const OperationParam OperationParam::FriendServiceEntitySubType = OperationParam("entitySubtype");
@@ -524,6 +529,13 @@ const OperationParam OperationParam::LobbyToTeamName = OperationParam("toTeamCod
 const OperationParam OperationParam::LobbySignalData = OperationParam("signalData");
 const OperationParam OperationParam::LobbyConnectionId = OperationParam("cxId");
 const OperationParam OperationParam::PingData = OperationParam("pingData");
+const OperationParam OperationParam::LobbyMinRating = OperationParam("minRating");
+const OperationParam OperationParam::LobbyMaxRating = OperationParam("maxRating");
+const OperationParam OperationParam::LobbyCriteria = OperationParam("criteriaJson");
+
+//global app
+const OperationParam OperationParam::GlobalAppReadSelectedProperties = OperationParam("propertyNames");
+const OperationParam OperationParam::GlobalAppReadPropertiesInCategories = OperationParam("categories");
 
 bool OperationParam::operator==(const OperationParam &s) const
 {

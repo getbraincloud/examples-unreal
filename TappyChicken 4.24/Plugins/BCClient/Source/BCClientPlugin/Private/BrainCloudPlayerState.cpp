@@ -1,25 +1,13 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudPlayerState.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 #include "JsonUtil.h"
 
 BrainCloudPlayerState::BrainCloudPlayerState(BrainCloudClient *client) : _client(client){};
-
-void BrainCloudPlayerState::readPlayerState(IServerCallback *callback, const FString &entityTypeFilter)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-    if (entityTypeFilter.Len() > 0)
-    {
-        message->SetStringField(OperationParam::PlayerStateServiceReadEntitySubtype.getValue(), entityTypeFilter);
-    }
-
-    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::Read, message, callback);
-    _client->sendRequest(sc);
-}
 
 void BrainCloudPlayerState::readUserState(IServerCallback *callback, const FString &entityTypeFilter)
 {
@@ -33,27 +21,11 @@ void BrainCloudPlayerState::readUserState(IServerCallback *callback, const FStri
     _client->sendRequest(sc);
 }
 
-void BrainCloudPlayerState::deletePlayer(IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-
-    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::FullReset, message, callback);
-    _client->sendRequest(sc);
-}
-
 void BrainCloudPlayerState::deleteUser(IServerCallback *callback)
 {
     TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
 
     ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::FullReset, message, callback);
-    _client->sendRequest(sc);
-}
-
-void BrainCloudPlayerState::resetPlayerState(IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-
-    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::DataReset, message, callback);
     _client->sendRequest(sc);
 }
 
@@ -73,17 +45,7 @@ void BrainCloudPlayerState::logout(IServerCallback *callback)
     _client->sendRequest(sc);
 }
 
-void BrainCloudPlayerState::updatePlayerName(const FString &name, IServerCallback *callback)
-{
-    updateName(name, callback);
-}
-
 void BrainCloudPlayerState::updateUserName(const FString &name, IServerCallback *callback)
-{
-    updateName(name, callback);
-}
-
-void BrainCloudPlayerState::updateName(const FString &name, IServerCallback *callback)
 {
     TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
     if (name.Len() > 0)
@@ -92,7 +54,12 @@ void BrainCloudPlayerState::updateName(const FString &name, IServerCallback *cal
     }
 
     ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdateName, message, callback);
-    _client->sendRequest(sc);
+    _client->sendRequest(sc);   
+}
+
+void BrainCloudPlayerState::updateName(const FString &name, IServerCallback *callback)
+{
+    updateUserName(name, callback);
 }
 
 void BrainCloudPlayerState::updateSummaryFriendData(const FString &jsonSummaryData, IServerCallback *callback)
@@ -128,15 +95,6 @@ void BrainCloudPlayerState::removeAttributes(const TArray<FString> &attributeNam
     message->SetArrayField(OperationParam::PlayerStateServiceAttributes.getValue(), JsonUtil::arrayToJsonArray(attributeNames));
 
     ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::RemoveAttributes, message, callback);
-    _client->sendRequest(sc);
-}
-
-void BrainCloudPlayerState::updatePlayerPictureUrl(const FString &pictureUrl, IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-    message->SetStringField(OperationParam::PlayerStateServicePictureUrl.getValue(), pictureUrl);
-
-    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdatePlayerPicture, message, callback);
     _client->sendRequest(sc);
 }
 
@@ -198,6 +156,25 @@ void BrainCloudPlayerState::setUserStatus(const FString &statusName, int duratio
     ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::SetUserStatus, message, callback);
     _client->sendRequest(sc);
 }
+
+void BrainCloudPlayerState::updateTimeZoneOffset(int32 timeZoneOffset, IServerCallback *callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetNumberField(OperationParam::PlayerStateServiceTimeZoneOffset.getValue(), timeZoneOffset);
+
+    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdateTimeZoneOffset, message, callback);
+    _client->sendRequest(sc);
+}
+
+void BrainCloudPlayerState::updateLanguageCode(const FString &languageCode, IServerCallback *callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetStringField(OperationParam::PlayerStateServiceLanguageCode.getValue(), languageCode);
+
+    ServerCall *sc = new ServerCall(ServiceName::PlayerState, ServiceOperation::UpdateLanguageCode, message, callback);
+    _client->sendRequest(sc);
+}
+
 
 const FString &BrainCloudPlayerState::getPlayerName()
 {

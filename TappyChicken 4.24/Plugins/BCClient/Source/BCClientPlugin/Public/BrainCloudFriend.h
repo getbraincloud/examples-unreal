@@ -77,11 +77,6 @@ class BCCLIENTPLUGIN_API BrainCloudFriend
 	void readFriendsEntities(const FString &entityType, IServerCallback *callback = nullptr);
 
 	/**
-	* @deprecated Use readFriendUserState instead - removal after September 1 2017
-	*/
-	void readFriendPlayerState(const FString &friendId, IServerCallback *callback = nullptr);
-
-	/**
 	* Read a friend's user state.
 	*
 	* Service Name - PlayerState
@@ -129,16 +124,6 @@ class BCCLIENTPLUGIN_API BrainCloudFriend
 	void findUsersBySubstrName(const FString &searchText, int32 maxResults, IServerCallback *callback = nullptr);
 
 	/**
-	* @deprecated Use findUserByUniversalId instead - removal after September 1 2017
-	*/
-	void findPlayerByUniversalId(const FString &searchText, int32 maxResults, IServerCallback *callback = nullptr);
-
-	/**
-	* @deprecated Use findUserByExactUniversalId instead - removal after Feburary 1 2019
-	*/
-	void findUserByUniversalId(const FString &searchText, int32 maxResults, IServerCallback *callback = nullptr);
-
-	/**
 	* Retrieves profile information for the partial matches of the specified text.
 	*
 	* Service Name - Friend
@@ -183,6 +168,19 @@ class BCCLIENTPLUGIN_API BrainCloudFriend
 	void listFriends(EFriendPlatform friendPlatform, bool includeSummaryData, IServerCallback *callback = nullptr);
 
 	/**
+	* Retrieves the social information associated with the logged in user. Includes summary data if includeSummaryData is true.
+	*
+	* Service Name - Friend
+	* Service Operation - GET_MY_SOCIAL_INFO
+	*
+	* @param friendPlatform Friend platform to query.
+	* @param includeSummaryData  True if including summary data; false otherwise.
+	* @param callback Method to be invoked when the server response is received.
+	*/
+	void getMySocialInfo(EFriendPlatform friendPlatform, bool includeSummaryData, IServerCallback *callback = nullptr);
+
+
+	/**
 	* Links the current user and the specified users as brainCloud friends.
 	*
 	* Service Name - Friend
@@ -192,6 +190,19 @@ class BCCLIENTPLUGIN_API BrainCloudFriend
 	* @param callback Method to be invoked when the server response is received.
 	*/
 	void addFriends(const TArray<FString> &profileIds, IServerCallback *callback = nullptr);
+	
+	/**
+	* Links the profiles for the specified externalIds for the given friend platform as internal friends.
+	*
+	* Service Name - Friend
+	* Service Operation - ADD_FRIENDS_FROM_PLATFORM
+	*
+	* @param friendPlatform Platform to add from (i.e: FriendPlatform::Facebook)
+	* @param mode ADD or SYNC
+	* @param externalIds Collection of external IDs from the friend platform.
+	* @param callback Method to be invoked when the server response is received.
+	*/
+	void addFriendsFromPlatform(const EFriendPlatform &friendPlatform, FString mode, const TArray<FString> &externalIds, IServerCallback *callback = nullptr);
 
 	/**
 	* Unlinks the current user and the specified users as brainCloud friends.

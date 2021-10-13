@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudPlaybackStream.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -54,24 +54,6 @@ void BrainCloudPlaybackStream::addEvent(const FString &playbackStreamId, const F
     message->SetObjectField(OperationParam::PlaybackStreamServiceSummary.getValue(), JsonUtil::jsonStringToValue(jsonSummary));
 
     ServerCall *sc = new ServerCall(ServiceName::PlaybackStream, ServiceOperation::AddEvent, message, callback);
-    _client->sendRequest(sc);
-}
-
-void BrainCloudPlaybackStream::getStreamSummariesForInitiatingPlayer(const FString &initiatingPlayerId, IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-    message->SetStringField(OperationParam::PlaybackStreamServiceInitiatingPlayerId.getValue(), initiatingPlayerId);
-
-    ServerCall *sc = new ServerCall(ServiceName::PlaybackStream, ServiceOperation::GetStreamSummariesForInitiatingPlayer, message, callback);
-    _client->sendRequest(sc);
-}
-
-void BrainCloudPlaybackStream::getStreamSummariesForTargetPlayer(const FString &targetPlayerId, IServerCallback *callback)
-{
-    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
-    message->SetStringField(OperationParam::PlaybackStreamServiceTargetPlayerId.getValue(), targetPlayerId);
-
-    ServerCall *sc = new ServerCall(ServiceName::PlaybackStream, ServiceOperation::GetStreamSummariesForTargetPlayer, message, callback);
     _client->sendRequest(sc);
 }
 

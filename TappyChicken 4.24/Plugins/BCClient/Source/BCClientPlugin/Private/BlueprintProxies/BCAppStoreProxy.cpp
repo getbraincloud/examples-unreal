@@ -1,13 +1,13 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "BCAppStoreProxy.h"
+
 #include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
 
 #include "BCWrapperProxy.h"
 #include "BrainCloudWrapper.h"
-#include "BCAppStoreProxy.h"
-
 UBCAppStoreProxy::UBCAppStoreProxy(const FObjectInitializer &ObjectInitializer)
     : Super(ObjectInitializer)
 {
@@ -52,5 +52,12 @@ UBCAppStoreProxy *UBCAppStoreProxy::FinalizePurchase(UBrainCloudWrapper *brainCl
 {
     UBCAppStoreProxy *Proxy = NewObject<UBCAppStoreProxy>();
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getAppStoreService()->finalizePurchase(storeId, transactionId, transactionData, Proxy);
+    return Proxy;
+}
+
+UBCAppStoreProxy* UBCAppStoreProxy::RefreshPromotions(UBrainCloudWrapper* brainCloudWrapper)
+{
+    UBCAppStoreProxy *Proxy = NewObject<UBCAppStoreProxy>();
+    UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getAppStoreService()->refreshPromotions(Proxy);
     return Proxy;
 }

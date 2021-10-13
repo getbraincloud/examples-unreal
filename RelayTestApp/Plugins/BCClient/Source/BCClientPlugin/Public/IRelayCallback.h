@@ -7,5 +7,5 @@ class BCCLIENTPLUGIN_API IRelayCallback
   public:
     /**
      */
-    virtual void relayCallback(int netId,const TArray<uint8>& jsonData) = 0;
+    virtual void relayCallback(const TArray<uint8>& jsonData) = 0;
 };

@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudGroup.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudClient.h"
 #include "ServerCall.h"
@@ -54,6 +54,18 @@ void BrainCloudGroup::autoJoinGroup(const FString &groupType, EAutoJoinStrategy 
 		message->SetObjectField(OperationParam::GroupWhere.getValue(), JsonUtil::jsonStringToValue(dataQueryJson));
 
 	ServerCall *sc = new ServerCall(ServiceName::Group, ServiceOperation::AutoJoinGroup, message, callback);
+	_client->sendRequest(sc);
+}
+
+void BrainCloudGroup::autoJoinGroupMulti(const TArray<FString> &groupTypes, EAutoJoinStrategy autoJoinStrategy, const FString &dataQueryJson, IServerCallback *callback)
+{
+	TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+	message->SetArrayField(OperationParam::GroupTypes.getValue(), JsonUtil::arrayToJsonArray(groupTypes));
+	message->SetStringField(OperationParam::GroupAutoJoinStrategy.getValue(), AutoJoinStrategyToString(autoJoinStrategy));
+	if (OperationParam::isOptionalParamValid(dataQueryJson))
+		message->SetObjectField(OperationParam::GroupWhere.getValue(), JsonUtil::jsonStringToValue(dataQueryJson));
+
+	ServerCall *sc = new ServerCall(ServiceName::Group, ServiceOperation::AutoJoinGroupMulti, message, callback);
 	_client->sendRequest(sc);
 }
 

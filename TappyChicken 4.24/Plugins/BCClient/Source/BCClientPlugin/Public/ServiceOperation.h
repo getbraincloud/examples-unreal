@@ -13,6 +13,12 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation Detach;
 	static const ServiceOperation ResetEmailPassword;
 	static const ServiceOperation ResetEmailPasswordAdvanced;
+	static const ServiceOperation ResetEmailPasswordWithExpiry;
+	static const ServiceOperation ResetEmailPasswordAdvancedWithExpiry;
+	static const ServiceOperation ResetUniversalIdPassword;
+	static const ServiceOperation ResetUniversalIdPasswordAdvanced;
+	static const ServiceOperation ResetUniversalIdPasswordWithExpiry;
+	static const ServiceOperation ResetUniversalIdPasswordAdvancedWithExpiry;
 	static const ServiceOperation SwitchToChildProfile;
 	static const ServiceOperation SwitchToParentProfile;
 	static const ServiceOperation GetChildProfiles;
@@ -85,6 +91,11 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation DetachBlockchainIdentity;
 	static const ServiceOperation RemoveUserItemFromBlockchain;
 
+	static const ServiceOperation UpdateTimeZoneOffset;
+	static const ServiceOperation UpdateLanguageCode;
+	static const ServiceOperation GetScheduledCloudSripts;
+	static const ServiceOperation GetRunningOrQueuedCloudScripts;
+
 	static const ServiceOperation GetFriendProfileInfoForExternalId;
 	static const ServiceOperation GetProfileInfoForCredential;
 	static const ServiceOperation GetProfileInfoForExternalAuthId;
@@ -98,7 +109,9 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation FindUsersByExactName;
 	static const ServiceOperation FindUsersBySubstrName;
 	static const ServiceOperation ListFriends;
+	static const ServiceOperation GetMySocialInfo;
 	static const ServiceOperation AddFriends;
+	static const ServiceOperation AddFriendsFromPlatform;
 	static const ServiceOperation GetUsersOnlineStatus;
 	static const ServiceOperation RemoveFriends;
 	static const ServiceOperation FindUserByUniversalId;
@@ -126,10 +139,18 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetGlobalLeaderboardEntryCount;
 	static const ServiceOperation RemovePlayerScore;
 	static const ServiceOperation GetPlayerScore;
+	static const ServiceOperation GetPlayerScores;
 	static const ServiceOperation GetPlayerScoresFromLeaderboards;
 	static const ServiceOperation PostScoreToGroupLeaderboard;
+	static const ServiceOperation PostScoreToDynamicGroupLeaderboard;
 	static const ServiceOperation RemoveGroupScore;
 	static const ServiceOperation GetGroupLeaderboardView;
+
+	//Global File
+	static const ServiceOperation GetFileInfo;
+	static const ServiceOperation GetFileInfoSimple;
+	static const ServiceOperation GetGlobalCDNUrl;
+	static const ServiceOperation GetGlobalFileList;
 
 	static const ServiceOperation InitThirdParty;
 	static const ServiceOperation PostThirdPartyLeaderboardScore;
@@ -156,6 +177,9 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation UpdateEventData;
 	static const ServiceOperation DeleteSent;
 	static const ServiceOperation DeleteIncoming;
+	static const ServiceOperation DeleteIncomingEvents;
+	static const ServiceOperation DeleteIncomingEventsOlderThan;
+	static const ServiceOperation DeleteIncomingEventsByTypeOlderThan;
 	static const ServiceOperation GetEvents;
 
 	static const ServiceOperation UpdateIncrement;
@@ -255,6 +279,8 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation IncrementSharedUserEntityData;
 	static const ServiceOperation IncrementGlobalEntityData;
 	static const ServiceOperation GetRandomEntitiesMatching;
+	static const ServiceOperation DeleteEntities;
+
 
 	static const ServiceOperation GetAttributes;
 	static const ServiceOperation UpdateAttributes;
@@ -267,6 +293,8 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation SetUserStatus;
 
 	static const ServiceOperation ReadProperties;
+	static const ServiceOperation ReadSelectedProperties;
+	static const ServiceOperation ReadPropertiesInCategories;
 
 	static const ServiceOperation GetUpdatedFiles;
 	static const ServiceOperation GetFileList;
@@ -300,6 +328,7 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation AddGroupMember;
 	static const ServiceOperation ApproveGroupJoinRequest;
 	static const ServiceOperation AutoJoinGroup;
+	static const ServiceOperation AutoJoinGroupMulti;
 	static const ServiceOperation CancelGroupInvitation;
 	static const ServiceOperation CreateGroup;
 	static const ServiceOperation CreateGroupEntity;
@@ -360,8 +389,10 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetEntityPage;
 	static const ServiceOperation GetEntityPageOffset;
 	static const ServiceOperation ReadEntity;
+	static const ServiceOperation IncrementData;
 	static const ServiceOperation UpdateEntity;
 	static const ServiceOperation UpdateEntityFields;
+	static const ServiceOperation UpdateSingletonFields;
 	
 	//presence
 	static const ServiceOperation ForcePush;
@@ -389,6 +420,7 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation GetSalesInventoryByCategory;
 	static const ServiceOperation StartPurchase;
 	static const ServiceOperation FinalizePurchase;
+	static const ServiceOperation RefreshPromotions;
 
 	// rtt
 	static const ServiceOperation RequestClientConnection;
@@ -435,7 +467,9 @@ class BCCLIENTPLUGIN_API ServiceOperation
 	static const ServiceOperation CancelFindRequest;
 	static const ServiceOperation GetRegionsForLobbies;
 	static const ServiceOperation PingData;
-
+	static const ServiceOperation GetLobbyInstances;
+	static const ServiceOperation GetLobbyInstancesWithPingData;
+	
 	//Item Catalog
 	static const ServiceOperation GetCatalogItemDefinition;
 	static const ServiceOperation GetCatalogItemsPage;

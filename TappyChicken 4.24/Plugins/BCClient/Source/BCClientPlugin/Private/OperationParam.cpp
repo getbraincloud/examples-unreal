@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "OperationParam.h"
+#include "BCClientPluginPrivatePCH.h"
 
 OperationParam::OperationParam(const FString &operation)
 {
@@ -42,6 +42,8 @@ const OperationParam OperationParam::TwitterServiceTweetTweet = OperationParam("
 const OperationParam OperationParam::TwitterServiceTweetPic = OperationParam("pic");
 
 // Authenticate Service - Authenticate Params
+const OperationParam OperationParam::AuthenticateServiceAuthenticateUniversalId = OperationParam("universalId");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateTokenTtlInMinutes = OperationParam("tokenTtlInMinutes");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationType = OperationParam("authenticationType");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthenticationToken = OperationParam("authenticationToken");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateExternalId = OperationParam("externalId");
@@ -54,7 +56,10 @@ const OperationParam OperationParam::AuthenticateServiceAuthenticateReleasePlatf
 const OperationParam OperationParam::AuthenticateServiceAuthenticateGameVersion = OperationParam("gameVersion");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateBrainCloudVersion = OperationParam("clientLibVersion");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthFacebook = OperationParam("Facebook");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthFacebookLimited = OperationParam("FacebookLimited");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthOculus = OperationParam("Oculus");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthEmail = OperationParam("Email");
+const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthPlaystationNetwork = OperationParam("PlaystationNetwork");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthGameCenter = OperationParam("GameCenter");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthUniversal = OperationParam("Universal");
 const OperationParam OperationParam::AuthenticateServiceAuthenticateAuthSteam = OperationParam("Steam");
@@ -157,6 +162,9 @@ const OperationParam OperationParam::EventServiceUpdateEventDataFromId = Operati
 const OperationParam OperationParam::EventServiceUpdateEventDataEventId = OperationParam("eventId");
 const OperationParam OperationParam::EventServiceUpdateEventDataData = OperationParam("eventData");
 const OperationParam OperationParam::EvId = OperationParam("evId");
+const OperationParam OperationParam::EventServiceEvIds = OperationParam("evIds");
+const OperationParam OperationParam::EventServiceDateMillis = OperationParam("dateMillis");
+const OperationParam OperationParam::EventServiceEventType = OperationParam("eventType");
 
 // Event Service - Delete Incoming Params
 const OperationParam OperationParam::EventServiceDeleteIncomingEventId = OperationParam("eventId");
@@ -172,7 +180,9 @@ const OperationParam OperationParam::EventServiceIncludeSentEvents = OperationPa
 const OperationParam OperationParam::FriendServiceAuthenticationType = OperationParam("authenticationType");
 const OperationParam OperationParam::FriendServiceEntityId = OperationParam("entityId");
 const OperationParam OperationParam::FriendServiceExternalId = OperationParam("externalId");
+const OperationParam OperationParam::FriendServiceExternalIds = OperationParam("externalIds");
 const OperationParam OperationParam::FriendServiceProfileId = OperationParam("profileId");
+const OperationParam OperationParam::FriendServiceMode = OperationParam("mode");
 const OperationParam OperationParam::FriendServiceFriendId = OperationParam("friendId");
 const OperationParam OperationParam::FriendServiceEntityType = OperationParam("entityType");
 const OperationParam OperationParam::FriendServiceEntitySubType = OperationParam("entitySubtype");
@@ -223,10 +233,12 @@ const OperationParam OperationParam::PlayerStateServiceWipeExisting = OperationP
 const OperationParam OperationParam::PlayerStateServicePictureUrl = OperationParam("playerPictureUrl");
 const OperationParam OperationParam::PlayerStateServiceContactEmail = OperationParam("contactEmail");
 
-const OperationParam OperationParam::PlayerStateServiceStatusName = OperationParam("statusName");;
-const OperationParam OperationParam::PlayerStateServiceAdditionalSecs = OperationParam("additionalSecs");;
-const OperationParam OperationParam::PlayerStateServiceDetails = OperationParam("details");;
-const OperationParam OperationParam::PlayerStateServiceDurationSecs = OperationParam("durationSecs");;
+const OperationParam OperationParam::PlayerStateServiceStatusName = OperationParam("statusName");
+const OperationParam OperationParam::PlayerStateServiceAdditionalSecs = OperationParam("additionalSecs");
+const OperationParam OperationParam::PlayerStateServiceDetails = OperationParam("details");
+const OperationParam OperationParam::PlayerStateServiceDurationSecs = OperationParam("durationSecs");
+const OperationParam OperationParam::PlayerStateServiceTimeZoneOffset = OperationParam("timeZoneOffset");
+const OperationParam OperationParam::PlayerStateServiceLanguageCode = OperationParam("languageCode"); 
 
 // Player Statistics Service - Update Increment Params
 const OperationParam OperationParam::PlayerStatisticsServiceStats = OperationParam("statistics");
@@ -301,6 +313,7 @@ const OperationParam OperationParam::ReleasePlatformGoogleAndroid = OperationPar
 const OperationParam OperationParam::ReleasePlatformWindowsPhone = OperationParam("WINP");
 const OperationParam OperationParam::ReleasePlatformWindows = OperationParam("WINDOWS");
 const OperationParam OperationParam::ReleasePlatformMac = OperationParam("MAC");
+const OperationParam OperationParam::ReleasePlatformOculus = OperationParam("OCULUS");
 const OperationParam OperationParam::ReleasePlatformLinux = OperationParam("LINUX");
 
 const OperationParam OperationParam::ScriptServiceRunScriptName = OperationParam("scriptName");
@@ -390,6 +403,7 @@ const OperationParam OperationParam::GroupRole = OperationParam("role");
 const OperationParam OperationParam::GroupAttributes = OperationParam("attributes");
 const OperationParam OperationParam::GroupName = OperationParam("name");
 const OperationParam OperationParam::GroupType = OperationParam("groupType");
+const OperationParam OperationParam::GroupTypes = OperationParam("groupTypes");
 const OperationParam OperationParam::GroupIsOpenGroup = OperationParam("isOpenGroup");
 const OperationParam OperationParam::GroupAcl = OperationParam("acl");
 const OperationParam OperationParam::GroupData = OperationParam("data");
@@ -421,6 +435,12 @@ const OperationParam OperationParam::Score = OperationParam("score");
 const OperationParam OperationParam::RoundStartedEpoch = OperationParam("roundStartedEpoch");
 const OperationParam OperationParam::Data = OperationParam("data");
 
+//Global File
+const OperationParam OperationParam::GlobalFileFileName = OperationParam("filename");
+const OperationParam OperationParam::GlobalFileFileId = OperationParam("fileId");
+const OperationParam OperationParam::GlobalFileFolderPath = OperationParam("folderPath");
+const OperationParam OperationParam::GlobalFileRecurse = OperationParam("recurse");
+
 //virtual currency
 const OperationParam OperationParam::VirtualCurrencyVcId = OperationParam("vcId");
 const OperationParam OperationParam::VirtualCurrencyLevelName = OperationParam("levelName");
@@ -430,12 +450,13 @@ const OperationParam OperationParam::VirtualCurrencyAmount = OperationParam("vcA
 
 //custom entity
 const OperationParam OperationParam::CustomEntityServiceEntityType = OperationParam("entityType");
-const OperationParam OperationParam::CustomEntityServiceJsonEntityData = OperationParam("jsonEntityData");
+const OperationParam OperationParam::CustomEntityServiceJsonEntityData = OperationParam("dataJson");
 const OperationParam OperationParam::CustomEntityServiceAcl = OperationParam("acl");
 const OperationParam OperationParam::CustomEntityServiceTimeToLive = OperationParam("timeToLive");
 const OperationParam OperationParam::CustomEntityServiceEntityId = OperationParam("entityId");
 const OperationParam OperationParam::CustomEntityServiceVersion = OperationParam("version");
 const OperationParam OperationParam::CustomEntityServiceWhereJson = OperationParam("whereJson");
+const OperationParam OperationParam::CustomEntityServiceMaxReturn = OperationParam("maxReturn");
 const OperationParam OperationParam::CustomEntityServiceRowsPerPage = OperationParam("rowsPerPage");
 const OperationParam OperationParam::CustomEntityServiceSearchJson = OperationParam("searchJson");
 const OperationParam OperationParam::CustomEntityServiceSortJson = OperationParam("sortJson");
@@ -444,6 +465,7 @@ const OperationParam OperationParam::CustomEntityServiceContext = OperationParam
 const OperationParam OperationParam::CustomEntityServicePageOffset = OperationParam("pageOffset");
 const OperationParam OperationParam::CustomEntityServiceFieldsJson = OperationParam("fieldsJson");
 const OperationParam OperationParam::CustomEntityServiceDataJson = OperationParam("dataJson");
+const OperationParam OperationParam::CustomEntityServiceDeleteCriteria = OperationParam("deleteCriteria");
 
 //app store
 const OperationParam OperationParam::AppStoreId = OperationParam("storeId");
@@ -507,6 +529,13 @@ const OperationParam OperationParam::LobbyToTeamName = OperationParam("toTeamCod
 const OperationParam OperationParam::LobbySignalData = OperationParam("signalData");
 const OperationParam OperationParam::LobbyConnectionId = OperationParam("cxId");
 const OperationParam OperationParam::PingData = OperationParam("pingData");
+const OperationParam OperationParam::LobbyMinRating = OperationParam("minRating");
+const OperationParam OperationParam::LobbyMaxRating = OperationParam("maxRating");
+const OperationParam OperationParam::LobbyCriteria = OperationParam("criteriaJson");
+
+//global app
+const OperationParam OperationParam::GlobalAppReadSelectedProperties = OperationParam("propertyNames");
+const OperationParam OperationParam::GlobalAppReadPropertiesInCategories = OperationParam("categories");
 
 bool OperationParam::operator==(const OperationParam &s) const
 {

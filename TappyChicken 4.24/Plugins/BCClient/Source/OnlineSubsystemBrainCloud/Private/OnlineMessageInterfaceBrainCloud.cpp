@@ -1,9 +1,9 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "OnlineSubsystemBrainCloudPrivatePCH.h"
 #include "OnlineMessageInterfaceBrainCloud.h"
+#include "OnlineSubsystemBrainCloudPrivatePCH.h"
 
-#include "Base64.h"
+#include "Misc/Base64.h"
 #include "BrainCloudClient.h"
 #include "ServiceOperation.h"
 #include "ServiceName.h"
@@ -176,7 +176,7 @@ void FOnlineMessageBrainCloud::EnumerateMessagesSuccess(const FString& jsonData)
         FString messageId = FString::FromInt((int64)messageObj->GetNumberField("eventId"));
 
 
-        #if ENGINE_MINOR_VERSION >= 18
+        #if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION >= 18
         const TSharedRef <FUniqueNetIdString> sref_fromId = MakeShareable(new FUniqueNetIdString(fromId));
         const TSharedRef <FUniqueNetIdString> sref_messageId = MakeShareable(new FUniqueNetIdString(messageId));
         FOnlineMessageHeader *fOnlineMessageHeader = new FOnlineMessageHeader(sref_fromId, sref_messageId);
@@ -193,8 +193,12 @@ void FOnlineMessageBrainCloud::EnumerateMessagesSuccess(const FString& jsonData)
 
         _cachedMessageHeaders.Add(header);
 
+#if ENGINE_MINOR_VERSION >= 27
         //message
-        TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(new FUniqueNetIdString(messageId)));
+        TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(_cachedMessageHeaders[0]->MessageId));
+#else
+        TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(new FUniqueNetIdString(messageId));
+#endif
 
         FString payloadStr = messageObj->GetObjectField("eventData")->GetStringField("payload");
         TArray<uint8> bytes;

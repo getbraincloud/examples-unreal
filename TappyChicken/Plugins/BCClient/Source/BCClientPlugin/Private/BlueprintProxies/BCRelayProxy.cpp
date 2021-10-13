@@ -1,10 +1,8 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BCRelayProxy.h"
-#include "BrainCloudClient.h"
+#include "BCClientPluginPrivatePCH.h"
 #include "ServerCall.h"
-
 #include "BCWrapperProxy.h"
 #include "BrainCloudWrapper.h"
 	

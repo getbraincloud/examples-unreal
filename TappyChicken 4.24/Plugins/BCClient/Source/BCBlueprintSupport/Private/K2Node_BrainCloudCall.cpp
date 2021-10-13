@@ -1,5 +1,6 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
+#include "K2Node_BrainCloudCall.h"
 #include "BCBlueprintSupportPrivatePCH.h"
 #include "BCBlueprintCallProxyBase.h"
 #include "BCBlueprintRTTCallProxyBase.h"
@@ -8,7 +9,6 @@
 #include "BlueprintFunctionNodeSpawner.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 
-#include "K2Node_BrainCloudCall.h"
 
 #define LOCTEXT_NAMESPACE "K2Node"
 
@@ -52,7 +52,13 @@ void UK2Node_BrainCloudCall::GetMenuActions(FBlueprintActionDatabaseRegistrar &A
                 continue;
             }
 
+            #if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <= 24
             UObjectProperty *ReturnProperty = Cast<UObjectProperty>(Function->GetReturnProperty());
+            #endif
+            #if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION >= 25
+            FObjectProperty *ReturnProperty = Cast<FObjectProperty>(Function->GetReturnProperty());
+            #endif
+
             // see if the function is a static factory method for online proxies
             bool const bIsProxyFactoryMethod = (ReturnProperty != nullptr) &&
                                                (ReturnProperty->PropertyClass->IsChildOf<UBCBlueprintCallProxyBase>() ||
@@ -71,7 +77,12 @@ void UK2Node_BrainCloudCall::GetMenuActions(FBlueprintActionDatabaseRegistrar &A
                     if (FunctionPtr.IsValid())
                     {
                         UFunction *Func = FunctionPtr.Get();
+                        #if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <= 24
                         UObjectProperty *ReturnProp = CastChecked<UObjectProperty>(Func->GetReturnProperty());
+                        #endif
+                        #if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION >= 25
+                        FObjectProperty *ReturnProp = CastChecked<FObjectProperty>(Func->GetReturnProperty());
+                        #endif
 
                         AsyncTaskNode->ProxyFactoryFunctionName = Func->GetFName();
                         AsyncTaskNode->ProxyFactoryClass = Func->GetOuterUClass();

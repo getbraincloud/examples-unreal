@@ -18,14 +18,14 @@
 *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 *  MA  02110-1301  USA
 */
+#include "WebSocketBase.h"
 #include "BCClientPluginPrivatePCH.h"
 #include <iostream>
-#include "WebSocketBase.h"
 #include "BrainCloudRelay.h"
 #include "Runtime/Launch/Resources/Version.h"
 
 #if PLATFORM_UWP
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
  #if PLATFORM_HTML5
  #endif
  #endif
@@ -84,7 +84,7 @@ void FUWPSocketHelper::OnUWPClosed(Windows::Networking::Sockets::IWebSocket ^ se
 		p->OnUWPClosed(sender, args);
 	}
 }
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 
 void FHtml5SocketHelper::Tick(float DeltaTime)
@@ -162,7 +162,7 @@ UWebSocketBase::UWebSocketBase()
 	messageWebSocket = nullptr;
 	uwpSocketHelper = ref new FUWPSocketHelper();
 	uwpSocketHelper->SetParent((int64)this);
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 	mWebSocketRef = -1;
 	mConnectSuccess = false;
@@ -189,7 +189,7 @@ void UWebSocketBase::BeginDestroy()
 		delete messageWebSocket;
 		messageWebSocket = nullptr;
 	}
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 mHtml5SocketHelper.UnBind();
 #endif
@@ -347,7 +347,7 @@ void UWebSocketBase::Connect(const FString &uri, const TMap<FString, FString> &h
 				}
 			}));
 	});
-	#if ENGINE_MINOR_VERSION <24
+	#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 	mHtml5SocketHelper.Bind(this);
 	std::string strUrl = TCHAR_TO_ANSI(*uri);
@@ -423,7 +423,7 @@ void UWebSocketBase::Connect(const FString &uri, const TMap<FString, FString> &h
 	connectInfo.context = mlwsContext;
 	connectInfo.address = stdAddress.c_str();
 	connectInfo.port = iPort;
-	connectInfo.ssl_connection = iUseSSL ? (LCCSCF_USE_SSL | LCCSCF_ALLOW_SELFSIGNED | LCCSCF_SKIP_SERVER_CERT_HOSTNAME_CHECK) : 0; //iUseSSL;
+	connectInfo.ssl_connection = iUseSSL ? (LCCSCF_USE_SSL | LCCSCF_ALLOW_SELFSIGNED/* | LCCSCF_SKIP_SERVER_CERT_HOSTNAME_CHECK*/) : 0; //iUseSSL;
 	connectInfo.path = stdPath.c_str();
 	connectInfo.host = stdHost.c_str();
 	connectInfo.origin = stdHost.c_str();
@@ -448,7 +448,7 @@ bool UWebSocketBase::SendText(const FString &data)
 	bSentMessage = true;
 	SendAsync(ref new String(*data)).then([this]() {
 	});
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 	std::string strData = TCHAR_TO_ANSI(*data);
 	SocketSend(mWebSocketRef, strData.c_str(), (int)strData.size());
@@ -483,7 +483,7 @@ bool UWebSocketBase::SendData(const TArray<uint8> &data)
 	bSentMessage = true;
 	SendAsyncData(data.GetData()).then([this]() {
 	});
-	#if ENGINE_MINOR_VERSION <24
+	#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 	FString parsedMessage = BrainCloudRelay::BCBytesToString(data.GetData(), data.Num());
 	std::string strData = TCHAR_TO_ANSI(*parsedMessage);
@@ -514,7 +514,7 @@ bool UWebSocketBase::SendData(const TArray<uint8> &data)
 void UWebSocketBase::ProcessWriteable()
 {
 #if PLATFORM_UWP
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 #endif
 #endif
@@ -587,7 +587,7 @@ void UWebSocketBase::ProcessRead(const char *in, int len)
 bool UWebSocketBase::ProcessHeader(unsigned char **p, unsigned char *end)
 {
 #if PLATFORM_UWP
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 #endif
 #endif
@@ -600,6 +600,7 @@ bool UWebSocketBase::ProcessHeader(unsigned char **p, unsigned char *end)
 	for (auto &it : mHeaderMap)
 	{
 		std::string strKey = TCHAR_TO_ANSI(*(it.Key));
+		strKey += ":";
 		std::string strValue = TCHAR_TO_ANSI(*(it.Value));
 
 		if (lws_add_http_header_by_name(mlws, (const unsigned char *)strKey.c_str(), (const unsigned char *)strValue.c_str(), (int)strValue.size(), p, end))
@@ -620,7 +621,7 @@ void UWebSocketBase::Close()
 		delete messageWriter;
 		messageWriter = nullptr;
 	}
-	#if ENGINE_MINOR_VERSION <24
+	#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 	SocketClose(mWebSocketRef);
 	mWebSocketRef = -1;
@@ -641,7 +642,7 @@ void UWebSocketBase::Close()
 void UWebSocketBase::Cleanlws()
 {
 #if PLATFORM_UWP
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 #endif
 #endif

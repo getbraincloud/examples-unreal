@@ -86,17 +86,6 @@ class UBCFriendProxy : public UBCBlueprintCallProxyBase
 	*/
 
 	/**
-	* Read a friend's user state.
-	*
-	* Service Name - PlayerState
-	* Service Operation - ReadFriendsPlayerState
-	*
-	* Param - friendId Target friend
-	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
-	static UBCFriendProxy *ReadFriendPlayerState(UBrainCloudWrapper *brainCloudWrapper, const FString &friendId);
-
-	/**
 	* Finds a list of users matching the search text by performing an exact match search
 	*
 	* Service Name - friend
@@ -120,18 +109,6 @@ class UBCFriendProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
 	static UBCFriendProxy *FindUsersBySubstrName(UBrainCloudWrapper *brainCloudWrapper, const FString &searchText, int32 maxResults);
-
-	/**
-	* @deprecated Use FindUserByUniversalId instead
-	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
-	static UBCFriendProxy *FindPlayerByUniversalId(UBrainCloudWrapper *brainCloudWrapper, const FString &searchText, int32 maxResults);
-
-	/**
-	* @deprecated Use FindUserByExactUniversalId
-	*/
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
-	static UBCFriendProxy *FindUserByUniversalId(UBrainCloudWrapper *brainCloudWrapper, const FString &searchText, int32 maxResults);
 
 	/**
 	* Retrieves profile information for the partial matches of the specified text.
@@ -185,6 +162,19 @@ class UBCFriendProxy : public UBCBlueprintCallProxyBase
 	static UBCFriendProxy *ListFriends(UBrainCloudWrapper *brainCloudWrapper, EFriendPlatform friendPlatform, bool includeSummaryData);
 
 	/**
+	* Retrieves the social information associated with the logged in user. Includes summary data if includeSummaryData is true.
+	*
+	* Service Name - Friend
+	* Service Operation - GET_MY_SOCIAL_INFO
+	*
+	* Param - friendPlatform Friend platform to query.
+	* Param - includeSummaryData  True if including summary data; false otherwise.
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
+	static UBCFriendProxy *GetMySocialInfo(UBrainCloudWrapper *brainCloudWrapper, EFriendPlatform friendPlatform, bool includeSummaryData);
+
+
+	/**
 	* Links the current user and the specified users as brainCloud friends.
 	*
 	* Service Name - Friend
@@ -194,6 +184,19 @@ class UBCFriendProxy : public UBCBlueprintCallProxyBase
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
 	static UBCFriendProxy *AddFriends(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> &profileIds);
+
+	/**
+	* Links the profiles for the specified externalIds for the given friend platform as internal friends.
+	*
+	* Service Name - Friend
+	* Service Operation - ADD_FRIENDS_FROM_PLATFORM
+	*
+	* Param - friendPlatform Platform to add from (i.e: FriendPlatform::Facebook)
+	* Param - mode ADD or SYNC
+	* Param - externalIds Collection of external IDs from the friend platform.
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
+    static UBCFriendProxy *AddFriendsFromPlatform(UBrainCloudWrapper *brainCloudWrapper,EFriendPlatform friendPlatform, FString mode, const TArray<FString> &externalIds);
 
 	/**
 	* Unlinks the current user and the specified users as brainCloud friends.
@@ -215,5 +218,17 @@ class UBCFriendProxy : public UBCBlueprintCallProxyBase
 	* Param - profileIds Collection of profile IDs.
 	*/
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
-	static UBCFriendProxy *GetUsersOnlineStatus(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> &profileIds);
+	static UBCFriendProxy *GetUsersOnlineStatus(UBrainCloudWrapper *brainCloudWrapper, const TArray<FString> &profileIds); 
+
+	/**
+	* Read a friend's user state.
+	*
+	* Service Name - PlayerState
+	* Service Operation - ReadFriendsPlayerState
+	*
+	* @param friendId Target friend
+	* @param callback Method to be invoked when the server response is received.
+	*/
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true"), Category = "BrainCloud|Friend")
+	static UBCFriendProxy *ReadFriendUserState(UBrainCloudWrapper *brainCloudWrapper, const FString &friendId); 
 };

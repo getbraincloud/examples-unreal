@@ -1,7 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
-#include "BCClientPluginPrivatePCH.h"
 #include "BrainCloudLobby.h"
+#include "BCClientPluginPrivatePCH.h"
 
 #include "BrainCloudWrapper.h"
 #include "BrainCloudClient.h"
@@ -315,6 +315,25 @@ void BrainCloudLobby::pingRegions(IServerCallback* in_callback)
     }
 }
 
+void BrainCloudLobby::getLobbyInstances(const FString &in_lobbyType, const FString &in_criteriaJson, IServerCallback* in_callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetStringField(OperationParam::LobbyRoomType.getValue(),in_lobbyType);
+    message->SetObjectField(OperationParam::LobbyCriteria.getValue(),JsonUtil::jsonStringToValue(in_criteriaJson));
+    
+    ServerCall* sc = new ServerCall(ServiceName::Lobby, ServiceOperation::GetLobbyInstances, message, in_callback);
+    _client->sendRequest(sc);
+}
+
+void BrainCloudLobby::getLobbyInstancesWithPingData(const FString& in_lobbyType, const FString& in_criteriaJson, IServerCallback* in_callback)
+{
+    TSharedRef<FJsonObject> message = MakeShareable(new FJsonObject());
+    message->SetStringField(OperationParam::LobbyRoomType.getValue(),in_lobbyType);
+    message->SetObjectField(OperationParam::LobbyCriteria.getValue(),JsonUtil::jsonStringToValue(in_criteriaJson));
+    
+    attachPingDataAndSend(message,ServiceOperation::GetLobbyInstancesWithPingData,in_callback);
+}
+
 void BrainCloudLobby::pingNextItemToProcess()
 {
     Mutex.Lock();
@@ -400,7 +419,11 @@ void BrainCloudLobby::attachPingDataAndSend(TSharedRef<FJsonObject> message, Ser
 void BrainCloudLobby::pingHost(FString in_region, FString in_target, int in_index)
 {
     {
+        #if ENGINE_MINOR_VERSION > 25
+        TSharedRef<IHttpRequest,ESPMode::ThreadSafe> Request = _http->CreateRequest();
+        #else
         TSharedRef<IHttpRequest> Request = _http->CreateRequest();
+        #endif
 	    Request->OnProcessRequestComplete().BindRaw(this, &BrainCloudLobby::onPingResponseReceived);
 
 	    //This is the url on which to process the request

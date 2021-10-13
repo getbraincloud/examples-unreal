@@ -5,7 +5,7 @@
 #include "IServerCallback.h"
 
 #if PLATFORM_UWP
-#if ENGINE_MINOR_VERSION <24
+#if ENGINE_MAJOR_VERSION <= 4 && ENGINE_MINOR_VERSION <24
 #if PLATFORM_HTML5
 #endif
 #endif
@@ -18,6 +18,8 @@
 #endif
 
 enum class BCRTTConnectionType : uint8;
+enum class BCRTTConnectionStatus : uint8;
+enum class BCWebsocketStatus : uint8;
 class IRTTCallback;
 class ServiceOperation;
 class ServiceName;
@@ -41,6 +43,7 @@ class BrainCloudRTTComms : public IServerCallback
 	void enableRTT(BCRTTConnectionType in_connectionType, UBCRTTProxy *callback);
 	void disableRTT();
 	bool isRTTEnabled();
+	BCRTTConnectionStatus getConnectionStatus();
 	void RunCallbacks();
 
 	void registerRTTCallback(ServiceName in_serviceName, IRTTCallback *callback);
@@ -86,6 +89,8 @@ class BrainCloudRTTComms : public IServerCallback
 	void setEndpointFromType(TArray<TSharedPtr<FJsonValue>> in_endpoints, FString in_socketType);
 	void onRecv(const FString &in_message);
 
+	FString buildRTTRequestError(FString in_statusMessage);
+	
 	// IServerCallback
 	void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, const FString &jsonData);
 	void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString &jsonError);
@@ -107,13 +112,19 @@ class BrainCloudRTTComms : public IServerCallback
 	TMap<FString, FString> m_rttHeadersMap;
 	TSharedPtr<FJsonObject> m_rttHeaders;
 	TSharedPtr<FJsonObject> m_endpoint;
+	TSharedRef<FJsonObject> m_disconnectJson = MakeShareable(new FJsonObject());
 
 	float m_heartBeatSecs;
 	float m_timeSinceLastRequest;
 	float m_lastNowMS;
 
 	BCRTTConnectionType m_connectionType;
+	BCRTTConnectionStatus m_rttConnectionStatus;
+	BCWebsocketStatus m_websocketStatus;
 	bool m_bIsConnected;
+	bool m_disconnectedWithReason = false;
 
 	struct lws_context *m_lwsContext;
+
+	FString BCBytesToString(const uint8* in, int32 count);
 };

@@ -18,7 +18,6 @@ class BrainCloudClient;
 #include "BrainCloudPlayerStatistics.h"
 #include "BrainCloudTime.h"
 #include "BrainCloudPlayerStatisticsEvent.h"
-#include "BrainCloudProduct.h"
 #include "BrainCloudIdentity.h"
 #include "BrainCloudItemCatalog.h"
 #include "BrainCloudUserItems.h"
@@ -39,11 +38,13 @@ class BrainCloudClient;
 #include "BrainCloudGroup.h"
 #include "BrainCloudMail.h"
 #include "BrainCloudTournament.h"
+#include "BrainCloudGlobalFile.h"
 #include "BrainCloudCustomEntity.h"
 #include "BrainCloudPresence.h"
 #include "BrainCloudVirtualCurrency.h"
 #include "BrainCloudAppStore.h"
 #include "BrainCloudRelay.h"
+#include "BrainCloudTimeUtils.h"
 #include "BrainCloudWrapper.generated.h"
 
 class ServiceName;
@@ -154,6 +155,51 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     void authenticateFacebook(FString fbUserId, FString fbAuthToken, bool forceCreate, IServerCallback *callback = nullptr);
 
     /*
+     * Authenticate the user with brainCloud using their FacebookLimited Credentials
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param fbUserId The facebookLimited id of the user
+     * @param fbAuthToken The validated token from the Facebook SDK
+     *   (that will be further validated when sent to the bC service)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void authenticateFacebookLimited(FString fbLimitedUserId, FString fbAuthToken, bool forceCreate, IServerCallback *callback = nullptr);
+
+    /*
+     * Authenticate the user with brainCloud using their Oculus Credentials
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param oculusUserId The oculus id of the user
+     * @param oculusNonce token from the Oculus SDK
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void authenticateOculus(FString oculusUserId, FString oculusNonce, bool forceCreate, IServerCallback *callback = nullptr);
+
+
+    /*
+     * Authenticate the user with brainCloud using their psn accountId and auth token
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param psnAccountId The account id of the user
+     * @param psnAuthToken The validated token from the Playstation SDK
+     *   (that will be further validated when sent to the bC service)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void authenticatePlaystationNetwork(FString psnAccountId, FString psnAuthToken, bool forceCreate, IServerCallback *callback = nullptr);
+
+    /*
      * Authenticate the user using their Game Center id
      *
      * Service Name - Authenticate
@@ -172,13 +218,41 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      * Service Name - Authenticate
      * Service Operation - Authenticate
      *
-     * @param userid  String representation of google+ userid (email)
-     * @param token  The authentication token derived via the google apis.
+     * @param googleUserId  String representation of google+ userid. Gotten with calls like RequestUserId
+     * @param ServerAuthCode  The server authentication token derived via the google apis. Gotten with calls like RequestServerAuthCode
      * @param forceCreate Should a new profile be created for this user if the account does not exist?
      * @param callback The method to be invoked when the server response is received
      *
      */
-    void authenticateGoogle(FString userid, FString token, bool forceCreate, IServerCallback *callback = nullptr);
+    void authenticateGoogle(FString googleUserId, FString ServerAuthCode, bool forceCreate, IServerCallback *callback = nullptr);
+
+    /*
+     * Authenticate the user using a google openId.
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param googleUserAccountEmail  the email associated with the google user
+     * @param IdToken  The Id of the google account. Can get with calls like requestIdToken
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void authenticateGoogleOpenId(FString googleUserAccountEmail, FString IdToken, bool forceCreate, IServerCallback *callback = nullptr);
+
+    /*
+     * Authenticate the user using a google openId.
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param appleUserId  this can be user id OR the email of the user account
+     * @param identityToken  the token confirming the user's identity
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void authenticateApple(FString appleUserId, FString identityToken, bool forceCreate, IServerCallback *callback = nullptr);
 
     /*
      * Authenticate the user using a steam userid and session ticket (without any validation on the userid).
@@ -221,6 +295,30 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      * @param callback The method to be invoked when the server response is received
      */
     void authenticateUniversal(FString userid, FString password, bool forceCreate, IServerCallback *callback = nullptr);
+
+  /*
+    * Authenticate the user using a handoffId and a token 
+    *
+    * Service Name - Authenticate
+    * Service Operation - Authenticate
+    *
+    * @param handoffId braincloud handoff id generated from cloud script
+    * @param securityToken The security token entered byt the user
+    * @param callback The method to be invoked when the server response is received
+    */
+  void authenticateHandoff(FString &handoffId, FString &securityToken, bool forceCreate, IServerCallback *callback = nullptr);
+
+    /*
+    * Authenticate the user using a handoffCode and a token 
+    *
+    * Service Name - Authenticate
+    * Service Operation - Authenticate
+    *
+    * @param handoffId braincloud handoff code generated from cloud script
+    * @param securityToken The security token entered byt the user
+    * @param callback The method to be invoked when the server response is received
+    */
+  void authenticateSettopHandoff(FString &handoffCode, IServerCallback *callback = nullptr);
 
     /*
      * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
@@ -288,6 +386,63 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      * In event the current session was previously an anonymous account, the smart switch will delete that profile.
      * Use this function to keep a clean designflow from anonymous to signed profiles
      *
+     * Authenticate the user with brainCloud using their FacebookLimited Credentials
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param fbUserId The facebookLimited id of the user
+     * @param fbAuthToken The validated token from the Facebook SDK
+     *   (that will be further validated when sent to the bC service)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void smartSwitchAuthenticateFacebookLimited(const FString &fbLimitedUserId, const FString &fbAuthToken, bool forceCreate, IServerCallback *callback = NULL);
+
+    /*
+     * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
+     * In event the current session was previously an anonymous account, the smart switch will delete that profile.
+     * Use this function to keep a clean designflow from anonymous to signed profiles
+     *
+     * Authenticate the user with brainCloud using their Oculus Credentials
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param oculusUserId The oculus id of the user
+     * @param oculusNonce token from the Oculus SDK
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void smartSwitchAuthenticateOculus(const FString &oculusUserId, const FString &oculusNonce, bool forceCreate, IServerCallback *callback = NULL);
+
+
+        /*
+     * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
+     * In event the current session was previously an anonymous account, the smart switch will delete that profile.
+     * Use this function to keep a clean designflow from anonymous to signed profiles
+     *
+     * Authenticate the user with brainCloud using their PSN Credentials
+     *
+     * Service Name - Authenticate
+     * Service Operation - Authenticate
+     *
+     * @param psnAccountId The PSN account id of the user
+     * @param psnAuthToken The validated token from the Playstation SDK
+     *   (that will be further validated when sent to the bC service)
+     * @param forceCreate Should a new profile be created for this user if the account does not exist?
+     * @param callback The method to be invoked when the server response is received
+     *
+     */
+    void smartSwitchAuthenticatePlaystationNetwork(const FString &psnAccountId, const FString &psnAuthToken, bool forceCreate, IServerCallback *callback = NULL);
+
+    /*
+     * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
+     * In event the current session was previously an anonymous account, the smart switch will delete that profile.
+     * Use this function to keep a clean designflow from anonymous to signed profiles
+     *
      * Authenticate the user using their Game Center id
      *
      * Service Name - Authenticate
@@ -315,6 +470,39 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
      * @param callback The method to be invoked when the server response is received
      */
     void smartSwitchAuthenticateGoogle(const FString &userid, const FString &token, bool forceCreate, IServerCallback *callback = NULL);
+
+    /*
+    * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
+    * In event the current session was previously an anonymous account, the smart switch will delete that profile.
+    * Use this function to keep a clean designflow from anonymous to signed profiles
+    *
+    * Authenticate the user using a google userId and google server authentication code.
+    *
+    * Service Name - Authenticate
+    * Service Operation - Authenticate
+    *
+    * @param googleUserAccountEmail The email associated with the google user
+    * @param IdToken  The Id token of the google account. Can get with calls like requestIdToken
+    * @param forceCreate Should a new profile be created for this user if the account does not exist?
+    * @param callback The method to be invoked when the server response is received
+    */
+    void smartSwitchAuthenticateGoogleOpenId(const FString &googleUserAccountEmail, const FString &IdToken, bool forceCreate, IServerCallback *callback = NULL);
+
+    /*
+    * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
+    * In event the current session was previously an anonymous account, the smart switch will delete that profile.
+    * Use this function to keep a clean designflow from anonymous to signed profiles
+    * Authenticate the user using a google userId and google server authentication code.
+    *
+    * Service Name - Authenticate
+    * Service Operation - Authenticate
+    *
+    * @param appleUserId this can be user id OR the email of the user account
+    * @param identityToken  the token confirming the user's identity
+    * @param forceCreate Should a new profile be created for this user if the account does not exist?
+    * @param callback The method to be invoked when the server response is received
+    */
+    void smartSwitchAuthenticateApple(const FString &appleUserId, const FString &identityToken, bool forceCreate, IServerCallback *callback = NULL);
 
     /*
      * Smart Switch Authenticate will logout of the current profile, and switch to the new authentication type.
@@ -413,6 +601,132 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     */
     void resetEmailPasswordAdvanced(const FString &emailAddress, const FString &in_serviceParams, IServerCallback *callback);
 
+    /**
+    * Reset Email password with a token expiry - Sends a password reset email to the specified address
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPassword
+    *
+    * @param email The email address to send the reset email to.
+    * @param in_tokenTtlInMinutes the token expiry value
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    * Note the follow error reason codes:
+    *
+    * SECURITY_ERROR (40209) - If the email address cannot be found.
+    */
+  void resetEmailPasswordWithExpiry(const FString &in_email, int32 in_tokenTtlInMinutes, IServerCallback *in_callback);
+
+    /**
+    * Reset Email password with service parameters with token expiry- Sends a password reset email to the specified address
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param emailAddress The email address to send the reset email to.
+    * @param serviceParams parameters to send to the email service see the doc for a full 
+    * @param in_tokenTtlInMinutes the expiry token value
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    * Note the follow error reason codes:
+    *
+    * SECURITY_ERROR (40209) - If the email address cannot be found.
+    */
+  void resetEmailPasswordAdvancedWithExpiry(const FString &in_emailAddress, const FString &in_serviceParams, int32 in_tokenTtlInMinutes, IServerCallback *in_callback);
+
+    /**
+    * Reset Universal Id password with service parameters 
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param universalId The email address to send the reset email to.
+    * @param in_tokenTtlInMinutes the expiry token value
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    */ 
+  void resetUniversalIdPassword(const FString &in_universalId, IServerCallback *in_callback);
+
+      /**
+    * Reset Universal Id password with service parameters 
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param universalId The email address to send the reset email to.
+    * @param serviceParams parameters to send to the email service see the doc for a full 
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    */ 
+  void resetUniversalIdPasswordAdvanced(const FString &in_universalId, const FString &in_serviceParams, IServerCallback *in_callback);
+
+    /**
+    * Reset Universal Id password with service parameters and with expiry
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param universalId The email address to send the reset email to.
+    * @param in_tokenTtlInMinutes the expiry token value
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    */ 
+  void resetUniversalIdPasswordWithExpiry(const FString &in_universalId, int32 in_tokenTtlInMinutes, IServerCallback *in_callback);
+
+      /**
+    * Reset Universal Id password with service parameters and with expiry 
+    *
+    * Service Name - Authenticate
+    * Operation - ResetEmailPasswordAdvanced
+    *
+    * @param appId the application id
+    * @param universalId The email address to send the reset email to.
+    * @param in_tokenTtlInMinutes the expiry token value
+    * @param serviceParams parameters to send to the email service see the doc for a full 
+    * list. http://getbraincloud.com/apidocs/apiref/#capi-mail
+    * @param callback The method to be invoked when the server response is received
+    * @return The JSON returned in the callback is as follows:
+    * {
+    *   "status": 200,
+    *   "data": {}
+    * }
+    *
+    */ 
+  void resetUniversalIdPasswordAdvancedWithExpiry(const FString &in_universalId, const FString &in_serviceParams, int32 in_tokenTtlInMinutes, IServerCallback *in_callback);
+
     const FString &getAnonymousId() const;
     const FString &getProfileId() const;
     void setAnonymousId(const FString &anonymousId);
@@ -432,6 +746,7 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     void runCallbacks();
 
     BrainCloudClient *getClient() { return _client; }
+    BrainCloudTimeUtils *getUtil() { return _client->getUtil(); }
 
     //Service Getters
     BrainCloudLeaderboard *getLeaderboardService() { return _client->getLeaderboardService(); }
@@ -443,7 +758,6 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     BrainCloudPlayerStatistics *getPlayerStatisticsService() { return _client->getPlayerStatisticsService(); }
     BrainCloudTime *getTimeService() { return _client->getTimeService(); }
     BrainCloudPlayerStatisticsEvent *getPlayerStatisticsEventService() { return _client->getPlayerStatisticsEventService(); }
-    BrainCloudProduct *getProductService() { return _client->getProductService(); }
     BrainCloudIdentity *getIdentityService() { return _client->getIdentityService(); }
     BrainCloudItemCatalog *getItemCatalogService() { return _client->getItemCatalogService(); }
     BrainCloudUserItems *getUserItemsService() { return _client->getUserItemsService(); }
@@ -464,6 +778,7 @@ class BCCLIENTPLUGIN_API UBrainCloudWrapper : public UObject, public IServerCall
     BrainCloudGroup *getGroupService() { return _client->getGroupService(); }
     BrainCloudMail *getMailService() { return _client->getMailService(); }
     BrainCloudTournament *getTournamentService() { return _client->getTournamentService(); }
+    BrainCloudGlobalFile *getGlobalFileService() { return _client->getGlobalFileService(); }
     BrainCloudCustomEntity *getCustomEntityService() { return _client->getCustomEntityService(); }
     BrainCloudPresence *getPresenceService() { return _client->getPresenceService(); }
     BrainCloudVirtualCurrency *getVirtualCurrencyService() { return _client->getVirtualCurrencyService(); }
