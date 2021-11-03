@@ -1,0 +1,60 @@
+// Copyright 2014-2019 Vladimir Alyamkin. All Rights Reserved.
+
+using UnrealBuildTool;
+
+public class VaRestEditor : ModuleRules
+{
+	public VaRestEditor(ReadOnlyTargetRules Target) : base(Target)
+	{
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
+		PrivateIncludePaths.AddRange(
+			new[]
+			{
+				"VaRestEditor/Private"
+
+				// ... add other private include paths required here ...
+			});
+
+
+		PublicDependencyModuleNames.AddRange(
+			new[]
+			{
+				"Core",
+				"VaRest"
+
+				// ... add other public dependencies that you statically link with here ...
+			});
+
+
+		PrivateDependencyModuleNames.AddRange(
+			new[]
+			{
+				"CoreUObject",
+				"Engine",
+				"Slate",
+				"SlateCore",
+				"InputCore",
+				"AssetTools",
+				"UnrealEd", // for FAssetEditorManager
+				"KismetWidgets",
+				"KismetCompiler",
+				"BlueprintGraph",
+				"GraphEditor",
+				"Kismet", // for FWorkflowCentricApplication
+				"PropertyEditor",
+				"EditorStyle",
+				"Sequencer",
+				"DetailCustomizations",
+				"Settings",
+				"RenderCore"
+			});
+
+
+		DynamicallyLoadedModuleNames.AddRange(
+			new string[]
+			{
+				// ... add any modules that your module loads dynamically here ...
+			});
+	}
+}

@@ -73,3 +73,12 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+RelayTestApp/Intermediate/*
+RelayTestApp/Plugins/BCClient/Binaries/*
+RelayTestApp/Plugins/BCClient/Intermediate/*
+RelayTestApp/Saved/*
+RelayTestApp/.idea/*
+RelayTestApp/Binaries/*
+
+TappyChicken/.idea/*
