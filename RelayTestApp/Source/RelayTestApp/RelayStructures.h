@@ -13,7 +13,7 @@
 
 // Screen state enum.
 UENUM(Blueprintable)
-enum class GameState : uint8
+enum class GameStateBC : uint8
 {
 	Login,          /* Login screen */
     LoggingIn,
@@ -25,7 +25,7 @@ enum class GameState : uint8
 };
 
 USTRUCT(BlueprintType)
-struct FMousePoint
+struct FMousePointBC
 {
 	GENERATED_BODY()
 	int x=0, y=0;
@@ -33,17 +33,17 @@ struct FMousePoint
 
 // A brainCloud user
 USTRUCT(BlueprintType)
-struct FUser
+struct FUserBC
 {
 	GENERATED_BODY()
-	FUser(
+	FUserBC(
 		FString id="",
 		FString name="",
 		int colorIndex = 0,
 		bool isReady=false,
 		bool isAlive=false,
 		bool allowSendTo=true,
-		FMousePoint pos = {0,0}) { }
+		FMousePointBC pos = {0,0}) { }
 	
 	FString id="";         /* Profile Id */
 	FString name="";       /* User name */
@@ -51,16 +51,16 @@ struct FUser
 	bool isReady = false;
 	bool isAlive = false;
 	bool allowSendTo = true;
-	FMousePoint pos = {0, 0};
+	FMousePointBC pos = {0, 0};
 };
 
 USTRUCT(BlueprintType)
-struct FLobby
+struct FLobbyBC
 {
 	GENERATED_BODY()
 	FString lobbyId;
 	FString ownerId;
-	TArray<FUser> members;
+	TArray<FUserBC> members;
 
 	void Clear()
 	{
@@ -71,7 +71,7 @@ struct FLobby
 };
 
 USTRUCT(BlueprintType)
-struct FServer
+struct FServerBC
 {
 	GENERATED_BODY()
 	FString host;
@@ -94,22 +94,22 @@ struct FServer
 };
 
 USTRUCT(BlueprintType)
-struct FShockwave
+struct FShockwaveBC
 {
 	GENERATED_BODY()
-	FMousePoint pos;
+	FMousePointBC pos;
 	int colorIndex;
 };
 
 USTRUCT(BlueprintType)
-struct FPlayerContainer
+struct FPlayerContainerBC
 {
 	GENERATED_BODY()
-	GameState screenState = GameState::Login;   /* Current screen we are on */
-	FUser user;                                      /* Our user */
-	FLobby lobby;                                    /* Lobby with its members as received from brainCloud Lobby Service */
-	FServer server;                                  /* Server info (IP, port, protocol, passcode) */
-	TArray<FShockwave> shockwaves;              /* Players' created shockwaves */
+	GameStateBC screenState = GameStateBC::Login;   /* Current screen we are on */
+	FUserBC user;                                      /* Our user */
+	FLobbyBC lobby;                                    /* Lobby with its members as received from brainCloud Lobby Service */
+	FServerBC server;                                  /* Server info (IP, port, protocol, passcode) */
+	TArray<FShockwaveBC> shockwaves;              /* Players' created shockwaves */
 	int mouseX = 0;
 	int mouseY = 0;
 };
@@ -121,15 +121,15 @@ class RELAYTESTAPP_API URelayStructures : public UObject
 };
 
 /*
-/*
- * Callback classes
-#1#
+//Callback classes
+ 
 class ServerBCCallback final : public IServerCallback
 {
 	// IServerCallback interface
 	virtual void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, const FString& jsonData) override;
 	virtual void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString& jsonError) override;
 };
+
 
 class RTTCallback final : public IRTTCallback
 {
@@ -209,5 +209,5 @@ public:
 	{
 		//dieWithMessage("Disconnected from RTT:\n" + errorMessage);
 	}
-};*/
-
+};
+*/

@@ -197,7 +197,7 @@ void FOnlineMessageBrainCloud::EnumerateMessagesSuccess(const FString& jsonData)
         //message
         TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(_cachedMessageHeaders[0]->MessageId));
 #else
-        TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(new FUniqueNetIdString(messageId));
+        TSharedPtr<FOnlineMessage> message = MakeShareable(new FOnlineMessage(new FUniqueNetIdString(messageId)));
 #endif
 
         FString payloadStr = messageObj->GetObjectField("eventData")->GetStringField("payload");
