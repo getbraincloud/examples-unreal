@@ -130,4 +130,10 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
 	static void SendToAll(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, bool reliable, bool ordered, BCRelayChannel channel);
+
+	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
+	static TArray<uint8> BCStringToBytes(const FString &in_string);
+	
+	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
+	static FString BCBytesToString(TArray<uint8> in_data);
 };

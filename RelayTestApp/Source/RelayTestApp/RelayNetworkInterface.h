@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "BrainCloudWrapper.h"
-#include "BCClientPlugin/Private/BlueprintProxies/BCWrapperProxy.h"
 #include "RelayNetworkInterface.generated.h"
 
 UCLASS()
@@ -15,24 +14,25 @@ class RELAYTESTAPP_API ARelayNetworkInterface : public AActor
 
 /*Functions*/
 	
-public:	
-	// Sets default values for this actor's properties
-	ARelayNetworkInterface();
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	// Sets default values for this actor's properties
+	ARelayNetworkInterface();
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	
+	//Used to remove app id from responding data with profile id
+	UFUNCTION(BlueprintCallable,Category="Interface")
+	FString GetProfileIdFromString(FString data);
 
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIDFromNetID(int netId,UBrainCloudWrapper* wrapper);
 	
-	/*Variables*/
-
+/*Variables*/
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString ServerURL;
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)

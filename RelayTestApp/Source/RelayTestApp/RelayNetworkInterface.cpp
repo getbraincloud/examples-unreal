@@ -23,6 +23,15 @@ void ARelayNetworkInterface::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+FString ARelayNetworkInterface::GetProfileIdFromString(FString data)
+{
+	//remove app id
+	data.RemoveAt(0,6);
+	//remove secret?
+	data.RemoveAt(36,70);
+	return data;
+}
+
 FString ARelayNetworkInterface::GetProfileIDFromNetID(int netId, UBrainCloudWrapper* wrapper)
 {
 	return wrapper->getRelayService()->getProfileIdForNetId(netId);

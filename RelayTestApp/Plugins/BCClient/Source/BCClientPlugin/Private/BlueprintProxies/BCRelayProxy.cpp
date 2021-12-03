@@ -1,6 +1,7 @@
 // Copyright 2018 bitHeads, Inc. All Rights Reserved.
 
 #include "BCRelayProxy.h"
+#include <ConvertUtilities.h>
 #include "BCClientPluginPrivatePCH.h"
 #include "ServerCall.h"
 #include "BCWrapperProxy.h"
@@ -90,4 +91,18 @@ void UBCRelayProxy::Send(UBrainCloudWrapper *brainCloudWrapper, const TArray<uin
 void UBCRelayProxy::SendToAll(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, bool reliable, bool ordered, BCRelayChannel channel)
 {
     UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getRelayService()->sendToAll(data, reliable, ordered, channel);
+}
+
+TArray<uint8> UBCRelayProxy::BCStringToBytes(const FString& in_string)
+{
+    TArray<uint8> data;
+    data.AddUninitialized(in_string.Len());
+    ConvertUtilities::BCStringToBytes(in_string, data.GetData(), in_string.Len());
+    return data;
+}
+
+FString UBCRelayProxy::BCBytesToString(TArray<uint8> in_data)
+{
+    FString parsedMessage = ConvertUtilities::BCBytesToString(in_data.GetData(), in_data.Num());
+    return parsedMessage;
 }
