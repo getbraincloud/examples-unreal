@@ -74,7 +74,7 @@ void UBCRelayProxy::DeregisterSystemCallback(UBrainCloudWrapper *brainCloudWrapp
 	UBCWrapperProxy::GetBrainCloudInstance(brainCloudWrapper)->getRelayService()->deregisterSystemCallback();
 }
 
-void UBCRelayProxy::Send(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, int toNetId, bool reliable, bool ordered, BCRelayChannel channel)
+void UBCRelayProxy::Send(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, int64 toNetId, bool reliable, bool ordered, BCRelayChannel channel)
 {
 	uint64 to_netId = (uint64)toNetId;
 	if (toNetId == -1) 
