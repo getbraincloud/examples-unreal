@@ -13,18 +13,8 @@ class RELAYTESTAPP_API ARelayNetworkInterface : public AActor
 	GENERATED_BODY()
 
 /*Functions*/
-	
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 public:
-	// Sets default values for this actor's properties
-	ARelayNetworkInterface();
-	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	
 	//Used to remove app id from responding data with profile id
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIdFromString(FString data);
@@ -41,6 +31,3 @@ public:
 	FString AppID;
 
 };
-
-
-

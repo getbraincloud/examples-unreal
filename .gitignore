@@ -52,6 +52,7 @@ Plugins/*/Binaries/*
 
 # Builds
 Build/*
+RelayTestApp/Build/*
 
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
