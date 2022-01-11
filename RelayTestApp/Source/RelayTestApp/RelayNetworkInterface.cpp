@@ -2,6 +2,8 @@
 
 #include "RelayNetworkInterface.h"
 
+#include "BrainCloudClient.h"
+
 
 FString ARelayNetworkInterface::GetProfileIdFromString(FString data)
 {
@@ -14,4 +16,10 @@ FString ARelayNetworkInterface::GetProfileIdFromString(FString data)
 FString ARelayNetworkInterface::GetProfileIDFromNetID(int netId, UBrainCloudWrapper* wrapper)
 {
 	return wrapper->getRelayService()->getProfileIdForNetId(netId);
+}
+
+FString ARelayNetworkInterface::GetBrainCloudVersion(UBrainCloudWrapper* wrapper)
+{
+	BrainCloudClient* Client = wrapper->getBCClient();
+	return Client->getBrainCloudClientVersion();
 }

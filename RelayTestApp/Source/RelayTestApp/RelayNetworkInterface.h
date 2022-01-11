@@ -21,6 +21,9 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIDFromNetID(int netId,UBrainCloudWrapper* wrapper);
+
+	UFUNCTION(BlueprintCallable,Category="Interface")
+	FString GetBrainCloudVersion(UBrainCloudWrapper* wrapper);
 	
 /*Variables*/
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
