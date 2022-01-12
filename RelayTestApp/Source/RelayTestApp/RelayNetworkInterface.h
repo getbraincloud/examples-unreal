@@ -15,7 +15,7 @@ class RELAYTESTAPP_API ARelayNetworkInterface : public AActor
 /*Functions*/
 
 public:
-	//Used to remove app id from responding data with profile id
+	//Used to remove app id from responding data
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIdFromString(FString data);
 
