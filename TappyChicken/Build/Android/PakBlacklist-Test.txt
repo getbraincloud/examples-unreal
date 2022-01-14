@@ -1,4 +1,0 @@
-../../../Engine/Content/EditorMeshes/ColorCalibrator/
-../../../Engine/Content/EngineDebugMaterials/
-../../../Engine/Plugins/Runtime/LeapMotionController/
-../../../TappyChicken/AssetRegistry.bin

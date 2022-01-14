@@ -15,12 +15,15 @@ class RELAYTESTAPP_API ARelayNetworkInterface : public AActor
 /*Functions*/
 
 public:
-	//Used to remove app id from responding data with profile id
+	//Used to remove app id from responding data
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIdFromString(FString data);
 
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetProfileIDFromNetID(int netId,UBrainCloudWrapper* wrapper);
+
+	UFUNCTION(BlueprintCallable,Category="Interface")
+	FString GetBrainCloudVersion(UBrainCloudWrapper* wrapper);
 	
 /*Variables*/
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
