@@ -7,13 +7,15 @@ public class RelayTestAppCPP : ModuleRules
 	public RelayTestAppCPP(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "BCClientPlugin", "OnlineSubsystem", "OnlineSubsystemUtils", "Sockets" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
-
+		PrivateDependencyModuleNames.AddRange(new string[] { "Json", "OnlineSubsystem" });
+        
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+        
+		DynamicallyLoadedModuleNames.Add("OnlineSubsystemBrainCloud");
 		
 		// Uncomment if you are using online features
 		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
