@@ -82,4 +82,9 @@ RelayTestApp/Saved/*
 RelayTestApp/.idea/*
 RelayTestApp/Binaries/*
 
-TappyChicken/.idea/*
+RelayTestAppCPP/Intermediate/*
+RelayTestAppCPP/Plugins/BCClient/Binaries/*
+RelayTestAppCPP/Plugins/BCClient/Intermediate/*
+RelayTestAppCPP/Saved/*
+RelayTestAppCPP/.idea/*
+RelayTestAppCPP/Binaries/*
