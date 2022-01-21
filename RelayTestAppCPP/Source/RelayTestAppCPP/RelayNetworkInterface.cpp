@@ -25,22 +25,61 @@ void ARelayNetworkInterface::Tick(float DeltaTime)
 
 }
 
-FString ARelayNetworkInterface::GetProfileIdFromString(FString data)
+void ARelayNetworkInterface::LoginUniversalBC_Implementation(FString& in_Username, FString& in_Password)
 {
-	data.RemoveAt(0,6);
-
-	data.RemoveAt(36,70);
-	return data;
+	
 }
 
-FString ARelayNetworkInterface::GetProfileIDFromNetID(int netId, UBrainCloudWrapper* wrapper)
+void ARelayNetworkInterface::AuthenticateCallback(FString jsonData, FBC_ReturnData responseData)
 {
-	return wrapper->getRelayService()->getProfileIdForNetId(netId);
+	
 }
 
-FString ARelayNetworkInterface::GetBrainCloudVersion(UBrainCloudWrapper* wrapper)
+void ARelayNetworkInterface::InitBrainCloud()
 {
-	BrainCloudClient* Client = wrapper->getBCClient();
+}
+
+void ARelayNetworkInterface::OnFailureCallback(FString in_ErrorMessage, FString in_Operation)
+{
+}
+
+void ARelayNetworkInterface::UpdateIDs()
+{
+}
+
+void ARelayNetworkInterface::IsLocalUserHost()
+{
+}
+
+void ARelayNetworkInterface::CheckMembers()
+{
+}
+
+FLinearColor ARelayNetworkInterface::DetermineColorIndex(int in_ColorIndex)
+{
+	return FLinearColor::Black;
+}
+
+void ARelayNetworkInterface::RemovingLeavingUser(FString in_memberID)
+{
+}
+
+FString ARelayNetworkInterface::GetProfileIdFromString(FString in_data)
+{
+	in_data.RemoveAt(0,6);
+
+	in_data.RemoveAt(36,70);
+	return in_data;
+}
+
+FString ARelayNetworkInterface::GetProfileIDFromNetID(int in_netId, UBrainCloudWrapper* in_wrapper)
+{
+	return in_wrapper->getRelayService()->getProfileIdForNetId(in_netId);
+}
+
+FString ARelayNetworkInterface::GetBrainCloudVersion(UBrainCloudWrapper* in_wrapper)
+{
+	BrainCloudClient* Client = in_wrapper->getBCClient();
 	return Client->getBrainCloudClientVersion();
 }
 

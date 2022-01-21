@@ -14,15 +14,16 @@ class RELAYTESTAPPCPP_API URelaySaveGame : public USaveGame
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere,Category="LocalSettings")
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LocalSettings")
 	FLinearColor LocalUserColor;
 
-	UPROPERTY(EditAnywhere,Category="LocalSettings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LocalSettings")
 	FText LocalUsername;
 
-	UPROPERTY(EditAnywhere,Category="LocalSettings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LocalSettings")
 	FText LocalPassword;
 
-	UPROPERTY(EditAnywhere,Category="LocalSettings")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LocalSettings")
 	int ArrowColorIndex;
 };
