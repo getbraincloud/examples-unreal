@@ -37,16 +37,13 @@ public:
 	
 //Loading Screen functions
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void SetUpLoadingScreen(int WidgetIndex, FText Message, bool bCancelButtonEnabled);
+	void SetUpLoadingScreen(int in_widgetIndex, FText in_message, bool in_bCancelButtonEnabled);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void SetUpLoadingText(FText NewMessage);
+	void AdjustCancelButtonVisibility(bool in_bIsVisible);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void AdjustCancelButtonVisibility(bool bIsVisible);
-
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void FinishedLoading(bool bIsNextStateCancelled);
+	void FinishedLoading(bool in_bIsNextStateCancelled);
 
 //Save/Load File
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
@@ -91,7 +88,8 @@ public:
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	bool IsReliable;
 
-	//ToDo: GameWidget reference variable
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	class UGameWidget* GameWidget;
 	
 	UPROPERTY(BlueprintReadWrite)
 	int CurrentWidgetIndex;

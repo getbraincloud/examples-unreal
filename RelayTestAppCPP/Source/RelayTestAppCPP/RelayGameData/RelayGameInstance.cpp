@@ -3,7 +3,9 @@
 
 #include "RelayGameInstance.h"
 
+#include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "RelayTestAppCPP/Widgets/GameWidget.h"
 
 URelayGameInstance::URelayGameInstance()
 {
@@ -14,21 +16,60 @@ URelayGameInstance::URelayGameInstance()
 	UserIndex = 0;
 }
 
-void URelayGameInstance::SetUpLoadingScreen(int WidgetIndex, FText Message, bool bCancelButtonEnabled)
+void URelayGameInstance::SetUpLoadingScreen(int in_widgetIndex, FText in_message, bool in_bCancelButtonEnabled)
 {
-	
+	//Set the index for after loading screen is finished
+	NextWidgetIndex = in_widgetIndex;
+	if(in_bCancelButtonEnabled)
+	{
+		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Visible);	
+	}
+	else
+	{
+		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Hidden);
+	}
+	//Setting Message for loading screen
+	GameWidget->LoadingScreenWidget->LoadingMessage->SetText(in_message);
+
+	//Change widget view to loading screen
+	GameWidget->WidgetSwitcher->SetActiveWidgetIndex(0);
+	IsLoading = true;
 }
 
-void URelayGameInstance::SetUpLoadingText(FText NewMessage)
+void URelayGameInstance::AdjustCancelButtonVisibility(bool in_bIsVisible)
 {
+	if(in_bIsVisible)
+	{
+		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Visible);	
+	}
+	else
+	{
+		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
-void URelayGameInstance::AdjustCancelButtonVisibility(bool bIsVisible)
+void URelayGameInstance::FinishedLoading(bool in_bIsNextStateCancelled)
 {
-}
-
-void URelayGameInstance::FinishedLoading(bool bIsNextStateCancelled)
-{
+	//If cancelled, go back to main menu widget which should be index 2
+	if(in_bIsNextStateCancelled)
+	{
+		GameWidget->WidgetSwitcher->SetActiveWidgetIndex(0);
+		
+		//ToDo: Check what the next widget index is to determine if Cancelling to Find lobby or Cancelling Joining Match
+		if(NextWidgetIndex <= 3)
+		{
+			//Cancel Find Lobby
+		}
+		else
+		{
+			//Cancel Joining Match
+		}
+	}
+	else
+	{
+		GameWidget->WidgetSwitcher->SetActiveWidgetIndex(NextWidgetIndex);
+		CurrentWidgetIndex = NextWidgetIndex;
+	}
 }
 
 void URelayGameInstance::SaveGameUserColor(FLinearColor in_Color, int in_ArrowColorIndex)
