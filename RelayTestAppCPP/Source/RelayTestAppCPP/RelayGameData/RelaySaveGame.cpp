@@ -4,3 +4,8 @@
 #include "RelaySaveGame.h"
 
 
+URelaySaveGame::URelaySaveGame()
+{
+	LocalUserColor = FColor::Black;
+	ArrowColorIndex = 0;
+}

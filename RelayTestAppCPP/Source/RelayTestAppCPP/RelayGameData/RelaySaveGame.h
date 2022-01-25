@@ -14,6 +14,7 @@ class RELAYTESTAPPCPP_API URelaySaveGame : public USaveGame
 {
 	GENERATED_BODY()
 
+	URelaySaveGame();
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="LocalSettings")
 	FLinearColor LocalUserColor;

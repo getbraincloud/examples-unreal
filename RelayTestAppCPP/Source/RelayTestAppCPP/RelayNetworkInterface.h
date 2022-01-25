@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "BCBlueprintCallProxyBase.h"
+#include "GameRelayCallback.h"
 #include "GameFramework/Actor.h"
 #include "BrainCloudWrapper.h"
+#include "RelayGameData/RelayGameInstance.h"
 
 #include "RelayNetworkInterface.generated.h"
 
@@ -13,10 +15,10 @@ class URelayGameInstance;
 class UVaRestJsonObject;
 
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FRelayInterfaceCallbackDelegate, FString, JsonData, FBC_ReturnData, AdditionalData);
-DECLARE_DELEGATE_TwoParams(FRelayInterfaceCallbackDelegate,FString,FBC_ReturnData);
+//DECLARE_DELEGATE_TwoParams(FRelayInterfaceCallbackDelegate,FString,FBC_ReturnData);
 
 UCLASS()
-class RELAYTESTAPPCPP_API ARelayNetworkInterface : public AActor, public IServerCallback
+class RELAYTESTAPPCPP_API ARelayNetworkInterface : public AActor
 {
 	GENERATED_BODY()
 	
@@ -34,17 +36,18 @@ public:
 	//Note this shows up when hovering over a BP node.... ?
 	/*************Functions************/
 
-	//Event functions
-	UFUNCTION(BlueprintNativeEvent, Category="RelayGameInstance")
-	void LoginUniversalBC(FString& in_Username, FString& in_Password);
+	
 
-	static void AuthenticateCallback(FString jsonData, FBC_ReturnData responseData);
+//Event Braincloud functions
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+	void LoginUniversalBC();
 
+//Callbacks
+	void AuthenticateCallback();
+
+//BrainCloudSpecific	
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void InitBrainCloud();
-	
-	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	void OnFailureCallback(FString in_ErrorMessage, FString in_Operation);
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void UpdateIDs();
@@ -56,10 +59,9 @@ public:
 	void CheckMembers();
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	FLinearColor DetermineColorIndex(int in_ColorIndex);
-
-	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void RemovingLeavingUser(FString in_memberID);
+	
+//Helper Functions
 	
 	//Used to remove app id from responding data
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
@@ -71,34 +73,12 @@ public:
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	FString GetBrainCloudVersion(UBrainCloudWrapper* in_wrapper);
 
-	//Callbacks
-	//Response delegates
-
-	FRelayInterfaceCallbackDelegate OnSuccess;
-	FRelayInterfaceCallbackDelegate OnFailure;
-
-	//callbacks
-	virtual void serverCallback(ServiceName serviceName, ServiceOperation serviceOperation, const FString &jsonData) override
-	{
-		FBC_ReturnData returnData = FBC_ReturnData(serviceName.getValue(), serviceOperation.getValue(), 200, 0);
-
-		if(serviceOperation.getValue() == "Authenticate")
-		{
-			//stuff
-		}
-		cleanup();
-	}
-
-	virtual void serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode, const FString &jsonError) override
-	{
-		FBC_ReturnData returnData = FBC_ReturnData(serviceName.getValue(), serviceOperation.getValue(), statusCode, reasonCode);
-		//OnFailure.Broadcast(jsonError, returnData);
-        
-		cleanup();
-	}
+	UFUNCTION(BlueprintCallable,Category="RelayInterface")
+	FLinearColor DetermineColorIndex(int in_ColorIndex);
+	
 private:
 	bool _bCleanupAfterFirstResponse = true;
-	void cleanup()
+	void Cleanup()
 	{
 		if (_bCleanupAfterFirstResponse)
 		{
@@ -110,23 +90,13 @@ private:
 	
 	/*************Variables************/
 public:
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString ServerURL;
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString SecretKey;
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString AppID;
-	UPROPERTY()
-	URelayGameInstance* GameInstance;
-	UPROPERTY()
-	UBrainCloudWrapper* BrainCloudWrapper;
 
 	bool IsHost;
 	bool IsReady;
 	bool RTTConnectionIsLive;
 	bool CancelRequested;
 	int64 ToAllPlayersNetID = 1099511627775;
-	
+	IServerCallback* AuthenticateRelayCallback;
 
 		/**********JSON References**********/
 	//Errors for VARestJsonObject
@@ -142,6 +112,20 @@ public:
 	UVaRestJsonObject* RelaySystemCallbackJson;
 	UPROPERTY()
 	UVaRestJsonObject* AuthenticateCallbackJson;*/
+	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
+	FString ServerURL;
+	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
+	FString SecretKey;
+	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
+	FString AppID;
+	UPROPERTY()
+	URelayGameInstance* GameInstance;
+	UPROPERTY()
+	UBrainCloudWrapper* BrainCloudWrapper;
+
+	
+	class GameRelayCallback* Callback;
+
 	UPROPERTY(Category="Braincloud",BlueprintReadWrite,EditAnywhere)
 	FString AlgoJson;
 

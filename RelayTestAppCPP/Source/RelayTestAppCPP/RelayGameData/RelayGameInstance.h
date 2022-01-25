@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RelayNetworkInterface.h"
 #include "RelaySaveGame.h"
 #include "Engine/GameInstance.h"
 #include "RelayGameInstance.generated.h"
@@ -57,17 +56,22 @@ public:
 	void SaveGameUserSignInEntry(FText in_Username,FText in_Password);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	bool LoadGame();
+	void LoadGame();
 
 //User Specific
 	//UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	//FRelayUserData CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void CreateLocalUser(FText in_LocalUsername, FLinearColor in_LocalColor);
+	void CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible);
+
+	bool IsUsernameNew() const
+	{
+		return SaveGameInstance->LocalUsername.ToString() == LocalUser.Username.ToString();
+	}
 	
 	/*********** Variables **************/
 	
@@ -94,11 +98,11 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int NextWidgetIndex;
 
-	UPROPERTY(BlueprintReadWrite)
-	ARelayNetworkInterface* RelayNetworkInterface;
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	class ARelayNetworkInterface* Interface;
 	//UPROPERTY(BlueprintReadWrite)
 	//UBrainCloudWrapper* BrainCloudWrapper;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	URelaySaveGame* SaveGameInstance;
 	
 	UPROPERTY(BlueprintReadWrite)
