@@ -4,24 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "RelaySaveGame.h"
+#include "RelayUserData.h"
 #include "Engine/GameInstance.h"
 #include "RelayGameInstance.generated.h"
-
-USTRUCT(BlueprintType)
-struct FRelayUserData
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FText Username;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FLinearColor PlayerColor;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FString ProfileID;
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	bool bShowShockwave;
-};
-
 
 /**
  * 
@@ -55,9 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void LoadGame();
 
-//User Specific
-	//UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	//FRelayUserData CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID);
+	URelayUserData* CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword);
@@ -67,15 +50,15 @@ public:
 
 	bool IsUsernameNew() const
 	{
-		return SaveGameInstance->LocalUsername.ToString() == LocalUser.Username.ToString();
+		return SaveGameInstance->LocalUsername.ToString() == LocalUser->Username.ToString();
 	}
 	
 	/*********** Variables **************/
-	
+
+	UPROPERTY()
+	TArray<URelayUserData*> ListOfUserObjects;
 	UPROPERTY(BlueprintReadWrite)
-	TArray<FRelayUserData> ListOfUserObjects;
-	UPROPERTY(BlueprintReadWrite)
-	FRelayUserData LocalUser;
+	URelayUserData* LocalUser;
 	UPROPERTY(BlueprintReadWrite)
 	FString ErrorMessage;
 	

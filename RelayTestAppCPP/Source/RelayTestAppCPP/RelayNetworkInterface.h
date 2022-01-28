@@ -37,11 +37,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void LoginUniversalBC();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void FindOrCreateLobby();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
-	void UpdateLocalColor(int ColorIndex);
+	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+	void UpdateLocalColor(int in_colorIndex);
 
 //Callbacks
 	void AuthenticateCallback();

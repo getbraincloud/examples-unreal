@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/ListView.h"
+#include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
 #include "LobbyWidget.generated.h"
 
 /**
@@ -14,15 +15,44 @@ class RELAYTESTAPPCPP_API ULobbyWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
+	virtual void NativeConstruct() override;
+
+	void AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowColorIndex);
+	
+	void StartButtonClicked();
+
+	void LeaveButtonClicked();
+
+	void BlackButtonClicked();
+
+	void BlueButtonClicked();
+
+	void GreenButtonClicked();
+
+	void GreyButtonClicked();
+
+	void OrangeButtonClicked();
+
+	void PurpleButtonClicked();
+
+	void WhiteCyanButtonClicked();
+
+	void YellowButtonClicked();
+	
 public:
 
 	void AdjustVisibilityForStartButton(bool bIsUserHost);
 
+
+
 	UPROPERTY(meta=(BindWidget))
-	UListView* LobbyListView;
+	UListView* Lobby_ListView;
 	
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartMatchButton;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* LeaveLobbyButton;
 
 	//Colors
 	/*
@@ -37,4 +67,34 @@ public:
 	 */
 	UPROPERTY(EditAnywhere)
 	TArray<FLinearColor> Colors;
+
+private:
+	UPROPERTY()
+	URelayGameInstance* GameInstance;
+
+
+	//Color Buttons	
+	UPROPERTY(meta=(BindWidget))
+	UButton* Black_Button;
+	
+	UPROPERTY(meta=(BindWidget))
+	UButton* Blue_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* Green_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* Grey_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* Orange_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* Purple_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* WhiteCyan_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* Yellow_Button;
 };

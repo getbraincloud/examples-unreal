@@ -34,7 +34,7 @@ public:
 	void ClosePopUp();
 	
 //Variables
-	//Note: using meta=(BindWidget) should attach the variable to the Widget in Editor automatically as long as the variable name is the same.
+	//Note: using meta=(BindWidget) attach the variable to the Widget in Editor automatically as long as the variable name is the same.
 
 	UPROPERTY(BlueprintReadWrite,meta=(BindWidget))
 	UTextBlock* ErrorMessage_Text;

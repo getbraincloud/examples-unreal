@@ -5,6 +5,7 @@
 
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
+#include "RelayTestAppCPP/RelayNetworkInterface.h"
 #include "RelayTestAppCPP/Widgets/GameWidget.h"
 
 URelayGameInstance::URelayGameInstance()
@@ -98,10 +99,9 @@ void URelayGameInstance::LoadGame()
 void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword)
 {
 	//Create user for widgets to use
-	LocalUser = *new FRelayUserData();
-	LocalUser.Username = in_LocalUsername;
-	LocalUser.PlayerColor = SaveGameInstance->LocalUserColor;
-
+	LocalUser = NewObject<URelayUserData>();
+	LocalUser->Initialize(in_LocalUsername, SaveGameInstance->LocalUserColor, Interface->LocalProfileID);
+	
 	//Save info of local player
 	SaveGameInstance->LocalUsername = in_LocalUsername;
 	SaveGameInstance->LocalPassword = in_LocalPassword;
@@ -114,7 +114,14 @@ void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in
 	
 }
 
-/*FRelayUserData URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)
+URelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex)
 {
+	URelayUserData* newUser = NewObject<URelayUserData>(this);
+	newUser->Initialize(in_NewUsername, in_NewUserColor, in_NewProfileID);
+	ListOfUserObjects[in_arrayIndex] = newUser;
+
+	GameWidget->LobbyWidget->Lobby_ListView->AddItem(newUser);
+	GameWidget->MatchWidget->Match_UserListView->AddItem(newUser);
 	
-}*/
+	return newUser;
+}

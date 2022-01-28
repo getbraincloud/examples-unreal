@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
+#include "Widgets/WidgetAddOns/OtherMatchUserWidget.h"
 
 // Sets default values
 ARelayNetworkInterface::ARelayNetworkInterface()
@@ -44,17 +45,17 @@ void ARelayNetworkInterface::LoginUniversalBC_Implementation()
 	UE_LOG(LogTemp, Warning, TEXT("Login Called"))
 }
 
-void ARelayNetworkInterface::FindOrCreateLobby_Implementation()
+void ARelayNetworkInterface::FindOrCreateLobby()
 {
 	bCancelRequested = false;
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 	BrainCloudWrapper->getRTTService()->enableRTT(ConnectionType, Callback);
 }
 
-void ARelayNetworkInterface::UpdateLocalColor_Implementation(int ColorIndex)
+void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 {
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, AppendColorIndex(ColorIndex), Callback);
+	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, AppendColorIndex(in_colorIndex), Callback);
 }
 
 void ARelayNetworkInterface::AuthenticateCallback()
@@ -62,7 +63,7 @@ void ARelayNetworkInterface::AuthenticateCallback()
 	if(GameInstance->IsUsernameNew())
 	{
 		Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser.Username.ToString(),Callback);
+		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser->Username.ToString(),Callback);
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Authenticate Callback"));
 	GameInstance->bIsLoading = false;
@@ -109,19 +110,9 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 	if(!jsonPacket->TryGetField(TEXT("operation"))) return;
 	lobbyJson = &jsonPacket;
 	FString operation = jsonPacket->GetStringField(TEXT("operation"));
-	if(!ensure(!operation.IsEmpty())) return;
 	
-	/*
-	 * Possible conditions to use
-	 *  Blueprint way : FCString::Strcmp(*A, *B) == 0;
-	 *  wcscmp((wchar_t*)MyString.Data.AllocatorInstance.Data,L"MyText") == 0
-	 *  operation.Equals(TEXT("")		
-	 */
+	if(ensure(operation.IsEmpty())) return;
 	
-	/*
-	 *  Explanation why Compare isn't working: Compare returns 0 if equal, negative if less than, positive if greater than
-	 *			aka: It does NOT return a bool...DOPE
-	 */
 	auto data = jsonPacket->GetObjectField(TEXT("data"));
 	if(operation.Equals(TEXT("MEMBER_JOIN")))
 	{
@@ -196,8 +187,36 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 {
 	//Clearing Lists so we can repopulate members that are in lobby
 	GameInstance->ListOfUserObjects.Empty();
-	GameInstance->GameWidget->LobbyWidget->LobbyListView->ClearListItems();
+	GameInstance->GameWidget->LobbyWidget->Lobby_ListView->ClearListItems();
+	GameInstance->GameWidget->MatchWidget->UserCursors.Empty();
 	
+	//Getting members to re-populate list with
+	TSharedPtr<FJsonObject> lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));
+	auto members = lobbyObject->GetArrayField(TEXT("memebers"));
+	for(int i=0; i < members.Num(); ++i)
+	{
+		TSharedPtr<FJsonValue> jsonValue = members[i];
+		TSharedPtr<FJsonObject> memberObject = jsonValue->AsObject();
+		TSharedPtr<FJsonObject> extraJson = memberObject->GetObjectField(TEXT("extra"));
+		
+		//Use below variables to create user object and then add them to lists for match and lobby
+		int memberColorIndex = extraJson->GetIntegerField(TEXT("colorIndex"));
+		FLinearColor memberColor = DetermineColorIndex(memberColorIndex);
+		FString memberUserName = memberObject->GetStringField(TEXT("name"));
+		FString memberProfileId = memberObject->GetStringField(TEXT("profileId"));
+		URelayUserData* newMember = GameInstance->CreateUserAndAddToList(FText::AsCultureInvariant(memberUserName), memberColor, memberProfileId, i);
+
+		//This check is necessary because local cursor is being handled within WBP_Match asset
+		if(!memberProfileId.Equals(LocalProfileID))
+		{
+			UOtherMatchUserWidget* newUserCursor = NewObject<UOtherMatchUserWidget>(GameInstance->GameWidget->MatchWidget);
+			newUserCursor->AddToViewport(50);
+			GameInstance->GameWidget->MatchWidget->MouseCursorCanvasPanel->AddChildToCanvas(newUserCursor);
+			newUserCursor->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
+			newUserCursor->UserData = newMember;
+			GameInstance->GameWidget->MatchWidget->UserCursors.Add(newUserCursor);
+		}
+	}
 }
 
 void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& DataJsonObject)
