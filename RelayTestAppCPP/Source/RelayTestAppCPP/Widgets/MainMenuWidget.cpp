@@ -1,5 +1,6 @@
 #include "MainMenuWidget.h"
 #include "Components/Button.h"
+#include "RelayTestAppCPP/RelayNetworkInterface.h"
 #include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
 
 void UMainMenuWidget::NativeConstruct()
@@ -14,4 +15,5 @@ void UMainMenuWidget::GoToLoadingScreen()
 	URelayGameInstance* GameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	FString LoadingMessage=TEXT("Joining Lobby...");
 	GameInstance->SetUpLoadingScreen(3, FText::AsCultureInvariant(LoadingMessage), true);
+	GameInstance->Interface->FindOrCreateLobby();
 }

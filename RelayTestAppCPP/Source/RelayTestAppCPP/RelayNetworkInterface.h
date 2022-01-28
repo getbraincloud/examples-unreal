@@ -3,22 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BCBlueprintCallProxyBase.h"
 #include "GameRelayCallback.h"
 #include "GameFramework/Actor.h"
 #include "BrainCloudWrapper.h"
+#include "IRTTCallback.h"
 #include "RelayGameData/RelayGameInstance.h"
 
 #include "RelayNetworkInterface.generated.h"
 
 class URelayGameInstance;
-class UVaRestJsonObject;
-
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FRelayInterfaceCallbackDelegate, FString, JsonData, FBC_ReturnData, AdditionalData);
-//DECLARE_DELEGATE_TwoParams(FRelayInterfaceCallbackDelegate,FString,FBC_ReturnData);
 
 UCLASS()
-class RELAYTESTAPPCPP_API ARelayNetworkInterface : public AActor
+class RELAYTESTAPPCPP_API ARelayNetworkInterface : public AActor, public IRTTCallback
 {
 	GENERATED_BODY()
 	
@@ -33,30 +29,36 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
 	//Note this shows up when hovering over a BP node.... ?
 	/*************Functions************/
-
 	
-
 //Event Braincloud functions
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void LoginUniversalBC();
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+	void FindOrCreateLobby();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+	void UpdateLocalColor(int ColorIndex);
+
 //Callbacks
 	void AuthenticateCallback();
+	
+	void EnableRTTCallback();
 
-//BrainCloudSpecific	
+	virtual void rttCallback(const FString &jsonData) override;
+
+//BrainCloud responses/calls
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void InitBrainCloud();
+	
+	void IsLocalUserHost(const TSharedPtr<FJsonObject>& DataJsonObject);
 
-	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	void UpdateIDs();
+	void CheckMembers(const TSharedPtr<FJsonObject>& DataJsonObject);
 
-	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	void IsLocalUserHost();
-
-	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	void CheckMembers();
+	void UpdateIDs(const TSharedPtr<FJsonObject>& DataJsonObject);
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void RemovingLeavingUser(FString in_memberID);
@@ -77,47 +79,30 @@ public:
 	FLinearColor DetermineColorIndex(int in_ColorIndex);
 	
 private:
-	bool _bCleanupAfterFirstResponse = true;
-	void Cleanup()
-	{
-		if (_bCleanupAfterFirstResponse)
-		{
-			// allow it to be removed, if no longer referenced
-			this->RemoveFromRoot();
-			this->ConditionalBeginDestroy();
-		}
-	}
+	static FString AppendColorIndex(int colorIndex);
 	
 	/*************Variables************/
 public:
 
-	bool IsHost;
-	bool IsReady;
-	bool RTTConnectionIsLive;
-	bool CancelRequested;
+	bool bIsHost;
+	bool bIsReady;
+	bool bRTTConnectionIsLive;
+	bool bCancelRequested;
 	int64 ToAllPlayersNetID = 1099511627775;
-	IServerCallback* AuthenticateRelayCallback;
 
-		/**********JSON References**********/
-	//Errors for VARestJsonObject
-	//  RelayNetworkInterface.gen.cpp(23): [C4430] missing type specifier - int assumed. Note: C++ does not support default-int
-	//    RelayNetworkInterface.gen.cpp(23): [C2146] syntax error: missing ';' before identifier 'UClass'
-	//  RelayNetworkInterface.gen.cpp(557): [C2065] 'Z_Construct_UClass_UVaRestJsonObject_NoRegister': undeclared identifier
-	
-	/*UPROPERTY()
-	UVaRestJsonObject* LobbyCallbackJson;
-	UPROPERTY()
-	UVaRestJsonObject* RelayDataCallbackJson;
-	UPROPERTY()
-	UVaRestJsonObject* RelaySystemCallbackJson;
-	UPROPERTY()
-	UVaRestJsonObject* AuthenticateCallbackJson;*/
+//Exposed Properties to set in Editor
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString ServerURL;
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString SecretKey;
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString AppID;
+	UPROPERTY(Category="BrainCloud",EditAnywhere,BlueprintReadWrite)
+	BCRTTConnectionType ConnectionType;
+	UPROPERTY(Category="Braincloud",BlueprintReadWrite,EditAnywhere)
+	FString AlgoJson;
+
+	
 	UPROPERTY()
 	URelayGameInstance* GameInstance;
 	UPROPERTY()
@@ -125,10 +110,7 @@ public:
 
 	
 	class GameRelayCallback* Callback;
-
-	UPROPERTY(Category="Braincloud",BlueprintReadWrite,EditAnywhere)
-	FString AlgoJson;
-
+	
 		/********** ID's **********/
 	FString ColorIndex;
 	FString LobbyID;
@@ -138,6 +120,9 @@ public:
 	int CallbackNetID;
 	FString LocalProfileID;
 
+	//Json references
+	
+	TSharedPtr<FJsonObject>* lobbyJson;
 	
 	
 };

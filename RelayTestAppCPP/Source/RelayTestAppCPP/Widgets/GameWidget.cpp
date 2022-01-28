@@ -22,5 +22,5 @@ void UGameWidget::ClosePopUp()
 {
 	PopUpWindow->SetVisibility(ESlateVisibility::Hidden);
 	URelayGameInstance* GameInstance= Cast<URelayGameInstance>(GetGameInstance());
-	GameInstance->ErrorOccurred = false;
+	GameInstance->bErrorOccurred = false;
 }

@@ -18,11 +18,11 @@ void ULoadingScreenWidget::NativeConstruct()
 void ULoadingScreenWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
 	Super::NativeTick(MyGeometry, InDeltaTime);
-	if(GameInstance->IsLoading && !isWaiting)
+	if(GameInstance->bIsLoading && !isWaiting)
 	{
 		isWaiting = true;
 	}
-	else if(!GameInstance->IsLoading && isWaiting)
+	else if(!GameInstance->bIsLoading && isWaiting)
 	{
 		GameInstance->FinishedLoading(CancelNextState);
 		CancelNextState = false;

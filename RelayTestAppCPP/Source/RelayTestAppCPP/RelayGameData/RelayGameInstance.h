@@ -19,7 +19,7 @@ struct FRelayUserData
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	FString ProfileID;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	bool ShowShockwave;
+	bool bShowShockwave;
 };
 
 
@@ -80,13 +80,13 @@ public:
 	FString ErrorMessage;
 	
 	UPROPERTY(BlueprintReadWrite)
-	bool ErrorOccurred;
+	bool bErrorOccurred;
 	UPROPERTY(BlueprintReadWrite)
-	bool IsLoading;
+	bool bIsLoading;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	bool IsOrdered;
+	bool bIsOrdered;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	bool IsReliable;
+	bool bIsReliable;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	class UGameWidget* GameWidget;

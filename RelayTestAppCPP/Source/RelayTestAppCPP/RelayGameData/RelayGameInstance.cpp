@@ -9,9 +9,9 @@
 
 URelayGameInstance::URelayGameInstance()
 {
-	IsReliable = false;
-	IsOrdered = false;
-	IsLoading = false;
+	bIsReliable = false;
+	bIsOrdered = false;
+	bIsLoading = false;
 	SaveSlotName = "RelayTestAppSave";
 	UserIndex = 0;
 }
@@ -20,20 +20,13 @@ void URelayGameInstance::SetUpLoadingScreen(int in_widgetIndex, FText in_message
 {
 	//Set the index for after loading screen is finished
 	NextWidgetIndex = in_widgetIndex;
-	if(in_bCancelButtonEnabled)
-	{
-		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Visible);	
-	}
-	else
-	{
-		GameWidget->LoadingScreenWidget->Cancel_Button->SetVisibility(ESlateVisibility::Hidden);
-	}
+	AdjustCancelButtonVisibility(in_bCancelButtonEnabled);
 	//Setting Message for loading screen
 	GameWidget->LoadingScreenWidget->LoadingMessage->SetText(in_message);
 
 	//Change widget view to loading screen
 	GameWidget->WidgetSwitcher->SetActiveWidgetIndex(0);
-	IsLoading = true;
+	bIsLoading = true;
 }
 
 void URelayGameInstance::AdjustCancelButtonVisibility(bool in_bIsVisible)
