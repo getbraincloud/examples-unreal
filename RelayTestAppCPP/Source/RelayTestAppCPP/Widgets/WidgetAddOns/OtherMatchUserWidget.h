@@ -18,7 +18,7 @@ class RELAYTESTAPPCPP_API UOtherMatchUserWidget : public UUserWidget
 
 public:
 	UPROPERTY(BlueprintReadWrite)
-	URelayUserData* UserData;
+	ARelayUserData* UserData;
 
 	UPROPERTY(meta=(BindWidget))
 	UImage* Arrow_Image;

@@ -10,10 +10,13 @@
  * 
  */
 UCLASS()
-class RELAYTESTAPPCPP_API URelayUserData : public UObject
+class RELAYTESTAPPCPP_API ARelayUserData : public AActor
 {
 	GENERATED_BODY()
 public:
+
+	ARelayUserData() {}
+	
 	//Review Note: Couldn't use a normal constructor to initialize these values because this is a UObject.
 	//Also couldn't make this a struct because I couldn't add it to a TArray thats on GameInstance.  
 	void Initialize(FText in_userName, FLinearColor in_playerColor, FString in_profileId)

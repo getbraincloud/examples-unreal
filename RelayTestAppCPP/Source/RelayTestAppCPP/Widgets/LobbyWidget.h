@@ -18,32 +18,40 @@ class RELAYTESTAPPCPP_API ULobbyWidget : public UUserWidget
 	virtual void NativeConstruct() override;
 
 	void AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowColorIndex);
-	
+
+	UFUNCTION()
 	void StartButtonClicked();
 
+	UFUNCTION()
 	void LeaveButtonClicked();
 
+	UFUNCTION()
 	void BlackButtonClicked();
 
+	UFUNCTION()
 	void BlueButtonClicked();
 
+	UFUNCTION()
 	void GreenButtonClicked();
 
+	UFUNCTION()
 	void GreyButtonClicked();
 
+	UFUNCTION()
 	void OrangeButtonClicked();
 
+	UFUNCTION()
 	void PurpleButtonClicked();
 
+	UFUNCTION()
 	void WhiteCyanButtonClicked();
 
+	UFUNCTION()
 	void YellowButtonClicked();
 	
 public:
 
 	void AdjustVisibilityForStartButton(bool bIsUserHost);
-
-
 
 	UPROPERTY(meta=(BindWidget))
 	UListView* Lobby_ListView;

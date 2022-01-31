@@ -62,6 +62,8 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void RemovingLeavingUser(FString in_memberID);
+
+	void DisconnectEverything();
 	
 //Helper Functions
 	

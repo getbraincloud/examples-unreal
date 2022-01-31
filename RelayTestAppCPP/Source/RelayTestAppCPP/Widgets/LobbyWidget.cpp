@@ -47,7 +47,7 @@ void ULobbyWidget::LeaveButtonClicked()
 	FString loadingMessage = TEXT("Returning to Main Menu");
 	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage), false);
 
-	//ToDo: Need a Leaving Lobby call for brainCloud here...
+	GameInstance->Interface->DisconnectEverything();
 }
 
 void ULobbyWidget::BlackButtonClicked()

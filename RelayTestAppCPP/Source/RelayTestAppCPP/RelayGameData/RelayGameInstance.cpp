@@ -99,7 +99,7 @@ void URelayGameInstance::LoadGame()
 void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword)
 {
 	//Create user for widgets to use
-	LocalUser = NewObject<URelayUserData>();
+	LocalUser = NewObject<ARelayUserData>();
 	LocalUser->Initialize(in_LocalUsername, SaveGameInstance->LocalUserColor, Interface->LocalProfileID);
 	
 	//Save info of local player
@@ -114,12 +114,12 @@ void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in
 	
 }
 
-URelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex)
+ARelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex)
 {
-	URelayUserData* newUser = NewObject<URelayUserData>(this);
+	ARelayUserData* newUser = NewObject<ARelayUserData>(this);
 	newUser->Initialize(in_NewUsername, in_NewUserColor, in_NewProfileID);
-	ListOfUserObjects[in_arrayIndex] = newUser;
-
+	//ListOfUserObjects[in_arrayIndex] = newUser;
+	ListOfUserObjects.Add(newUser);
 	GameWidget->LobbyWidget->Lobby_ListView->AddItem(newUser);
 	GameWidget->MatchWidget->Match_UserListView->AddItem(newUser);
 	

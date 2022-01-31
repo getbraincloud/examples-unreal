@@ -15,16 +15,21 @@ class RELAYTESTAPPCPP_API UMatchWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+
+	virtual void NativeConstruct() override;
 	
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite)
 	TArray<UOtherMatchUserWidget*> UserCursors;
 	
-	UPROPERTY(meta=(BindVariable))
+	UPROPERTY(BlueprintReadWrite,meta=(BindVariable))
 	FLinearColor color;
 	
-	UPROPERTY(meta=(BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UListView* Match_UserListView;
 
-	UPROPERTY(meta=(BindWidget))
-	UCanvasPanel* MouseCursorCanvasPanel;
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UCanvasPanel* MouseCursor_CanvasPanel;
+
+	UPROPERTY(BlueprintReadWrite)
+	URelayGameInstance* GameInstance;
 };

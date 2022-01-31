@@ -40,7 +40,7 @@ public:
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void LoadGame();
 
-	URelayUserData* CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex);
+	ARelayUserData* CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword);
@@ -56,9 +56,9 @@ public:
 	/*********** Variables **************/
 
 	UPROPERTY()
-	TArray<URelayUserData*> ListOfUserObjects;
+	TArray<ARelayUserData*> ListOfUserObjects;
 	UPROPERTY(BlueprintReadWrite)
-	URelayUserData* LocalUser;
+	ARelayUserData* LocalUser;
 	UPROPERTY(BlueprintReadWrite)
 	FString ErrorMessage;
 	
