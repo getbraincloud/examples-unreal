@@ -114,7 +114,7 @@ void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in
 	
 }
 
-ARelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID, int in_arrayIndex)
+ARelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)
 {
 	ARelayUserData* newUser = NewObject<ARelayUserData>(this);
 	newUser->Initialize(in_NewUsername, in_NewUserColor, in_NewProfileID);

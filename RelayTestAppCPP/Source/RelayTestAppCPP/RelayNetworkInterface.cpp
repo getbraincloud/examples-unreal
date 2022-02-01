@@ -106,7 +106,7 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 	
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
-	const bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);		// need to use this to deserialize the json into jsonPacket
+	const bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);		
 
 	if(!bResponse) return;
 	if(!jsonPacket->TryGetField(TEXT("operation"))) return;
@@ -181,14 +181,15 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& Data
 	for(auto member : members)
 	{
 		auto object = member->AsObject();
-		profileId = GetProfileIdFromString(object->GetStringField("profileId"));
+		profileId = object->GetStringField("profileId");
 		if(profileId.Equals(LocalProfileID))
 		{
 			bIsHost = profileId.Equals(OwnerID);
+			UE_LOG(LogTemp, Warning, TEXT("Host checked..."));
 		}
 	}
-	bIsReady = !bIsHost;
 	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
+	bIsReady = !bIsHost;
 
 	UE_LOG(LogTemp, Warning, TEXT("Figured out who is hosting..."));
 }
@@ -220,7 +221,12 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 		FLinearColor memberColor = DetermineColorIndex(memberColorIndex);
 		FString memberUserName = memberObject->GetStringField(TEXT("name"));
 		FString memberProfileId = memberObject->GetStringField(TEXT("profileId"));
-		ARelayUserData* newMember = GameInstance->CreateUserAndAddToList(FText::AsCultureInvariant(memberUserName), memberColor, memberProfileId, i);
+		ARelayUserData* newMember = GameInstance->CreateUserAndAddToList
+										(
+											FText::AsCultureInvariant(memberUserName),
+											memberColor,
+											memberProfileId
+										);
 
 		//This check is necessary because local cursor is being handled within WBP_Match asset
 		/*if(!memberProfileId.Equals(LocalProfileID))
@@ -275,11 +281,11 @@ void ARelayNetworkInterface::DisconnectEverything()
 	bRTTConnectionIsLive = false;
 	BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();
 	BrainCloudWrapper->getClient()->getRelayService()->deregisterSystemCallback();
-	BrainCloudWrapper->getClient()->getRelayService()->disconnect();
 	BrainCloudWrapper->getClient()->getRTTService()->deregisterAllRTTCallbacks();
+	BrainCloudWrapper->getClient()->getRelayService()->disconnect();
 	BrainCloudWrapper->getClient()->getRTTService()->disableRTT();
 	BrainCloudWrapper->getClient()->getRTTService()->deregisterRTTLobbyCallback();
-	
+
 	//ToDo: make a timer for one second for loading screen buffer
 
 	GameInstance->bIsLoading = false;

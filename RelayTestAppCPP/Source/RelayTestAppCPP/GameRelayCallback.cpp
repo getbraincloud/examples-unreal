@@ -38,6 +38,7 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 			Interface->LocalProfileID = profileId;
 		}
 		Interface->AuthenticateCallback();
+		delete this;
 	}
 	else if(serviceName == ServiceName::RTTRegistration)
 	{
@@ -50,14 +51,24 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 30, FColor::Blue,serviceName.getValue());
 	UE_LOG(LogTemp,Log,TEXT("Server Callback"));
-	delete this;
+	
 }
 
 void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode,
 	const FString& jsonError)
 {
-	//Not sure why I put a callback to call server error again... ?
-	//Callback->serverError(serviceName, serviceOperation, statusCode, reasonCode, jsonError);
+	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonError);
+	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
+	FJsonSerializer::Deserialize(reader, jsonPacket);
+	if(jsonPacket->HasField("statusMessage"))
+	{
+		FString message = jsonPacket->GetStringField(TEXT("statusMessage"));
+		if(message.Equals(TEXT("DisableRTT Called")))
+		{
+			delete this;
+			return;
+		}
+	}
 	
 	FString middleString = " |||| JSON ERROR: ";
 	FString appendString = serviceOperation.getValue() + middleString + jsonError; 
