@@ -23,7 +23,7 @@ void ARelayPlayerController::ChangeCursorTexture(bool in_changeToNormal)
 		}
 		FString arrowPath = TEXT("ArtResources/arrow") + FString::FromInt(GameInstance->SaveGameInstance->ArrowColorIndex);
 		FName arrowPathName = FName(arrowPath);
-		GetWorld()->GetGameViewport()->SetHardwareCursor(EMouseCursor::TextEditBeam, arrowPathName, FVector2D::ZeroVector);
+		GetWorld()->GetGameViewport()->SetHardwareCursor(EMouseCursor::TextEditBeam, arrowPathName, FVector2D(0.25,0));
 		CurrentMouseCursor = EMouseCursor::TextEditBeam;
 	}
 }

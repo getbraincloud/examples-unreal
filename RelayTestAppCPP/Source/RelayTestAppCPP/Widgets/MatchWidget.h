@@ -3,11 +3,11 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
-#include "Styling/SlateBrush.h"
 #include "Components/CanvasPanel.h"
 #include "Components/ListView.h"
 #include "RelayTestAppCPP/RelayPlayerController.h"
 #include "WidgetAddOns/OtherMatchUserWidget.h"
+#include "WidgetAddOns/ShockwaveWidget.h"
 #include "MatchWidget.generated.h"
 
 /**
@@ -34,8 +34,12 @@ public:
 	
 	UFUNCTION()
 	void LeaveButtonClicked();
+
+	void CalculateInputPosition();
 	
-	void SpawnMouseShockwave();
+	void SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal);
+
+	void MoveOtherUserCursor(FVector2D in_inputPosition, FString in_profileId);
 	
 	UPROPERTY(BlueprintReadWrite)
 	TArray<UOtherMatchUserWidget*> UserCursors;
@@ -49,6 +53,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UCanvasPanel* MouseCursor_CanvasPanel;
 
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UCanvasPanel* Shockwave_CanvasPanel;
+
 	UPROPERTY(BlueprintReadWrite)
 	URelayGameInstance* GameInstance;
 
@@ -58,13 +65,20 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	UButton* GameAreaButton;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UShockwaveWidget> ShockwaveWidgetRef;
+
 	UPROPERTY()
 	bool bIsMouseInGameButton;
 
 	UPROPERTY()
 	ARelayPlayerController* RelayPlayerController;
 
-	float LocationX;
-	float LocationY;
+	UPROPERTY()
+	FVector2D InputLocation;
+	UPROPERTY()
 	float Scale;
+	
+	const FString MoveOperation = "\"move\",";
+	const FString ShockwaveOperation = "\"shockwave\",";
 };

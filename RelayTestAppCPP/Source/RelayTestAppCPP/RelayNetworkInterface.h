@@ -46,7 +46,8 @@ public:
 	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void UpdateLocalColor(int in_colorIndex);
 
-	void LocalUserMouseMoved(int32 in_x, int32 in_y);
+	//Format needed for operation example = "\"move\","
+	void LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation);
 
 //Callbacks
 	void AuthenticateCallback();
@@ -132,21 +133,21 @@ public:
 	UPROPERTY()
 	UBrainCloudWrapper* BrainCloudWrapper;
 
-	
 	class GameRelayCallback* Callback;
 	
 		/********** ID's **********/
-	FString ColorIndex;
+	UPROPERTY()
 	FString LobbyID;
-	TArray<FString> UserCXIDs;
+	
+	UPROPERTY()
 	FString OwnerID;
-	TMap<int,FString> ProfileIDToNetID;
+	
+	UPROPERTY()
 	int CallbackNetID;
+
+	UPROPERTY()
 	FString LocalProfileID;
 
 	//Json references
-	
-	TSharedPtr<FJsonObject>* lobbyJson;
-	
-	
+	//TSharedPtr<FJsonObject>* lobbyJson;
 };

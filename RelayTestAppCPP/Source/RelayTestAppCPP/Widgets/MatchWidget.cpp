@@ -1,6 +1,7 @@
 #include "MatchWidget.h"
 
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Components/CanvasPanelSlot.h"
 #include "Kismet/GameplayStatics.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 
@@ -11,8 +12,9 @@ void UMatchWidget::NativeConstruct()
 	LeaveButton->OnClicked.AddDynamic(this, &UMatchWidget::LeaveButtonClicked);
 	GameAreaButton->OnHovered.AddDynamic(this, &UMatchWidget::GameButtonHovered);
 	GameAreaButton->OnUnhovered.AddDynamic(this, &UMatchWidget::GameButtonUnhovered);
+	GameAreaButton->OnClicked.AddDynamic(this, &UMatchWidget::GameButtonClicked);
 	bIsMouseInGameButton = false;
-	RelayPlayerController = Cast<ARelayPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(),0));
+	RelayPlayerController = Cast<ARelayPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	
 }
 
@@ -21,20 +23,18 @@ void UMatchWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	if(bIsMouseInGameButton)
 	{
-		RelayPlayerController->GetMousePosition(LocationX,LocationY);
-		Scale = UWidgetLayoutLibrary::GetViewportScale(RelayPlayerController);
-		LocationX = LocationX / Scale;
-		LocationY = LocationY / Scale;
-		LocationX = LocationX - 820;
-		LocationY = LocationY - 200;
-		GameInstance->Interface->LocalUserMouseMoved(LocationX, LocationY);
+		//Input position is set to InputLocation
+		CalculateInputPosition();
+		GameInstance->Interface->LocalUserSendEvent(InputLocation, MoveOperation);
 	}
 }
 
 void UMatchWidget::GameButtonClicked()
 {
-	SpawnMouseShockwave();
-	//GameInstance->Interface->LocalShockwaveSpawn()
+	//Get Mouse Position, input position is set to InputLocation
+	CalculateInputPosition();
+	SpawnMouseShockwave(InputLocation, GameInstance->SaveGameInstance->LocalUserColor, true);
+	GameInstance->Interface->LocalUserSendEvent(InputLocation, ShockwaveOperation);
 }
 
 void UMatchWidget::GameButtonHovered()
@@ -57,11 +57,41 @@ void UMatchWidget::LeaveButtonClicked()
 	GameInstance->Interface->DisconnectEverything();
 }
 
-void UMatchWidget::SpawnMouseShockwave()
+void UMatchWidget::CalculateInputPosition()
 {
-	/*
-	 * Get Player color
-	 * Get mouse position
-	 * 
-	 */
+	RelayPlayerController->GetMousePosition(InputLocation.X, InputLocation.Y);
+	Scale = UWidgetLayoutLibrary::GetViewportScale(RelayPlayerController);
+	InputLocation.X = InputLocation.X / Scale;
+	InputLocation.Y = InputLocation.Y / Scale;
+	InputLocation.X = InputLocation.X - 820;
+	InputLocation.Y = InputLocation.Y - 200;
+}
+
+void UMatchWidget::SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal)
+{
+	//Offsetting position //-55
+	in_position.X = isInputLocal ? in_position.X + -90 : in_position.X + -70;
+	in_position.Y = in_position.Y + -25;
+	
+	//Setting Up widget and add to viewport
+	UShockwaveWidget* shockwave = Cast<UShockwaveWidget>(CreateWidget(this, ShockwaveWidgetRef));
+	shockwave->AddToViewport(1);
+	shockwave->Shockwave_Image->SetColorAndOpacity(in_color);
+
+	//Adding to Shockwave Canvas to then set position
+	UCanvasPanelSlot* widgetSlot = Shockwave_CanvasPanel->AddChildToCanvas(shockwave);
+	widgetSlot->SetPosition(in_position);
+}
+
+void UMatchWidget::MoveOtherUserCursor(FVector2D in_inputPosition, FString in_profileId)
+{
+	for(UOtherMatchUserWidget* user : UserCursors)
+	{
+		if(user->UserData->ProfileID.Equals(in_profileId) && IsValid(user))
+		{
+			user->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
+			UCanvasPanelSlot* widgetSlot = Cast<UCanvasPanelSlot>(user->Slot);
+			widgetSlot->SetPosition(in_inputPosition);
+		}
+	}
 }

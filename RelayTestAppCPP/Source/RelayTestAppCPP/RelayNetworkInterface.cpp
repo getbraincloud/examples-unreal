@@ -76,15 +76,14 @@ void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, AppendColorIndex(in_colorIndex), Callback);
 }
 
-void ARelayNetworkInterface::LocalUserMouseMoved(int32 in_x, int32 in_y)
+void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
 {
 	if(BrainCloudWrapper->getClient()->getRelayService()->isConnected())
 	{
 		//Make json string to convert to bytes
-		//TEXT("{\"op\":\"move\",\"data"":{""x\":");
-		const FString beginningString = TEXT("{\"op\":") TEXT("\"move\",") TEXT("\"data\":{");
-		const FString xString = TEXT("\"x\":") + FString::FromInt(in_x) + TEXT(",");
-		const FString yString = TEXT("\"y\":") + FString::FromInt(in_y) + TEXT("}}");
+		const FString beginningString = TEXT("{\"op\":") + in_operation + TEXT("\"data\":{");
+		const FString xString = TEXT("\"x\":") + FString::FromInt(in_inputPosition.X) + TEXT(",");
+		const FString yString = TEXT("\"y\":") + FString::FromInt(in_inputPosition.Y) + TEXT("}}");
 		FString extraJson = beginningString + xString + yString;
 		TArray<uint8> jsonData;
 		jsonData.AddUninitialized(extraJson.Len());
@@ -151,7 +150,7 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 
 	if(!bResponse) return;
 	if(!jsonPacket->TryGetField(TEXT("operation"))) return;
-	lobbyJson = &jsonPacket;
+	
 	FString operation = jsonPacket->GetStringField(TEXT("operation"));
 	
 	if(operation.IsEmpty())
@@ -216,10 +215,10 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 			{
 				if(user->ProfileID.Equals(incomingUserProfileId))
 				{
-					FVector2D newPosition = FVector2D::ZeroVector;
-					newPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
-					newPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
-					GameInstance->GameWidget->MoveOtherUserCursor(newPosition, incomingUserProfileId);
+					FVector2D inputPosition = FVector2D::ZeroVector;
+					inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
+					inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
+					GameInstance->GameWidget->MatchWidget->MoveOtherUserCursor(inputPosition, incomingUserProfileId);
 				}
 			}
 		}
@@ -229,7 +228,10 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 			{
 				if(user->ProfileID.Equals(incomingUserProfileId) && user->bShowShockwave)
 				{
-					//ToDo: Spawn Mouse Ripple -> MatchWidget class
+					FVector2D inputPosition = FVector2D::ZeroVector;
+					inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
+					inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
+					GameInstance->GameWidget->MatchWidget->SpawnMouseShockwave(inputPosition, user->PlayerColor, false);
 				}
 			}
 		}
@@ -347,11 +349,12 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 		if(!memberProfileId.Equals(LocalProfileID))
 		{
 			UUserWidget* widget = CreateWidget(GameInstance->GameWidget->MatchWidget,OtherCursorWidgetReference);
-			UOtherMatchUserWidget* newUserCursor = Cast<UOtherMatchUserWidget>(widget);//NewObject<UOtherMatchUserWidget>(GameInstance->GameWidget->MatchWidget);
+			UOtherMatchUserWidget* newUserCursor = Cast<UOtherMatchUserWidget>(widget);
+			newUserCursor->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
 			newUserCursor->AddToViewport(50);
-			GameInstance->GameWidget->MatchWidget->MouseCursor_CanvasPanel->AddChildToCanvas(newUserCursor);
 			newUserCursor->UserData = newMember;
 			GameInstance->GameWidget->MatchWidget->UserCursors.Add(newUserCursor);
+			GameInstance->GameWidget->MatchWidget->MouseCursor_CanvasPanel->AddChildToCanvas(newUserCursor);
 			UE_LOG(LogTemp, Warning, TEXT("Cursor set up"));
 		}
 	}

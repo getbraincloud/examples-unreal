@@ -25,16 +25,3 @@ void UGameWidget::ClosePopUp()
 	URelayGameInstance* GameInstance= Cast<URelayGameInstance>(GetGameInstance());
 	GameInstance->bErrorOccurred = false;
 }
-
-void UGameWidget::MoveOtherUserCursor(FVector2D in_newPosition, FString in_profile)
-{
-	for(UOtherMatchUserWidget* user : MatchWidget->UserCursors)
-	{
-		if(user->UserData->ProfileID.Equals(in_profile) && IsValid(user))
-		{
-			user->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
-			UCanvasPanelSlot* widgetSlot = Cast<UCanvasPanelSlot>(user->Slot);
-			widgetSlot->SetPosition(FVector2D(in_newPosition.X, in_newPosition.Y));
-		}
-	}
-}
