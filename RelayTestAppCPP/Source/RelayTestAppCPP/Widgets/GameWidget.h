@@ -32,6 +32,8 @@ public:
 
 	UFUNCTION()
 	void ClosePopUp();
+
+	void MoveOtherUserCursor(FVector2D in_newPosition, FString in_profile);
 	
 //Variables
 	//Note: using meta=(BindWidget) attach the variable to the Widget in Editor automatically as long as the variable name is the same.

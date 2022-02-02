@@ -114,14 +114,9 @@ void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in
 	
 }
 
-ARelayUserData* URelayGameInstance::CreateUserAndAddToList(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)
+ARelayUserData* URelayGameInstance::CreateUser(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)
 {
 	ARelayUserData* newUser = NewObject<ARelayUserData>(this);
 	newUser->Initialize(in_NewUsername, in_NewUserColor, in_NewProfileID);
-	//ListOfUserObjects[in_arrayIndex] = newUser;
-	ListOfUserObjects.Add(newUser);
-	GameWidget->LobbyWidget->Lobby_ListView->AddItem(newUser);
-	GameWidget->MatchWidget->Match_UserListView->AddItem(newUser);
-	
 	return newUser;
 }

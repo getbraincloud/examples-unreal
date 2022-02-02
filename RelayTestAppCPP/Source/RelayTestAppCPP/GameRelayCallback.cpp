@@ -42,12 +42,14 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	}
 	else if(serviceName == ServiceName::RTTRegistration)
 	{
-		Interface->EnableRTTCallback();
+		Interface->FindLobby();
+		//this callback will get deleted when RTT is disabled aka in serverError callback
 	}
 	else if(serviceName == ServiceName::Lobby)
 	{
 		//Lobby stuff
 		Interface->rttCallback(jsonData);
+		delete this;
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 30, FColor::Blue,serviceName.getValue());
 	UE_LOG(LogTemp,Log,TEXT("Server Callback"));

@@ -39,7 +39,7 @@ void ULobbyWidget::StartButtonClicked()
 	FString loadingMessage = TEXT("Joining a match... ");
 	GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(loadingMessage), false);
 
-	//ToDo: Need a User Is Ready call here.
+	GameInstance->Interface->SendUpdateReady();
 }
 
 void ULobbyWidget::LeaveButtonClicked()
