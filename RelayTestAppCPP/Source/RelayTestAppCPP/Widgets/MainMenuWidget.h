@@ -2,10 +2,11 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/TextBlock.h"
 #include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
 #include "MainMenuWidget.generated.h"
 
+class UTextBlock;
+class UComboBoxString;
 class UButton;
 /**
  * 
@@ -32,4 +33,7 @@ public:
 
 	UPROPERTY()
 	URelayGameInstance* GameInstance;
+
+	UPROPERTY(meta=(BindWidget))
+	UComboBoxString* ConnectionType_ComboBox;
 };

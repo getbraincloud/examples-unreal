@@ -1,7 +1,10 @@
 #include "MainMenuWidget.h"
 #include "Components/Button.h"
+#include "Components/ComboBoxString.h"
+#include "Components/TextBlock.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 #include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
+
 
 void UMainMenuWidget::NativeConstruct()
 {
@@ -13,6 +16,7 @@ void UMainMenuWidget::NativeConstruct()
 
 void UMainMenuWidget::GoToLoadingScreen()
 {
+	GameInstance->Interface->ConnectionType = static_cast<BCRelayConnectionType>(ConnectionType_ComboBox->GetSelectedIndex());
 	FString LoadingMessage=TEXT("Joining Lobby...");
 	GameInstance->SetUpLoadingScreen(3, FText::AsCultureInvariant(LoadingMessage), true);
 	GameInstance->Interface->FindOrCreateLobby();

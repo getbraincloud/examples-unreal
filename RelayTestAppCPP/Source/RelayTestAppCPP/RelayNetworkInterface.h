@@ -119,8 +119,8 @@ public:
 	FString SecretKey;
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
 	FString AppID;
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	BCRelayConnectionType ConnectionType;
+	
+	
 	UPROPERTY(Category="Braincloud",BlueprintReadWrite,EditAnywhere)
 	FString AlgoJson;
 	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
@@ -130,7 +130,9 @@ public:
 	URelayGameInstance* GameInstance;
 	UPROPERTY()
 	UBrainCloudWrapper* BrainCloudWrapper;
-
+	UPROPERTY()
+	BCRelayConnectionType ConnectionType;
+	
 	class GameRelayCallback* Callback;
 	
 		/********** ID's **********/
