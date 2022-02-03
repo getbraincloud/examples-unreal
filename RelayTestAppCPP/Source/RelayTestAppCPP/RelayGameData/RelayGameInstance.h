@@ -50,6 +50,8 @@ public:
 
 	void RemoveUserFromList(FString in_profileId);
 
+	void SetUpSignInScreen();
+
 	bool IsUsernameNew() const
 	{
 		return SaveGameInstance->LocalUsername.ToString() == LocalUser->Username.ToString();

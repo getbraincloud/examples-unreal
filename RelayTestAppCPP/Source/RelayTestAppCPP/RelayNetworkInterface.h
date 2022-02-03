@@ -20,30 +20,25 @@ UCLASS()
 class RELAYTESTAPPCPP_API ARelayNetworkInterface : public AActor, public IRTTCallback, public IRelayCallback, public IRelaySystemCallback, public IRelayConnectCallback
 {
 	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ARelayNetworkInterface();
 
 protected:
+	// Sets default values for this actor's properties
+	ARelayNetworkInterface();
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
-	//Note this shows up when hovering over a BP node.... ?
-	/*************Functions************/
-	
-//Event Braincloud functions
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
-	void LoginUniversalBC();
 
-	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
+public:
+	
+//Button related Event brainCloud functions
+	
+	void LoginUniversalBC();
+	
 	void FindOrCreateLobby();
 
-	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void UpdateLocalColor(int in_colorIndex);
 
 	//Specific Format needed for operation; for example = "\"move\","

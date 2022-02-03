@@ -35,7 +35,7 @@ void ARelayNetworkInterface::Tick(float DeltaTime)
 	BrainCloudWrapper->runCallbacks();
 }
 
-void ARelayNetworkInterface::LoginUniversalBC_Implementation()
+void ARelayNetworkInterface::LoginUniversalBC()
 {
 	FString userId = GameInstance->SaveGameInstance->LocalUsername.ToString();
 	FString password = GameInstance->SaveGameInstance->LocalPassword.ToString();
@@ -297,17 +297,15 @@ void ARelayNetworkInterface::InitBrainCloud()
 	BrainCloudWrapper->AddToRoot();
 	BrainCloudWrapper->initialize(ServerURL,SecretKey,AppID,GetBrainCloudVersion());
 	BrainCloudWrapper->getClient()->enableLogging(true);
-	
-	UE_LOG(LogTemp, Warning, TEXT("Wrapper Initialized"));
 }
 
 void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& DataJsonObject)
 {
-	/*if(!ensure(DataJsonObject->HasField(TEXT("lobby"))))
+	if(!ensure(DataJsonObject->HasField(TEXT("lobby"))))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Data Json Object does not have Lobby field"));
 		return;
-	}*/
+	}
 
 	auto lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));
 	auto members = lobbyObject->GetArrayField(TEXT("members"));
@@ -326,8 +324,6 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& Data
 	}
 	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
 	bIsReady = !bIsHost;
-
-	UE_LOG(LogTemp, Warning, TEXT("Figured out who is hosting..."));
 }
 
 void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJsonObject)
@@ -348,7 +344,7 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 	auto members = lobbyObject->GetArrayField(TEXT("members"));
 	if(members.Num() == 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No members for Check Members"));
+		UE_LOG(LogTemp, Warning, TEXT("No members for Check Members function"));
 		return;
 	}
 	
@@ -383,20 +379,17 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 			newUserCursor->UserData = newMember;
 			GameInstance->GameWidget->MatchWidget->UserCursors.Add(newUserCursor);
 			GameInstance->GameWidget->MatchWidget->MouseCursor_CanvasPanel->AddChildToCanvas(newUserCursor);
-			UE_LOG(LogTemp, Warning, TEXT("Cursor set up"));
 		}
 	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Members Checked"));
 }
 
 void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& DataJsonObject)
 {
-	/*if(!ensure(DataJsonObject->HasField(TEXT("lobbyId"))))
+	if(!ensure(DataJsonObject->HasField(TEXT("lobbyId"))))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Data Json Packet Not Valid"));
 		return;
-	}*/
+	}
 		
 	LobbyID = DataJsonObject->GetStringField("lobbyId");
 	auto lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));

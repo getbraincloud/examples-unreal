@@ -4,6 +4,7 @@
 #include "RelayGameInstance.h"
 
 #include "Components/Button.h"
+#include "Components/EditableTextBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 #include "RelayTestAppCPP/Widgets/GameWidget.h"
@@ -76,6 +77,8 @@ void URelayGameInstance::LoadGame()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Save Data Loaded"));
 	}
+
+	SetUpSignInScreen();
 }
 
 void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword)
@@ -88,12 +91,17 @@ void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalP
 	SaveGameInstance->LocalUsername = in_LocalUsername;
 	SaveGameInstance->LocalPassword = in_LocalPassword;
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
-	UE_LOG(LogTemp, Warning, TEXT("Local User Created"));
 }
-//ToDo finish this function and hook it up
+
 void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible)
 {
-	
+	for(ARelayUserData* user : ListOfUserObjects)
+	{
+		if(user->ProfileID.Equals(in_ProfileID))
+		{
+			user->bShowShockwave = in_IsVisible;
+		}
+	}	
 }
 
 void URelayGameInstance::RemoveUserFromList(FString in_profileId)
@@ -107,6 +115,13 @@ void URelayGameInstance::RemoveUserFromList(FString in_profileId)
 		}
 	}
 	ListOfUserObjects.Remove(userToRemove);
+}
+
+void URelayGameInstance::SetUpSignInScreen()
+{
+	GameWidget->SignInWidget->Username_EditableText->SetText(SaveGameInstance->LocalUsername);
+	GameWidget->SignInWidget->Password_EditableText->SetText(SaveGameInstance->LocalPassword);
+	GameWidget->WidgetSwitcher->SetActiveWidgetIndex(1);
 }
 
 ARelayUserData* URelayGameInstance::CreateUser(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)
