@@ -2,6 +2,7 @@
 
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 
@@ -15,7 +16,8 @@ void UMatchWidget::NativeConstruct()
 	GameAreaButton->OnClicked.AddDynamic(this, &UMatchWidget::GameButtonClicked);
 	bIsMouseInGameButton = false;
 	RelayPlayerController = Cast<ARelayPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-	
+	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
+	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
 }
 
 void UMatchWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -94,4 +96,26 @@ void UMatchWidget::MoveOtherUserCursor(FVector2D in_inputPosition, FString in_pr
 			widgetSlot->SetPosition(in_inputPosition);
 		}
 	}
+}
+
+void UMatchWidget::RemoveUserFromList(FString in_profileId)
+{
+	UOtherMatchUserWidget* cursorToRemove;
+	for(UOtherMatchUserWidget* cursor : UserCursors)
+	{
+		if(cursor->UserData->ProfileID.Equals(in_profileId))
+		{
+			cursor->RemoveFromParent();
+			cursorToRemove = cursor;
+		}
+	}
+	UserCursors.Remove(cursorToRemove);
+	
+	Match_UserListView->ClearListItems();
+	for(ARelayUserData* user : GameInstance->ListOfUserObjects)
+	{
+		Match_UserListView->AddItem(user);
+	}
+	Match_UserListView->RequestRefresh();
+	GEngine->ForceGarbageCollection(true);
 }

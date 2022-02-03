@@ -46,9 +46,14 @@ public:
 	//UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="RelayInterface")
 	void UpdateLocalColor(int in_colorIndex);
 
-	//Format needed for operation example = "\"move\","
+	//Specific Format needed for operation; for example = "\"move\","
 	void LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation);
 
+	//Called from Cancel button from loading screen
+	void JoinLobbyCancelled();
+
+	void SendUpdateReady();
+	
 //Callbacks
 	void AuthenticateCallback();
 	
@@ -63,8 +68,6 @@ public:
 	virtual void relayConnectSuccess(const FString& jsonResponse) override;
 
 	virtual void relayConnectFailure(const FString& errorMessage) override;
-
-	void SendUpdateReady();
 
 //BrainCloud responses/calls
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
@@ -93,7 +96,7 @@ public:
 	FString GetProfileIDFromNetID(int in_netId,UBrainCloudWrapper* in_wrapper);
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
-	FString GetBrainCloudVersion(UBrainCloudWrapper* in_wrapper);
+	FString GetBrainCloudVersion();
 
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	FLinearColor DetermineColorIndex(int in_ColorIndex);

@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/TextBlock.h"
+#include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
 #include "MainMenuWidget.generated.h"
 
 class UButton;
@@ -25,4 +26,10 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* JoinLobbyButton;
+
+	UPROPERTY(meta=(BindWidget))
+	UTextBlock* VersionText;
+
+	UPROPERTY()
+	URelayGameInstance* GameInstance;
 };

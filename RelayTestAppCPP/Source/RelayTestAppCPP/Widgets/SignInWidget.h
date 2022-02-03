@@ -17,4 +17,7 @@ class RELAYTESTAPPCPP_API USignInWidget : public UUserWidget
 public:
 	UPROPERTY(BlueprintReadWrite)
 	URelayGameInstance* GameInstance;
+
+	UPROPERTY(meta=(BindWidget))
+	class UTextBlock* VersionText;
 };

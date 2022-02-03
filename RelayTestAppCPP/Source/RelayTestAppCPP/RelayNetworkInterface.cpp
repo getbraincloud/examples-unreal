@@ -100,12 +100,27 @@ void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FStr
 	}
 }
 
+void ARelayNetworkInterface::JoinLobbyCancelled()
+{
+	if(bRTTConnectionIsLive)
+	{
+		bRTTConnectionIsLive = false;
+		Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+		BrainCloudWrapper->getLobbyService()->cancelFindRequest(TEXT("CursorPartyV2"), Callback);
+	}
+	else
+	{
+		DisconnectEverything();
+		GameInstance->bIsLoading = false;
+	}
+}
+
 void ARelayNetworkInterface::AuthenticateCallback()
 {
 	if(GameInstance->IsUsernameNew())
 	{
-		Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser->Username.ToString(),Callback);
+		Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser->Username.ToString(), Callback);
 	}
 	UE_LOG(LogTemp, Warning, TEXT("Authenticate Callback"));
 	GameInstance->bIsLoading = false;
@@ -240,7 +255,20 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 
 void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 {
-	//ToDo: Need to determine when someone leaves
+	
+	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonResponse);
+	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
+	FJsonSerializer::Deserialize(reader, jsonPacket);
+	if(jsonPacket->HasField(TEXT("op")))
+	{
+		FString operation = jsonPacket->GetStringField(TEXT("op"));
+		if(operation.Equals(TEXT("DISCONNECT")))
+		{
+			FString profileId = GetProfileIdFromString(jsonPacket->GetStringField(TEXT("cxId")));
+			GameInstance->RemoveUserFromList(profileId);
+			GameInstance->GameWidget->MatchWidget->RemoveUserFromList(profileId);
+		}
+	}
 }
 
 void ARelayNetworkInterface::relayConnectSuccess(const FString& jsonResponse)
@@ -267,7 +295,7 @@ void ARelayNetworkInterface::InitBrainCloud()
 {
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
-	BrainCloudWrapper->initialize(ServerURL,SecretKey,AppID,GetBrainCloudVersion(BrainCloudWrapper));
+	BrainCloudWrapper->initialize(ServerURL,SecretKey,AppID,GetBrainCloudVersion());
 	BrainCloudWrapper->getClient()->enableLogging(true);
 	
 	UE_LOG(LogTemp, Warning, TEXT("Wrapper Initialized"));
@@ -479,8 +507,8 @@ FString ARelayNetworkInterface::GetProfileIDFromNetID(int in_netId, UBrainCloudW
 	return in_wrapper->getRelayService()->getProfileIdForNetId(in_netId);
 }
 
-FString ARelayNetworkInterface::GetBrainCloudVersion(UBrainCloudWrapper* in_wrapper)
+FString ARelayNetworkInterface::GetBrainCloudVersion()
 {
-	BrainCloudClient* Client = in_wrapper->getBCClient();
+	BrainCloudClient* Client = BrainCloudWrapper->getBCClient();
 	return Client->getBrainCloudClientVersion();
 }

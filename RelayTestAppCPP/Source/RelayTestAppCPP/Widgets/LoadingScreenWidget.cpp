@@ -1,6 +1,7 @@
 #include "LoadingScreenWidget.h"
 
 #include "Components/Button.h"
+#include "RelayTestAppCPP/RelayNetworkInterface.h"
 
 void ULoadingScreenWidget::NativeOnInitialized()
 {
@@ -24,7 +25,7 @@ void ULoadingScreenWidget::NativeTick(const FGeometry& MyGeometry, float InDelta
 	}
 	else if(!GameInstance->bIsLoading && isWaiting)
 	{
-		GameInstance->FinishedLoading(CancelNextState);
+		GameInstance->FinishedLoading();
 		CancelNextState = false;
 	}
 }
@@ -32,4 +33,8 @@ void ULoadingScreenWidget::NativeTick(const FGeometry& MyGeometry, float InDelta
 void ULoadingScreenWidget::OnCancelButtonClicked()
 {
 	CancelNextState = true;
+	FString loadingMessage = TEXT("Cancelling Lobby Request....");
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage),false);
+	
+	GameInstance->Interface->JoinLobbyCancelled();
 }

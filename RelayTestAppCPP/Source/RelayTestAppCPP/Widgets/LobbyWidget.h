@@ -4,6 +4,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/ListView.h"
+
 #include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
 #include "LobbyWidget.generated.h"
 
@@ -61,6 +62,9 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* LeaveLobbyButton;
+
+	UPROPERTY(meta=(BindWidget))
+	class UTextBlock* VersionText;
 
 	//Colors
 	/*

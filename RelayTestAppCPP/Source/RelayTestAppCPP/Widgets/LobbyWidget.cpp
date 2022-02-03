@@ -1,4 +1,5 @@
 #include "LobbyWidget.h"
+#include "Components/TextBlock.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 
 void ULobbyWidget::NativeConstruct()
@@ -18,6 +19,7 @@ void ULobbyWidget::NativeConstruct()
 	Yellow_Button->OnClicked.AddDynamic(this, &ULobbyWidget::YellowButtonClicked);
 	
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
+	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
 }
 
 void ULobbyWidget::AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowColorIndex)

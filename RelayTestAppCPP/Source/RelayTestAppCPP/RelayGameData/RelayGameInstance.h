@@ -28,7 +28,7 @@ public:
 	void AdjustCancelButtonVisibility(bool in_bIsVisible);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void FinishedLoading(bool in_bIsNextStateCancelled);
+	void FinishedLoading();
 
 //Save/Load File
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
@@ -47,6 +47,8 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible);
+
+	void RemoveUserFromList(FString in_profileId);
 
 	bool IsUsernameNew() const
 	{

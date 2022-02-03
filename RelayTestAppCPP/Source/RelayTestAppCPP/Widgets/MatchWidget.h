@@ -40,6 +40,8 @@ public:
 	void SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal);
 
 	void MoveOtherUserCursor(FVector2D in_inputPosition, FString in_profileId);
+
+	void RemoveUserFromList(FString in_profileId);
 	
 	UPROPERTY(BlueprintReadWrite)
 	TArray<UOtherMatchUserWidget*> UserCursors;
@@ -64,6 +66,9 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* GameAreaButton;
+
+	UPROPERTY(meta=(BindWidget))
+	class UTextBlock* VersionText;
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UShockwaveWidget> ShockwaveWidgetRef;

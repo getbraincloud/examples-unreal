@@ -42,28 +42,10 @@ void URelayGameInstance::AdjustCancelButtonVisibility(bool in_bIsVisible)
 	}
 }
 
-void URelayGameInstance::FinishedLoading(bool in_bIsNextStateCancelled)
+void URelayGameInstance::FinishedLoading()
 {
-	//If cancelled, go back to main menu widget which should be index 2
-	if(in_bIsNextStateCancelled)
-	{
-		GameWidget->WidgetSwitcher->SetActiveWidgetIndex(0);
-		
-		//ToDo: Check what the next widget index is to determine if Cancelling to Find lobby or Cancelling Joining Match
-		if(NextWidgetIndex <= 3)
-		{
-			//Cancel Find Lobby
-		}
-		else
-		{
-			//Cancel Joining Match
-		}
-	}
-	else
-	{
-		GameWidget->WidgetSwitcher->SetActiveWidgetIndex(NextWidgetIndex);
-		CurrentWidgetIndex = NextWidgetIndex;
-	}
+	GameWidget->WidgetSwitcher->SetActiveWidgetIndex(NextWidgetIndex);
+	CurrentWidgetIndex = NextWidgetIndex;
 }
 
 void URelayGameInstance::SaveGameUserColor(FLinearColor in_Color, int in_ArrowColorIndex)
@@ -108,10 +90,23 @@ void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalP
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
 	UE_LOG(LogTemp, Warning, TEXT("Local User Created"));
 }
-
+//ToDo finish this function and hook it up
 void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible)
 {
 	
+}
+
+void URelayGameInstance::RemoveUserFromList(FString in_profileId)
+{
+	ARelayUserData* userToRemove;
+	for(ARelayUserData* user : ListOfUserObjects)
+	{
+		if(user->ProfileID.Equals(in_profileId))
+		{
+			userToRemove = user;
+		}
+	}
+	ListOfUserObjects.Remove(userToRemove);
 }
 
 ARelayUserData* URelayGameInstance::CreateUser(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)

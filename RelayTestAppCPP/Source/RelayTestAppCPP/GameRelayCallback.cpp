@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameRelayCallback.h"
-
 #include "BCBlueprintCallProxyBase.h"
 #include "ServiceName.h"
 #include "ServiceOperation.h"
@@ -47,8 +46,15 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	}
 	else if(serviceName == ServiceName::Lobby)
 	{
-		//Lobby stuff
-		Interface->rttCallback(jsonData);
+		if(serviceOperation == ServiceOperation::CancelFindRequest)
+		{
+			Interface->GameInstance->bIsLoading = false;	
+		}
+		else
+		{
+			//Lobby stuff
+			Interface->rttCallback(jsonData);	
+		}
 		delete this;
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 30, FColor::Blue,serviceName.getValue());
