@@ -38,17 +38,13 @@ void ULobbyWidget::AdjustVisibilityForStartButton(bool bIsUserHost)
 
 void ULobbyWidget::StartButtonClicked()
 {
-	FString loadingMessage = TEXT("Joining a match... ");
-	GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(loadingMessage), false);
-
+	GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(JoinMatchLoadingMessage), false);
 	GameInstance->Interface->SendUpdateReady();
 }
 
 void ULobbyWidget::LeaveButtonClicked()
 {
-	FString loadingMessage = TEXT("Returning to Main Menu");
-	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage), false);
-
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(ReturnMenuLoadingMessage), false);
 	GameInstance->Interface->DisconnectEverything();
 }
 

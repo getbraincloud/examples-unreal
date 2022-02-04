@@ -25,18 +25,15 @@ void UMatchWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	if(bIsMouseInGameButton)
 	{
-		//Input position is set to InputLocation
-		CalculateInputPosition();
-		GameInstance->Interface->LocalUserSendEvent(InputLocation, MoveOperation);
+		GameInstance->Interface->LocalUserSendEvent(CalculateInputPosition(), MoveOperation);
 	}
 }
 
 void UMatchWidget::GameButtonClicked()
 {
-	//Get Mouse Position, input position is set to InputLocation
-	CalculateInputPosition();
-	SpawnMouseShockwave(InputLocation, GameInstance->SaveGameInstance->LocalUserColor, true);
-	GameInstance->Interface->LocalUserSendEvent(InputLocation, ShockwaveOperation);
+	FVector2D position = CalculateInputPosition();
+	SpawnMouseShockwave(position, GameInstance->SaveGameInstance->LocalUserColor, true);
+	GameInstance->Interface->LocalUserSendEvent(position, ShockwaveOperation);
 }
 
 void UMatchWidget::GameButtonHovered()
@@ -53,25 +50,28 @@ void UMatchWidget::GameButtonUnhovered()
 
 void UMatchWidget::LeaveButtonClicked()
 {
-	FString loadingMessage = TEXT("Returning to Main Menu");
-	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage), false);
-
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(ReturnMenuLoadingMessage), false);
 	GameInstance->Interface->DisconnectEverything();
 }
 
-void UMatchWidget::CalculateInputPosition()
+FVector2D UMatchWidget::CalculateInputPosition()
 {
-	RelayPlayerController->GetMousePosition(InputLocation.X, InputLocation.Y);
-	Scale = UWidgetLayoutLibrary::GetViewportScale(RelayPlayerController);
-	InputLocation.X = InputLocation.X / Scale;
-	InputLocation.Y = InputLocation.Y / Scale;
-	InputLocation.X = InputLocation.X - 820;
-	InputLocation.Y = InputLocation.Y - 200;
+	FVector2D resultPosition;
+	RelayPlayerController->GetMousePosition(resultPosition.X, resultPosition.Y);
+
+	float Scale = UWidgetLayoutLibrary::GetViewportScale(RelayPlayerController);
+	resultPosition.X = resultPosition.X / Scale;
+	resultPosition.Y = resultPosition.Y / Scale;
+	
+	//Coordinates of game area button top left corner
+	resultPosition.X = resultPosition.X - 820;
+	resultPosition.Y = resultPosition.Y - 200;
+	return resultPosition;
 }
 
 void UMatchWidget::SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal)
 {
-	//Offsetting position //-55
+	//Offsetting position
 	in_position.X = isInputLocal ? in_position.X + -90 : in_position.X + -70;
 	in_position.Y = in_position.Y + -25;
 	

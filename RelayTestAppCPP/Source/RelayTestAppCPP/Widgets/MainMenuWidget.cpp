@@ -9,15 +9,13 @@
 void UMainMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	JoinLobbyButton->OnClicked.AddDynamic(this, &UMainMenuWidget::GoToLoadingScreen);
+	JoinLobbyButton->OnClicked.AddDynamic(this, &UMainMenuWidget::SetUpLoadingLobbyScreen);
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
 }
 
-void UMainMenuWidget::GoToLoadingScreen()
+void UMainMenuWidget::SetUpLoadingLobbyScreen()
 {
-	GameInstance->Interface->ConnectionType = static_cast<BCRelayConnectionType>(ConnectionType_ComboBox->GetSelectedIndex());
-	FString LoadingMessage=TEXT("Joining Lobby...");
 	GameInstance->SetUpLoadingScreen(3, FText::AsCultureInvariant(LoadingMessage), true);
 	GameInstance->Interface->FindOrCreateLobby();
 }

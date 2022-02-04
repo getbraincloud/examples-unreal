@@ -21,36 +21,33 @@ public:
 	URelayGameInstance();
 	
 //Loading Screen functions
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
+	
 	void SetUpLoadingScreen(int in_widgetIndex, FText in_message, bool in_bCancelButtonEnabled);
-
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
+	
 	void AdjustCancelButtonVisibility(bool in_bIsVisible);
-
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
+	
 	void FinishedLoading();
 
 //Save/Load File
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
+	
 	void SaveGameUserColor(FLinearColor in_Color,int in_ArrowColorIndex);
-
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
+	
 	void SaveGameUserSignInEntry(FText in_Username,FText in_Password);
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void LoadGame();
 
 	ARelayUserData* CreateUser(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID);
+	
+	void CreateLocalUser(FText in_LocalUsername);
 
-	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
-	void CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword);
-
+	//Called from a blueprint toggle set up within Content->Widgets->ScreenAddonWidgets->WBP_Match_UserEntry.uasset 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible);
 
 	void RemoveUserFromList(FString in_profileId);
 
-	void SetUpSignInScreen();
+	void SetUpSignInScreen() const;
 
 	bool IsUsernameNew() const
 	{

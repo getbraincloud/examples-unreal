@@ -37,5 +37,5 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	UEditableTextBox* Password_EditableText;
 
-	
+	const FString LoadingMessage = TEXT("Logging in....");
 };

@@ -26,15 +26,11 @@ void ULoadingScreenWidget::NativeTick(const FGeometry& MyGeometry, float InDelta
 	else if(!GameInstance->bIsLoading && isWaiting)
 	{
 		GameInstance->FinishedLoading();
-		CancelNextState = false;
 	}
 }
 
 void ULoadingScreenWidget::OnCancelButtonClicked()
 {
-	CancelNextState = true;
-	FString loadingMessage = TEXT("Cancelling Lobby Request....");
-	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage),false);
-	
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(CancelLoadingMessage), false);
 	GameInstance->Interface->JoinLobbyCancelled();
 }

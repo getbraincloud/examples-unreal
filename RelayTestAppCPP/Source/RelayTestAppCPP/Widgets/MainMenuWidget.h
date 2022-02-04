@@ -19,7 +19,7 @@ class RELAYTESTAPPCPP_API UMainMenuWidget : public UUserWidget
 	virtual void NativeConstruct() override;
 
 	UFUNCTION()
-	void GoToLoadingScreen();
+	void SetUpLoadingLobbyScreen();
 	
 public:
 	UPROPERTY(BlueprintReadWrite,meta=(BindWidget))
@@ -34,6 +34,5 @@ public:
 	UPROPERTY()
 	URelayGameInstance* GameInstance;
 
-	UPROPERTY(meta=(BindWidget))
-	UComboBoxString* ConnectionType_ComboBox;
+	const FString LoadingMessage = TEXT("Joining a lobby...");
 };

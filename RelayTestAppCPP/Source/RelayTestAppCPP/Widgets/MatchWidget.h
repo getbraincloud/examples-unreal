@@ -35,7 +35,7 @@ public:
 	UFUNCTION()
 	void LeaveButtonClicked();
 
-	void CalculateInputPosition();
+	FVector2D CalculateInputPosition();
 	
 	void SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal);
 
@@ -47,7 +47,7 @@ public:
 	TArray<UOtherMatchUserWidget*> UserCursors;
 	
 	UPROPERTY(BlueprintReadWrite,meta=(BindVariable))
-	FLinearColor color;
+	FLinearColor Color;
 	
 	UPROPERTY(meta=(BindWidget))
 	UListView* Match_UserListView;
@@ -79,11 +79,7 @@ public:
 	UPROPERTY()
 	ARelayPlayerController* RelayPlayerController;
 
-	UPROPERTY()
-	FVector2D InputLocation;
-	UPROPERTY()
-	float Scale;
-	
-	const FString MoveOperation = "\"move\",";
-	const FString ShockwaveOperation = "\"shockwave\",";
+	const FString ReturnMenuLoadingMessage = TEXT("Returning to Main Menu...");
+	const FString MoveOperation = TEXT("\"move\",");
+	const FString ShockwaveOperation = TEXT("\"shockwave\",");
 };

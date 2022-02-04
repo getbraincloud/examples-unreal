@@ -15,6 +15,7 @@ void USignInWidget::NativeConstruct()
 
 void USignInWidget::LoginButtonClicked()
 {
+	//Making sure fields are filled
 	if(Username_EditableText->GetText().IsEmpty())
 	{
 		FString popUpMessage = TEXT("Please enter username");
@@ -25,10 +26,14 @@ void USignInWidget::LoginButtonClicked()
 		FString popUpMessage = TEXT("Please enter a password");
 		GameInstance->GameWidget->SetUpPopUp(FText::AsCultureInvariant(popUpMessage));
 	}
-	GameInstance->CreateLocalUser(Username_EditableText->GetText(), Password_EditableText->GetText());
+	
+	//Creating user data object and saving the entry
+	GameInstance->CreateLocalUser(Username_EditableText->GetText());
+	GameInstance->SaveGameUserSignInEntry(Username_EditableText->GetText(), Password_EditableText->GetText());
+	//Setting username text to show in Main Menu
 	GameInstance->GameWidget->MainMenuWidget->MainMenuUsername_Text_1->SetText(Username_EditableText->GetText());
+	//brainCloud call to authenticate
 	GameInstance->Interface->LoginUniversalBC();
 	
-	FString loadingMessage = TEXT("Logging in....");
-	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(loadingMessage), false);
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(LoadingMessage), false);
 }

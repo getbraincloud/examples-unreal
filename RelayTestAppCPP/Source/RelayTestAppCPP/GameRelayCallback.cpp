@@ -19,20 +19,19 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
 	bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);
-
-	FBC_ReturnData returnData = FBC_ReturnData(serviceName.getValue(), serviceOperation.getValue(), 200, 0);
+	if(!bResponse)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Server callback failed to deserialize jsonData"));
+		delete this;
+		return;
+	}
 
 	if (serviceName == ServiceName::AuthenticateV2 && serviceOperation == ServiceOperation::Authenticate)
 	{
-		FString profileId = TEXT("");
+		TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
+		FString profileId = data->GetStringField(TEXT("profileId"));
 
-		if (bResponse)
-		{
-			TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
-			profileId = data->GetStringField(TEXT("profileId"));
-		}
-
-		if (profileId != TEXT(""))
+		if (!profileId.IsEmpty())
 		{
 			Interface->LocalProfileID = profileId;
 		}
@@ -42,24 +41,16 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	else if(serviceName == ServiceName::RTTRegistration)
 	{
 		Interface->FindLobby();
-		//this callback will get deleted when RTT is disabled aka in serverError callback
+		//callback will get deleted when RTT is disabled which will be within serverError callback
 	}
 	else if(serviceName == ServiceName::Lobby)
 	{
 		if(serviceOperation == ServiceOperation::CancelFindRequest)
 		{
-			Interface->GameInstance->bIsLoading = false;	
-		}
-		else
-		{
-			//Lobby stuff
-			Interface->rttCallback(jsonData);	
+			Interface->StartLoadingTimer();	
 		}
 		delete this;
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 30, FColor::Blue,serviceName.getValue());
-	UE_LOG(LogTemp,Log,TEXT("Server Callback"));
-	
 }
 
 void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation serviceOperation, int32 statusCode, int32 reasonCode,
@@ -77,11 +68,10 @@ void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation se
 			return;
 		}
 	}
-	
+	//Setting up error message for pop up screen
 	FString middleString = " |||| JSON ERROR: ";
 	FString appendString = serviceOperation.getValue() + middleString + jsonError; 
 	const FText errorMessage = FText::AsCultureInvariant(appendString);
 	Interface->GameInstance->GameWidget->SetUpPopUp(errorMessage);
-	UE_LOG(LogTemp, Warning, TEXT("Server Error Happened"));
 	delete this;
 }

@@ -23,6 +23,7 @@ void URelayGameInstance::SetUpLoadingScreen(int in_widgetIndex, FText in_message
 	//Set the index for after loading screen is finished
 	NextWidgetIndex = in_widgetIndex;
 	AdjustCancelButtonVisibility(in_bCancelButtonEnabled);
+	
 	//Setting Message for loading screen
 	GameWidget->LoadingScreenWidget->LoadingMessage->SetText(in_message);
 
@@ -70,27 +71,16 @@ void URelayGameInstance::LoadGame()
 	{
 		SaveGameInstance = Cast<URelaySaveGame>(UGameplayStatics::CreateSaveGameObject(URelaySaveGame::StaticClass()));
 		UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
-
-		UE_LOG(LogTemp, Warning, TEXT("New Save Instance"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Save Data Loaded"));
 	}
 
 	SetUpSignInScreen();
 }
 
-void URelayGameInstance::CreateLocalUser(FText in_LocalUsername, FText in_LocalPassword)
+void URelayGameInstance::CreateLocalUser(FText in_LocalUsername)
 {
 	//Create user for widgets to use
 	LocalUser = NewObject<ARelayUserData>();
 	LocalUser->Initialize(in_LocalUsername, SaveGameInstance->LocalUserColor, Interface->LocalProfileID);
-	
-	//Save info of local player
-	SaveGameInstance->LocalUsername = in_LocalUsername;
-	SaveGameInstance->LocalPassword = in_LocalPassword;
-	UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
 }
 
 void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in_IsVisible)
@@ -117,7 +107,7 @@ void URelayGameInstance::RemoveUserFromList(FString in_profileId)
 	ListOfUserObjects.Remove(userToRemove);
 }
 
-void URelayGameInstance::SetUpSignInScreen()
+void URelayGameInstance::SetUpSignInScreen() const
 {
 	GameWidget->SignInWidget->Username_EditableText->SetText(SaveGameInstance->LocalUsername);
 	GameWidget->SignInWidget->Password_EditableText->SetText(SaveGameInstance->LocalPassword);

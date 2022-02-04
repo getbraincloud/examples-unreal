@@ -22,20 +22,22 @@ class RELAYTESTAPPCPP_API ULoadingScreenWidget : public UUserWidget
 
 	UFUNCTION()
 	void OnCancelButtonClicked();
-
-	UPROPERTY()
-	URelayGameInstance* GameInstance;
-
-	UPROPERTY()
-	bool isWaiting;
+	
 public:
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	bool CancelNextState;
+
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* LoadingMessage;
 
 	UPROPERTY (meta = (BindWidget))
 	class UButton* Cancel_Button;
-	
+
+private:
+	const FString CancelLoadingMessage = TEXT("Cancelling lobby request....");
+
+	UPROPERTY()
+	URelayGameInstance* GameInstance;
+
+	UPROPERTY()
+	bool isWaiting;
 };

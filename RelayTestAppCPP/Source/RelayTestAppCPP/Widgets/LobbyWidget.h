@@ -109,4 +109,8 @@ private:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* Yellow_Button;
+
+	const FString JoinMatchLoadingMessage = TEXT("Joining a match... ");
+
+	const FString ReturnMenuLoadingMessage = TEXT("Returning to Main Menu...");
 };

@@ -3,7 +3,7 @@
 
 #include "RelayNetworkInterface.h"
 #include "BrainCloudClient.h"
-#include "ConvertUtilities.h"
+#include <ConvertUtilities.h>
 #include "Kismet/GameplayStatics.h"
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
@@ -14,7 +14,6 @@ ARelayNetworkInterface::ARelayNetworkInterface()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
 }
 
 // Called when the game starts or when spawned
@@ -41,53 +40,36 @@ void ARelayNetworkInterface::LoginUniversalBC()
 	FString password = GameInstance->SaveGameInstance->LocalPassword.ToString();
 
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-	
 	BrainCloudWrapper->authenticateUniversal(userId, password, true, Callback);
-	UE_LOG(LogTemp, Warning, TEXT("Login Called"))
 }
 
 void ARelayNetworkInterface::FindOrCreateLobby()
 {
 	bIsHost = false;
 	bIsReady = false;
-	bCancelRequested = false;
-	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BCRTTConnectionType rttConnectType;
-	switch(ConnectionType)
-	{
-		case BCRelayConnectionType::TCP:
-			rttConnectType = BCRTTConnectionType::TCP;
-			break;
-		case BCRelayConnectionType::UDP:
-			rttConnectType = BCRTTConnectionType::UDP;
-			break;
-		case BCRelayConnectionType::WEBSOCKET:
-		default:
-			rttConnectType = BCRTTConnectionType::WEBSOCKET;
-			break;
 	
-	}
-	BrainCloudWrapper->getRTTService()->enableRTT(rttConnectType, Callback);
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	BrainCloudWrapper->getRTTService()->enableRTT(BCRTTConnectionType::WEBSOCKET, Callback);
 }
 
 void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 {
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, AppendColorIndex(in_colorIndex), Callback);
+	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeColorIndexJsonString(in_colorIndex), Callback);
 }
 
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
 {
 	if(BrainCloudWrapper->getClient()->getRelayService()->isConnected())
 	{
-		//Make json string to convert to bytes
+		//Making json FString to convert to bytes
 		const FString beginningString = TEXT("{\"op\":") + in_operation + TEXT("\"data\":{");
 		const FString xString = TEXT("\"x\":") + FString::FromInt(in_inputPosition.X) + TEXT(",");
 		const FString yString = TEXT("\"y\":") + FString::FromInt(in_inputPosition.Y) + TEXT("}}");
 		FString extraJson = beginningString + xString + yString;
 		TArray<uint8> jsonData;
 		jsonData.AddUninitialized(extraJson.Len());
-		StringToBytes(extraJson,jsonData.GetData(),extraJson.Len());
+		ConvertUtilities::BCStringToBytes(extraJson,jsonData.GetData(),extraJson.Len());
 
 		BrainCloudWrapper->getClient()->getRelayService()->send
 			(
@@ -111,7 +93,6 @@ void ARelayNetworkInterface::JoinLobbyCancelled()
 	else
 	{
 		DisconnectEverything();
-		GameInstance->bIsLoading = false;
 	}
 }
 
@@ -122,7 +103,6 @@ void ARelayNetworkInterface::AuthenticateCallback()
 		Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser->Username.ToString(), Callback);
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Authenticate Callback"));
 	GameInstance->bIsLoading = false;
 }
 
@@ -132,9 +112,10 @@ void ARelayNetworkInterface::FindLobby()
 	
 	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
 	
-	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-	FString extraJson = AppendColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
 	TArray<FString> otherUserCxIds;
+	FString extraJson = MakeColorIndexJsonString(GameInstance->SaveGameInstance->ArrowColorIndex);
+	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
+	
 	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
 		(
 			"CursorPartyV2",
@@ -150,104 +131,110 @@ void ARelayNetworkInterface::FindLobby()
 			otherUserCxIds,
 			Callback
 		);
-	
 }
 
 void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 {
-	//ToDo: Need to catch empty responses like this one {"packetId":3,"responses":[{"data":null,"status":200}]}
-	// - perhaps use some ifEnsure statements to return when its a response we're not looking for.
-	// - Also the check for operation.Compare doesn't really work the way I thought it was intended, operation string is empty yet I'm still getting the log...
-	
+	//Deserializing jsonData to then get fields from the json
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
-	const bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);		
-
-	if(!bResponse) return;
-	if(!jsonPacket->TryGetField(TEXT("operation"))) return;
+	const bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);
 	
-	FString operation = jsonPacket->GetStringField(TEXT("operation"));
-	
-	if(operation.IsEmpty())
+	if(!bResponse)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Operation is empty...."));
+		UE_LOG(LogTemp, Warning, TEXT("Failed to deserialize jsonData in rtt callback...."));
 		return;
 	}
 	
-	auto data = jsonPacket->GetObjectField(TEXT("data"));
+	if(!jsonPacket->HasField(TEXT("operation")))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Operation field in rtt callback response wasn't present...."));
+		return;
+	}
+	FString operation = jsonPacket->GetStringField(TEXT("operation"));
+	
+	TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
+	//Checking what operation response is meant for
 	if(operation.Equals(TEXT("MEMBER_JOIN")))
 	{
-		//Update IDs
+		//Updating members and stopping loading screen here
 		UpdateIDs(data);
 		IsLocalUserHost(data);
 		CheckMembers(data);
 		GameInstance->bIsLoading = false;
-		
-		
 	}
 	else if(operation.Equals(TEXT("MEMBER_UPDATE")) ||
 			operation.Equals(TEXT("MEMBER_LEFT")) ||
 			operation.Equals(TEXT("STATUS_UPDATE")))
 	{
+		//Already in lobby screen and someone has made an update for lobby
 		UpdateIDs(data);
 		IsLocalUserHost(data);
 		CheckMembers(data);
-		
-		UE_LOG(LogTemp, Warning, TEXT("Member List Update"));
 	}
 	else if(operation.Equals(TEXT("STARTING")))
 	{
+		//Setting up loading screen to transition from lobby -> match
 		FString loadingMessage = TEXT("Joining a match...."); 
 		GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(loadingMessage), false);
-
-		UE_LOG(LogTemp, Warning, TEXT("Loading screen for Match..."));
 	}
 	else if(operation.Equals(TEXT("ROOM_READY")))
 	{
+		//Match screen is ready to be loaded in + set up important relay functions
 		GameInstance->bIsLoading = false;
 		BrainCloudWrapper->getClient()->getRelayService()->registerRelayCallback(this);
 		BrainCloudWrapper->getClient()->getRelayService()->registerSystemCallback(this);
 		ConnectToRelay(jsonPacket);
-		
-		UE_LOG(LogTemp, Warning, TEXT("Load Finish for Match"));
 	}
 }
 
 void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes)
 {
-	CallbackNetID = netId;
 	FString jsonData = BytesToString(bytes.GetData(),bytes.Num());
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
-	FJsonSerializer::Deserialize(reader, jsonPacket);
-	if(jsonPacket->HasField(TEXT("op")))
+	
+	bool bResponse = FJsonSerializer::Deserialize(reader, jsonPacket);
+	if(!bResponse)
 	{
-		FString operation = jsonPacket->GetStringField(TEXT("op"));
-		FString incomingUserProfileId = GetProfileIDFromNetID(CallbackNetID, BrainCloudWrapper);
-		if(operation.Equals(TEXT("move")))
+		UE_LOG(LogTemp, Warning, TEXT("Failed to deserialize jsonData in relay callback...."));
+		return;
+	}
+
+	if(!jsonPacket->HasField(TEXT("operation")))
+	{
+		// No need for logging here, we will get a blank response to know brainCloud servers has received the "FIND_OR_CREATE_LOBBY" request.
+		// the response should look like this: {"packetId":3,"responses":[{"data":null,"status":200}]}
+		return;
+	}
+	
+	CallbackNetID = netId;
+	FString operation = jsonPacket->GetStringField(TEXT("op"));
+	FString incomingUserProfileId = BrainCloudWrapper->getRelayService()->getProfileIdForNetId(CallbackNetID);
+		
+	if(operation.Equals(TEXT("move")))
+	{
+		for(ARelayUserData* user : GameInstance->ListOfUserObjects)
 		{
-			for(ARelayUserData* user : GameInstance->ListOfUserObjects)
+			if(user->ProfileID.Equals(incomingUserProfileId))
 			{
-				if(user->ProfileID.Equals(incomingUserProfileId))
-				{
-					FVector2D inputPosition = FVector2D::ZeroVector;
-					inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
-					inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
-					GameInstance->GameWidget->MatchWidget->MoveOtherUserCursor(inputPosition, incomingUserProfileId);
-				}
+				FVector2D inputPosition;
+				inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
+				inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
+				GameInstance->GameWidget->MatchWidget->MoveOtherUserCursor(inputPosition, incomingUserProfileId);
 			}
 		}
-		else if(operation.Equals(TEXT("shockwave")))
+	}
+	else if(operation.Equals(TEXT("shockwave")))
+	{
+		for(ARelayUserData* user : GameInstance->ListOfUserObjects)
 		{
-			for(ARelayUserData* user : GameInstance->ListOfUserObjects)
+			if(user->ProfileID.Equals(incomingUserProfileId) && user->bShowShockwave)
 			{
-				if(user->ProfileID.Equals(incomingUserProfileId) && user->bShowShockwave)
-				{
-					FVector2D inputPosition = FVector2D::ZeroVector;
-					inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
-					inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
-					GameInstance->GameWidget->MatchWidget->SpawnMouseShockwave(inputPosition, user->PlayerColor, false);
-				}
+				FVector2D inputPosition;
+				inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
+				inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
+				GameInstance->GameWidget->MatchWidget->SpawnMouseShockwave(inputPosition, user->PlayerColor, false);
 			}
 		}
 	}
@@ -255,7 +242,6 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 
 void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 {
-	
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonResponse);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
 	FJsonSerializer::Deserialize(reader, jsonPacket);
@@ -264,21 +250,16 @@ void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 		FString operation = jsonPacket->GetStringField(TEXT("op"));
 		if(operation.Equals(TEXT("DISCONNECT")))
 		{
-			FString profileId = GetProfileIdFromString(jsonPacket->GetStringField(TEXT("cxId")));
+			FString profileId = GetProfileIdFromCxId(jsonPacket->GetStringField(TEXT("cxId")));
 			GameInstance->RemoveUserFromList(profileId);
 			GameInstance->GameWidget->MatchWidget->RemoveUserFromList(profileId);
 		}
 	}
 }
 
-void ARelayNetworkInterface::relayConnectSuccess(const FString& jsonResponse)
-{
-	UE_LOG(LogTemp, Warning, TEXT("Connection Successful"));
-}
-
 void ARelayNetworkInterface::relayConnectFailure(const FString& errorMessage)
 {
-	FString middleString = " |||| JSON ERROR: ";
+	FString middleString = " || JSON ERROR: ";
 	FString appendString = middleString + errorMessage; 
 	const FText jsonMessage = FText::AsCultureInvariant(appendString);
 	GameInstance->GameWidget->SetUpPopUp(jsonMessage);
@@ -286,7 +267,7 @@ void ARelayNetworkInterface::relayConnectFailure(const FString& errorMessage)
 
 void ARelayNetworkInterface::SendUpdateReady()
 {
-	FString extraJson = AppendColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
+	FString extraJson = MakeColorIndexJsonString(GameInstance->SaveGameInstance->ArrowColorIndex);
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
 	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, extraJson, Callback);
 }
@@ -295,19 +276,19 @@ void ARelayNetworkInterface::InitBrainCloud()
 {
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
-	BrainCloudWrapper->initialize(ServerURL,SecretKey,AppID,GetBrainCloudVersion());
+	BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, GetBrainCloudVersion());
 	BrainCloudWrapper->getClient()->enableLogging(true);
 }
 
-void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& DataJsonObject)
+void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	if(!ensure(DataJsonObject->HasField(TEXT("lobby"))))
+	if(!in_jsonPacket->HasField(TEXT("lobby")))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Data Json Object does not have Lobby field"));
+		UE_LOG(LogTemp, Warning, TEXT("in_jsonPacket does not have Lobby field"));
 		return;
 	}
 
-	auto lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));
+	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
 	auto members = lobbyObject->GetArrayField(TEXT("members"));
 	if(members.Num() == 0) return;
 	
@@ -319,14 +300,13 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& Data
 		if(profileId.Equals(LocalProfileID))
 		{
 			bIsHost = profileId.Equals(OwnerID);
-			UE_LOG(LogTemp, Warning, TEXT("Host checked..."));
 		}
 	}
 	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
 	bIsReady = !bIsHost;
 }
 
-void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJsonObject)
+void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
 	//Clearing Lists so we can repopulate members that are in lobby
 	GameInstance->ListOfUserObjects.Empty();
@@ -338,25 +318,21 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 	}
 	GameInstance->GameWidget->MatchWidget->UserCursors.Empty();
 	
-	
 	//Getting members to re-populate list with
-	TSharedPtr<FJsonObject> lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));
+	const TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
+	
 	auto members = lobbyObject->GetArrayField(TEXT("members"));
-	if(members.Num() == 0)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("No members for Check Members function"));
-		return;
-	}
+	if(members.Num() == 0) return;
 	
 	for(int i=0; i < members.Num(); ++i)
 	{
-		TSharedPtr<FJsonValue> jsonValue = members[i];
-		TSharedPtr<FJsonObject> memberObject = jsonValue->AsObject();
-		TSharedPtr<FJsonObject> extraJson = memberObject->GetObjectField(TEXT("extra"));
+		const TSharedPtr<FJsonValue> jsonValue = members[i];
+		const TSharedPtr<FJsonObject> memberObject = jsonValue->AsObject();
+		const TSharedPtr<FJsonObject> extraJson = memberObject->GetObjectField(TEXT("extra"));
 		
 		//Use below variables to create user object and then add them to lists for match and lobby
 		int memberColorIndex = extraJson->GetIntegerField(TEXT("colorIndex"));
-		FLinearColor memberColor = DetermineColorIndex(memberColorIndex);
+		FLinearColor memberColor = GameInstance->GameWidget->LobbyWidget->Colors[memberColorIndex];
 		FString memberUserName = memberObject->GetStringField(TEXT("name"));
 		FString memberProfileId = memberObject->GetStringField(TEXT("profileId"));
 		ARelayUserData* newMember = GameInstance->CreateUser
@@ -369,6 +345,7 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 		GameInstance->ListOfUserObjects.Add(newMember);
 		GameInstance->GameWidget->LobbyWidget->Lobby_ListView->AddItem(newMember);
 		GameInstance->GameWidget->MatchWidget->Match_UserListView->AddItem(newMember);
+		
 		//This check is necessary because local cursor is being handled within WBP_Match asset
 		if(!memberProfileId.Equals(LocalProfileID))
 		{
@@ -383,64 +360,21 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& DataJso
 	}
 }
 
-void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& DataJsonObject)
+void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	if(!ensure(DataJsonObject->HasField(TEXT("lobbyId"))))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Data Json Packet Not Valid"));
-		return;
-	}
+	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return; 
 		
-	LobbyID = DataJsonObject->GetStringField("lobbyId");
-	auto lobbyObject = DataJsonObject->GetObjectField(TEXT("lobby"));
-	OwnerID = GetProfileIdFromString(lobbyObject->GetStringField(TEXT("ownerCxId")));
-
-	UE_LOG(LogTemp, Warning, TEXT("ID's Updated"));
+	LobbyID = in_jsonPacket->GetStringField("lobbyId");
+	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
+	OwnerID = GetProfileIdFromCxId(lobbyObject->GetStringField(TEXT("ownerCxId")));
 }
 
-FLinearColor ARelayNetworkInterface::DetermineColorIndex(int in_ColorIndex)
-{
-	return GameInstance->GameWidget->LobbyWidget->Colors[in_ColorIndex];
-}
-
-FString ARelayNetworkInterface::AppendColorIndex(int colorIndex)
+FString ARelayNetworkInterface::MakeColorIndexJsonString(int colorIndex)
 {
 	const FString beginningString = TEXT("{\"colorIndex\":");
 	const FString colorIndexString = FString::FromInt(colorIndex) + TEXT("}");
 	FString returnValue = beginningString + colorIndexString;
 	return returnValue;
-}
-
-FString ARelayNetworkInterface::BytesToString(const uint8* in, int32 count)
-{
-	FString result2;
-	result2.Empty(count);
-	while (count)
-	{
-		result2 += ANSICHAR(*in);
-		++in;
-		--count;
-	}
-	
-	return result2;
-}
-
-int32 ARelayNetworkInterface::StringToBytes(const FString& in_string, uint8* out_bytes, int32 in_maxBufferSize)
-{
-	int32 numBytes = 0;
-	const TCHAR *charPos = *in_string;
-
-	while (*charPos && numBytes < in_maxBufferSize)
-	{
-		out_bytes[numBytes] = (uint8)(*charPos);
-		charPos++;
-		++numBytes;
-	}
-	return numBytes;
-}
-
-void ARelayNetworkInterface::RemovingLeavingUser(FString in_memberID)
-{
 }
 
 void ARelayNetworkInterface::DisconnectEverything()
@@ -453,55 +387,55 @@ void ARelayNetworkInterface::DisconnectEverything()
 	BrainCloudWrapper->getClient()->getRTTService()->disableRTT();
 	BrainCloudWrapper->getClient()->getRTTService()->deregisterRTTLobbyCallback();
 
-	//ToDo: make a timer for one second for loading screen buffer
-
-	GameInstance->bIsLoading = false;
+	StartLoadingTimer();
 }
 
-void ARelayNetworkInterface::ConnectToRelay(const TSharedPtr<FJsonObject>& DataJsonObject)
+void ARelayNetworkInterface::ConnectToRelay(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	auto dataObject = DataJsonObject->GetObjectField(TEXT("data"));
-	FString address = dataObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
-	FString relayConnectType = "";
-	switch(ConnectionType)
-	{
-		case BCRelayConnectionType::TCP:
-			relayConnectType = TEXT("tcp");
-			break;
-		case BCRelayConnectionType::WEBSOCKET:
-			relayConnectType = TEXT("ws");
-			break;
-		case BCRelayConnectionType::UDP:
-			relayConnectType = TEXT("udp");
-			break;
-	}
-	int port = dataObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(relayConnectType);
-	FString passcode = dataObject->GetStringField(TEXT("passcode"));
+	TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("data"));
+	FString address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
+	
+	int port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(TEXT("ws"));
+	FString passcode = lobbyObject->GetStringField(TEXT("passcode"));
+
+	//Connect to Relay with connect info provided above
 	BrainCloudWrapper->getClient()->getRelayService()->connect
 		(
-			ConnectionType,
+			BCRelayConnectionType::WEBSOCKET,
 			address,
 			port,
 			passcode,
 			LobbyID,
-			this);
+			this
+		);
 }
 
-FString ARelayNetworkInterface::GetProfileIdFromString(FString in_data)
+FString ARelayNetworkInterface::GetProfileIdFromCxId(FString in_data)
 {
 	in_data.RemoveAt(0,6);
-
 	in_data.RemoveAt(36,70);
 	return in_data;
-}
-
-FString ARelayNetworkInterface::GetProfileIDFromNetID(int in_netId, UBrainCloudWrapper* in_wrapper)
-{
-	return in_wrapper->getRelayService()->getProfileIdForNetId(in_netId);
 }
 
 FString ARelayNetworkInterface::GetBrainCloudVersion()
 {
 	BrainCloudClient* Client = BrainCloudWrapper->getBCClient();
 	return Client->getBrainCloudClientVersion();
+}
+
+void ARelayNetworkInterface::DelayToFinishLoadingScreen()
+{
+	GameInstance->bIsLoading = false;
+	GetWorld()->GetTimerManager().ClearTimer(DelayTimerHandle);
+}
+
+void ARelayNetworkInterface::StartLoadingTimer()
+{
+	GetWorld()->GetTimerManager().SetTimer
+			(
+				DelayTimerHandle,
+				this,
+				&ARelayNetworkInterface::DelayToFinishLoadingScreen,
+				LoadingTime
+			);
 }
