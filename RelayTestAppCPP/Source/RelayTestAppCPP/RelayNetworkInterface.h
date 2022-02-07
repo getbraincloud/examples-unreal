@@ -96,7 +96,7 @@ public:
 private:
 	FString GetProfileIdFromCxId(FString in_data);
 
-	static FString MakeColorIndexJsonString(int colorIndex);
+	static FString MakeJsonStringForColorIndex(int colorIndex);
 
 public:
 //Exposed Properties to set in Editor

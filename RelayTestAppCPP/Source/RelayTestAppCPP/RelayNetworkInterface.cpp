@@ -30,7 +30,7 @@ void ARelayNetworkInterface::BeginPlay()
 void ARelayNetworkInterface::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if(!ensure(BrainCloudWrapper != nullptr)) return;
+	if(BrainCloudWrapper == nullptr) return;
 	BrainCloudWrapper->runCallbacks();
 }
 
@@ -39,7 +39,7 @@ void ARelayNetworkInterface::LoginUniversalBC()
 	FString userId = GameInstance->SaveGameInstance->LocalUsername.ToString();
 	FString password = GameInstance->SaveGameInstance->LocalPassword.ToString();
 
-	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 	BrainCloudWrapper->authenticateUniversal(userId, password, true, Callback);
 }
 
@@ -55,7 +55,7 @@ void ARelayNetworkInterface::FindOrCreateLobby()
 void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 {
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeColorIndexJsonString(in_colorIndex), Callback);
+	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonStringForColorIndex(in_colorIndex), Callback);
 }
 
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
@@ -113,7 +113,7 @@ void ARelayNetworkInterface::FindLobby()
 	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
 	
 	TArray<FString> otherUserCxIds;
-	FString extraJson = MakeColorIndexJsonString(GameInstance->SaveGameInstance->ArrowColorIndex);
+	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
 	
 	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
@@ -190,7 +190,7 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 
 void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes)
 {
-	FString jsonData = BytesToString(bytes.GetData(),bytes.Num());
+	FString jsonData = ConvertUtilities::BCBytesToString(bytes.GetData(),bytes.Num());
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
 	
@@ -201,7 +201,7 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 		return;
 	}
 
-	if(!jsonPacket->HasField(TEXT("operation")))
+	if(!jsonPacket->HasField(TEXT("op")))
 	{
 		// No need for logging here, we will get a blank response to know brainCloud servers has received the "FIND_OR_CREATE_LOBBY" request.
 		// the response should look like this: {"packetId":3,"responses":[{"data":null,"status":200}]}
@@ -248,6 +248,7 @@ void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 	if(jsonPacket->HasField(TEXT("op")))
 	{
 		FString operation = jsonPacket->GetStringField(TEXT("op"));
+		//Checking if someone has left the match
 		if(operation.Equals(TEXT("DISCONNECT")))
 		{
 			FString profileId = GetProfileIdFromCxId(jsonPacket->GetStringField(TEXT("cxId")));
@@ -267,7 +268,7 @@ void ARelayNetworkInterface::relayConnectFailure(const FString& errorMessage)
 
 void ARelayNetworkInterface::SendUpdateReady()
 {
-	FString extraJson = MakeColorIndexJsonString(GameInstance->SaveGameInstance->ArrowColorIndex);
+	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
 	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, extraJson, Callback);
 }
@@ -288,14 +289,14 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_j
 		return;
 	}
 
-	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
-	auto members = lobbyObject->GetArrayField(TEXT("members"));
+	TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
+	TArray<TSharedPtr<FJsonValue>> members = lobbyObject->GetArrayField(TEXT("members"));
 	if(members.Num() == 0) return;
 	
 	FString profileId;
-	for(auto member : members)
+	for(TSharedPtr<FJsonValue> member : members)
 	{
-		auto object = member->AsObject();
+		TSharedPtr<FJsonObject> object = member->AsObject();
 		profileId = object->GetStringField("profileId");
 		if(profileId.Equals(LocalProfileID))
 		{
@@ -308,7 +309,7 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_j
 
 void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	//Clearing Lists so we can repopulate members that are in lobby
+	//Clearing Lists to then repopulate members that are in lobby
 	GameInstance->ListOfUserObjects.Empty();
 	GameInstance->GameWidget->LobbyWidget->Lobby_ListView->ClearListItems();
 	GameInstance->GameWidget->MatchWidget->Match_UserListView->ClearListItems();
@@ -369,7 +370,7 @@ void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPac
 	OwnerID = GetProfileIdFromCxId(lobbyObject->GetStringField(TEXT("ownerCxId")));
 }
 
-FString ARelayNetworkInterface::MakeColorIndexJsonString(int colorIndex)
+FString ARelayNetworkInterface::MakeJsonStringForColorIndex(int colorIndex)
 {
 	const FString beginningString = TEXT("{\"colorIndex\":");
 	const FString colorIndexString = FString::FromInt(colorIndex) + TEXT("}");
