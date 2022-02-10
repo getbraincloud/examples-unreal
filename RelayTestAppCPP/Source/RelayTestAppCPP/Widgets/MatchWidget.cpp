@@ -94,22 +94,27 @@ void UMatchWidget::MoveOtherUserCursor(FVector2D in_inputPosition, FString in_pr
 			user->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
 			UCanvasPanelSlot* widgetSlot = Cast<UCanvasPanelSlot>(user->Slot);
 			widgetSlot->SetPosition(in_inputPosition);
+			break;
 		}
 	}
 }
 
 void UMatchWidget::RemoveUserFromList(FString in_profileId)
 {
-	UOtherMatchUserWidget* cursorToRemove;
+	UOtherMatchUserWidget* cursorToRemove = nullptr;
 	for(UOtherMatchUserWidget* cursor : UserCursors)
 	{
 		if(cursor->UserData->ProfileID.Equals(in_profileId))
 		{
 			cursor->RemoveFromParent();
 			cursorToRemove = cursor;
+			break;
 		}
 	}
-	UserCursors.Remove(cursorToRemove);
+	if(cursorToRemove != nullptr)
+	{
+		UserCursors.Remove(cursorToRemove);	
+	}
 	
 	Match_UserListView->ClearListItems();
 	for(ARelayUserData* user : GameInstance->ListOfUserObjects)

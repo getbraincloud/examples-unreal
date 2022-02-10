@@ -222,6 +222,7 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 				inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
 				inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
 				GameInstance->GameWidget->MatchWidget->MoveOtherUserCursor(inputPosition, incomingUserProfileId);
+				break;
 			}
 		}
 	}
@@ -235,6 +236,7 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 				inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
 				inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
 				GameInstance->GameWidget->MatchWidget->SpawnMouseShockwave(inputPosition, user->PlayerColor, false);
+				break;
 			}
 		}
 	}
@@ -301,6 +303,7 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_j
 		if(profileId.Equals(LocalProfileID))
 		{
 			bIsHost = profileId.Equals(OwnerID);
+			break;
 		}
 	}
 	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);

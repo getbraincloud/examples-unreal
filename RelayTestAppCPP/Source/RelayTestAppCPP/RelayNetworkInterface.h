@@ -137,7 +137,7 @@ private:
 	UPROPERTY()
 	FTimerHandle DelayTimerHandle;
 
-	class GameRelayCallback* Callback;
+	GameRelayCallback* Callback;
 	bool bIsHost;
 	bool bIsReady;
 	bool bRTTConnectionIsLive;

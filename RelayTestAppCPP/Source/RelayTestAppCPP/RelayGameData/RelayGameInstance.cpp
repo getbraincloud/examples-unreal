@@ -90,21 +90,26 @@ void URelayGameInstance::AdjustShockwaveVisibility(FString in_ProfileID, bool in
 		if(user->ProfileID.Equals(in_ProfileID))
 		{
 			user->bShowShockwave = in_IsVisible;
+			break;
 		}
 	}	
 }
 
 void URelayGameInstance::RemoveUserFromList(FString in_profileId)
 {
-	ARelayUserData* userToRemove;
+	ARelayUserData* userToRemove = nullptr;
 	for(ARelayUserData* user : ListOfUserObjects)
 	{
 		if(user->ProfileID.Equals(in_profileId))
 		{
 			userToRemove = user;
+			break;
 		}
 	}
-	ListOfUserObjects.Remove(userToRemove);
+	if(userToRemove != nullptr)
+	{
+		ListOfUserObjects.Remove(userToRemove);	
+	}
 }
 
 void URelayGameInstance::SetUpSignInScreen() const
