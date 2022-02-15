@@ -82,6 +82,14 @@ RelayTestApp/Saved/*
 RelayTestApp/.idea/*
 RelayTestApp/Binaries/*
 
+RelayTestAppCPP/Intermediate/*
+RelayTestAppCPP/Plugins/BCClient/Binaries/*
+RelayTestAppCPP/Plugins/BCClient/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Binaries/*
+RelayTestAppCPP/Saved/*
+RelayTestAppCPP/.idea/*
+RelayTestAppCPP/Binaries/*
+
 TappyChicken/.idea/*
 TappyChicken/Build/*
-TappyChicken 4.24/Build/*
