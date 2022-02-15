@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "IServerCallback.h"
-
-
 #include "BrainCloudWrapper.h"
 #include "RelayNetworkInterface.h"
 
@@ -28,5 +26,5 @@ public:
 protected:
 	UBrainCloudWrapper* Wrapper;
 	IServerCallback* Callback;
-	class ARelayNetworkInterface* Interface;
+	ARelayNetworkInterface* Interface;
 };

@@ -10,7 +10,7 @@ Clone the repo, run the uproject file, run the project to play it in the editor!
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal).
 
-## Relay Test App
+## Relay Test App (Blueprint) Relay Test App CPP (C++ Only)
 
 ### Summary
 
@@ -22,7 +22,7 @@ The mouse movement are sent using unreliable, ordered messages. The shockwaves a
 
 In Unreal Engine, the implementation uses WebSockets. Therefore, the unreliable messages are guaranteed reliable. But, the application can crossplay with other APIs (C#, Unity, Java, etc) which support unreliable UDP protocol.
 
-### BP_RelayNetworkInterface.uasset
+### BP_RelayNetworkInterface.uasset (Blueprint) / RelayNetworkInterface class (C++)
 
 This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all the logic to communicate with brainCloud server and how to utilize the blueprint nodes with the brainCloud plugin. This includes the following: 
 
