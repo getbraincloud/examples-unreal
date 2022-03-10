@@ -106,7 +106,7 @@ public:
     * @param channel One of: (CHANNEL_HIGH_PRIORITY_1, CHANNEL_HIGH_PRIORITY_2, CHANNEL_NORMAL_PRIORITY, CHANNEL_LOW_PRIORITY)
 	*/
 	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
-	static void Send(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, int64 toNetId, bool reliable, bool ordered, BCRelayChannel channel);
+	static void Send(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, int toNetId, bool reliable, bool ordered, BCRelayChannel channel);
 
 	/**
      * Send a packet to any players by using a mask
@@ -130,10 +130,4 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
 	static void SendToAll(UBrainCloudWrapper *brainCloudWrapper, const TArray<uint8> &data, bool reliable, bool ordered, BCRelayChannel channel);
-
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
-	static TArray<uint8> BCStringToBytes(const FString &in_string);
-	
-	UFUNCTION(BlueprintCallable, Category = "BrainCloud|Relay")
-	static FString BCBytesToString(TArray<uint8> in_data);
 };

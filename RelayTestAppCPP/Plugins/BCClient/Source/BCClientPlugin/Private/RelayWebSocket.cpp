@@ -237,7 +237,7 @@ namespace BrainCloud
 
     void RelayWebSocket::OnReceiveData(const TArray<uint8> &data)
     {
-        //UE_LOG(LogBrainCloudRelayComms, Log, TEXT("RelayWebScoket OnReceiveData"));
+        UE_LOG(LogBrainCloudRelayComms, Log, TEXT("RelayWebScoket OnReceiveData"));
         FScopeLock Lock(&m_mutex);
         if (!m_connectedSocket) return;
         m_packetQueue.Add(data);

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include <ConvertUtilities.h>
 #include "BrainCloudWrapper.h"
 #include "RelayNetworkInterface.generated.h"
 
@@ -24,6 +25,12 @@ public:
 
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	FString GetBrainCloudVersion(UBrainCloudWrapper* wrapper);
+
+	UFUNCTION(BlueprintCallable,Category="Interface")
+	FString BCBytesToString(TArray<uint8> in_data);
+	
+	UFUNCTION(BlueprintCallable,Category="Interface")
+	TArray<uint8> BCStringToBytes(const FString &in_string);
 	
 /*Variables*/
 	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
