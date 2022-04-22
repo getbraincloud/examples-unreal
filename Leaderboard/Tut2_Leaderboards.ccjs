@@ -1,3 +1,6 @@
+// parameters:
+//{"score":25,"kills":1,"nickname":"Jo"}
+
 // Retrieve the parameters
 var score = data.score;
 var kills = data.kills;
@@ -44,3 +47,14 @@ if (scoreResult.status == "200") {
 }
 results["leaderboardsWritten"] = leaderboardsWritten;
 results;
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut2_Leaderboards",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":10,
+// "description":"",
+// "parms":"{\\\"score\\\":25,\\\"kills\\\":1,\\\"nickname\\\":\\\"Jo\\\"}",
+// "version":4,
+// "updatedAt":1650551927517
