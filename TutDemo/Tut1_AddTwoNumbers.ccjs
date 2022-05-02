@@ -1,6 +1,19 @@
 // Retrieve our two paramaters 
-var a = data.num1; var b = data.num2;
-
+var a = data.num1; 
+var b = data.num2;
+ 
 // Perform our highly advanced calculation!
-var c = a + b; // "Return" the result c; 
-c;
+var c = a + b; 
+// "Return" the result 
+c; 
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut1_AddTwoNumbers",
+// "clientCallable":true,
+// "s2sCallable":true,
+// "peerCallable":false,
+// "scriptTimeout":10,
+// "description":"",
+// "parms":"{\\\"num1\\\":1,\\\"num2\\\":2}",
+// "version":5,
+// "updatedAt":1651519634591
