@@ -6,51 +6,50 @@ public class VaRestEditor : ModuleRules
 {
 	public VaRestEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		
 		PrivateIncludePaths.AddRange(
-			new[]
-			{
-				"VaRestEditor/Private"
-
+			new string[] {
+				"VaRestEditor/Private",
+				
 				// ... add other private include paths required here ...
 			});
-
-
+			
+		
 		PublicDependencyModuleNames.AddRange(
-			new[]
+			new string[]
 			{
 				"Core",
-				"VaRest"
+                "VaRest"
 
 				// ... add other public dependencies that you statically link with here ...
 			});
-
-
+			
+		
 		PrivateDependencyModuleNames.AddRange(
-			new[]
+			new string[]
 			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
-				"InputCore",
-				"AssetTools",
-				"UnrealEd", // for FAssetEditorManager
-				"KismetWidgets",
-				"KismetCompiler",
-				"BlueprintGraph",
-				"GraphEditor",
-				"Kismet", // for FWorkflowCentricApplication
-				"PropertyEditor",
-				"EditorStyle",
-				"Sequencer",
-				"DetailCustomizations",
-				"Settings",
-				"RenderCore"
+                "CoreUObject",
+                "Engine",
+                "Slate",
+                "SlateCore",
+                "InputCore",
+                "AssetTools",
+                "UnrealEd",     // for FAssetEditorManager
+                "KismetWidgets",
+                "KismetCompiler",
+                "BlueprintGraph",
+                "GraphEditor",
+                "Kismet",       // for FWorkflowCentricApplication
+                "PropertyEditor",
+                "EditorStyle",
+                "Sequencer",
+                "DetailCustomizations",
+                "Settings",
+                "RenderCore"
 			});
-
-
+		
+		
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{

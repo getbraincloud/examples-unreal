@@ -15,7 +15,7 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 	const ANSICHAR* OctetPtr = SourceString;
 
 	uint32 Codepoint = 0;
-	uint32 Octet = static_cast<uint32>(static_cast<uint8>(*SourceString));
+	uint32 Octet = (uint32)((uint8)*SourceString);
 	uint32 Octet2, Octet3, Octet4;
 
 	if (Octet < 128) // one octet char: 0 to 127
@@ -23,14 +23,14 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 		++SourceString; // skip to next possible start of codepoint.
 		return Octet;
 	}
-	if (Octet < 192) // bad (starts with 10xxxxxx).
+	else if (Octet < 192) // bad (starts with 10xxxxxx).
 	{
 		// Apparently each of these is supposed to be flagged as a bogus
 		//  char, instead of just resyncing to the next valid codepoint.
 		++SourceString; // skip to next possible start of codepoint.
 		return UNICODE_BOGUS_CHAR_CODEPOINT;
 	}
-	if (Octet < 224) // two octets
+	else if (Octet < 224) // two octets
 	{
 		// Ensure our string has enough characters to read from
 		if (SourceLengthRemaining < 2)
@@ -41,7 +41,7 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 		}
 
 		Octet -= (128 + 64);
-		Octet2 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet2 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet2 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
@@ -66,14 +66,14 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 		}
 
 		Octet -= (128 + 64 + 32);
-		Octet2 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet2 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet2 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet3 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet3 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet3 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
@@ -107,21 +107,21 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 		}
 
 		Octet -= (128 + 64 + 32 + 16);
-		Octet2 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet2 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet2 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet3 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet3 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet3 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet4 = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet4 = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet4 & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
@@ -129,16 +129,16 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 		}
 
 		Codepoint = (((Octet << 18)) | ((Octet2 - 128) << 12) |
-		             ((Octet3 - 128) << 6) | ((Octet4 - 128)));
+					 ((Octet3 - 128) << 6) | ((Octet4 - 128)));
 		if ((Codepoint >= 0x10000) && (Codepoint <= 0x10FFFF))
 		{
 			SourceString += 4; // skip to next possible start of codepoint.
 			return Codepoint;
 		}
 	}
-		// Five and six octet sequences became illegal in rfc3629.
-		//  We throw the codepoint away, but parse them to make sure we move
-		//  ahead the right number of bytes and don't overflow the buffer.
+	// Five and six octet sequences became illegal in rfc3629.
+	//  We throw the codepoint away, but parse them to make sure we move
+	//  ahead the right number of bytes and don't overflow the buffer.
 	else if (Octet < 252) // five octets
 	{
 		// Ensure our string has enough characters to read from
@@ -149,28 +149,28 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
@@ -191,35 +191,35 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
 			return UNICODE_BOGUS_CHAR_CODEPOINT;
 		}
 
-		Octet = static_cast<uint32>(static_cast<uint8>(*(++OctetPtr)));
+		Octet = (uint32)((uint8) * (++OctetPtr));
 		if ((Octet & (128 + 64)) != 128) // Format isn't 10xxxxxx?
 		{
 			++SourceString; // Sequence was not valid UTF-8. Skip the first byte and continue.
@@ -236,9 +236,9 @@ uint32 FUtf8Helper::CodepointFromUtf8(const ANSICHAR*& SourceString, const uint3
 
 FJSONState::FJSONState()
 	: Notation(EJSONNotation::NONE)
-	  , bEscape(false)
-	  , bError(false)
-	  , Quote(UNICODE_BOGUS_CHAR_CODEPOINT)
+	, bEscape(false)
+	, bError(false)
+	, Quote(UNICODE_BOGUS_CHAR_CODEPOINT)
 {
 	Key.Reserve(1024);
 	Data.Reserve(4096);
@@ -348,7 +348,7 @@ void FJSONState::PopValue(bool bCheckType)
 				}
 				case EJson::String:
 				{
-					FJsonValueNonConstString* JsonValueString = static_cast<FJsonValueNonConstString*>(Value.Get());
+					FJsonValueNonConstString* JsonValueString = ((FJsonValueNonConstString*)Value.Get());
 					JsonValueString->AsNonConstString() = Data;
 					JsonValueString->AsNonConstString().Shrink();
 					Size += JsonValueString->AsNonConstString().GetAllocatedSize();
@@ -363,7 +363,7 @@ void FJSONState::PopValue(bool bCheckType)
 					{
 						if (LowerCase.IsNumeric())
 						{
-							static_cast<FJsonValueNonConstNumber*>(Value.Get())->AsNonConstNumber() = FCString::Atod(*LowerCase);
+							((FJsonValueNonConstNumber*)Value.Get())->AsNonConstNumber() = FCString::Atod(*LowerCase);
 						}
 						else
 						{
@@ -376,7 +376,7 @@ void FJSONState::PopValue(bool bCheckType)
 						FString Rigth = LowerCase.Right(LowerCase.Len() - ePosition - 1);
 						if (Left.IsNumeric() && Rigth.IsNumeric())
 						{
-							static_cast<FJsonValueNonConstNumber*>(Value.Get())->AsNonConstNumber() = FCString::Atod(*Left) * FMath::Pow(10.f, FCString::Atoi(*Rigth));
+							((FJsonValueNonConstNumber*)Value.Get())->AsNonConstNumber() = FCString::Atod(*Left) * FMath::Pow(10.f, FCString::Atoi(*Rigth));
 						}
 						else
 						{
@@ -394,11 +394,11 @@ void FJSONState::PopValue(bool bCheckType)
 					auto LowerCase = Data.ToLower();
 					if (LowerCase == TEXT("true"))
 					{
-						static_cast<FJsonValueNonConstBoolean*>(Value.Get())->AsNonConstBool() = true;
+						((FJsonValueNonConstBoolean*)Value.Get())->AsNonConstBool() = true;
 					}
 					else if (LowerCase == TEXT("false"))
 					{
-						static_cast<FJsonValueNonConstBoolean*>(Value.Get())->AsNonConstBool() = false;
+						((FJsonValueNonConstBoolean*)Value.Get())->AsNonConstBool() = false;
 					}
 					else
 					{
@@ -433,7 +433,7 @@ void FJSONState::PopValue(bool bCheckType)
 				}
 				else if (Container->Type == EJson::Array)
 				{
-					static_cast<FJsonValueNonConstArray*>(Container.Get())->AsNonConstArray().Add(Value);
+					((FJsonValueNonConstArray*)Container.Get())->AsNonConstArray().Add(Value);
 				}
 				else
 				{
@@ -467,7 +467,7 @@ FJsonValueObject* FJSONState::GetObject()
 	FJsonValue* Value = GetLast();
 	if (Value != nullptr && Value->Type == EJson::Object)
 	{
-		return static_cast<FJsonValueObject*>(Value);
+		return (FJsonValueObject*)Value;
 	}
 	bError = true;
 	return nullptr;
@@ -478,7 +478,7 @@ FJsonValueNonConstArray* FJSONState::GetArray()
 	FJsonValue* Value = GetLast();
 	if (Value != nullptr && Value->Type == EJson::Array)
 	{
-		return static_cast<FJsonValueNonConstArray*>(Value);
+		return (FJsonValueNonConstArray*)Value;
 	}
 	bError = true;
 	return nullptr;
@@ -486,7 +486,7 @@ FJsonValueNonConstArray* FJSONState::GetArray()
 
 TSharedPtr<FJsonValueObject> FJSONState::PushObject()
 {
-	TSharedPtr<FJsonValueObject> Result(new FJsonValueObject(MakeShared<FJsonObject>()));
+	TSharedPtr<FJsonValueObject> Result(new FJsonValueObject(TSharedPtr<FJsonObject>(new FJsonObject())));
 	Objects.Add(Result);
 	Size += sizeof(TSharedPtr<FJsonValueObject>) + sizeof(FJsonValueObject);
 	return Result;
@@ -588,18 +588,12 @@ bool FJSONReader::FindToken(const TCHAR& Char)
 	{
 		switch (Char)
 		{
-		case '{': State.Tokens.Add(EJSONToken::CURLY_BEGIN);
-			return true;
-		case '}': State.Tokens.Add(EJSONToken::CURLY_END);
-			return true;
-		case '[': State.Tokens.Add(EJSONToken::SQUARE_BEGIN);
-			return true;
-		case ']': State.Tokens.Add(EJSONToken::SQUARE_END);
-			return true;
-		case ',': State.Tokens.Add(EJSONToken::COMMA);
-			return true;
-		case ':': State.Tokens.Add(EJSONToken::COLON);
-			return true;
+		case '{': State.Tokens.Add(EJSONToken::CURLY_BEGIN); return true;
+		case '}': State.Tokens.Add(EJSONToken::CURLY_END); return true;
+		case '[': State.Tokens.Add(EJSONToken::SQUARE_BEGIN); return true;
+		case ']': State.Tokens.Add(EJSONToken::SQUARE_END); return true;
+		case ',': State.Tokens.Add(EJSONToken::COMMA); return true;
+		case ':': State.Tokens.Add(EJSONToken::COLON); return true;
 		}
 	}
 	return false;
@@ -657,7 +651,7 @@ void FJSONReader::UpdateNotation()
 			}
 			else
 			{
-				State.Root = MakeShared<FJsonObject>();
+				State.Root = TSharedPtr<FJsonObject>(new FJsonObject());
 				State.PushObject(State.Root); // add root object
 				State.Notation = EJSONNotation::OBJECT;
 			}
@@ -840,12 +834,9 @@ void FJSONReader::ReadAsString(const TCHAR& Char)
 		{
 			switch (Char)
 			{
-			case 'n': State.Data.AppendChar('\n');
-				break;
-			case 't': State.Data.AppendChar('\t');
-				break;
-			default: State.Data.AppendChar(Char);
-				break;
+			case 'n': State.Data.AppendChar('\n'); break;
+			case 't': State.Data.AppendChar('\t'); break;
+			default: State.Data.AppendChar(Char); break;
 			}
 		}
 		else
@@ -921,6 +912,7 @@ void FJSONReader::ReadBasicValue(const TCHAR& Char)
 		State.PushNumber();
 		State.Notation = EJSONNotation::NUMBER;
 		ReadAsNumber(Char);
+		return;
 	}
 }
 
@@ -984,22 +976,15 @@ bool FJSONReader::Read(const TCHAR Char)
 
 	switch (State.Notation)
 	{
-	case EJSONNotation::NONE: UpdateNotation();
-		break;
+	case EJSONNotation::NONE: UpdateNotation(); break;
 
-	case EJSONNotation::STRING: ReadAsString(Char);
-		break;
-	case EJSONNotation::STRING_SPECIAL: ReadAsStringSpecial(Char);
-		break;
-	case EJSONNotation::NUMBER: ReadAsNumber(Char);
-		break;
-	case EJSONNotation::ARRAY: ReadAsArray(Char);
-		break;
-	case EJSONNotation::OBJECT: ReadAsObject(Char);
-		break;
+	case EJSONNotation::STRING: ReadAsString(Char); break;
+	case EJSONNotation::STRING_SPECIAL: ReadAsStringSpecial(Char); break;
+	case EJSONNotation::NUMBER: ReadAsNumber(Char); break;
+	case EJSONNotation::ARRAY: ReadAsArray(Char); break;
+	case EJSONNotation::OBJECT: ReadAsObject(Char); break;
 
-	case EJSONNotation::SKIP: Skip(Char);
-		break;
+	case EJSONNotation::SKIP: Skip(Char); break;
 	}
 
 	if (State.bError)
@@ -1022,13 +1007,17 @@ bool FJSONWriter::GetStartChar(const TSharedPtr<FJsonValue>& JsonValue, FString&
 {
 	switch (JsonValue->Type)
 	{
-	case EJson::Object: Str = FString(TEXT("{"));
+	case EJson::Object:
+		Str = FString(TEXT("{"));
 		break;
-	case EJson::Array: Str = FString(TEXT("["));
+	case EJson::Array:
+		Str = FString(TEXT("["));
 		break;
-	case EJson::String: Str = FString(TEXT("\""));
+	case EJson::String:
+		Str = FString(TEXT("\""));
 		break;
-	default: return false;
+	default:
+		return false;
 		break;
 	}
 
@@ -1039,13 +1028,17 @@ bool FJSONWriter::GetEndChar(const TSharedPtr<FJsonValue>& JsonValue, FString& S
 {
 	switch (JsonValue->Type)
 	{
-	case EJson::Object: Str = FString(TEXT("}"));
+	case EJson::Object:
+		Str = FString(TEXT("}"));
 		break;
-	case EJson::Array: Str = FString(TEXT("]"));
+	case EJson::Array:
+		Str = FString(TEXT("]"));
 		break;
-	case EJson::String: Str = FString(TEXT("\""));
+	case EJson::String:
+		Str = FString(TEXT("\""));
 		break;
-	default: return false;
+	default:
+		return false;
 		break;
 	}
 

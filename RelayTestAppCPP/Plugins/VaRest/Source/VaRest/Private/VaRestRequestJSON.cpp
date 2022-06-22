@@ -20,13 +20,13 @@ void FVaRestLatentAction<T>::Cancel()
 	UObject* Obj = Request.Get();
 	if (Obj != nullptr)
 	{
-		static_cast<UVaRestRequestJSON*>(Obj)->Cancel();
+		((UVaRestRequestJSON*)Obj)->Cancel();
 	}
 }
 
 UVaRestRequestJSON::UVaRestRequestJSON(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
-	  , BinaryContentType(TEXT("application/octet-stream"))
+	, BinaryContentType(TEXT("application/octet-stream"))
 {
 	ContinueAction = nullptr;
 
@@ -173,7 +173,7 @@ FString UVaRestRequestJSON::GetURL() const
 
 EVaRestRequestStatus UVaRestRequestJSON::GetStatus() const
 {
-	return static_cast<EVaRestRequestStatus>(static_cast<uint8>(HttpRequest->GetStatus()));
+	return EVaRestRequestStatus((uint8)HttpRequest->GetStatus());
 }
 
 int32 UVaRestRequestJSON::GetResponseCode() const
@@ -278,22 +278,28 @@ void UVaRestRequestJSON::ProcessRequest()
 	// Set verb
 	switch (RequestVerb)
 	{
-	case EVaRestRequestVerb::GET: HttpRequest->SetVerb(TEXT("GET"));
+	case EVaRestRequestVerb::GET:
+		HttpRequest->SetVerb(TEXT("GET"));
 		break;
 
-	case EVaRestRequestVerb::POST: HttpRequest->SetVerb(TEXT("POST"));
+	case EVaRestRequestVerb::POST:
+		HttpRequest->SetVerb(TEXT("POST"));
 		break;
 
-	case EVaRestRequestVerb::PUT: HttpRequest->SetVerb(TEXT("PUT"));
+	case EVaRestRequestVerb::PUT:
+		HttpRequest->SetVerb(TEXT("PUT"));
 		break;
 
-	case EVaRestRequestVerb::DEL: HttpRequest->SetVerb(TEXT("DELETE"));
+	case EVaRestRequestVerb::DEL:
+		HttpRequest->SetVerb(TEXT("DELETE"));
 		break;
 
-	case EVaRestRequestVerb::CUSTOM: HttpRequest->SetVerb(CustomVerb);
+	case EVaRestRequestVerb::CUSTOM:
+		HttpRequest->SetVerb(CustomVerb);
 		break;
 
-	default: break;
+	default:
+		break;
 	}
 
 	// Set content-type
@@ -413,7 +419,8 @@ void UVaRestRequestJSON::ProcessRequest()
 		break;
 	}
 
-	default: break;
+	default:
+		break;
 	}
 
 	// Apply additional headers

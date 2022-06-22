@@ -32,21 +32,29 @@ EVaJson UVaRestJsonValue::GetType() const
 
 	switch (JsonVal->Type)
 	{
-	case EJson::None: return EVaJson::None;
+	case EJson::None:
+		return EVaJson::None;
 
-	case EJson::Null: return EVaJson::Null;
+	case EJson::Null:
+		return EVaJson::Null;
 
-	case EJson::String: return EVaJson::String;
+	case EJson::String:
+		return EVaJson::String;
 
-	case EJson::Number: return EVaJson::Number;
+	case EJson::Number:
+		return EVaJson::Number;
 
-	case EJson::Boolean: return EVaJson::Boolean;
+	case EJson::Boolean:
+		return EVaJson::Boolean;
 
-	case EJson::Array: return EVaJson::Array;
+	case EJson::Array:
+		return EVaJson::Array;
 
-	case EJson::Object: return EVaJson::Object;
+	case EJson::Object:
+		return EVaJson::Object;
 
-	default: return EVaJson::None;
+	default:
+		return EVaJson::None;
 	}
 }
 
@@ -59,21 +67,29 @@ FString UVaRestJsonValue::GetTypeString() const
 
 	switch (JsonVal->Type)
 	{
-	case EJson::None: return TEXT("None");
+	case EJson::None:
+		return TEXT("None");
 
-	case EJson::Null: return TEXT("Null");
+	case EJson::Null:
+		return TEXT("Null");
 
-	case EJson::String: return TEXT("String");
+	case EJson::String:
+		return TEXT("String");
 
-	case EJson::Number: return TEXT("Number");
+	case EJson::Number:
+		return TEXT("Number");
 
-	case EJson::Boolean: return TEXT("Boolean");
+	case EJson::Boolean:
+		return TEXT("Boolean");
 
-	case EJson::Array: return TEXT("Array");
+	case EJson::Array:
+		return TEXT("Array");
 
-	case EJson::Object: return TEXT("Object");
+	case EJson::Object:
+		return TEXT("Object");
 
-	default: return TEXT("None");
+	default:
+		return TEXT("None");
 	}
 }
 
