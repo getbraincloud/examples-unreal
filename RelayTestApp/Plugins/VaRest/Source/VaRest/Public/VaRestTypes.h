@@ -23,12 +23,11 @@ enum class EVaRestRequestVerb : uint8
 UENUM(BlueprintType)
 enum class EVaRestRequestContentType : uint8
 {
-	x_www_form_urlencoded_url UMETA(DisplayName = "x-www-form-urlencoded (URL)"),
-	x_www_form_urlencoded_body UMETA(DisplayName = "x-www-form-urlencoded (Request Body)"),
+	x_www_form_urlencoded_url	UMETA(DisplayName = "x-www-form-urlencoded (URL)"),
+	x_www_form_urlencoded_body	UMETA(DisplayName = "x-www-form-urlencoded (Request Body)"),
 	json,
 	binary
 };
-
 // clang-format on
 
 /** Enumerates the current state of an Http request */
@@ -182,19 +181,19 @@ struct VAREST_API FVaRestURL
 
 	FVaRestURL()
 		: Port(0)
-		  , Valid(0)
+		, Valid(0)
 	{
 	}
 
 	FVaRestURL(FURL& InUrl)
 		: Protocol(InUrl.Protocol)
-		  , Host(InUrl.Host)
-		  , Port(InUrl.Port)
-		  , Valid(InUrl.Valid)
-		  , Map(InUrl.Map)
-		  , RedirectURL(InUrl.RedirectURL)
-		  , Op(InUrl.Op)
-		  , Portal(InUrl.Portal)
+		, Host(InUrl.Host)
+		, Port(InUrl.Port)
+		, Valid(InUrl.Valid)
+		, Map(InUrl.Map)
+		, RedirectURL(InUrl.RedirectURL)
+		, Op(InUrl.Op)
+		, Portal(InUrl.Portal)
 	{
 	}
 };

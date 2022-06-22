@@ -34,11 +34,11 @@ public:
 
 	FVaRestLatentAction(FWeakObjectPtr RequestObj, T& ResultParam, const FLatentActionInfo& LatentInfo)
 		: Called(false)
-		  , Request(RequestObj)
-		  , ExecutionFunction(LatentInfo.ExecutionFunction)
-		  , OutputLink(LatentInfo.Linkage)
-		  , CallbackTarget(LatentInfo.CallbackTarget)
-		  , Result(ResultParam)
+		, Request(RequestObj)
+		, ExecutionFunction(LatentInfo.ExecutionFunction)
+		, OutputLink(LatentInfo.Linkage)
+		, CallbackTarget(LatentInfo.CallbackTarget)
+		, Result(ResultParam)
 	{
 	}
 
@@ -47,12 +47,12 @@ public:
 		Response.FinishAndTriggerIf(Called, ExecutionFunction, OutputLink, CallbackTarget);
 	}
 
-	virtual void NotifyObjectDestroyed() override
+	virtual void NotifyObjectDestroyed()
 	{
 		Cancel();
 	}
 
-	virtual void NotifyActionAborted() override
+	virtual void NotifyActionAborted()
 	{
 		Cancel();
 	}
@@ -70,7 +70,6 @@ public:
 
 /** Generate a delegates for callback events */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRequestComplete, class UVaRestRequestJSON*, Request);
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnRequestFail, class UVaRestRequestJSON*, Request);
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaticRequestComplete, class UVaRestRequestJSON*);
@@ -314,16 +313,16 @@ protected:
 	FString CustomVerb;
 
 	/** Request we're currently processing */
-#if ENGINE_MINOR_VERSION > 25
+	#if ENGINE_MINOR_VERSION > 25
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> HttpRequest = FHttpModule::Get().CreateRequest();
-#else
+	#else
 	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-#endif
+	#endif
 
 public:
-#if ENGINE_MINOR_VERSION > 25
+	#if ENGINE_MINOR_VERSION > 25
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> GetHttpRequest() const { return HttpRequest; };
-#else
+	#else
 	TSharedRef<IHttpRequest> GetHttpRequest() const { return HttpRequest; };
-#endif
+	#endif
 };

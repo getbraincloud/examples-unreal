@@ -13,7 +13,7 @@ typedef TJsonWriter<TCHAR, TCondensedJsonPrintPolicy<TCHAR>> FCondensedJsonStrin
 
 UVaRestJsonObject::UVaRestJsonObject(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
-	  , JsonObj(MakeShared<FJsonObject>())
+	, JsonObj(MakeShared<FJsonObject>())
 {
 }
 
@@ -281,27 +281,35 @@ void UVaRestJsonObject::SetArrayField(const FString& FieldName, const TArray<UVa
 
 		switch (InVal->GetType())
 		{
-		case EVaJson::None: break;
-
-		case EVaJson::Null: ValArray.Add(MakeShareable(new FJsonValueNull()));
+		case EVaJson::None:
 			break;
 
-		case EVaJson::String: ValArray.Add(MakeShareable(new FJsonValueString(JsonVal->AsString())));
+		case EVaJson::Null:
+			ValArray.Add(MakeShareable(new FJsonValueNull()));
 			break;
 
-		case EVaJson::Number: ValArray.Add(MakeShareable(new FJsonValueNumber(JsonVal->AsNumber())));
+		case EVaJson::String:
+			ValArray.Add(MakeShareable(new FJsonValueString(JsonVal->AsString())));
 			break;
 
-		case EVaJson::Boolean: ValArray.Add(MakeShareable(new FJsonValueBoolean(JsonVal->AsBool())));
+		case EVaJson::Number:
+			ValArray.Add(MakeShareable(new FJsonValueNumber(JsonVal->AsNumber())));
 			break;
 
-		case EVaJson::Array: ValArray.Add(MakeShareable(new FJsonValueArray(JsonVal->AsArray())));
+		case EVaJson::Boolean:
+			ValArray.Add(MakeShareable(new FJsonValueBoolean(JsonVal->AsBool())));
 			break;
 
-		case EVaJson::Object: ValArray.Add(MakeShareable(new FJsonValueObject(JsonVal->AsObject())));
+		case EVaJson::Array:
+			ValArray.Add(MakeShareable(new FJsonValueArray(JsonVal->AsArray())));
 			break;
 
-		default: break;
+		case EVaJson::Object:
+			ValArray.Add(MakeShareable(new FJsonValueObject(JsonVal->AsObject())));
+			break;
+
+		default:
+			break;
 		}
 	}
 
@@ -635,11 +643,11 @@ void UVaRestJsonObject::DecodeFromArchive(TUniquePtr<FArchive>& Reader)
 
 		if (bIsIntelByteOrder)
 		{
-			Char = CharCast<TCHAR>(static_cast<UCS2CHAR>(static_cast<uint16>(SymbolBytes[0]) + static_cast<uint16>(SymbolBytes[1]) * 256));
+			Char = CharCast<TCHAR>((UCS2CHAR)((uint16)SymbolBytes[0] + (uint16)SymbolBytes[1] * 256));
 		}
 		else
 		{
-			Char = CharCast<TCHAR>(static_cast<UCS2CHAR>(static_cast<uint16>(SymbolBytes[1]) + static_cast<uint16>(SymbolBytes[0]) * 256));
+			Char = CharCast<TCHAR>((UCS2CHAR)((uint16)SymbolBytes[1] + (uint16)SymbolBytes[0] * 256));
 		}
 
 		if (!JsonReader.Read(Char))
