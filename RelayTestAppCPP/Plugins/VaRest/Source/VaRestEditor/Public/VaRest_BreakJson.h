@@ -52,8 +52,8 @@ public:
 	// End UEdGraphNode interface.
 
 	// Begin UK2Node interface
-	virtual bool IsNodePure() const { return true; }
-	virtual bool ShouldShowNodeProperties() const { return true; }
+	virtual bool IsNodePure() const override { return true; }
+	virtual bool ShouldShowNodeProperties() const override { return true; }
 	void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 	virtual FText GetMenuCategory() const override;
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
@@ -81,8 +81,8 @@ public:
 	// End UEdGraphNode interface.
 
 	// Begin UK2Node interface
-	virtual bool IsNodePure() const { return true; }
-	virtual bool ShouldShowNodeProperties() const { return true; }
+	virtual bool IsNodePure() const override { return true; }
+	virtual bool ShouldShowNodeProperties() const override { return true; }
 	void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 	virtual FText GetMenuCategory() const override;
 	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
