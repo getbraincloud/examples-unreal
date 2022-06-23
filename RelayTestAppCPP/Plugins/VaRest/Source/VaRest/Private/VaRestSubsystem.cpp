@@ -94,7 +94,7 @@ UVaRestJsonObject* UVaRestSubsystem::ConstructVaRestJsonObject()
 
 UVaRestJsonObject* UVaRestSubsystem::StaticConstructVaRestJsonObject()
 {
-	auto SelfSystem = CastChecked<UVaRestSubsystem>(USubsystemBlueprintLibrary::GetEngineSubsystem(StaticClass()), ECastCheckedType::NullChecked);
+	auto SelfSystem = CastChecked<UVaRestSubsystem>(USubsystemBlueprintLibrary::GetEngineSubsystem(UVaRestSubsystem::StaticClass()), ECastCheckedType::NullChecked);
 	return SelfSystem->ConstructVaRestJsonObject();
 }
 
@@ -176,7 +176,10 @@ class UVaRestJsonObject* UVaRestSubsystem::LoadJsonFromFile(const FString& Path,
 		{
 			return Json;
 		}
-		UE_LOG(LogVaRest, Error, TEXT("%s: Can't decode json from file %s"), *VA_FUNC_LINE, *Path);
+		else
+		{
+			UE_LOG(LogVaRest, Error, TEXT("%s: Can't decode json from file %s"), *VA_FUNC_LINE, *Path);
+		}
 	}
 	else
 	{

@@ -19,7 +19,7 @@ public:
 	 *
 	 * @return Returns singleton instance, loading the module on demand if needed
 	 */
-	static FVaRestModule& Get()
+	static inline FVaRestModule& Get()
 	{
 		return FModuleManager::LoadModuleChecked<FVaRestModule>("VaRest");
 	}
@@ -29,7 +29,7 @@ public:
 	 *
 	 * @return True if the module is loaded and ready to use
 	 */
-	static bool IsAvailable()
+	static inline bool IsAvailable()
 	{
 		return FModuleManager::Get().IsModuleLoaded("VaRest");
 	}

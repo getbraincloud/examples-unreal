@@ -1,5 +1,7 @@
 // Copyright 2014-2019 Vladimir Alyamkin. All Rights Reserved.
 
+using System.IO;
+
 namespace UnrealBuildTool.Rules
 {
 	public class VaRest : ModuleRules
@@ -9,14 +11,13 @@ namespace UnrealBuildTool.Rules
 			PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 			PrivateIncludePaths.AddRange(
-				new[]
-				{
-					"VaRest/Private"
+				new string[] {
+					"VaRest/Private",
 					// ... add other private include paths required here ...
 				});
 
 			PublicDependencyModuleNames.AddRange(
-				new[]
+				new string[]
 				{
 					"Core",
 					"CoreUObject",

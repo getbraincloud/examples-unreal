@@ -157,7 +157,7 @@ private:
 			}
 			else if (TIsSame<T, bool>::Value)
 			{
-				SetBoolField(field.Key, static_cast<bool>(field.Value));
+				SetBoolField(field.Key, (bool)field.Value);
 			}
 		}
 	}
