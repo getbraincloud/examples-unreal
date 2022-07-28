@@ -90,6 +90,7 @@ RelayTestAppCPP/Plugins/VaRest/Binaries/*
 RelayTestAppCPP/Saved/*
 RelayTestAppCPP/.idea/*
 RelayTestAppCPP/Binaries/*
+RelayTestAppCPP/Build/*
 
 TappyChicken/.idea/*
 TappyChicken/Build/*
