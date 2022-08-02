@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [submodule "DonutTag/Plugins/BCClient"]
 	path = DonutTag/Plugins/BCClient
 	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
@@ -40,3 +41,29 @@
 	branch = 4.27
 
 
+=======
+[submodule "RelayTestAppCPP/Plugins/VaRest"]
+	path = RelayTestAppCPP/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "RelayTestAppCPP/Plugins/BCClient"]
+	path = RelayTestAppCPP/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "RelayTestApp/Plugins/VaRest"]
+	path = RelayTestApp/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "RelayTestApp/Plugins/BCClient"]
+	path = RelayTestApp/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "TappyChicken/Plugins/VaRest"]
+	path = TappyChicken/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "TappyChicken/Plugins/BCClient"]
+	path = TappyChicken/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+>>>>>>> origin/develop

@@ -51,8 +51,13 @@
 Plugins/*/Binaries/*
 
 # Builds
+<<<<<<< HEAD
 **/Build/*
 
+=======
+Build/*
+RelayTestApp/Build/*
+>>>>>>> origin/develop
 
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
@@ -75,4 +80,19 @@ Plugins/*/Binaries/*
 # Cache files for the editor to use
 **/DerivedDataCache/*
 
+<<<<<<< HEAD
 **/.idea/*
+=======
+RelayTestAppCPP/Intermediate/*
+RelayTestAppCPP/Plugins/BCClient/Binaries/*
+RelayTestAppCPP/Plugins/BCClient/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Binaries/*
+RelayTestAppCPP/Saved/*
+RelayTestAppCPP/.idea/*
+RelayTestAppCPP/Binaries/*
+RelayTestAppCPP/Build/*
+
+TappyChicken/.idea/*
+TappyChicken/Build/*
+>>>>>>> origin/develop

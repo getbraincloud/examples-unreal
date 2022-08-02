@@ -2,13 +2,35 @@
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
 
-### Instructions
+## Instructions
 
-Clone the repo, run the uproject file, run the project to play it in the editor!
+### Clone:
 
-### Standalone Client Lib
+The examples include the required plugins as git submodules.
 
-Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal).
+```
+$ git clone --recurse-submodules --branch develop git@github.com:getbraincloud/examples-unreal.git
+```
+
+If you are updating an existing repository, or forget to --recurse-submodules, then just update the modules. 
+Make sure you've done this if you get "missing plugin" error on load.
+
+```
+$ cd examples-unreal
+$ git submodule update --init --recursive
+```
+
+### Build:
+
+Open the uproject file in UE 4.27. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
+
+### Run:
+
+Play in editor or launch standalone game.
+
+## Standalone Client Lib
+
+Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
 
 ## Relay Test App (Blueprint) Relay Test App CPP (C++ Only)
 
