@@ -1,0 +1,42 @@
+[submodule "DonutTag/Plugins/BCClient"]
+	path = DonutTag/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "DonutTag/Plugins/VaRest"]
+	path = DonutTag/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "Groups/Plugins/VaRest"]
+	path = Groups/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "Groups/Plugins/BCClient"]
+	path = Groups/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "Leaderboard/Plugins/VaRest"]
+	path = Leaderboard/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "Leaderboard/Plugins/BCClient"]
+	path = Leaderboard/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "S2SPoster/Plugins/VaRest"]
+	path = S2SPoster/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "S2SPoster/braincloud-unreal-plugin-src"]
+	path = S2SPoster/braincloud-unreal-plugin-src
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "TutDemo/Plugins/BCClient"]
+	path = TutDemo/Plugins/BCClient
+	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	branch = develop
+[submodule "TutDemo/Plugins/VaRest"]
+	path = TutDemo/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+
+
