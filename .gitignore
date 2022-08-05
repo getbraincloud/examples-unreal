@@ -1,6 +1,14 @@
 # Visual Studio 2015 user specific files
 .vs/
 .vscode/
+*.code-workspace
+*.ignore
+
+# Xcode files
+*.xc_workspace
+
+# braincloud app ids
+ids.h
 
 # Compiled Object files
 *.slo
