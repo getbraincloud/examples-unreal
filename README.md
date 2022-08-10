@@ -20,6 +20,21 @@ $ cd examples-unreal
 $ git submodule update --init --recursive
 ```
 
+### Configure:
+
+**Important** Requires configuration of ids.h header file in the project folder under Source/, which defines the server url, app id and app secret. This file is not included with the examples and loading, building and initializing will fail without it. Create a file into source code folder called ids.h, and put 3 defines in it:
+
+```
+#define BRAINCLOUD_SERVER_URL "https://api.braincloudservers.com/dispatcherV2"
+#define BRAINCLOUD_APP_ID ""
+#define BRAINCLOUD_APP_SECRET ""
+```
+Fill in values for BRAINCLOUD_APP_ID and BRAINCLOUD_APP_SECRET.
+
+If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
+
+https://portal.braincloudservers.com/
+
 ### Build:
 
 Open the uproject file in UE 4.27. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.

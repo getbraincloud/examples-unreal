@@ -8,6 +8,7 @@
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
 #include "Widgets/WidgetAddOns/OtherMatchUserWidget.h"
+#include "ids.h"
 
 // Sets default values
 ARelayNetworkInterface::ARelayNetworkInterface()
@@ -279,7 +280,7 @@ void ARelayNetworkInterface::InitBrainCloud()
 {
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
-	BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, GetBrainCloudVersion());
+	BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, BRAINCLOUD_APP_SECRET, BRAINCLOUD_APP_ID, GetBrainCloudVersion());
 	BrainCloudWrapper->getClient()->enableLogging(true);
 }
 
