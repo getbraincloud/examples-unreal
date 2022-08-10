@@ -75,6 +75,9 @@ Plugins/*/Intermediate/*
 # Cache files for the editor to use
 DerivedDataCache/*
 
+# app secret ids.h
+ids.h
+
 RelayTestApp/Intermediate/*
 RelayTestApp/Plugins/BCClient/Binaries/*
 RelayTestApp/Plugins/BCClient/Intermediate/*
