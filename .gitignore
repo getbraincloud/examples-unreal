@@ -81,6 +81,26 @@ Plugins/*/Binaries/*
 #Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
-**/DerivedDataCache/*
+DerivedDataCache/*
+
+# app secret ids.h
+ids.h
+
+RelayTestApp/Intermediate/*
+RelayTestApp/Plugins/BCClient/Binaries/*
+RelayTestApp/Plugins/BCClient/Intermediate/*
+RelayTestApp/Saved/*
+RelayTestApp/.idea/*
+RelayTestApp/Binaries/*
+
+RelayTestAppCPP/Intermediate/*
+RelayTestAppCPP/Plugins/BCClient/Binaries/*
+RelayTestAppCPP/Plugins/BCClient/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Intermediate/*
+RelayTestAppCPP/Plugins/VaRest/Binaries/*
+RelayTestAppCPP/Saved/*
+RelayTestAppCPP/.idea/*
+RelayTestAppCPP/Binaries/*
+RelayTestAppCPP/Build/*
 
 **/.idea/*
