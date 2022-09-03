@@ -64,7 +64,6 @@ if [[ $needspush != 0 ]];
 then
     git push
     code=$?
-    echo $code
     if [[ $code != 0 ]];
     then
         echo "--- Failure: needs updating and cannot push"
