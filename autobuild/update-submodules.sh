@@ -13,6 +13,8 @@ then
     fi
 fi
 
+needspush=0
+
 for i in RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient BasicDemo5/Plugins/BCClient
 do
     echo
@@ -44,14 +46,9 @@ do
             
             git add $i
             git commit -m "automatic submodules update" .
-            git push
-            code=$?
-            echo $code
-            if [[ $code != 0 ]];
-            then
-                echo "--- Failure $i needs updating and cannot push"
-                continue
-            fi
+
+            needspush=1
+
             git submodule status $i
             echo "--- $i updated on branch $STR"
          else
@@ -62,5 +59,17 @@ do
         echo "--- $i is already up to date on branch $STR"
     fi
 done
+
+if [[ $needspush != 0 ]];
+then
+    git push
+    code=$?
+    echo $code
+    if [[ $code != 0 ]];
+    then
+        echo "--- Failure: needs updating and cannot push"
+    fi
+fi
+
 echo
 exit $code
