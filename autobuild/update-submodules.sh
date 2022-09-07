@@ -6,7 +6,7 @@ then
         if [[ $1 != "--ignore" ]];
         then
             echo
-            echo "Warning: this project has modifications. These files will be ignored in push. To continue update use --ignore."
+            echo "Warning: this project has modifications. These files will be ignored in commit. To continue update use --ignore."
             git diff --compact-summary
             exit 1
         fi
@@ -37,13 +37,6 @@ do
     then
         if [[ $(git diff --compact-summary $i) ]];
         then
-            # make sure we use ssh url to push
-            fullUrl=$(git config -f .gitmodules --get submodule.$i.url)
-            newUrl=$(echo "$fullUrl" | sed "s,https://github.com/,git@github.com:,g")
-            pushd $i
-            git remote set-url origin ${newUrl}
-            popd
-            
             git add $i
             git commit -m "automatic submodules update" .
 
@@ -71,13 +64,8 @@ done
 
 if [[ $needspush != 0 ]];
 then
-    git push
-    code=$?
-    if [[ $code != 0 ]];
-    then
-        echo "--- Failure: needs updating and cannot push"
-    fi
+    echo "--- ATTENTION REQUIRED! Update pending. Please run command: git push"
 fi
 
 echo
-exit $code
+exit 0
