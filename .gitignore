@@ -7,9 +7,6 @@
 # Xcode files
 *.xc_workspace
 
-# braincloud app ids
-ids.h
-
 # Compiled Object files
 *.slo
 *.lo

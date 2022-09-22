@@ -1,13 +1,23 @@
 {
 	"folders": [
 		{
+			"name": "TappyChicken",
 			"path": "."
 		},
 		{
-			"path": "C:\\Program Files\\Epic Games\\UE_4.20"
+			"name": "UE4",
+			"path": "/Users/Shared/Epic Games/UE_4.27"
 		}
 	],
 	"settings": {
 		"typescript.tsc.autoDetect": "off"
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-vscode.cpptools",
+			"ms-dotnettools.csharp",
+			"vadimcn.vscode-lldb",
+			"ms-vscode.mono-debug"
+		]
 	}
 }
