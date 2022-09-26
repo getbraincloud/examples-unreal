@@ -77,8 +77,15 @@ This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all th
 Works with plugin for Unreal Engine 5.0 (beta).
 
 ```
+git checkout UE5-examples
+cd BasicDemo5
+```
+
+Then
+
+```
 $ cd Plugins/BCClient
-$ git checkout UE5-plugin
+$ git checkout ue5-plugin
 $ cd Plugins/VaRest
 $ git checkout 5.0
 ```
