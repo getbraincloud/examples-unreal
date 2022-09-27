@@ -17,6 +17,11 @@ struct FAppIds
         serverUrl = BRAINCLOUD_SERVER_URL;
         secretKey = BRAINCLOUD_APP_SECRET;
         appId = BRAINCLOUD_APP_ID;
+        
+        if(appId=="")
+            appId = getenv("BC_RELAYTESTAPP_APP_ID");
+        if(secretKey=="")
+            secretKey = getenv("BC_RELAYTESTAPP_APP_SECRET");
     }
 
     UPROPERTY(BlueprintReadWrite)
