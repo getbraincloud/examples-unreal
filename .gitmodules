@@ -25,7 +25,7 @@
 [submodule "TutDemo/Plugins/VaRest"]
 	path = TutDemo/Plugins/VaRest
 	url = https://github.com/ufna/VaRest.git
-	branch = 4.27
+	branch = 5.0
 [submodule "TutDemo/Plugins/BCClient"]
 	path = TutDemo/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
