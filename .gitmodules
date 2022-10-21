@@ -22,11 +22,11 @@
 	path = TappyChicken/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
 	branch = develop
-[submodule "TutDemo/Plugins/VaRest"]
-	path = TutDemo/Plugins/VaRest
+[submodule "ScriptTestApp/Plugins/VaRest"]
+	path = ScriptTestApp/Plugins/VaRest
 	url = https://github.com/ufna/VaRest.git
 	branch = 4.27
-[submodule "TutDemo/Plugins/BCClient"]
-	path = TutDemo/Plugins/BCClient
+[submodule "ScriptTestApp/Plugins/BCClient"]
+	path = ScriptTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
 	branch = develop
