@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "ids.h"
 #include "RelayTestAppGameModeBase.generated.h"
 
 /**
@@ -13,5 +14,5 @@ UCLASS()
 class RELAYTESTAPP_API ARelayTestAppGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
 };
+

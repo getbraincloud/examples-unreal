@@ -163,10 +163,6 @@
 			"Enabled": false
 		},
 		{
-			"Name": "GitSourceControl",
-			"Enabled": false
-		},
-		{
 			"Name": "GameplayCameras",
 			"Enabled": false
 		},
