@@ -23,6 +23,21 @@ FBrainCloudInitParams UBCInitHelpers::InitializeFromHeader()
 	return params;
 }
 
+TArray<uint8> UBCInitHelpers::ConvertStringToBytes(FString inputString)
+{
+	uint32 size = inputString.Len();
+	TArray<uint8> data;
+	data.AddUninitialized(size);
+	StringToBytes(inputString, data.GetData(), size);
+
+	return data;
+}
+
+FString UBCInitHelpers::ConvertBytesToString(TArray<uint8> inputBytes)
+{
+	return BytesToString(inputBytes.GetData(), inputBytes.Num());
+}
+
 FBrainCloudInitParams UBCInitHelpers::InitializeFromFile()
 {
 	FBrainCloudInitParams params;

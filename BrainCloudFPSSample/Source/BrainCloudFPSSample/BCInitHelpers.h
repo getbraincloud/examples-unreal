@@ -77,6 +77,29 @@ struct FBrainCloudPlayerData
 	FLobbyMemberData LobbyMemberData;
 };
 
+USTRUCT(BlueprintType)
+struct FRoomData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		FString LobbyId = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		FString Address = "";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		int PortUDP = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		int PortTCP = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		int PortWS = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Room Data")
+		FString Passcode = "";
+};
 
 USTRUCT(BlueprintType)
 struct FLobbyData
@@ -105,7 +128,10 @@ struct FLobbyData
 		TArray<FLobbyMemberData> Members;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
-		FLobbyMemberData LobbyLeader;
+		FString LobbyLeaderCxId;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
+		FRoomData RoomData;
 };
 
 UCLASS(MinimalAPI)
@@ -120,5 +146,11 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BC Init Helpers")
 		static FBrainCloudInitParams InitializeFromHeader();
+
+	UFUNCTION(BlueprintCallable, Category = "Conversion Helpers")
+		static TArray<uint8> ConvertStringToBytes(FString inputString);
+
+	UFUNCTION(BlueprintCallable, Category = "Conversion Helpers")
+		static FString ConvertBytesToString(TArray<uint8> inputBytes);
 };
 
