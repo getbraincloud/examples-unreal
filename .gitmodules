@@ -26,6 +26,6 @@
 [submodule "ScriptTestApp/Plugins/BCClient"]
 	path = ScriptTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
-[submodule "BrainCloudFPSSample/Plugins/BCClient"]
-	path = BrainCloudFPSSample/Plugins/BCClient
+[submodule "BCFPS/Plugins/BCClient"]
+	path = BCFPS/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
