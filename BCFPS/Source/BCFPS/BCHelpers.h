@@ -138,7 +138,7 @@ UCLASS(MinimalAPI)
 class UBCHelpers : public UObject
 {
 	GENERATED_BODY()
-public:
+public: 
 	UBCHelpers(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintCallable, Category = "BC Init Helpers")
