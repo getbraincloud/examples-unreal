@@ -1,7 +1,6 @@
 [submodule "RelayTestAppCPP/Plugins/VaRest"]
 	path = RelayTestAppCPP/Plugins/VaRest
 	url = https://github.com/ufna/VaRest.git
-	branch = develop
 [submodule "RelayTestAppCPP/Plugins/BCClient"]
 	path = RelayTestAppCPP/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
@@ -9,7 +8,6 @@
 [submodule "RelayTestApp/Plugins/VaRest"]
 	path = RelayTestApp/Plugins/VaRest
 	url = https://github.com/ufna/VaRest.git
-	branch = develop
 [submodule "RelayTestApp/Plugins/BCClient"]
 	path = RelayTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
