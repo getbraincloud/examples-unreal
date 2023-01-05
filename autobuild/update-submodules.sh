@@ -62,7 +62,7 @@ done
 
 if [[ $needspush != 0 ]];
 then
-    git commit -m "automatic submodules update" .
+    git commit -m "automatic submodules update"
     echo "--- ATTENTION REQUIRED! Update pending. Please run command: git push"
 fi
 
