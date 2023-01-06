@@ -3,10 +3,10 @@ if [[ $(git diff --compact-summary) ]];
 then
     if [[ $1 != "--force" ]];
     then
-        if [[ $1 != "--ignore" ]];
+        if [[ $1 != "--ignore-changes" ]];
         then
             echo
-            echo "Warning: this project has modifications. These files will be ignored in commit. To continue update use --ignore."
+            echo "Warning: this project has modifications you may want to commit first. To continue update use --ignore-changes."
             git diff --compact-summary
             exit 1
         fi
@@ -15,7 +15,7 @@ fi
 
 needspush=0
 
-for i in RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient BCFPS/Plugins/BCClient
+for i in RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient RelayTestAppCPP/Plugins/VaRest RelayTestApp/Plugins/VaRest TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient
 do
     echo
     git submodule status $i
@@ -38,7 +38,6 @@ do
         if [[ $(git diff --compact-summary $i) ]];
         then
             git add $i
-            git commit -m "automatic submodules update" .
 
             needspush=1
 
@@ -52,7 +51,6 @@ do
         if [[ $(git diff --compact-summary $i) ]];
         then
             git add $i
-            git commit -m "automatic submodules update" .
 
             needspush=1
             echo "--- $i local is already up to date updating branch $STR"
@@ -64,6 +62,7 @@ done
 
 if [[ $needspush != 0 ]];
 then
+    git commit -m "automatic submodules update"
     echo "--- ATTENTION REQUIRED! Update pending. Please run command: git push"
 fi
 
