@@ -1,6 +1,6 @@
 #!/bin/bash
 # usage:
-#      autobuild/runtest.sh RunSet
+#      autobuild/runapp.sh RelayTestApp
 
 # BuildCookRun Help:
 # 
@@ -121,20 +121,11 @@
 #     -NoSign                                 Skips signing of code/content files.
 
 
-export UNREAL_RunUAT="/Users/Shared/Epic Games/UE_5.1/Engine/Build/BatchFiles/RunUAT.sh"
-export UNREAL_Build="/Users/Shared/Epic Games/UE_5.1/Engine/Build/BatchFiles/Mac/Build.sh"
-#export UNREAL_EditorCmd="/Users/Shared/Epic Games/UE_4.27/Engine/Binaries/Mac/ue4Editor-Cmd"
-export UNREAL_EditorCmd="/Users/Shared/Epic Games/UE_5.1/Engine/Binaries/Mac/UnrealEditor-Cmd"
-export PROJECT_NAME=${1}
+export PROJECTNAME=${1}
 export WORKSPACE=$PWD
 
-../autobuild/cleanupunreal.sh
-
 # need to build c++ source code here
-"$UNREAL_RunUAT" BuildCookRun -project="$WORKSPACE/$PROJECT_NAME.uproject"   -noP4 -platform=Mac -clientconfig=Development -build 
-#"$UNREAL_RunUAT"  BuildCookRun -targetplatform=Mac -project=/Volumes/Project/brainCloudUnreal/braincloud-unreal/BCSubsystem.uproject  -build 
+"/Users/Shared/Epic Games/UE_5.1/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -noP4 -platform=Mac -clientconfig=Development -build 
 
-#"$UNREAL_Build" -ModuleWithSuffix=$PROJECT_NAME,8348 $PROJECT_NAME Mac Development -Project="$WORKSPACE/$PROJECT_NAME.uproject" "$WORKSPACE/$PROJECT_NAME.uproject"  -IgnoreJunk
-
-# run specified test
-"$UNREAL_EditorCmd" "$WORKSPACE/$PROJECT_NAME.uproject" -game
+# run specified app
+"/Users/Shared/Epic Games/UE_5.1/Engine/Binaries/Mac/UnrealEditor-Cmd" "$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game
