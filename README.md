@@ -71,3 +71,11 @@ This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all th
 - Host can start the game for the lobby.
 - Handling inputs from members both local and network members. 
 - Handling a user leaving a match or lobby.
+
+### Possible Errors
+
+If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
+  ```
+  error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
+```
+In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.
