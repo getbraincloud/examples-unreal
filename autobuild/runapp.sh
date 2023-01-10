@@ -125,8 +125,7 @@ export PROJECTNAME=${1}
 export WORKSPACE=$PWD
 
 # need to build c++ source code here
-"/Users/Shared/Epic Games/UE_4.27/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -noP4 -platform=Mac -clientconfig=Development -build 
+"/Users/Shared/Epic Games/UE_5.1/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -noP4 -platform=Mac -clientconfig=Development -build 
 
 # run specified app
-#"/Users/Shared/Epic Games/UE_5.1/Engine/Binaries/Mac/UnrealEditor-Cmd" "$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game
-"/Users/Shared/Epic Games/UE_4.27/Engine/Binaries/Mac/UE4Editor-Cmd" "$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game
+"/Users/Shared/Epic Games/UE_5.1/Engine/Binaries/Mac/UnrealEditor-Cmd" "$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game
