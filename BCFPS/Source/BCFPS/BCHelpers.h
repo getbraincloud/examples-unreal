@@ -119,16 +119,16 @@ struct FLobbyData
 		FString LobbyTypeID = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
-		int MinUsers;
+		int MinUsers = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
-		int MaxUsers;
+		int MaxUsers = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
 		TArray<FLobbyMemberData> Members;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
-		FString LobbyLeaderCxId;
+		FString LobbyLeaderCxId = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Data")
 		FRoomData RoomData;

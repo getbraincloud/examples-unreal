@@ -15,5 +15,5 @@ mkdir "$WORKSPACE/Binaries/${PROJECTNAME}_MacOSBuild"
 
 "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/Build.sh" ${PROJECTNAME}Editor Mac Development -Project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" 
 
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -nocompileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/MacOS_Build_${PROJECTNAME}" -package  -ue4exe="/Users/Shared/Epic Games/UE_4.27/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor"  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs -distribution -nodebuginfo -targetplatform=Mac -build -target=RelayTestApp -utf8output 
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -nocompileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/MacOS_Build_${PROJECTNAME}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs -distribution -nodebuginfo -targetplatform=Mac -build -target=$PROJECTNAME -utf8output 
  
