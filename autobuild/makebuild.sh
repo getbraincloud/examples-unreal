@@ -1,20 +1,32 @@
 #!/bin/bash
 # usage:
-#      autobuild/makebuild.sh project_name
+#      autobuild/makebuild.sh RelayTestApp MAC
+#      autobuild/makebuild.sh RelayTestApp IOS
+#      autobuild/makebuild.sh RelayTestApp ANDROID
+
 # make sure to set the install path of your engine version
+#       export UE_VERSION=5.1
 #       export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
+#		 export WORKSPACE=$PWD
 
 PROJECTNAME=${1}
-WORKSPACE=$PWD
+TARGET=${2}
+if [ $UE_VERSION == 4.27 ]
+then
+	UE4String='-ue4exe="${UE_INSTALL_PATH}/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor"'
+fi
+if [ "$3" !=  "nosign" ]
+then
+	ModeString='-distribution'
+fi
 
-
-mkdir "$WORKSPACE/Binaries/"
-mkdir "$WORKSPACE/Binaries/${PROJECTNAME}_MacOSBuild"
+mkdir -p "$WORKSPACE/Exports/"
+mkdir -p "$WORKSPACE/Exports/${PROJECTNAME}"
 
 #"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/GenerateProjectFiles.sh" -projectfiles -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game  -progress 
 
 "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/Build.sh" ${PROJECTNAME}Editor Mac Development -Project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" 
 
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -nocompileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/MacOS_Build_${PROJECTNAME}" -package   -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs -distribution -nodebuginfo -targetplatform=Mac -build -target=RelayTestApp -utf8output 
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -nocompileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/Exports/${PROJECTNAME}" -package   -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak ${ModeString} -prereqs -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output 
  
- #-ue4exe="/Users/Shared/Epic Games/UE_4.27/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor"
+ #

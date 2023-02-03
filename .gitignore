@@ -78,3 +78,6 @@ DerivedDataCache/*
 
 # Builds
 **/Build/*
+
+#Exported packages
+**Exports/

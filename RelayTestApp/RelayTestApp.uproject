@@ -231,10 +231,6 @@
 			]
 		},
 		{
-			"Name": "AndroidPermission",
-			"Enabled": false
-		},
-		{
 			"Name": "AppleImageUtils",
 			"Enabled": false
 		},
