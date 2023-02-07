@@ -134,6 +134,30 @@ struct FLobbyData
 		FRoomData RoomData;
 };
 
+USTRUCT(BlueprintType)
+struct FLobbySetting
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	FString RoomName = "Default Room";
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	int GameTime = 3;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	int MapSelection = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	int MaxPlayers = 2;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	int Region = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
+	int GameMode = 0;
+};
+
 UCLASS(MinimalAPI)
 class UBCHelpers : public UObject
 {
