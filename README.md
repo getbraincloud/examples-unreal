@@ -37,7 +37,7 @@ https://portal.braincloudservers.com/
 
 ### Build:
 
-Open the uproject file in UE 5.1. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
+Open the uproject file in Unreal Engine. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
 
 Make sure to download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
 
