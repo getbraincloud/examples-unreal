@@ -9,7 +9,7 @@ This repository contains example Unreal projects that use the brainCloud client.
 The examples include the required plugins as git submodules.
 
 ```
-$ git clone --recurse-submodules https://github.com:getbraincloud/examples-unreal.git
+$ git clone --recurse-submodules https://github.com/getbraincloud/examples-unreal.git
 ```
 
 If you are updating an existing repository, or forget to --recurse-submodules, then just update the modules. 
