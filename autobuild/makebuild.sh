@@ -5,6 +5,7 @@
 #      autobuild/makebuild.sh RelayTestApp ANDROID
 
 # make sure to set the install path of your engine version
+#       export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_4.27'
 #       export UE_VERSION=5.1
 #       export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 #		 export WORKSPACE=$PWD #(this is examples root folder)
