@@ -39,7 +39,13 @@ https://portal.braincloudservers.com/
 
 Open the uproject file in Unreal Engine. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
 
-Make sure to download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
+### Upgrading Engine Version
+
+1. Clean intermediate and build folders.
+2. Download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
+3. The BCClient plugin will work as-is for any engine version.
+4. Choose the new engine version: Use the right-click menu on the .uproject file OR use the terminal command UnrealVersionSelector.exe OR modify "EngineAssociation" in .uproject file.
+5. Re-generate code project files (eg. visual studio or xcode).
 
 ### Run:
 
