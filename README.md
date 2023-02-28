@@ -39,7 +39,7 @@ https://portal.braincloudservers.com/
 
 Open the uproject file in Unreal Engine. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
 
-### Upgrading Engine Version
+#### Upgrading Engine Version
 
 1. Clean intermediate and build folders.
 2. Download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
@@ -83,10 +83,10 @@ This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all th
 ### Possible Errors
 
 If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
-  ```
-  error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
-```
-In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.
+
+ error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
+
+In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
 
 ## ScriptTestApp (blueprint only)
 Implements [CloudCode Tutorial](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) 1 Your First Script and 6 S2S Scripts.
@@ -95,16 +95,14 @@ Requires a script on the server for App ID (included).
 
 Uses MobileStarterContent. If you load in UE 5 + you may see an error similar to: 
 
-'''
 Failed to import '/Users/Shared/Epic Games/UE_5.1/FeaturePacks/MobileStarterContent.upack'. Failed to create asset '/Game/MobileStarterContent'. Please see Output Log for details.
-'''
 
 Workaround: rename the installed upack file. 
 
-'''
+```
 cd "$UE_INSTALL_PATH"
 mv StarterContent.upack MobileStarterContent.upack
-'''
+```
 
 ## Tappy Chicken
 Based on Unreal's' demo. Shows 
