@@ -22,7 +22,3 @@
     path = Leaderboard/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
     branch = develop
-[submodule "RelayTestAppCPP/Plugins/VaRest"]
-    path = RelayTestAppCPP/Plugins/VaRest
-    url = https://github.com/ufna/VaRest.git
-    branch = develop
