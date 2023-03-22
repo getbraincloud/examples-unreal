@@ -106,11 +106,11 @@ Uses MobileStarterContent. If you load in UE 5 + you may see an error similar to
 
 Failed to import '/Users/Shared/Epic Games/UE_5.1/FeaturePacks/MobileStarterContent.upack'. Failed to create asset '/Game/MobileStarterContent'. Please see Output Log for details.
 
-Workaround: rename the installed upack file. 
+Workaround: copy the installed upack file. 
 
 ```
 cd "$UE_INSTALL_PATH"
-mv StarterContent.upack MobileStarterContent.upack
+cp StarterContent.upack MobileStarterContent.upack
 ```
 
 ## Leaderboard
