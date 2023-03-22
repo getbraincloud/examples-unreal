@@ -1,0 +1,27 @@
+
+// parameters:
+//{"profileId":"aprofileId"}
+
+var leaderboardId = data.Id;
+var sortOrder = "HIGH_TO_LOW";
+var startIndex = 0;
+var endIndex = data.Num - 1;
+var results = {};
+
+// Grab the leaderboard service proxy from the bridge
+var leaderboardService = bridge.getLeaderboardServiceProxy();
+
+var results = leaderboardService.getGlobalLeaderboardPage(leaderboardId, sortOrder, startIndex, endIndex);
+
+results;
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut2_LeaderboardsGet",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":10,
+// "description":"",
+// "parms":"{\\\"profileId\\\":\\\"aprofileId\\\"}",
+// "version":2,
+// "updatedAt":1650551734142
