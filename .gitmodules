@@ -1,10 +1,10 @@
 [submodule "Groups/Plugins/BCClient"]
 	path = Groups/Plugins/BCClient
-	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
 	branch = develop
 [submodule "Leaderboard/Plugins/BCClient"]
 	path = Leaderboard/Plugins/BCClient
-	url = git@github.com:getbraincloud/braincloud-unreal-plugin-src.git
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
 	branch = develop
 [submodule "RelayTestAppCPP/Plugins/VaRest"]
 	path = RelayTestAppCPP/Plugins/VaRest
