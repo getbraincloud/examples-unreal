@@ -10,7 +10,7 @@ cd Config
 sed -i '' "s/SecretKey = .*$/SecretKey = \"${SECRET_KEY}\"/g" DefaultEngine.ini
 sed -i '' "s/AppID = .*$/AppID = \"${APP_ID}\"/g" DefaultEngine.ini
 
-if [ S2S_Key != "" ];
+if [ -z S2S_Key ];
 then
 sed -i '' "s/S2SKey = .*$/S2SKey = \"${S2S_KEY}\"/g" DefaultEngine.ini
 LINES=7
