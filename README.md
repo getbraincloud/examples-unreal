@@ -37,7 +37,9 @@ https://portal.braincloudservers.com/
 
 ### Build:
 
-Open the uproject file in Unreal Engine. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
+Required for some examples: add the VaREST plugin to your engine from Epic Launcher or download to Plugins folder.
+
+Open the uproject file in Unreal Engine. It will inform that the BCClient module is missing or unbuilt. Click YES to build. Click Show Log to see progress.
 
 #### Upgrading Engine Version
 
@@ -88,6 +90,13 @@ If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
 
 In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
 
+## Tappy Chicken
+Based on Unreal's' demo. Shows 
+
+* Achievements
+* Leaderboards
+* User Entities
+
 ## ScriptTestApp (blueprint only)
 Implements [CloudCode Tutorial](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) 1 Your First Script and 6 S2S Scripts.
 
@@ -97,16 +106,15 @@ Uses MobileStarterContent. If you load in UE 5 + you may see an error similar to
 
 Failed to import '/Users/Shared/Epic Games/UE_5.1/FeaturePacks/MobileStarterContent.upack'. Failed to create asset '/Game/MobileStarterContent'. Please see Output Log for details.
 
-Workaround: rename the installed upack file. 
+Workaround: copy the installed upack file. 
 
 ```
 cd "$UE_INSTALL_PATH"
-mv StarterContent.upack MobileStarterContent.upack
+cp StarterContent.upack MobileStarterContent.upack
 ```
 
-## Tappy Chicken
-Based on Unreal's' demo. Shows 
+## Leaderboard
+Implements tutorials 2 Making API Calls and 4 Pre and Post Hooks.
 
-* Achievements
-* Leaderboards
-* User Entities
+## Groups
+Implements tutorials 3 Working with Global and User Entities 4 Pre and Post Hooks 5 External Web Services and 6 S2S Scripts.

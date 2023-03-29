@@ -1,0 +1,39 @@
+// Tut3_DeleteGroup() - deletes the specified group
+// Retrieve the parameter
+var groupId = data.groupId;
+var results = {};
+// Grab the Global Entity service proxy from the bridge
+var globalEntityService = bridge.getGlobalEntityServiceProxy();
+// Find the specified group
+var searchResults = globalEntityService.readEntity(groupId);
+if (searchResults.status == "200") {
+    // Did we find it?
+    if (searchResults.data.entityType == "group") {
+      // Grab the identifying info
+      var version = searchResults.data.version;
+      // Delete the group
+      var deleteResults = globalEntityService.deleteEntity(groupId, version);
+      if (deleteResults.status == "200") {
+        results.message = "Successfully deleted group.";
+        results.numDeleted = 1;
+      } else {
+        results.message = "unknown error";
+      }
+    } else {
+      results.message = "Entity is not a group.";
+    }
+} else {
+    results.message = "Entity does not exist.";
+}
+results;
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut3_DeleteGroup",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\r\\n  \\\"groupId\\\": \\\"aGroupGUID\\\"\\r\\n}",
+// "version":1,
+// "updatedAt":1650371914444
