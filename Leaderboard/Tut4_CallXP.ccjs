@@ -1,0 +1,27 @@
+// Tut3_ListGroups() - lists all the groups
+// No parameters to retrieve
+var results = {};
+// Grab the player stats service proxy from the bridge
+var playerStatisticsProxy = bridge.getPlayerStatisticsServiceProxy();
+
+//results = playerStatisticsProxy.incrementExperiencePoints(50);
+
+//results = playerStatisticsProxy.getNextExperienceLevel();
+
+var gamificationProxy = bridge.getGamificationServiceProxy();
+
+var postResult = gamificationProxy.readXpLevelsMetadata();
+
+postResult.data.xp_levels[data.xpLevel];
+
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut4_CallXP",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\n    \\\"xpLevel\\\": 2\\n}",
+// "version":34,
+// "updatedAt":1650635270805

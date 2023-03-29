@@ -16,6 +16,8 @@ PROJECT_NAME=$2
 # TODO: copy in config changes and re-generate xcode/vs project files
 
 #get correct VaRest
+if [ -d Plugins/VaRest ];
+then
 cd Plugins/VaRest
 if [ $UE_VERSION == "4.27" ];
 then
@@ -30,6 +32,7 @@ else
 fi
 git pull
 cd ../..
+fi
 
 echo "Updated plugin VaRest" 
 
