@@ -288,7 +288,8 @@ void ARelayNetworkInterface::InitBrainCloud()
     if(secretKey=="")
         secretKey = getenv("BC_RELAYTESTAPP_APP_SECRET");
 
-	BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, secretKey, appId, "1.0");
+	//BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, secretKey, appId, "1.0");
+	BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
 	BrainCloudWrapper->getClient()->enableLogging(true);
 }
 
