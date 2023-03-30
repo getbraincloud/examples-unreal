@@ -280,12 +280,16 @@ void ARelayNetworkInterface::InitBrainCloud()
 {
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
-//23649
-    //a754a2c0-72d9-46ce-9fdf-18e9c19a556c
-    if(ServerURL.IsEmpty())
-        BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, BRAINCLOUD_APP_SECRET, BRAINCLOUD_APP_ID, "1.0");
-    else
-        BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
+    
+    FString appId = BRAINCLOUD_APP_ID;
+    if(appId=="")
+        appId = getenv("BC_RELAYTESTAPP_APP_ID");
+    FString secretKey = BRAINCLOUD_APP_SECRET;
+    if(secretKey=="")
+        secretKey = getenv("BC_RELAYTESTAPP_APP_SECRET");
+
+	//BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, secretKey, appId, "1.0");
+	BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
 	BrainCloudWrapper->getClient()->enableLogging(true);
 }
 
