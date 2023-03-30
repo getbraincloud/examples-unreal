@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "4.27",
+	"EngineAssociation": "5.1",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -231,10 +231,6 @@
 			]
 		},
 		{
-			"Name": "AndroidPermission",
-			"Enabled": false
-		},
-		{
 			"Name": "AppleImageUtils",
 			"Enabled": false
 		},
@@ -440,6 +436,11 @@
 		{
 			"Name": "UObjectPlugin",
 			"Enabled": false
+		},
+		{
+			"Name": "VaRest",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/e47be161e7a24e928560290abd5dcc4f"
 		}
 	]
 }

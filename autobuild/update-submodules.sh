@@ -3,10 +3,10 @@ if [[ $(git diff --compact-summary) ]];
 then
     if [[ $1 != "--force" ]];
     then
-        if [[ $1 != "--ignore" ]];
+        if [[ $1 != "--ignore-changes" ]];
         then
             echo
-            echo "Warning: this project has modifications. These files will be ignored in commit. To continue update use --ignore."
+            echo "Warning: this project has modifications you may want to commit first. To continue update use --ignore-changes."
             git diff --compact-summary
             exit 1
         fi
@@ -29,7 +29,19 @@ do
             continue
         fi
     fi
-
+    
+    if [[ ${1} == "master" ]] ; then
+        echo modifying .gitmodule branch to default
+        git submodule set-branch --default $i
+        git add .gitmodules
+    else
+        if [[ ${1} != "" ]] ; then
+            echo modifying .gitmodule branch to ${1}
+            git submodule set-branch  --branch ${1} $i
+            git add .gitmodules
+        fi
+    fi
+    
     STR=$(git config -f .gitmodules --get submodule.$i.branch)
     STR=${STR:="default"}
     
@@ -38,7 +50,6 @@ do
         if [[ $(git diff --compact-summary $i) ]];
         then
             git add $i
-            git commit -m "automatic submodules update" .
 
             needspush=1
 
@@ -52,7 +63,6 @@ do
         if [[ $(git diff --compact-summary $i) ]];
         then
             git add $i
-            git commit -m "automatic submodules update" .
 
             needspush=1
             echo "--- $i local is already up to date updating branch $STR"
@@ -64,6 +74,7 @@ done
 
 if [[ $needspush != 0 ]];
 then
+    git commit -m "automatic submodules update"
     echo "--- ATTENTION REQUIRED! Update pending. Please run command: git push"
 fi
 

@@ -1,0 +1,27 @@
+message = data.message; //get the passed in API parameters
+hookParms = data.parms; //get the custom hook parameters
+message.xp_points *= hookParms.experienceMultiplier; //multiply the XP points value that was passed in
+var retval = {}; //prepare the return object
+if(message.xp_points > 10000) // the xp value is too large, return an error
+{
+   retval.status = 500;
+   retval.reasonCode = 50000;
+   retval.errorMessage = "XP value is too high!";
+} 
+else // pass the multiplied XP value onto the API
+{
+   retval.status = 200;
+   retval.messageOverride = message;
+}
+retval; //return the object
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut4_XPPreHook",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\r\\n    \\\"xp_points\\\": 1\\r\\n}",
+// "version":2,
+// "updatedAt":1650457769594
