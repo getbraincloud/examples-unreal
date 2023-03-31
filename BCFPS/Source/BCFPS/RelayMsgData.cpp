@@ -7,13 +7,13 @@ void URelayMsgUtils::SetOperation(OperationType op, UPARAM(ref) FRelayMsgData& d
 
 void URelayMsgUtils::AddString(FString key, FString value, UPARAM(ref) FRelayMsgData& data)
 {
-	uint32 size = value.Len();
 	TArray<uint8> bytes;
-	FTCHARToUTF8 Convert(*value);
-	int32 length = Convert.Length();
+	const TCHAR* charArray = *value;
 
-	bytes.SetNum(length);
-	memcpy(bytes.GetData(), Convert.Get(), length);
+	int32 numBytes = FCString::Strlen(charArray) * sizeof(TCHAR);
+
+	bytes.SetNum(numBytes);
+	memcpy(bytes.GetData(), charArray, numBytes);
 
 	FRelayMsgValue val = FRelayMsgValue();
 	val.bytesData = bytes;
@@ -100,8 +100,18 @@ FString URelayMsgUtils::GetString(FString key, UPARAM(ref) FRelayMsgData& data)
 	}
 
 	TArray<uint8> bytes = data.Data[key].bytesData;
-	char* CharArray = TCHAR_TO_UTF8(*FString(UTF8_TO_TCHAR((const char*)bytes.GetData())));
-	FString resultString(CharArray);
+
+	int32 numChars = bytes.Num() / sizeof(TCHAR);
+
+	TCHAR* charArray = new TCHAR[numChars + 1];
+
+	memcpy(charArray, bytes.GetData(), bytes.Num());
+
+	charArray[numChars] = '\0';
+
+	FString resultString(charArray);
+	
+	delete[] charArray;
 
 	return resultString;
 }
