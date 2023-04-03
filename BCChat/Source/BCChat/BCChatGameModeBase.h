@@ -13,5 +13,5 @@ UCLASS()
 class BCCHAT_API ABCChatGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-
+	
 };

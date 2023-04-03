@@ -9,7 +9,6 @@ public class BCChatEditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_1;
-		ExtraModuleNames.Add("BCChat");
+		ExtraModuleNames.AddRange( new string[] { "BCChat" } );
 	}
 }
