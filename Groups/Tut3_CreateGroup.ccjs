@@ -1,0 +1,46 @@
+// Tut3_CreateGroup() - creates a new group
+// Retrieve the parameter
+var groupName = data.groupName;
+var results = {};
+// Grab the Global Entity service proxy from the bridge
+var globalEntityService = bridge.getGlobalEntityServiceProxy();
+// First check to see if a group of this name already exists
+var searchResults = globalEntityService.getListByIndexedId(groupName, 1);
+// If we find one, abort, cause the name is already taken
+if (searchResults.data.entityList.length > 0)
+{
+    results.message = "Failure - group already exists.";
+    results.group = null;
+}
+else
+{
+// Create the groupData to store in the entities
+    var groupData = {};
+    groupData.groupName = groupName;
+    groupData.members = {};
+    var aclPermissions = {};
+    aclPermissions.other = 2; // public read-write permission
+    var createResults = globalEntityService.createEntityWithIndexedId("group", groupName, 0, aclPermissions, groupData);
+    if (createResults.data.entityId !== null)
+    {
+      results.message = "Success - created new group.";
+      results.group = createResults.data;
+    }
+    else
+    {
+      results.message = "Unknown error occurred creating group";
+      results.group = createResults.data;
+    }
+}
+results;
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut3_CreateGroup",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\r\\n     \\\"groupName\\\": \\\"The Tater Tots\\\"\\r\\n}",
+// "version":1,
+// "updatedAt":1650371778386

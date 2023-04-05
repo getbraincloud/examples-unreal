@@ -15,7 +15,7 @@ fi
 
 needspush=0
 
-for i in RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient BCFPS/Plugins/BCClient
+for i in RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient BCFPS/Plugins/BCClient Groups/Plugins/BCClient Leaderboard/Plugins/BCClient
 do
     echo
     git submodule status $i
@@ -29,7 +29,19 @@ do
             continue
         fi
     fi
-
+    
+    if [[ ${1} == "master" ]] ; then
+        echo modifying .gitmodule branch to default
+        git submodule set-branch --default $i
+        git add .gitmodules
+    else
+        if [[ ${1} != "" ]] ; then
+            echo modifying .gitmodule branch to ${1}
+            git submodule set-branch  --branch ${1} $i
+            git add .gitmodules
+        fi
+    fi
+    
     STR=$(git config -f .gitmodules --get submodule.$i.branch)
     STR=${STR:="default"}
     

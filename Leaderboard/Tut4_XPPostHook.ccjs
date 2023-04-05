@@ -1,0 +1,20 @@
+message = data.message; //get the result of the API call
+
+message.wasPostHooked = true; //append the bool to the result
+
+var retval = {};
+retval.status = 200;
+retval.data = message;  //add the modified message to the return object
+
+retval; //return the object
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"Tut4_XPPostHook",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{}",
+// "version":4,
+// "updatedAt":1650458176802

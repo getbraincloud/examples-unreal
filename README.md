@@ -9,7 +9,7 @@ This repository contains example Unreal projects that use the brainCloud client.
 The examples include the required plugins as git submodules.
 
 ```
-$ git clone --recurse-submodules --branch develop git@github.com:getbraincloud/examples-unreal.git
+$ git clone --recurse-submodules https://github.com/getbraincloud/examples-unreal.git
 ```
 
 If you are updating an existing repository, or forget to --recurse-submodules, then just update the modules. 
@@ -17,7 +17,7 @@ Make sure you've done this if you get "missing plugin" error on load.
 
 ```
 $ cd examples-unreal
-$ git submodule update --init --recursive
+$ git submodule update --init
 ```
 
 ### Configure:
@@ -37,7 +37,17 @@ https://portal.braincloudservers.com/
 
 ### Build:
 
-Open the uproject file in UE 4.27. It will inform that VaRest and BCClient modules are missing or unbuilt. Click YES to build. Click Show Log to see progress.
+Required for some examples: add the VaREST plugin to your engine from Epic Launcher or download to Plugins folder.
+
+Open the uproject file in Unreal Engine. It will inform that the BCClient module is missing or unbuilt. Click YES to build. Click Show Log to see progress.
+
+#### Upgrading Engine Version
+
+1. Clean intermediate and build folders.
+2. Download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
+3. The BCClient plugin will work as-is for any engine version.
+4. Choose the new engine version: Use the right-click menu on the .uproject file OR use the terminal command UnrealVersionSelector.exe OR modify "EngineAssociation" in .uproject file.
+5. Re-generate code project files (eg. visual studio or xcode).
 
 ### Run:
 
@@ -75,7 +85,36 @@ This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all th
 ### Possible Errors
 
 If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
-  ```
-  error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
+
+ error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
+
+In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
+
+## Tappy Chicken
+Based on Unreal's' demo. Shows 
+
+* Achievements
+* Leaderboards
+* User Entities
+
+## ScriptTestApp (blueprint only)
+Implements [CloudCode Tutorial](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) 1 Your First Script and 6 S2S Scripts.
+
+Requires a script on the server for App ID (included).
+
+Uses MobileStarterContent. If you load in UE 5 + you may see an error similar to: 
+
+Failed to import '/Users/Shared/Epic Games/UE_5.1/FeaturePacks/MobileStarterContent.upack'. Failed to create asset '/Game/MobileStarterContent'. Please see Output Log for details.
+
+Workaround: copy the installed upack file. 
+
 ```
-In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.
+cd "$UE_INSTALL_PATH"
+cp StarterContent.upack MobileStarterContent.upack
+```
+
+## Leaderboard
+Implements tutorials 2 Making API Calls and 4 Pre and Post Hooks.
+
+## Groups
+Implements tutorials 3 Working with Global and User Entities 4 Pre and Post Hooks 5 External Web Services and 6 S2S Scripts.

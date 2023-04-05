@@ -1,8 +1,10 @@
 #!/bin/bash
 # usage:
-#      autobuild/makebuild.sh project_name
+#      autobuild/workspace-genarate.sh project_name
 
-export PROJECTNAME=${1}
-export WORKSPACE=$PWD
+#       export WORKSPACE=$PWD
+#       export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 
-"/Users/Shared/Epic Games/UE_5.1/Engine/Build/BatchFiles/Mac/GenerateProjectFiles.sh" -projectfiles -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game -rocket -progress 
+PROJECTNAME=${1}
+echo $PROJECTNAME
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/GenerateProjectFiles.sh" -projectfiles -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game -rocket -progress 
