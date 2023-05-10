@@ -30,18 +30,26 @@ do
         fi
     fi
     
-        if [[ $1 == "--branch" ]];
+    if [[ $1 == "--branch" ]];
+    then
+        if [[ ${2} == "master" ]];
         then
-            if [ [ ${2} == "master" ] || [ ${2} == "" ] ] ; then
-                echo modifying .gitmodule branch to default
-                git submodule set-branch --default $i
+            echo modifying .gitmodule branch to default
+            git submodule set-branch --default $i
+            if [[ $(git diff --compact-summary .gitmodules) ]];
+            then
                 git add .gitmodules
-            else
-                echo modifying .gitmodule branch to ${2}
-                git submodule set-branch  --branch ${2} $i
-                git add .gitmodules
+                needspush=1
             fi
+        else
+            echo modifying .gitmodule branch to ${2}
+            git submodule set-branch  --branch ${2} $i
+        if [[ $(git diff --compact-summary .gitmodules) ]];
+        then
+            git add .gitmodules
+            needspush=1
         fi
+    fi
     
     STR=$(git config -f .gitmodules --get submodule.$i.branch)
     STR=${STR:="default"}
