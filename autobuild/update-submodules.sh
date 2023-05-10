@@ -44,10 +44,11 @@ do
         else
             echo modifying .gitmodule branch to ${2}
             git submodule set-branch  --branch ${2} $i
-        if [[ $(git diff --compact-summary .gitmodules) ]];
-        then
-            git add .gitmodules
-            needspush=1
+            if [[ $(git diff --compact-summary .gitmodules) ]];
+            then
+                git add .gitmodules
+                needspush=1
+            fi
         fi
     fi
     
