@@ -17,8 +17,8 @@
 [submodule "Groups/Plugins/BCClient"]
     path = Groups/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
-    branch = develop
+	branch = develop
 [submodule "Leaderboard/Plugins/BCClient"]
     path = Leaderboard/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
-    branch = develop
+	branch = develop
