@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "JsonUtilities/Public/JsonUtilities.h"
 #include "BCHelpers.generated.h"
 
 USTRUCT(BlueprintType)
@@ -49,6 +50,26 @@ struct FLobbyMemberData
 		FString cxId = "";
 };
 
+USTRUCT(BlueprintType)
+struct FPlayerStatistics
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	int shotsFired = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	int gamesLost = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	int gamesPlayed = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	int shotsHit = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Stats")
+	int gamesWon = 0;
+};
 
 USTRUCT(BlueprintType)
 struct FBrainCloudPlayerData
@@ -71,7 +92,7 @@ struct FBrainCloudPlayerData
 		FString PictureURL = "";
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Data")
-		FString StatisticsJson = "";
+		FPlayerStatistics StatisticsJson;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Data")
 		FLobbyMemberData LobbyMemberData;
@@ -176,4 +197,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Conversion Helpers")
 		static FString ConvertBytesToString(TArray<uint8> inputBytes);
+
+	UFUNCTION(BlueprintCallable, Category="Help")
+	static bool FieldHasValue(FString json, FString field);
+
+	static TSharedPtr<FJsonObject> GetJsonData(FString json);
 };

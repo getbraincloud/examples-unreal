@@ -39,6 +39,26 @@ FString UBCHelpers::ConvertBytesToString(TArray<uint8> inputBytes)
 	return BytesToString(inputBytes.GetData(), inputBytes.Num());
 }
 
+bool UBCHelpers::FieldHasValue(FString json, FString field)
+{
+	TSharedPtr<FJsonObject> jsonObject = GetJsonData(json);
+	auto value = jsonObject->TryGetField(field);
+	if(value != nullptr && value.IsValid() && value.Get()->Type != EJson::Null)
+	{
+		return true;
+	}
+	return false;
+}
+
+TSharedPtr<FJsonObject> UBCHelpers::GetJsonData(FString json)
+{
+	TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(json);
+		TSharedPtr<FJsonObject> jsonValue = MakeShareable(new FJsonObject());
+	FJsonSerializer::Deserialize(reader, jsonValue);
+	TSharedPtr<FJsonObject> data = jsonValue->GetObjectField("data");
+	return data;
+}
+
 FBrainCloudInitParams UBCHelpers::InitializeFromFile()
 {
 	FBrainCloudInitParams params;
