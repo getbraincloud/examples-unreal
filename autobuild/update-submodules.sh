@@ -6,7 +6,7 @@ then
         if [[ $1 != "--ignore" ]];
         then
             echo
-            echo "Warning: this project has modifications. These files will be ignored in push. To continue update use --ignore."
+            echo "Warning: this project has modifications you may want to commit first. To continue update use --ignore."
             git diff --compact-summary
             exit 1
         fi
