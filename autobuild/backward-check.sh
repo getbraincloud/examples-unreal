@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PROJECT_NAME=${1:-"BCSubsystem"}
-PROJECT_ROOT=${1:-"."}
+PROJECT_NAME=${1:BCSubsystem}
+PROJECT_ROOT=${1:=.}
 ASSETS=$(find ${PROJECT_ROOT}/Content -type f -name "*.uasset")
 MAPS=$(find ${PROJECT_ROOT}/Content -type f -name "*.umap")
 

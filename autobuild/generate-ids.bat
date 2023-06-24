@@ -19,6 +19,7 @@ echo #define BRAINCLOUD_APP_SECRET "%SECRET_KEY%" >>ids.h
 
 echo File ids.h created in Source/%PROJECT_NAME%
 
-type ids.h
+:: for verbose logs
+:: type ids.h
 
 cd ..\..
