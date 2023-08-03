@@ -24,21 +24,7 @@ pipeline {
                 sh '~/braincloud-bin/setupexamplesunreal.sh'
             }
         }
-
-        stage('Code Pull Win') {
-            agent {
-                label 'unrealWindows'
-            }
-            steps {
-                echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                //if (${CLEAN_BUILD}) {
-                    deleteDir()
-                //}
-                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
-            	bat 'C:\\Users\\buildmaster\\braincloud-bin\\setuptestsunreal.bat'
-            }
-        }
-        
+      
         stage('Build macOS') {
             agent {
                 label 'clientUnit'
@@ -113,24 +99,41 @@ pipeline {
                 }
             }
         }
-/*        
+    } // end stages Mac
+        
+   stages {
+        stage('Code Pull Win') {
+            agent {
+                label 'unrealWindows'
+            }
+            steps {
+                echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
+                //if (${CLEAN_BUILD}) {
+                    deleteDir()
+                //}
+                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
+            	bat 'C:\\Users\\buildmaster\\braincloud-bin\\setuptestsunreal.bat'
+            }
+        }
+        
         stage('RelayTestAppCpp Build Windows 4.27 ') {
            agent {
                 label 'unrealWindows'
             }
             environment {
                 PROJECT="RelayTestAppCpp"
-                PLATFORM="ANDROID"
+                PLATFORM="WIN64"
                 UE_VERSION="4.27"
 			    UE_RUNUAT_PATH="D:\\Program Files\\UE_4.27\\Engine\\Build\\BatchFiles\\RunUAT.bat"
                 UE_EDITOR_PATH="D:\\Program Files\\UE_4.27\\Engine\\Binaries\\Win64\\UE4Editor-cmd.exe"
   			}
             steps {
                 //bat 'autobuild\\makebuild.bat %PROJECT%'
+                echo "gtting ready for this"
             }
 
         }
-        */
+        
 
-    }
+    } // end stages windows
 }
