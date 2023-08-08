@@ -1,4 +1,4 @@
-@ echo OFF
+@echo OFF
 
 set PROJECT_NAME=%1
 set APP_ID=%2
@@ -19,6 +19,10 @@ echo #define BRAINCLOUD_APP_SECRET "%SECRET_KEY%" >>ids.h
 
 echo File ids.h created in Source/%PROJECT_NAME%
 
-type ids.h
+:: for verbose logs
+:: type ids.h
+
+git update-index --skip-worktree ids.h
+echo -- File ids.h excluded from git worktree
 
 cd ..\..
