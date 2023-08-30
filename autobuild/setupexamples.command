@@ -33,7 +33,7 @@ cd "`dirname "$0"`"/..
 export WORKSPACE=$PWD
 
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p ue_relaytestapp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Source/RelayTestAppCPP -p ue_relaytestapp -x h -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p ue_relaytestapp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Source/TappyChicken -p ue_tappychicken -x h -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p ue_leaderboard -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ue_scripttestapp -x ini -s $SERVER_ENVIRONMENT
@@ -49,4 +49,4 @@ cd RelayTestAppCpp
 rsync -a "$UE_INSTALL_PATH/Engine/Content/Certificates/ThirdParty/cacert.pem" Content/Certificates/
 cd ..
 
-echo "Done examples setup"
+echo "Done setup examples"

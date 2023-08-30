@@ -8,7 +8,6 @@
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
 #include "Widgets/WidgetAddOns/OtherMatchUserWidget.h"
-#include "ids.h"
 
 // Sets default values
 ARelayNetworkInterface::ARelayNetworkInterface()
@@ -282,6 +281,19 @@ void ARelayNetworkInterface::InitBrainCloud()
 	BrainCloudWrapper->AddToRoot();
     
     // this will be loaded from BrainCloudSettings.ini
+    FString ConfigPath = FConfigCacheIni::NormalizeConfigIniPath(
+            FPaths::ProjectConfigDir() + TEXT("BrainCloudSettings.ini"));
+
+    if (GConfig) {
+        FString Section = "Credentials";
+        FConfigSection *ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
+        FConfigFile *ConfigFile = GConfig->FindConfigFile(*ConfigPath);
+        
+        
+        AppID = ConfigSection->FindRef(TEXT("AppId")).GetValue();
+        SecretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
+        ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
+    }
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
 	BrainCloudWrapper->getClient()->enableLogging(true);

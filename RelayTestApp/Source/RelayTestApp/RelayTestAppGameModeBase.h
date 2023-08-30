@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "ids.h"
 #include "RelayTestAppGameModeBase.generated.h"
 
 /**
