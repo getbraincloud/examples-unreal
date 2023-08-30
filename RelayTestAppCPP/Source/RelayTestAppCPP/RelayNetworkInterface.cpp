@@ -281,10 +281,8 @@ void ARelayNetworkInterface::InitBrainCloud()
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
     
-    if(ServerURL.IsEmpty() && SecretKey.IsEmpty() && AppID.IsEmpty())
-        BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, BRAINCLOUD_APP_SECRET, BRAINCLOUD_APP_ID, "1.0");
-    else
-        BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
+    // this will be loaded from BrainCloudSettings.ini
+    BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
 	BrainCloudWrapper->getClient()->enableLogging(true);
 }

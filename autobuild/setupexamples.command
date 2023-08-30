@@ -1,18 +1,18 @@
 #!/bin/bash
 
-if [ -z $BRAINCLOUD_TOOLS ];
+if [ -z "$BRAINCLOUD_TOOLS" ];
 then
   export BRAINCLOUD_TOOLS=~/braincloud-client-master
 fi
 
-if [ -z $UE_INSTALL_PATH ];
+if [ -z "$UE_INSTALL_PATH" ];
 then
     export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 fi
 
 echo "UE_INSTALL_PATH is $UE_INSTALL_PATH"
 
-if ! [ -d ${BRAINCLOUD_TOOLS} ];
+if ! [ -d "${BRAINCLOUD_TOOLS}" ];
 then
     echo "Error: Can't find brainCloud tools in path ${BRAINCLOUD_TOOLS}"
     exit 1
@@ -32,7 +32,12 @@ cd "`dirname "$0"`"/..
 
 export WORKSPACE=$PWD
 
-${BRAINCLOUD_TOOLS}/bin/setupexamplesunreal.sh $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p ue_relaytestapp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Source/RelayTestAppCPP -p ue_relaytestapp -x h -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Source/TappyChicken -p ue_tappychicken -x h -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p ue_leaderboard -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ue_scripttestapp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p ue_groups -x ini -s $SERVER_ENVIRONMENT
 
 echo "Copying certificates for RTT"
 
@@ -44,4 +49,4 @@ cd RelayTestAppCpp
 rsync -a "$UE_INSTALL_PATH/Engine/Content/Certificates/ThirdParty/cacert.pem" Content/Certificates/
 cd ..
 
-echo "Done"
+echo "Done examples setup"
