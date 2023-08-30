@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# run this in your project root folder
+
 if [ -z "$BRAINCLOUD_TOOLS" ];
 then
   export BRAINCLOUD_TOOLS=~/braincloud-client-master
@@ -28,7 +30,7 @@ else
   SERVER_ENVIRONMENT=$1
 fi
 
-cd "`dirname "$0"`"/..
+cd "`dirname "$0"`"
 
 export WORKSPACE=$PWD
 
