@@ -14,27 +14,12 @@ struct FAppIds
     
     FAppIds()
     {
-        serverUrl = BRAINCLOUD_SERVER_URL;
-        secretKey = BRAINCLOUD_APP_SECRET;
-        appId = BRAINCLOUD_APP_ID;
-        
-        if(appId==""){
-            char* env = getenv("BC_RELAYTESTAPP_APP_ID");
-            if(env != NULL)
-                appId = env;
-        }
-        if(secretKey==""){
-            char* env = getenv("BC_RELAYTESTAPP_APP_SECRET");
-            if(env != NULL)
-                secretKey = env;
-        }
-        if(serverUrl==""){
-            char* env = getenv("BC_BRAINCLOUD_SERVER_URL");
-            if(env != NULL)
-                serverUrl = env;
+        if(serverUrl.IsEmpty() && secretKey.IsEmpty() && appId.IsEmpty()){
+            serverUrl = BRAINCLOUD_SERVER_URL;
+            secretKey = BRAINCLOUD_APP_SECRET;
+            appId = BRAINCLOUD_APP_ID;
         }
     }
-
     UPROPERTY(BlueprintReadWrite)
     FString serverUrl;
     UPROPERTY(BlueprintReadWrite)
