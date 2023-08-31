@@ -30,16 +30,16 @@ else
   SERVER_ENVIRONMENT=$1
 fi
 
-cd "`dirname "$0"`"
+cd "`dirname "$0"`"/..
 
 export WORKSPACE=$PWD
 
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p ue_relaytestapp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p ue_relaytestapp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Source/TappyChicken -p ue_tappychicken -x h -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p ue_leaderboard -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ue_scripttestapp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p ue_groups -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT
 
 echo "Copying certificates for RTT"
 
