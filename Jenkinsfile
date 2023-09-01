@@ -21,7 +21,7 @@ pipeline {
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
                 //if (${CLEAN_BUILD}) {
-                    deleteDir()
+                //    deleteDir()
                 //}
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
@@ -29,6 +29,12 @@ pipeline {
                 sh 'autobuild/makebuild.sh RelayTestApp MAC'
                 //sh 'autobuild/makebuild.sh RelayTestApp IOS'
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
+            }
+            post {
+                success {
+                    fileOperations([fileZipOperation(folderPath: 'artifacts', outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts.zip', followSymlinks: false, onlyIfSuccessful: true
+                }
             }
         }
     } // end stages
