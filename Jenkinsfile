@@ -1,8 +1,5 @@
 pipeline {
     agent none
-    triggers {
-        cron('H 22 * * 1-5') // nightly around 10 pm
-    }
     parameters {
         string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
@@ -19,7 +16,7 @@ pipeline {
                 UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
                 UE_EDITOR_CMD="UnrealEditor-Cmd"
                 UE_VERSION="5.1"
-                BRAINCLOUD_TOOLS=/Users/buildmaster/braincloud-client-master
+                BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
