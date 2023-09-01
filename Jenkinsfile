@@ -26,14 +26,14 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh 'autobuild/_brainCloudSetup_examples-unreal.command'
-                sh 'autobuild/makebuild.sh RelayTestApp MAC'
+                sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
                 //sh 'autobuild/makebuild.sh RelayTestApp IOS'
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: 'artifacts', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts.zip', followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: 'UE_5_Mac', outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Mac.zip', followSymlinks: false, onlyIfSuccessful: true
                 }
             }
         }
@@ -54,12 +54,12 @@ pipeline {
                  //}
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64'
+                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win'
              }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: 'artifacts', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts.zip', followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: 'UE_5_Win', outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Win.zip', followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
