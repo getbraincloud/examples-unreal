@@ -34,9 +34,7 @@ pipeline {
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
             }
         }
-    } // end stages Mac
-        
-   stages {
+
         stage('UE 4.27 Win') {
             agent {
                 label 'unrealWindows'
@@ -56,6 +54,7 @@ pipeline {
             	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
             }
         }
+
         stage('UE 5.2 Win') {
             agent {
                 label 'unrealWindows'
@@ -75,5 +74,5 @@ pipeline {
             	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
             }
         }
-   } // end stages windows
+   } // end stages
 }
