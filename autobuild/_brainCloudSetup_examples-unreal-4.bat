@@ -8,7 +8,7 @@ set SERVER_ENVIRONMENT=internal
   
 pushd ..
 
-set WORKSPACE=%CD
+set WORKSPACE=%CD%
 
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Source\RelayTestApp relaytestapp h %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Source\RelayTestAppCPP relaytestapp h %SERVER_ENVIRONMENT%
