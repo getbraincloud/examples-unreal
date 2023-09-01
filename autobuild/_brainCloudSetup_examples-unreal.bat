@@ -6,7 +6,7 @@
 
 set SERVER_ENVIRONMENT=internal
   
-pushd ..
+pushd %~dp0\..
 
 set WORKSPACE=%CD%
 
