@@ -10,7 +10,7 @@ if not defined UE_INSTALL_PATH goto Path_Error
 set PROJECTNAME=%~1
 if "%PROJECTNAME%" == "" goto Proj_Error
 
-set ARTIFACTS=$~3
+set ARTIFACTS=%~3
 if "%ARTIFACTS%" == "" set ARTIFACTS=artifacts
 
 call "%UE_INSTALL_PATH%\Engine\Binaries\DotNet\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -game -rocket -progress 
