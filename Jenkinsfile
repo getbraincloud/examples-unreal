@@ -34,45 +34,5 @@ pipeline {
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
             }
         }
-
-        stage('UE 4.27 Win') {
-            agent {
-                label 'unrealWindows'
-            }
-            environment {
-                UE_VERSION="4.27"
-                UE_INSTALL_PATH="C:\\ProgramFiles\\UE_4.27\\"
-                BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
-             }
-            steps {
-                echo "---- braincloud Code Pull ue4-examples ${BC_LIB}"
-                //if (${CLEAN_BUILD}) {
-                    deleteDir()
-                //}
-                checkout([$class: 'GitSCM', branches: [[name: '*/ue4-examples']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
-            	bat 'autobuild\\_brainCloudSetup_examples-unreal-4.bat'
-            	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
-            }
-        }
-
-        stage('UE 5.2 Win') {
-            agent {
-                label 'unrealWindows'
-            }
-            environment {
-                UE_VERSION="5.2"
-                UE_INSTALL_PATH="C:\\ProgramFiles\\UE_5.2\\"
-                BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
-             }
-            steps {
-                echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                //if (${CLEAN_BUILD}) {
-                    deleteDir()
-                //}
-                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
-            	bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
-            	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
-            }
-        }
-   } // end stages
+    } // end stages
 }
