@@ -10,9 +10,16 @@ pipeline {
     }
     stages {
 
-        stage('Code Pull Mac') {
+        stage('UE 5.1 Mac') {
             agent {
                 label 'clientUnit'
+            }
+            environment {
+                PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
+                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
+                UE_EDITOR_CMD="UnrealEditor-Cmd"
+                UE_VERSION="5.1"
+                BRAINCLOUD_TOOLS=/Users/buildmaster/braincloud-client-master
             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
@@ -21,119 +28,52 @@ pipeline {
                 //}
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh '~/braincloud-bin/setupexamplesunreal.sh'
-            }
-        }
-      
-        stage('Build macOS') {
-            agent {
-                label 'clientUnit'
-            }
-            environment {
-			    PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-			    UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
-                UE_EDITOR_CMD="UnrealEditor-Cmd"
-                UE_VERSION="5.1"
-                PROJECT="RelayTestAppCpp"
-                PLATFORM="MAC"
-            }
-            steps {
-				sh 'autobuild/makebuild.sh RelayTestAppCpp MAC'
-            }
-            post {
-                success {
-                    fileOperations([folderCreateOperation('artifacts/${PROJECT-${PLATFORM}')])
-                    fileOperations([fileCreateOperation(fileContent: '''Run \'${PROJECT}\' on Mac OS.\nFirst, quarantine to allow permission:\nsudo xattr -r -d com.apple.quarantine ${PROJECT}.app/\n''', fileName: 'artifacts/${PROJECT}-${PLATFORM}/README.md')])
-                    fileOperations([fileZipOperation(folderPath: 'artifacts/${PROJECT}-${PLATFORM}', outputFolderPath: 'artifacts')])
-                     archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts/${PROJECT}-${PLATFORM}.zip', followSymlinks: false, onlyIfSuccessful: true
-                }
-            }
-        }
-        
-        stage('Build iOS') {
-            agent {
-                label 'clientUnit'
-            }
-            environment {
-			    PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-			    UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
-                UE_EDITOR_CMD="UnrealEditor-Cmd"
-                UE_VERSION="5.1"
-                PROJECT="RelayTestAppCpp"
-                PLATFORM="IOS"
-  			}
-            steps {
-				sh 'autobuild/makebuild.sh ${PROJECT} ${PLATFORM}'
-            }
-            post {
-                success {
-                    fileOperations([folderCreateOperation('artifacts/${PROJECT}-${PLATFORM}')])
-                    fileOperations([fileCreateOperation(fileContent: '''Install \'${PROJECT}\' on ${PLATFORM}.\n''', fileName: 'artifacts/${PROJECT}-${PLATFORM}/README.md')])
-                    fileOperations([fileZipOperation(folderPath: 'artifacts/${PROJECT}-${PLATFORM}', outputFolderPath: 'artifacts')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts/${PROJECT}-${PLATFORM}.zip', followSymlinks: false, onlyIfSuccessful: true
-                }
-            }
-        }           
-       
-        stage('Build Android') {
-            agent {
-                label 'clientUnit'
-            }
-            environment {
-			    PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-			    UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
-                UE_EDITOR_CMD="UnrealEditor-Cmd"
-                UE_VERSION="5.1"
-                PROJECT="RelayTestAppCpp"
-                PLATFORM="ANDROID"
-  			}
-            steps {
-				sh 'autobuild/makebuild.sh ${PROJECT} ${PLATFORM}'
-            }
-            post {
-                success {
-                    fileOperations([folderCreateOperation('artifacts/${PROJECT}-${PLATFORM}')])
-                    fileOperations([fileCreateOperation(fileContent: '''Install \'${PROJECT}\' on ${PLATFORM}.\n''', fileName: 'artifacts/${PROJECT}-${PLATFORM}/README.md')])
-                    fileOperations([fileZipOperation(folderPath: 'artifacts/${PROJECT}-${PLATFORM}', outputFolderPath: 'artifacts')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'artifacts/${PROJECT}-${PLATFORM}.zip', followSymlinks: false, onlyIfSuccessful: true
-                }
+                sh 'autobuild/_brainCloudSetup_examples-unreal.command'
+                sh 'autobuild/makebuild.sh RelayTestApp MAC'
+                //sh 'autobuild/makebuild.sh RelayTestApp IOS'
+                //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
             }
         }
     } // end stages Mac
         
    stages {
-        stage('Code Pull Win') {
+        stage('UE 4.27 Win') {
             agent {
                 label 'unrealWindows'
             }
+            environment {
+                UE_VERSION="4.27"
+                UE_INSTALL_PATH="C:\\ProgramFiles\\UE_4.27\\"
+                BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
+             }
+            steps {
+                echo "---- braincloud Code Pull ue4-examples ${BC_LIB}"
+                //if (${CLEAN_BUILD}) {
+                    deleteDir()
+                //}
+                checkout([$class: 'GitSCM', branches: [[name: '*/ue4-examples']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
+            	bat 'autobuild\\_brainCloudSetup_examples-unreal-4.bat'
+            	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
+            }
+        }
+        stage('UE 5.2 Win') {
+            agent {
+                label 'unrealWindows'
+            }
+            environment {
+                UE_VERSION="5.2"
+                UE_INSTALL_PATH="C:\\ProgramFiles\\UE_5.2\\"
+                BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
+             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
                 //if (${CLEAN_BUILD}) {
                     deleteDir()
                 //}
-                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
-            	bat 'C:\\Users\\buildmaster\\braincloud-bin\\setuptestsunreal.bat'
+                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
+            	bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
+            	bat 'autobuild\\makebuild.bat RelayTestApp Win64'
             }
         }
-        
-        stage('RelayTestAppCpp Build Windows 4.27 ') {
-           agent {
-                label 'unrealWindows'
-            }
-            environment {
-                PROJECT="RelayTestAppCpp"
-                PLATFORM="WIN64"
-                UE_VERSION="4.27"
-			    UE_RUNUAT_PATH="D:\\Program Files\\UE_4.27\\Engine\\Build\\BatchFiles\\RunUAT.bat"
-                UE_EDITOR_PATH="D:\\Program Files\\UE_4.27\\Engine\\Binaries\\Win64\\UE4Editor-cmd.exe"
-  			}
-            steps {
-                //bat 'autobuild\\makebuild.bat %PROJECT%'
-                echo "gtting ready for this"
-            }
-
-        }
-        
-
-    } // end stages windows
+   } // end stages windows
 }
