@@ -84,3 +84,4 @@ DerivedDataCache/*
 
 #Exported packages
 **Exports/
+artifacts/
