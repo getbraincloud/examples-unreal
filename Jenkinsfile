@@ -3,8 +3,7 @@ pipeline {
     parameters {
         //string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
-        booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'clean pull and build')
-        //choice(name: 'PROJECTNAME', choices: ['all', 'RelayTestApp', 'RelayTestAppCPP', 'TappyChicken', 'ScriptTestApp','Groups', 'Leaderboard'], description: 'Where to run tests?')
+        choice(name: 'PROJECTNAME', choices: ['all', 'RelayTestApp', 'RelayTestAppCPP', 'TappyChicken', 'ScriptTestApp','Groups', 'Leaderboard'], description: 'Where to run tests?')
         //choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64', 'IOS', 'Android'])
     }
     stages {
@@ -20,6 +19,7 @@ pipeline {
                 UE_VERSION="5.1"
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
+            when { expression { params.PROJECTNAME == 'all' } }
             steps {
                 deleteDir()
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
@@ -35,6 +35,33 @@ pipeline {
                 //sh 'autobuild/makebuild.sh RelayTestApp IOS'
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
                 //sh 'autobuild/makebuild.sh ${params.PROJECTNAME} ${params.PLATFORM} UE_5_${params.PLATFORM}'
+            }
+            post {
+                success {
+                    fileOperations([fileZipOperation(folderPath: 'UE_5_Mac', outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Mac.zip', followSymlinks: false, onlyIfSuccessful: true
+                }
+            }
+        }
+        stage('UE 5.1 Mac') {
+            agent {
+                label 'clientUnit'
+            }
+            environment {
+                PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
+                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
+                UE_EDITOR_CMD="UnrealEditor-Cmd"
+                UE_VERSION="5.1"
+                BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
+            }
+            when { expression { params.PROJECTNAME != 'all' } }
+            steps {
+                deleteDir()
+                echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
+                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
+                sh 'autobuild/checkout-submodule.sh ${BC_LIB}' //not ported to windows yet
+                sh 'autobuild/_brainCloudSetup_examples-unreal.command'
+                sh 'autobuild/makebuild.sh ${params.PROJECTNAME} Mac UE_5_${params.Mac}'
             }
             post {
                 success {
