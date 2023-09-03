@@ -2,7 +2,7 @@ pipeline {
     agent none
     parameters {
         //string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
-        string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
+        string(name: 'BRANCH_NAME', defaultValue: 'jenkins-build', description: 'examples-unreal branch')
         choice(name: 'PROJECTNAME', choices: ['all', 'RelayTestApp', 'RelayTestAppCPP', 'TappyChicken', 'ScriptTestApp','Groups', 'Leaderboard'], description: 'Where to run tests?')
         //choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64', 'IOS', 'Android'])
     }
