@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('UE 5.1 Mac') {
+        stage('UE 5.1 Mac Solo Build') {
             agent {
                 label 'clientUnit'
             }
