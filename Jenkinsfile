@@ -21,7 +21,7 @@ pipeline {
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
             steps {
-                script{
+                script {
                     echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
                     if (${params.CLEAN_BUILD}) {
                         deleteDir()
@@ -62,7 +62,7 @@ pipeline {
                  BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
               }
              steps {
-                script{
+                script {
                      echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
                      if (${params.CLEAN_BUILD}) {
                         deleteDir()
@@ -100,7 +100,7 @@ pipeline {
                  BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
               }
              steps {
-                script{
+                script {
                      echo "---- braincloud Code Pull ue4-examples ${BC_LIB}"
                      if (${params.CLEAN_BUILD}) {
                          deleteDir()
