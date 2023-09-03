@@ -4,6 +4,12 @@ pipeline {
         string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'clean pull and build')
+        booleanParam(name: 'RelayTestApp', defaultValue: true, description: 'build?')
+        booleanParam(name: 'RelayTestAppCPP', defaultValue: false, description: 'build?')
+        booleanParam(name: 'TappyChicken', defaultValue: false, description: 'build?')
+        booleanParam(name: 'ScriptTestApp', defaultValue: false, description: 'build?')
+        booleanParam(name: 'Groups', defaultValue: false, description: 'build?')
+        booleanParam(name: 'Leaderboard', defaultValue: false, description: 'build?')
     }
     stages {
 
@@ -20,20 +26,32 @@ pipeline {
             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                //if (${CLEAN_BUILD}) {
+                if (${params.CLEAN_BUILD}) {
                     deleteDir()
-                //}
+                }
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh 'autobuild/_brainCloudSetup_examples-unreal.command'
-                sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
-                //sh 'autobuild/makebuild.sh RelayTestApp IOS'
-                //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
+                if(${params.RelayTestApp}) {
+                    sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
+                    //sh 'autobuild/makebuild.sh RelayTestApp IOS'
+                    //sh 'autobuild/makebuild.sh RelayTestApp ANDROID'
+                }
+                if(${params.RelayTestAppCPP}) {
+                    sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
+                }
+                if(${params.TappyChicken}) {
+                    sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
+                }
+                if(${params.ScriptTestApp}) {
+                    sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
+                if(${params.Groups}) {
+                    sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
+                }
+                if(${params.Leaderboard}) {
+                    sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
+                }
+
             }
             post {
                 success {
@@ -60,11 +78,11 @@ pipeline {
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win'
-                 bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat Groups Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat Leaderboard Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win'
+                 //b/at 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat Groups Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat Leaderboard Win64 UE_4_Win'
             }
             post {
                 success {
@@ -91,9 +109,9 @@ pipeline {
                  checkout([$class: 'GitSCM', branches: [[name: '*/ue4-examples']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\_brainCloudSetup_examples-unreal-4.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win'
-                 bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win'
+                // bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win'
+                 //bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win'
              }
             post {
                 success {
