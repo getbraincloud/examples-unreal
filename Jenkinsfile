@@ -20,11 +20,7 @@ pipeline {
             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                script {
-                    if (${params.CLEAN_BUILD}) {
-                        deleteDir()
-                    }
-                }
+                deleteDir()
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh 'autobuild/_brainCloudSetup_examples-unreal.command'
@@ -56,11 +52,11 @@ pipeline {
               }
              steps {
                  echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                 script {
-                    if (${params.CLEAN_BUILD}) {
+                 //script {
+                 //   if (${params.CLEAN_BUILD}) {
                         deleteDir()
-                    }
-                 }
+                 //   }
+                 //}
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
@@ -89,11 +85,11 @@ pipeline {
               }
              steps {
                  echo "---- braincloud Code Pull ue4-examples ${BC_LIB}"
-                 script {
-                    if (${params.CLEAN_BUILD}) {
+                 //script {
+                 //   if (${params.CLEAN_BUILD}) {
                         deleteDir()
-                    }
-                 }
+                 //   }
+                 //}
                  checkout([$class: 'GitSCM', branches: [[name: '*/ue4-examples']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\_brainCloudSetup_examples-unreal-4.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_4_Win64'
