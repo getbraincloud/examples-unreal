@@ -3,7 +3,7 @@ pipeline {
     parameters {
         string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
-        booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'clean pull and build')
+        //booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'clean pull and build')
     }
     stages {
 
