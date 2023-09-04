@@ -13,7 +13,8 @@ pipeline {
             }
             environment {
                 PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
+                //UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
+                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1.1_Source"
                 UE_EDITOR_CMD="UnrealEditor-Cmd"
                 UE_VERSION="5.1"
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
@@ -35,11 +36,11 @@ pipeline {
                 // todo: make sure compatible version android sdk etc
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID UE_5_Android'
 
-                //sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
-                //sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
-                //sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
-                //sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
-                //sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
             }
             post {
                 success {
@@ -69,11 +70,11 @@ pipeline {
                  // todo: checkout submodule branch
                  bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
-                 //bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
-                 //bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
-                 //b/at 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_5_Win64'
-                 //bat 'autobuild\\makebuild.bat Groups Win64 UE_5_Win64'
-                 //bat 'autobuild\\makebuild.bat Leaderboard Win64 UE_5_Win64'
+                 bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
+                 bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
+                 bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_5_Win64'
+                 bat 'autobuild\\makebuild.bat Groups Win64 UE_5_Win64'
+                 bat 'autobuild\\makebuild.bat Leaderboard Win64 UE_5_Win64'
             }
             post {
                 success {
@@ -103,9 +104,9 @@ pipeline {
                  // todo: checkout submodule branch
                  bat 'autobuild\\_brainCloudSetup_examples-unreal-4.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_4_Win64'
-                // bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win64'
-                 //bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win64'
-                 //bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win64'
+                 bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_4_Win64'
+                 bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_4_Win64'
+                 bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_4_Win64'
              }
             post {
                 success {
