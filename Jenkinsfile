@@ -13,8 +13,8 @@ pipeline {
             }
             environment {
                 PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-                //UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
-                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1.1_Source"
+                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
+                //UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1.1_Source" // needs varest plugin
                 UE_EDITOR_CMD="UnrealEditor-Cmd"
                 UE_VERSION="5.1"
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
