@@ -20,9 +20,9 @@ pipeline {
             }
             steps {
                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                if (${params.CLEAN_BUILD}) {
+                //if (${params.CLEAN_BUILD}) {
                     deleteDir()
-                }
+                //}
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])				
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh 'autobuild/_brainCloudSetup_examples-unreal.command'
