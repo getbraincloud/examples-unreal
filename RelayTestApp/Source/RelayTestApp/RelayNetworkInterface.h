@@ -31,13 +31,4 @@ public:
 	
 	UFUNCTION(BlueprintCallable,Category="Interface")
 	TArray<uint8> BCStringToBytes(const FString &in_string);
-	
-/*Variables*/
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString ServerURL;
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString SecretKey;
-	UPROPERTY(Category="Braincloud",EditAnywhere,BlueprintReadWrite)
-	FString AppID;
-
 };

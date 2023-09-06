@@ -99,16 +99,16 @@ private:
 	static FString MakeJsonStringForColorIndex(int colorIndex);
 
 public:
-//Exposed Properties to set in Editor
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString ServerURL;
-	
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString SecretKey;
-	
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString AppID;
-	
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString ServerURL;
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString AppID;
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString SecretKey;
+    
 	UPROPERTY(Category="Braincloud", BlueprintReadWrite, EditAnywhere)
 	FString AlgoJson;
 	

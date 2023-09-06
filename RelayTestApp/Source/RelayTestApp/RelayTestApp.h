@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ids.h"
 #include "RelayTestApp.generated.h"
 
 USTRUCT(BlueprintType)
@@ -14,10 +13,18 @@ struct FAppIds
     
     FAppIds()
     {
-        if(serverUrl.IsEmpty() && secretKey.IsEmpty() && appId.IsEmpty()){
-            serverUrl = BRAINCLOUD_SERVER_URL;
-            secretKey = BRAINCLOUD_APP_SECRET;
-            appId = BRAINCLOUD_APP_ID;
+        FString ConfigPath = FConfigCacheIni::NormalizeConfigIniPath(
+                FPaths::ProjectConfigDir() + TEXT("BrainCloudSettings.ini"));
+
+        if (GConfig) {
+            FString Section = "Credentials";
+            FConfigSection *ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
+            FConfigFile *ConfigFile = GConfig->FindConfigFile(*ConfigPath);
+
+
+            appId = ConfigSection->FindRef(TEXT("AppId")).GetValue();
+            secretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
+            serverUrl = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
         }
     }
     UPROPERTY(BlueprintReadWrite)
