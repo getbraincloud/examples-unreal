@@ -41,7 +41,7 @@ $ git submodule set-branch --branch develop RelayTestApp/Plugins/BCClient
 [Credentials]
 AppId=12345
 AppSecret=foo123ba-12f4-1o34-o234-r123foo1
-ServerUrl=https://api.internal.braincloudservers.com/dispatcherv2
+ServerUrl=https://api.braincloudservers.com/dispatcherv2
 ```
 Fill in values for AppId and SecretKey. You can find this information on the brainCloud portal. If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
 
@@ -98,7 +98,7 @@ In Unreal Engine, the implementation uses WebSockets. Therefore, the unreliable 
 
 ### BP_RelayNetworkInterface.uasset (Blueprint) / RelayNetworkInterface class (C++)
 
-This is a Unreal blueprint example. BP_RelayNetworkInterface.uasset holds all the logic to communicate with brainCloud server and how to utilize the blueprint nodes with the brainCloud plugin. This includes the following: 
+BP_RelayNetworkInterface.uasset holds all the logic to communicate with brainCloud server and how to utilize the blueprint nodes with the brainCloud plugin. This includes the following (C++ follows the same workflow): 
 
 - Initialize brainCloud.
 - Universal Authentication.
