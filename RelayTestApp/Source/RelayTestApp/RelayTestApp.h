@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ids.h"
 #include "RelayTestApp.generated.h"
 
 USTRUCT(BlueprintType)
@@ -14,27 +13,20 @@ struct FAppIds
     
     FAppIds()
     {
-        serverUrl = BRAINCLOUD_SERVER_URL;
-        secretKey = BRAINCLOUD_APP_SECRET;
-        appId = BRAINCLOUD_APP_ID;
-        
-        if(appId==""){
-            char* env = getenv("BC_RELAYTESTAPP_APP_ID");
-            if(env != NULL)
-                appId = env;
-        }
-        if(secretKey==""){
-            char* env = getenv("BC_RELAYTESTAPP_APP_SECRET");
-            if(env != NULL)
-                secretKey = env;
-        }
-        if(serverUrl==""){
-            char* env = getenv("BC_BRAINCLOUD_SERVER_URL");
-            if(env != NULL)
-                serverUrl = env;
+        FString ConfigPath = FConfigCacheIni::NormalizeConfigIniPath(
+                FPaths::ProjectConfigDir() + TEXT("BrainCloudSettings.ini"));
+
+        if (GConfig) {
+            FString Section = "Credentials";
+            FConfigSection *ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
+            FConfigFile *ConfigFile = GConfig->FindConfigFile(*ConfigPath);
+
+
+            appId = ConfigSection->FindRef(TEXT("AppId")).GetValue();
+            secretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
+            serverUrl = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
         }
     }
-
     UPROPERTY(BlueprintReadWrite)
     FString serverUrl;
     UPROPERTY(BlueprintReadWrite)
