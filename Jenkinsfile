@@ -4,7 +4,8 @@ pipeline {
         string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
-        choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64', 'iOS', 'Android'], description: 'Which platform to build?')
+        choice(name: 'PLATFORM', choices: ['all', 'MAC', 'Win64'], description: 'Which platform to build?')
+        // todo: 'iOS', 'Android'
         // todo: pick engine version
     }
     stages {
