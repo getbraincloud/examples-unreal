@@ -31,7 +31,7 @@ pipeline {
             }
             steps {
                 echo "---- building ${params.PRODUCT} for ${params.PLATFORM} branch ${BRANCH_NAME} plugin ${BC_LIB}"
-                 deleteDir()  // deleting makes for a slow build, do this manually if needed
+                // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 //sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh 'autoconfig_macos.command'
