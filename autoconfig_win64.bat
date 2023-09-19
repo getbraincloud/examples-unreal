@@ -6,16 +6,27 @@
 
 set SERVER_ENVIRONMENT=internal
   
-pushd %~dp0\..
+pushd %~dp0
 
 set WORKSPACE=%CD%
 
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged RelayTestApp\Config\BrainCloudConfig.ini
+
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Config RelayTestApp ini %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged RelayTestAppCPP\Config\BrainCloudConfig.ini
+
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Source\TappyChicken ue_tappychicken h %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged TappyChicken\Source\TappyChicken\ids.h
+
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat ScriptTestApp\Config ScriptTestApp ini %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged ScriptTestApp\Config\BrainCloudConfig.ini
+
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Leaderboard\Config Leaderboard ini %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged Leaderboard\Config\BrainCloudConfig.ini
+
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Groups\Config Groups ini %SERVER_ENVIRONMENT%
+git update-index --assume-unchanged Groups\Config\BrainCloudConfig.ini
 
 popd
 

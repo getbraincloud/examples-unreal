@@ -30,7 +30,7 @@ else
   SERVER_ENVIRONMENT=$1
 fi
 
-cd "`dirname "$0"`"/..
+cd "`dirname "$0"`"
 
 export WORKSPACE=$PWD
 
@@ -39,7 +39,15 @@ ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Source/TappyChicken -p ue_tappychicken -x h -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT 
+
+git update-index --assume-unchanged RelayTestApp/Config/BrainCloudSettings.ini
+git update-index --assume-unchanged RelayTestAppCPP/Config/BrainCloudSettings.ini
+git update-index --assume-unchanged  TappyChicken/Source/TappyChicken/ids.h
+git update-index --assume-unchanged Leaderboard/Config/BrainCloudSettings.ini
+git update-index --assume-unchanged ScriptTestApp/Config/BrainCloudSettings.ini
+git update-index --assume-unchanged Groups/Config/BrainCloudSettings.ini
+echo "Secret config files have been excluded from git worktree."
 
 echo "Copying certificates for RTT"
 
