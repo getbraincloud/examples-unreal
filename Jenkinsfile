@@ -34,7 +34,7 @@ pipeline {
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh 'autobuild/_brainCloudSetup_examples-unreal.command'
+                sh 'autoconfig_macos.command'
                 sh "autobuild/makebuild.sh ${params.PRODUCT} ${params.PLATFORM} ${params.PRODUCT}_${params.PLATFORM}"
             }
             post {
@@ -68,7 +68,7 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  // todo: checkout submodule branch
-                 bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
+                 bat 'autoconfig_win64.bat'
 
                 // todo: use product and platform parameters
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 RelayTestApp_Win64'
@@ -107,7 +107,7 @@ pipeline {
                 // deleteDir() // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh 'autobuild/_brainCloudSetup_examples-unreal.command'
+                sh 'autoconfig_macos.command'
                 sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
 
                 // todo: signing issues
@@ -151,7 +151,7 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  // todo: checkout submodule branch
-                 bat 'autobuild\\_brainCloudSetup_examples-unreal.bat'
+                 bat 'autoconfig_win64.bat'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
