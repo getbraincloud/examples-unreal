@@ -9,6 +9,7 @@ set SERVER_ENVIRONMENT=internal
 pushd %~dp0
 
 set WORKSPACE=%CD%
+echo WORKSPACE is %WORKSPACE%
 
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%
 git update-index --assume-unchanged RelayTestApp\Config\BrainCloudConfig.ini
@@ -33,5 +34,5 @@ popd
 exit /B 0
 
 :Path_Error
-echo "Must set BRAINCLOUD_TOOLS=~/braincloud-client-master"
+echo Must set BRAINCLOUD_TOOLS=C:\path\to\braincloud-client-master
 exit /B 1

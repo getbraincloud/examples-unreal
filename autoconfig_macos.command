@@ -33,6 +33,7 @@ fi
 cd "`dirname "$0"`"
 
 export WORKSPACE=$PWD
+echo "WORKSPACE is $WORKSPACE"
 
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
