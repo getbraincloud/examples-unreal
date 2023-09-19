@@ -31,17 +31,17 @@ pipeline {
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
             steps {
-                echo "---- building ${params.PRODUCT} for ${params.PLATFORM} branch ${BRANCH_NAME} plugin ${BC_LIB}"
+                echo "---- building ${params.PRODUCT} for Mac branch ${BRANCH_NAME} plugin ${BC_LIB}"
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh './autoconfig_macos.command'
-                sh "autobuild/makebuild.sh ${params.PRODUCT} ${params.PLATFORM} ${params.PRODUCT}_${params.PLATFORM}"
+                sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ${params.PRODUCT}_Mac"
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_${params.PLATFORM}", outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_${params.PLATFORM}.zip", followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_Mac", outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_Mac.zip", followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
