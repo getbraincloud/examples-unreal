@@ -5,7 +5,7 @@ pipeline {
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
         choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
-        booleanParam(name: 'DELETE_WORKSPACE', defaultValue: true, description: 'Pull fresh clone?')
+        booleanParam(name: 'DELETE_WORKSPACE', defaultValue: false, description: 'Start with fresh workspace?')
         // todo: 'iOS', 'Android'
         // todo: pick engine version
         // todo: set server 'internal', 'prod', etc
@@ -14,7 +14,7 @@ pipeline {
         stage('Clean Mac') {
             when {
                 expression {
-                    params.CLEAN_BUILD == true
+                    params.DELETE_WORKSPACE == true
                 }
             }
             agent {
@@ -29,7 +29,7 @@ pipeline {
         stage('Clean Win') {
             when {
                 expression {
-                    params.CLEAN_BUILD == true
+                    params.DELETE_WORKSPACE == true
                 }
             }
             agent {
