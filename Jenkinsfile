@@ -67,7 +67,7 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
                 sh './autoconfig_macos.command internal -nodev'
-                sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ${params.PRODUCT}_Mac"
+                sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ."
             }
             post {
                 success {
@@ -103,7 +103,7 @@ pipeline {
                  bat 'autoconfig_win64.bat -nodev'
 
                 // todo: use product and platform parameters
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 RelayTestApp_Win64'
+                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
 
             }
             post {
