@@ -1,7 +1,7 @@
 @ echo off
 ::&& setlocal EnableDelayedExpansion
 
-FOR %%G IN (RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, Leaderboard) DO (
+FOR %%G IN (RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp) DO (
 
 if exist "%%G\Plugins\BCClient" (
 
