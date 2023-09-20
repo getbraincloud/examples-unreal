@@ -7,6 +7,7 @@ pipeline {
         choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
         // todo: 'iOS', 'Android'
         // todo: pick engine version
+        // todo: set server 'internal', 'prod', etc
     }
     stages {
 
@@ -35,7 +36,7 @@ pipeline {
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh './autoconfig_macos.command -nodev'
+                sh './autoconfig_macos.command internal -nodev'
                 sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ${params.PRODUCT}_Mac"
             }
             post {
@@ -108,7 +109,7 @@ pipeline {
                 // deleteDir() // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh 'autoconfig_macos.command -nodev'
+                sh 'autoconfig_macos.command internal -nodev'
                 sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
 
                 // todo: signing issues
