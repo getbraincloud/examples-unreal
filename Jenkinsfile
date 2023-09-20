@@ -5,11 +5,37 @@ pipeline {
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
         choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
+        booleanParam(name: 'CLEAN_BUILD', defaultValue: true, description: 'Pull fresh clone?')
         // todo: 'iOS', 'Android'
         // todo: pick engine version
         // todo: set server 'internal', 'prod', etc
     }
     stages {
+        stage('Clean Mac') {
+            when {
+                params.CLEAN_BUILD == true
+            }
+            agent {
+                label 'clientUnit'
+            }
+            steps {
+                echo "---- Deleting workspace folder Mac"
+                deleteDir()
+            }
+        }
+
+        stage('Clean Win') {
+            when {
+                params.CLEAN_BUILD == true
+            }
+            agent {
+                label 'unrealWindows'
+            }
+            steps {
+                echo "---- Deleting workspace folder Win"
+                deleteDir()
+            }
+        }
 
        stage('Project Build Mac') {
             when {
