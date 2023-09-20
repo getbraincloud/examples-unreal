@@ -65,7 +65,7 @@ pipeline {
                  bat 'autoconfig_win64.bat -nodev'
 
                 // todo: use product and platform parameters
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 RelayTestApp_Win64'
+                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
 
             }
             post {
