@@ -13,7 +13,9 @@ pipeline {
     stages {
         stage('Clean Mac') {
             when {
-                params.CLEAN_BUILD == true
+                expression {
+                    params.CLEAN_BUILD == true
+                }
             }
             agent {
                 label 'clientUnit'
@@ -26,7 +28,9 @@ pipeline {
 
         stage('Clean Win') {
             when {
-                params.CLEAN_BUILD == true
+                expression {
+                    params.CLEAN_BUILD == true
+                }
             }
             agent {
                 label 'unrealWindows'
