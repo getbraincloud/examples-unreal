@@ -5,26 +5,11 @@ pipeline {
         string(name: 'BRANCH_NAME', defaultValue: 'ue4-examples', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp'], description: 'Which thing to build?')
         choice(name: 'PLATFORM', choices: ['all', 'Win64'], description: 'Which platform to build?')
-        booleanParam(name: 'DELETE_WORKSPACE', defaultValue: false, description: 'Start with fresh workspace?')        // todo: 'iOS', 'Android'
-        // todo: pick engine version
+        booleanParam(name: 'DELETE_WORKSPACE', defaultValue: false, description: 'Start with fresh workspace?')
+        // todo: 'iOS', 'Android'
         // todo: set server 'internal', 'prod', etc
     }
     stages {
-        stage('Clean Mac') {
-            when {
-                expression {
-                    params.DELETE_WORKSPACE == true
-                }
-            }
-            agent {
-                label 'clientUnit'
-            }
-            steps {
-                echo "---- Deleting workspace folder Mac"
-                deleteDir()
-            }
-        }
-
         stage('Clean Win') {
             when {
                 expression {
