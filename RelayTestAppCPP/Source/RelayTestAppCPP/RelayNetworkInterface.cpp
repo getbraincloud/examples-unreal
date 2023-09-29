@@ -3,6 +3,8 @@
 
 #include "RelayNetworkInterface.h"
 #include "BrainCloudClient.h"
+#include "BrainCloudAppDataStruct.h"
+#include "BrainCloudFunctionLibrary.h"
 #include <ConvertUtilities.h>
 #include "Kismet/GameplayStatics.h"
 #include "RelayGameData/RelayGameInstance.h"
@@ -289,10 +291,9 @@ void ARelayNetworkInterface::InitBrainCloud()
         FConfigSection *ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
         FConfigFile *ConfigFile = GConfig->FindConfigFile(*ConfigPath);
         
-        
         AppID = ConfigSection->FindRef(TEXT("AppId")).GetValue();
         SecretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
-        ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
+		ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
     }
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
