@@ -293,7 +293,7 @@ void ARelayNetworkInterface::InitBrainCloud()
         
         AppID = ConfigSection->FindRef(TEXT("AppId")).GetValue();
         SecretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
-        ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue() + "/dispatcherv2";
+		ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
     }
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
