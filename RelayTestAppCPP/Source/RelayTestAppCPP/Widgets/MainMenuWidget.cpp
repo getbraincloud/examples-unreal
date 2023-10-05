@@ -10,12 +10,12 @@ void UMainMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	JoinLobbyButton->OnClicked.AddDynamic(this, &UMainMenuWidget::SetUpLoadingLobbyScreen);
-	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
-	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
+	RelayGameInstance = Cast<URelayGameInstance>(GetGameInstance());
+	VersionText->SetText(FText::AsCultureInvariant(RelayGameInstance->Interface->GetBrainCloudVersion()));
 }
 
 void UMainMenuWidget::SetUpLoadingLobbyScreen()
 {
-	GameInstance->SetUpLoadingScreen(3, FText::AsCultureInvariant(LoadingMessage), true);
-	GameInstance->Interface->FindOrCreateLobby();
+	RelayGameInstance->SetUpLoadingScreen(3, FText::AsCultureInvariant(LoadingMessage), true);
+	RelayGameInstance->Interface->FindOrCreateLobby();
 }

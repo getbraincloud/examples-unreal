@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BrainCloudRelay.h"
 #include "RelaySaveGame.h"
 #include "RelayUserData.h"
 #include "Engine/GameInstance.h"
@@ -53,7 +54,13 @@ public:
 	{
 		return SaveGameInstance->LocalUsername.ToString() == LocalUser->Username.ToString();
 	}
-	
+
+	UFUNCTION(BlueprintCallable, Category="RelayGameInstance")
+	void UpdateRelayProtocol(FString in_relaySelection);
+
+	UPROPERTY(BlueprintReadWrite, Category="RelayGameInstance")
+	FString LobbyType;	
+
 	/*********** Variables **************/
 
 	UPROPERTY()
@@ -92,6 +99,11 @@ public:
 	//Used for Save Game to Slot Function for SaveGameInstance
 	UPROPERTY(BlueprintReadWrite)
 	int UserIndex;
+
+	UPROPERTY(BlueprintReadOnly)
+	BCRelayConnectionType RelayProtocol;
+	UPROPERTY(BlueprintReadOnly)
+	FString RelayProtocolString;
 	
 	
 };

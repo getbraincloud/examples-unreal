@@ -120,7 +120,7 @@ void ARelayNetworkInterface::FindLobby()
 	
 	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
 		(
-			"CursorPartyV2",
+			GameInstance->LobbyType,
 			76,
 			1,
 			AlgoJson,
@@ -259,6 +259,29 @@ void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 			GameInstance->RemoveUserFromList(profileId);
 			GameInstance->GameWidget->MatchWidget->RemoveUserFromList(profileId);
 		}
+		else if(operation.Equals(TEXT("CONNECT")))
+		{
+			GameInstance->bIsLoading = false;
+			SendUpdateReady();
+		}
+		else if(operation.Equals(TEXT("END_MATCH")))
+		{
+			if(!bEndMatchRequested)
+			{
+				GameInstance->SetUpLoadingScreen(3, FText::FromString(TEXT("Game Ended, Returning to Lobby...")), false);
+			}
+			BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();
+			BrainCloudWrapper->getClient()->getRelayService()->deregisterSystemCallback();
+			BrainCloudWrapper->getClient()->getRelayService()->disconnect();
+			//Start timer?
+			GetWorld()->GetTimerManager().SetTimer
+			(
+				DelayTimerForEndMatchHandle,
+				this,
+				&ARelayNetworkInterface::DelayToFinishEndMatchLoading,
+				EndMatchLoadingTime
+			);
+		}
 	}
 }
 
@@ -386,6 +409,8 @@ void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPac
 	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return; 
 		
 	LobbyID = in_jsonPacket->GetStringField("lobbyId");
+	FString stringForLobbyID = TEXT("Lobby ID: ");
+	GameInstance->GameWidget->LobbyID_Text->SetText(FText::FromString(stringForLobbyID + LobbyID));
 	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
 	OwnerID = GetProfileIdFromCxId(lobbyObject->GetStringField(TEXT("ownerCxId")));
 }
@@ -415,14 +440,13 @@ void ARelayNetworkInterface::ConnectToRelay(const TSharedPtr<FJsonObject>& in_js
 {
 	TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("data"));
 	FString address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
-	
-	int port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(TEXT("ws"));
+	int port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(GameInstance->RelayProtocolString);
 	FString passcode = lobbyObject->GetStringField(TEXT("passcode"));
-
+	bEndMatchRequested = false;
 	//Connect to Relay with connect info provided above
 	BrainCloudWrapper->getClient()->getRelayService()->connect
 		(
-			BCRelayConnectionType::WEBSOCKET,
+			GameInstance->RelayProtocol,
 			address,
 			port,
 			passcode,
@@ -444,10 +468,25 @@ FString ARelayNetworkInterface::GetBrainCloudVersion()
 	return Client->getBrainCloudClientVersion();
 }
 
+bool ARelayNetworkInterface::IsUserAuthenticated()
+{
+	if(BrainCloudWrapper)
+	{
+		return BrainCloudWrapper->getClient()->isAuthenticated();
+	}
+	return false;
+}
+
 void ARelayNetworkInterface::DelayToFinishLoadingScreen()
 {
 	GameInstance->bIsLoading = false;
 	GetWorld()->GetTimerManager().ClearTimer(DelayTimerHandle);
+}
+
+void ARelayNetworkInterface::DelayToFinishEndMatchLoading()
+{
+	GameInstance->bIsLoading = false;
+	GetWorld()->GetTimerManager().ClearTimer(DelayTimerForEndMatchHandle);
 }
 
 void ARelayNetworkInterface::StartLoadingTimer()
@@ -459,4 +498,13 @@ void ARelayNetworkInterface::StartLoadingTimer()
 				&ARelayNetworkInterface::DelayToFinishLoadingScreen,
 				LoadingTime
 			);
+}
+
+void ARelayNetworkInterface::EndMatch()
+{
+	GameInstance->SetUpLoadingScreen(3, FText::FromString(TEXT("Game Ended, Returning to Lobby...")), false);
+	bEndMatchRequested = true;
+	FString payload = TEXT("{}");
+	BrainCloudWrapper->getClient()->getRelayService()->endMatch(payload);
+	UE_LOG(LogTemp, Log, TEXT("End Match request sent"));
 }

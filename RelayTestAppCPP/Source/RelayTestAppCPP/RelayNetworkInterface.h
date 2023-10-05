@@ -88,10 +88,17 @@ public:
 //Helper Functions
 	FString GetBrainCloudVersion();
 
+	bool IsUserAuthenticated();
+
 	UFUNCTION()
 	void DelayToFinishLoadingScreen();
 
+	UFUNCTION()
+	void DelayToFinishEndMatchLoading();
+
 	void StartLoadingTimer();
+
+	void EndMatch();
 
 private:
 	FString GetProfileIdFromCxId(FString in_data);
@@ -137,10 +144,15 @@ private:
 	UPROPERTY()
 	FTimerHandle DelayTimerHandle;
 
+	UPROPERTY()
+	FTimerHandle DelayTimerForEndMatchHandle;
+
 	class GameRelayCallback* Callback;
 	bool bIsHost;
 	bool bIsReady;
 	bool bRTTConnectionIsLive;
+	bool bEndMatchRequested;
 	int64 ToAllPlayersNetID = 1099511627775;
 	const float LoadingTime = 2.5;
+	const float EndMatchLoadingTime = 1.0;
 };
