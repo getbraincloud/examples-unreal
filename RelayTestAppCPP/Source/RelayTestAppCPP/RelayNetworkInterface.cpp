@@ -504,7 +504,7 @@ void ARelayNetworkInterface::EndMatch()
 {
 	GameInstance->SetUpLoadingScreen(3, FText::FromString(TEXT("Game Ended, Returning to Lobby...")), false);
 	bEndMatchRequested = true;
-	FString payload = TEXT("{}");
+	FString payload = TEXT("{\"op\":\"END_MATCH\"}");
 	BrainCloudWrapper->getClient()->getRelayService()->endMatch(payload);
 	UE_LOG(LogTemp, Log, TEXT("End Match request sent"));
 }
