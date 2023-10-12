@@ -47,6 +47,7 @@ void ARelayNetworkInterface::LoginUniversalBC()
 
 void ARelayNetworkInterface::FindOrCreateLobby()
 {
+	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForJoinButton(false);
 	bIsHost = false;
 	bIsReady = false;
 	
@@ -57,7 +58,8 @@ void ARelayNetworkInterface::FindOrCreateLobby()
 void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 {
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonStringForColorIndex(in_colorIndex), Callback);
+	GameInstance->SaveGameInstance->ArrowColorIndex = in_colorIndex;
+	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonExtraString(), Callback);
 }
 
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
@@ -115,7 +117,7 @@ void ARelayNetworkInterface::FindLobby()
 	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
 	
 	TArray<FString> otherUserCxIds;
-	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
+	FString extraJson = MakeJsonExtraString();
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
 	
 	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
@@ -184,9 +186,22 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 	{
 		//Match screen is ready to be loaded in + set up important relay functions
 		GameInstance->bIsLoading = false;
-		BrainCloudWrapper->getClient()->getRelayService()->registerRelayCallback(this);
-		BrainCloudWrapper->getClient()->getRelayService()->registerSystemCallback(this);
-		ConnectToRelay(jsonPacket);
+		TSharedPtr<FJsonObject> lobbyObject = jsonPacket->GetObjectField(TEXT("data"));
+		Address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
+		Port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(GameInstance->RelayProtocolString);
+		Passcode = lobbyObject->GetStringField(TEXT("passcode"));
+		if(bPresentAfterRelayStarted)
+		{
+			BrainCloudWrapper->getClient()->getRelayService()->registerRelayCallback(this);
+			BrainCloudWrapper->getClient()->getRelayService()->registerSystemCallback(this);
+			ConnectToRelay();
+		}
+		else
+		{
+			GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForJoinButton(true);
+			GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(false);
+		}
+		bPresentAfterRelayStarted = false;
 	}
 }
 
@@ -295,9 +310,17 @@ void ARelayNetworkInterface::relayConnectFailure(const FString& errorMessage)
 
 void ARelayNetworkInterface::SendUpdateReady()
 {
-	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, extraJson, Callback);
+	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, MakeJsonExtraString(), Callback);
+}
+
+void ARelayNetworkInterface::JoinMatch()
+{
+	bIsReady = true;
+	bPresentAfterRelayStarted = true;
+	BrainCloudWrapper->getRelayService()->registerRelayCallback(this);
+	BrainCloudWrapper->getRelayService()->registerSystemCallback(this);
+	ConnectToRelay();
 }
 
 void ARelayNetworkInterface::InitBrainCloud()
@@ -406,20 +429,25 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_json
 
 void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return; 
+	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return;
 		
 	LobbyID = in_jsonPacket->GetStringField("lobbyId");
 	FString stringForLobbyID = TEXT("Lobby ID: ");
-	GameInstance->GameWidget->LobbyID_Text->SetText(FText::FromString(stringForLobbyID + LobbyID));
+	if(!ensure(GameInstance != nullptr))
+	{
+		GameInstance->GameWidget->LobbyID_Text->SetText(FText::FromString(stringForLobbyID + LobbyID));
+	}
 	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
 	OwnerID = GetProfileIdFromCxId(lobbyObject->GetStringField(TEXT("ownerCxId")));
 }
 
-FString ARelayNetworkInterface::MakeJsonStringForColorIndex(int colorIndex)
+FString ARelayNetworkInterface::MakeJsonExtraString() const
 {
 	const FString beginningString = TEXT("{\"colorIndex\":");
-	const FString colorIndexString = FString::FromInt(colorIndex) + TEXT("}");
-	FString returnValue = beginningString + colorIndexString;
+	const FString colorIndexValue = FString::FromInt(GameInstance->SaveGameInstance->ArrowColorIndex) + TEXT(",");
+	const FString userPresentString = TEXT("\"presentSinceStart\":");
+	FString userPresentValue = bPresentAfterRelayStarted ? TEXT("\"true\"")  : TEXT("\"false\"");
+	FString returnValue = beginningString + colorIndexValue + userPresentString + userPresentValue + TEXT("}");
 	return returnValue;
 }
 
@@ -436,20 +464,16 @@ void ARelayNetworkInterface::DisconnectEverything()
 	StartLoadingTimer();
 }
 
-void ARelayNetworkInterface::ConnectToRelay(const TSharedPtr<FJsonObject>& in_jsonPacket)
+void ARelayNetworkInterface::ConnectToRelay()
 {
-	TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("data"));
-	FString address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
-	int port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(GameInstance->RelayProtocolString);
-	FString passcode = lobbyObject->GetStringField(TEXT("passcode"));
 	bEndMatchRequested = false;
 	//Connect to Relay with connect info provided above
 	BrainCloudWrapper->getClient()->getRelayService()->connect
 		(
 			GameInstance->RelayProtocol,
-			address,
-			port,
-			passcode,
+			Address,
+			Port,
+			Passcode,
 			LobbyID,
 			this
 		);

@@ -52,6 +52,8 @@ public:
 
 	// Called from Start button enabled only for Host in LobbyWidget
 	void SendUpdateReady();
+
+	void JoinMatch();
 	
 //Callbacks
 	void AuthenticateCallback();
@@ -83,7 +85,7 @@ private:
 
 	void UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPacket);
 
-	void ConnectToRelay(const TSharedPtr<FJsonObject>& in_jsonPacket);
+	void ConnectToRelay();
 public:
 //Helper Functions
 	FString GetBrainCloudVersion();
@@ -103,7 +105,7 @@ public:
 private:
 	FString GetProfileIdFromCxId(FString in_data);
 
-	static FString MakeJsonStringForColorIndex(int colorIndex);
+	FString MakeJsonExtraString() const;
 
 public:
 
@@ -147,9 +149,15 @@ private:
 	UPROPERTY()
 	FTimerHandle DelayTimerForEndMatchHandle;
 
+	//Relay Connection References
+	FString Address;
+	int Port;
+	FString Passcode;
+
 	class GameRelayCallback* Callback;
 	bool bIsHost;
 	bool bIsReady;
+	bool bPresentAfterRelayStarted;
 	bool bRTTConnectionIsLive;
 	bool bEndMatchRequested;
 	int64 ToAllPlayersNetID = 1099511627775;

@@ -20,11 +20,11 @@ void UGameWidget::NativeConstruct()
 
 void UGameWidget::SetUpPopUp(FText in_ErrorMessage)
 {
-	if(ErrorMessage_Text)
+	if(!ensure(ErrorMessage_Text != nullptr))
 	{
 		ErrorMessage_Text->SetText(in_ErrorMessage);
 	}
-	if(PopUpWindow)
+	if(!ensure(PopUpWindow != nullptr))
 	{
 		PopUpWindow->SetVisibility(ESlateVisibility::Visible);
 	}
@@ -32,11 +32,11 @@ void UGameWidget::SetUpPopUp(FText in_ErrorMessage)
 
 void UGameWidget::ClosePopUp()
 {
-	if(PopUpWindow)
+	if(!ensure(PopUpWindow != nullptr))
 	{
 		PopUpWindow->SetVisibility(ESlateVisibility::Hidden);
 	}
-	if(RelayGameInstance)
+	if(!ensure(RelayGameInstance != nullptr))
 	{
 		RelayGameInstance->bErrorOccurred = false;
 	}

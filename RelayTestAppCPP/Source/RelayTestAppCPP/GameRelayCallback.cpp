@@ -72,7 +72,7 @@ void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation se
 	FString middleString = " |||| JSON ERROR: ";
 	FString appendString = serviceOperation.getValue() + middleString + jsonError; 
 	const FText errorMessage = FText::AsCultureInvariant(appendString);
-	if(Interface != nullptr)
+	if(!ensure(Interface != nullptr))
 	{
 		Interface->GameInstance->GameWidget->SetUpPopUp(errorMessage);
 		if(Interface->IsUserAuthenticated())
