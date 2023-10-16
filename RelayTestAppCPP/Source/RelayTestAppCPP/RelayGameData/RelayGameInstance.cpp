@@ -16,6 +16,9 @@ URelayGameInstance::URelayGameInstance()
 	bIsLoading = false;
 	SaveSlotName = "RelayTestAppSave";
 	UserIndex = 0;
+	LobbyType = "CursorPartyV2";
+	RelayProtocol = BCRelayConnectionType::WEBSOCKET;
+	RelayProtocolString = TEXT("ws");
 }
 
 void URelayGameInstance::SetUpLoadingScreen(int in_widgetIndex, FText in_message, bool in_bCancelButtonEnabled)
@@ -117,6 +120,25 @@ void URelayGameInstance::SetUpSignInScreen() const
 	GameWidget->SignInWidget->Username_EditableText->SetText(SaveGameInstance->LocalUsername);
 	GameWidget->SignInWidget->Password_EditableText->SetText(SaveGameInstance->LocalPassword);
 	GameWidget->WidgetSwitcher->SetActiveWidgetIndex(1);
+}
+
+void URelayGameInstance::UpdateRelayProtocol(FString in_relaySelection)
+{
+	if(in_relaySelection.Equals("UDP"))
+	{
+		RelayProtocol = BCRelayConnectionType::UDP;
+		RelayProtocolString = TEXT("udp");
+	}
+	else if(in_relaySelection.Equals("TCP"))
+	{
+		RelayProtocol = BCRelayConnectionType::TCP;
+		RelayProtocolString = TEXT("tcp");
+	}
+	else
+	{
+		RelayProtocol = BCRelayConnectionType::WEBSOCKET;
+		RelayProtocolString = TEXT("ws");
+	}
 }
 
 ARelayUserData* URelayGameInstance::CreateUser(FText in_NewUsername, FLinearColor in_NewUserColor, FString in_NewProfileID)

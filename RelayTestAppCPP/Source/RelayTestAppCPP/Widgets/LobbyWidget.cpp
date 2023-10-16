@@ -7,6 +7,7 @@ void ULobbyWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	StartMatchButton->OnClicked.AddDynamic(this, &ULobbyWidget::StartButtonClicked);
+	JoinMatchButton->OnClicked.AddDynamic(this, &ULobbyWidget::ULobbyWidget::JoinButtonClicked);
 	LeaveLobbyButton->OnClicked.AddDynamic(this, &ULobbyWidget::LeaveButtonClicked);
 
 	Black_Button->OnClicked.AddDynamic(this, &ULobbyWidget::BlackButtonClicked);
@@ -20,6 +21,7 @@ void ULobbyWidget::NativeConstruct()
 	
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
+	JoinMatchButton->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void ULobbyWidget::AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowColorIndex)
@@ -33,13 +35,34 @@ void ULobbyWidget::AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowCo
 
 void ULobbyWidget::AdjustVisibilityForStartButton(bool bIsUserHost)
 {
-	StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	if(StartMatchButton->IsValidLowLevel())
+	{
+		StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);	
+	}
+}
+
+void ULobbyWidget::AdjustVisibilityForJoinButton(bool bPresentSinceStart)
+{
+	if(JoinMatchButton->IsValidLowLevel())
+	{
+		JoinMatchButton->SetVisibility(bPresentSinceStart ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	}
 }
 
 void ULobbyWidget::StartButtonClicked()
 {
+	if(GameInstance->IsValidLowLevel())
+	{
+		GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(JoinMatchLoadingMessage), false);
+		GameInstance->Interface->SendUpdateReady();
+	}
+}
+
+void ULobbyWidget::JoinButtonClicked()
+{
 	GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(JoinMatchLoadingMessage), false);
-	GameInstance->Interface->SendUpdateReady();
+	AdjustVisibilityForJoinButton(false);
+	GameInstance->Interface->JoinMatch();
 }
 
 void ULobbyWidget::LeaveButtonClicked()

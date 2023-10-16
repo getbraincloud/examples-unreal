@@ -31,8 +31,14 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* VersionText;
 
-	UPROPERTY()
-	URelayGameInstance* GameInstance;
+	UPROPERTY(BlueprintReadWrite)
+	URelayGameInstance* RelayGameInstance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,meta=(BindWidget))
+	UComboBoxString* Protocol_Combobox;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite,meta=(BindWidget))
+	UComboBoxString* LobbyType_Combobox;
 
 	const FString LoadingMessage = TEXT("Joining a lobby...");
 };

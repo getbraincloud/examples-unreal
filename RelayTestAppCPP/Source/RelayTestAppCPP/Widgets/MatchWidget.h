@@ -35,6 +35,11 @@ public:
 	UFUNCTION()
 	void LeaveButtonClicked();
 
+	UFUNCTION()
+	void EndMatchButtonClicked();
+
+	void AdjustVisibilityForEndMatchButton(bool in_bIsUserHost);
+
 	FVector2D CalculateInputPosition();
 	
 	void SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal);
@@ -63,6 +68,9 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* LeaveButton;
+	
+	UPROPERTY(meta=(BindWidget))
+	UButton* EndMatchButton;
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* GameAreaButton;
