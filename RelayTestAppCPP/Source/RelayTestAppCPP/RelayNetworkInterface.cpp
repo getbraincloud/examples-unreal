@@ -3,8 +3,6 @@
 
 #include "RelayNetworkInterface.h"
 #include "BrainCloudClient.h"
-#include "BrainCloudAppDataStruct.h"
-#include "BrainCloudFunctionLibrary.h"
 #include <ConvertUtilities.h>
 #include "Kismet/GameplayStatics.h"
 #include "RelayGameData/RelayGameInstance.h"
@@ -64,7 +62,8 @@ void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
 {
-	if(BrainCloudWrapper->getClient()->getRelayService()->isConnected())
+	bool isConnected = BrainCloudWrapper->getClient()->getRelayService()->isConnected();
+	if(isConnected)
 	{
 		//Making json FString to convert to bytes
 		const FString beginningString = TEXT("{\"op\":") + in_operation + TEXT("\"data\":{");
@@ -369,12 +368,17 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_j
 			break;
 		}
 	}
-	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
+	if(!ensure(GameInstance != nullptr))
+	{
+		GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
+	}
+	
 	bIsReady = !bIsHost;
 }
 
 void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
+	if(!BrainCloudWrapper->getRTTService()->isRTTEnabled()) return;
 	//Clearing Lists to then repopulate members that are in lobby
 	GameInstance->ListOfUserObjects.Empty();
 	GameInstance->GameWidget->LobbyWidget->Lobby_ListView->ClearListItems();

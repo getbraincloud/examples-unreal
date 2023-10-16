@@ -35,18 +35,27 @@ void ULobbyWidget::AdjustLocalUserColor(FLinearColor in_newColor, int in_arrowCo
 
 void ULobbyWidget::AdjustVisibilityForStartButton(bool bIsUserHost)
 {
-	StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	if(StartMatchButton->IsValidLowLevel())
+	{
+		StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);	
+	}
 }
 
 void ULobbyWidget::AdjustVisibilityForJoinButton(bool bPresentSinceStart)
 {
-	JoinMatchButton->SetVisibility(bPresentSinceStart ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	if(JoinMatchButton->IsValidLowLevel())
+	{
+		JoinMatchButton->SetVisibility(bPresentSinceStart ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	}
 }
 
 void ULobbyWidget::StartButtonClicked()
 {
-	GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(JoinMatchLoadingMessage), false);
-	GameInstance->Interface->SendUpdateReady();
+	if(GameInstance->IsValidLowLevel())
+	{
+		GameInstance->SetUpLoadingScreen(4, FText::AsCultureInvariant(JoinMatchLoadingMessage), false);
+		GameInstance->Interface->SendUpdateReady();
+	}
 }
 
 void ULobbyWidget::JoinButtonClicked()
