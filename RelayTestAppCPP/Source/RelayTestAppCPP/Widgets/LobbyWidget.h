@@ -24,6 +24,9 @@ class RELAYTESTAPPCPP_API ULobbyWidget : public UUserWidget
 	void StartButtonClicked();
 
 	UFUNCTION()
+	void JoinButtonClicked();
+
+	UFUNCTION()
 	void LeaveButtonClicked();
 
 	UFUNCTION()
@@ -54,11 +57,16 @@ public:
 
 	void AdjustVisibilityForStartButton(bool bIsUserHost);
 
+	void AdjustVisibilityForJoinButton(bool bPresentSinceStart);
+
 	UPROPERTY(meta=(BindWidget))
 	UListView* Lobby_ListView;
 	
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartMatchButton;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* JoinMatchButton;
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* LeaveLobbyButton;
@@ -83,8 +91,7 @@ public:
 private:
 	UPROPERTY()
 	URelayGameInstance* GameInstance;
-
-
+	
 	//Color Buttons	
 	UPROPERTY(meta=(BindWidget))
 	UButton* Black_Button;
