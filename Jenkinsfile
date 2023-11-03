@@ -4,14 +4,14 @@ pipeline {
         string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
-        choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
+        choice(name: 'PLATFORM', choices: ['all', 'MAC', 'Win64'], description: 'Which platform to build?')
         booleanParam(name: 'DELETE_WORKSPACE', defaultValue: false, description: 'Start with fresh workspace?')
         // todo: 'iOS', 'Android'
         // todo: pick engine version
         // todo: set server 'internal', 'prod', etc
     }
     stages {
-        stage('Clean Mac') {
+        stage('Clean MAC') {
             when {
                 expression {
                     params.DELETE_WORKSPACE == true
@@ -21,7 +21,7 @@ pipeline {
                 label 'clientUnit'
             }
             steps {
-                echo "---- Deleting workspace folder Mac"
+                echo "---- Deleting workspace folder MAC"
                 deleteDir()
             }
         }
@@ -41,11 +41,11 @@ pipeline {
             }
         }
 
-       stage('Project Build Mac') {
+       stage('Project Build MAC') {
             when {
                 expression {
                     params.PRODUCT != 'all' &&
-                    params.PLATFORM == 'Mac' ||
+                    params.PLATFORM == 'MAC' ||
                     params.PRODUCT != 'all' &&
                     params.PLATFORM == 'all'
                 }
@@ -62,7 +62,7 @@ pipeline {
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
             steps {
-                echo "---- building ${params.PRODUCT} for Mac branch ${BRANCH_NAME} plugin ${BC_LIB}"
+                echo "---- building ${params.PRODUCT} for MAC branch ${BRANCH_NAME} plugin ${BC_LIB}"
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
@@ -71,8 +71,8 @@ pipeline {
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_Mac", outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_Mac.zip", followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_MAC", outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_MAC.zip", followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
@@ -114,11 +114,11 @@ pipeline {
             }
        }
 
-        stage('Build All 5.1 Mac') {
+        stage('Build All 5.1 MAC') {
             when {
                 expression {
                     params.PRODUCT == 'all' &&
-                    params.PLATFORM == 'Mac' ||
+                    params.PLATFORM == 'MAC' ||
                     params.PRODUCT == 'all' &&
                     params.PLATFORM == 'all'
                 }
@@ -145,23 +145,23 @@ pipeline {
                 sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT'
                 sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT'
                 sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT '
-                sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_MAC'
 
                 // todo: signing issues
                 //sh 'autobuild/makebuild.sh RelayTestApp IOS UE_5_IOS'
                 // todo: make sure compatible version android sdk etc
                 //sh 'autobuild/makebuild.sh RelayTestApp ANDROID UE_5_Android'
 
-                sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
+                sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_MAC'
+                sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_MAC'
+                sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_MAC'
+                sh 'autobuild/makebuild.sh Groups MAC UE_5_MAC'
+                sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_MAC'
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: 'UE_5_Mac', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Mac.zip', followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: 'UE_5_MAC', outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_MAC.zip', followSymlinks: false, onlyIfSuccessful: true
                 }
             }
         }
