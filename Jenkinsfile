@@ -100,7 +100,7 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat RelayTestApp\\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
 
                 // todo: use product and platform parameters
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
@@ -188,12 +188,12 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Config TappyChicken h %SERVER_ENVIRONMENT%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat ScriptTestApp\Config ScriptTestApp ini %SERVER_ENVIRONMENT%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Leaderboard\Config Leaderboard ini %SERVER_ENVIRONMENT%'
-                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Groups\Config Groups ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat RelayTestApp\\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat RelayTestAppCPP\\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat TappyChicken\\Config TappyChicken h %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat ScriptTestApp\\Config ScriptTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat Leaderboard\\Config Leaderboard ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat Groups\\Config Groups ini %SERVER_ENVIRONMENT%'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
