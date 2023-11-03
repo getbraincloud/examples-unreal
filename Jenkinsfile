@@ -66,7 +66,7 @@ pipeline {
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ${params.PRODUCT}/Config -p ${params.PRODUCT} -x ini -s $SERVER_ENVIRONMENT'
+                sh "${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ${params.PRODUCT}/Config -p ${params.PRODUCT} -x ini -s $SERVER_ENVIRONMENT"
                 sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ."
             }
             post {
