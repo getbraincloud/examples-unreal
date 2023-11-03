@@ -1,7 +1,7 @@
 pipeline {
     agent none
     parameters {
-        string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
+        string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
         choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
         choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
@@ -66,7 +66,7 @@ pipeline {
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh './autoconfig_macos.command internal -nodev'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ${params.PRODUCT}/Config -p ${params.PRODUCT} -x ini -s $SERVER_ENVIRONMENT'
                 sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ."
             }
             post {
@@ -100,7 +100,7 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'autoconfig_win64.bat -nodev'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
 
                 // todo: use product and platform parameters
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
@@ -139,7 +139,12 @@ pipeline {
                 // deleteDir() // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh 'autoconfig_macos.command internal -nodev'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Config -p TappyChicken -x ini -s $SERVER_ENVIRONMENT'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT'
+                sh '${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT '
                 sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
 
                 // todo: signing issues
@@ -183,7 +188,12 @@ pipeline {
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'autoconfig_win64.bat -nodev'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Config TappyChicken h %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat ScriptTestApp\Config ScriptTestApp ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Leaderboard\Config Leaderboard ini %SERVER_ENVIRONMENT%'
+                 bat 'call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Groups\Config Groups ini %SERVER_ENVIRONMENT%'
                  bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
                  bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
