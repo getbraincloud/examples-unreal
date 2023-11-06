@@ -14,12 +14,6 @@
 
 PROJECTNAME=${1}
 TARGET=${2}
-ARTIFACTS=${3}
-
-if [ -z $ARTIFACTS ];
-then
-    ARTIFACTS=artifacts
-fi
 
 if [[ $UE_VERSION == "4.27" ]];
 then
@@ -37,4 +31,4 @@ mkdir -p "$WORKSPACE/$ARTIFACTS/${PROJECTNAME}-${TARGET}"
 
 "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/Build.sh" ${PROJECTNAME}Editor Mac Development -Project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" 
  
- "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/$ARTIFACTS/${PROJECTNAME}-${TARGET}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs  ${ModeString}  -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output
+ "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}-${TARGET}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs  ${ModeString}  -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output
