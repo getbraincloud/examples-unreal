@@ -96,20 +96,20 @@ pipeline {
                  BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
               }
              steps {
-                 echo "---- building RelayTestApp for Win64 branch ${BRANCH_NAME} plugin ${BC_LIB}"
+                 echo "---- building ${params.PRODUCT} for Win64 branch ${BRANCH_NAME} plugin ${BC_LIB}"
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat RelayTestApp\\Config RelayTestApp ini %SERVER_ENVIRONMENT%'
+                 bat "call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat ${params.PRODUCT}\\Config ${params.PRODUCT} ini ${params.SERVER_ENVIRONMENT}"
 
                 // todo: use product and platform parameters
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
+                 bat "autobuild\\makebuild.bat ${params.PRODUCT} Win64 ."
 
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: 'RelayTestApp_Win64', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'RelayTestApp_Win64.zip', followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_Win64", outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_Win64.zip", followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
