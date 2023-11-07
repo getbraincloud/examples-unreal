@@ -1,17 +1,17 @@
 pipeline {
     agent none
     parameters {
-        string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin-src branch (blank for .gitmodules)')
+        string(name: 'BC_LIB', defaultValue: '', description: 'braincloud-unreal-plugin branch (blank for .gitmodules)')
         string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'examples-unreal branch')
-        choice(name: 'PRODUCT', choices: ['all', 'RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
-        choice(name: 'PLATFORM', choices: ['all', 'Mac', 'Win64'], description: 'Which platform to build?')
+        choice(name: 'PRODUCT', choices: ['RelayTestApp', 'RelayTestAppCpp', 'TappyChicken', 'ScriptTestApp', 'Groups', 'Leaderboard'], description: 'Which thing to build?')
+        choice(name: 'PLATFORM', choices: ['all', 'MAC', 'Win64'], description: 'Which platform to build?')
         booleanParam(name: 'DELETE_WORKSPACE', defaultValue: false, description: 'Start with fresh workspace?')
         // todo: 'iOS', 'Android'
         // todo: pick engine version
         // todo: set server 'internal', 'prod', etc
     }
     stages {
-        stage('Clean Mac') {
+        stage('Clean MAC') {
             when {
                 expression {
                     params.DELETE_WORKSPACE == true
@@ -21,7 +21,7 @@ pipeline {
                 label 'clientUnit'
             }
             steps {
-                echo "---- Deleting workspace folder Mac"
+                echo "---- Deleting workspace folder MAC"
                 deleteDir()
             }
         }
@@ -41,12 +41,10 @@ pipeline {
             }
         }
 
-       stage('Project Build Mac') {
+       stage('Project Build MAC') {
             when {
                 expression {
-                    params.PRODUCT != 'all' &&
-                    params.PLATFORM == 'Mac' ||
-                    params.PRODUCT != 'all' &&
+                    params.PLATFORM == 'MAC' ||
                     params.PLATFORM == 'all'
                 }
             }
@@ -62,17 +60,17 @@ pipeline {
                 BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
             }
             steps {
-                echo "---- building ${params.PRODUCT} for Mac branch ${BRANCH_NAME} plugin ${BC_LIB}"
+                echo "---- building ${params.PRODUCT} for MAC branch ${BRANCH_NAME} plugin ${BC_LIB}"
                 // deleteDir()  // deleting makes for a slow build, do this manually if needed
                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                 sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh './autoconfig_macos.command internal -nodev'
+                sh "${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ${params.PRODUCT}/Config -p ${params.PRODUCT} -x ini -s ${params.SERVER_ENVIRONMENT}"
                 sh "autobuild/makebuild.sh ${params.PRODUCT} MAC ."
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_Mac", outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_Mac.zip", followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_MAC", outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_MAC.zip", followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
@@ -80,9 +78,7 @@ pipeline {
        stage('Project Build Win') {
             when {
                 expression {
-                    params.PRODUCT != 'all' &&
                     params.PLATFORM == 'Win64' ||
-                    params.PRODUCT != 'all' &&
                     params.PLATFORM == 'all'
                 }
             }
@@ -96,105 +92,20 @@ pipeline {
                  BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
               }
              steps {
-                 echo "---- building RelayTestApp for Win64 branch ${BRANCH_NAME} plugin ${BC_LIB}"
+                 echo "---- building ${params.PRODUCT} for Win64 branch ${BRANCH_NAME} plugin ${BC_LIB}"
                  // deleteDir() // deleting makes for a slow build, do this manually if needed
                  checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
                  bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'autoconfig_win64.bat -nodev'
+                 bat "call %BRAINCLOUD_TOOLS%\\bin\\copy-ids.bat ${params.PRODUCT}\\Config ${params.PRODUCT} ini ${params.SERVER_ENVIRONMENT}"
 
                 // todo: use product and platform parameters
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 .'
+                 bat "autobuild\\makebuild.bat ${params.PRODUCT} Win64 ."
 
             }
             post {
                 success {
-                    fileOperations([fileZipOperation(folderPath: 'RelayTestApp_Win64', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'RelayTestApp_Win64.zip', followSymlinks: false, onlyIfSuccessful: true
-                }
-            }
-       }
-
-        stage('Build All 5.1 Mac') {
-            when {
-                expression {
-                    params.PRODUCT == 'all' &&
-                    params.PLATFORM == 'Mac' ||
-                    params.PRODUCT == 'all' &&
-                    params.PLATFORM == 'all'
-                }
-            }
-            agent {
-                label 'clientUnit'
-            }
-            environment {
-                PATH = "/Applications/CMake.app/Contents/bin:/usr/local/bin:${env.PATH}"
-                UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1"
-                //UE_INSTALL_PATH="/Users/Shared/Epic Games/UE_5.1.1_Source" // needs varest plugin
-                UE_EDITOR_CMD="UnrealEditor-Cmd"
-                UE_VERSION="5.1"
-                BRAINCLOUD_TOOLS="/Users/buildmaster/braincloud-client-master"
-            }
-            steps {
-                echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                // deleteDir() // deleting makes for a slow build, do this manually if needed
-                checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
-                sh 'autobuild/checkout-submodule.sh ${BC_LIB}'
-                sh 'autoconfig_macos.command internal -nodev'
-                sh 'autobuild/makebuild.sh RelayTestApp MAC UE_5_Mac'
-
-                // todo: signing issues
-                //sh 'autobuild/makebuild.sh RelayTestApp IOS UE_5_IOS'
-                // todo: make sure compatible version android sdk etc
-                //sh 'autobuild/makebuild.sh RelayTestApp ANDROID UE_5_Android'
-
-                sh 'autobuild/makebuild.sh RelayTestAppCpp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh TappyChicken MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh ScriptTestApp MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Groups MAC UE_5_Mac'
-                sh 'autobuild/makebuild.sh Leaderboard MAC UE_5_Mac'
-            }
-            post {
-                success {
-                    fileOperations([fileZipOperation(folderPath: 'UE_5_Mac', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Mac.zip', followSymlinks: false, onlyIfSuccessful: true
-                }
-            }
-        }
-
-       stage('Build All 5.2 Win') {
-            when {
-                expression {
-                    params.PRODUCT == 'all' &&
-                    params.PLATFORM == 'Win64' ||
-                    params.PRODUCT == 'all' &&
-                    params.PLATFORM == 'all'
-                }
-            }
-            agent {
-                 label 'unrealWindows'
-             }
-             environment {
-                 UE_VERSION="5.2"
-                 UE_INSTALL_PATH="C:\\ProgramFiles\\UE_5.2\\"
-                 BRAINCLOUD_TOOLS="C:\\Users\\buildmaster\\braincloud-client-master"
-              }
-             steps {
-                 echo "---- braincloud Code Pull ${BRANCH_NAME} ${BC_LIB}"
-                 // deleteDir() // deleting makes for a slow build, do this manually if needed
-                 checkout([$class: 'GitSCM', branches: [[name: '*/${BRANCH_NAME}']], extensions: [[$class: 'SubmoduleOption', disableSubmodules: false, parentCredentials: false, recursiveSubmodules: true, reference: '', trackingSubmodules: false]], userRemoteConfigs: [[url: 'https://github.com/getbraincloud/examples-unreal.git']]])
-                 bat 'autobuild\\checkout-submodule.bat %BC_LIB%'
-                 bat 'autoconfig_win64.bat -nodev'
-                 bat 'autobuild\\makebuild.bat RelayTestApp Win64 UE_5_Win64'
-                 bat 'autobuild\\makebuild.bat RelayTestAppCPP Win64 UE_5_Win64'
-                 bat 'autobuild\\makebuild.bat TappyChicken Win64 UE_5_Win64'
-                 bat 'autobuild\\makebuild.bat ScriptTestApp Win64 UE_5_Win64'
-                 bat 'autobuild\\makebuild.bat Groups Win64 UE_5_Win64'
-                 bat 'autobuild\\makebuild.bat Leaderboard Win64 UE_5_Win64'
-            }
-            post {
-                success {
-                    fileOperations([fileZipOperation(folderPath: 'UE_5_Win64', outputFolderPath: '.')])
-                    archiveArtifacts allowEmptyArchive: true, artifacts: 'UE_5_Win64.zip', followSymlinks: false, onlyIfSuccessful: true
+                    fileOperations([fileZipOperation(folderPath: "${params.PRODUCT}_Win64", outputFolderPath: '.')])
+                    archiveArtifacts allowEmptyArchive: true, artifacts: "${params.PRODUCT}_Win64.zip", followSymlinks: false, onlyIfSuccessful: true
                 }
             }
        }
