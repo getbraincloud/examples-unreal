@@ -12,26 +12,38 @@ The examples include the required plugins as git submodules.
 $ git clone --recurse-submodules https://github.com/getbraincloud/examples-unreal.git
 ```
 
-If you are updating an existing repository, or forget to --recurse-submodules, then just update the modules. 
-Make sure you've done this if you get "missing plugin" error on load.
+If you are updating an existing repository then just update the modules. Do this if you get "missing plugin" error on load.
 
 ```
 $ cd examples-unreal
 $ git submodule update --init
 ```
 
+For development get the latest code on your working plugin branch. Eg.
+
+```
+$ git submodule update --remote
+```
+
+You can modify the submodule to lock into a particular branch. Eg.
+
+```
+$ git submodule set-branch --default RelayTestApp/Plugins/BCClient
+$ git submodule set-branch --branch release/5.0 RelayTestApp/Plugins/BCClient
+$ git submodule set-branch --branch develop RelayTestApp/Plugins/BCClient
+```
+
 ### Configure:
 
-**Important** Requires configuration of ids.h header file in the project folder under Source/, which defines the server url, app id and app secret. This file is not included with the examples and loading, building and initializing will fail without it. Create a file into source code folder called ids.h, and put 3 defines in it:
+**Important** Requires configuration of **BrainCloudSettings.ini** file in the project folder under Config/, which defines the server url, app id and app secret. Initializing and connecting will fail without it.
 
 ```
-#define BRAINCLOUD_SERVER_URL "https://api.braincloudservers.com/dispatcherV2"
-#define BRAINCLOUD_APP_ID ""
-#define BRAINCLOUD_APP_SECRET ""
+[Credentials]
+AppId=12345
+AppSecret=foo123ba-12f4-1o34-o234-r123foo1
+ServerUrl=https://api.internal.braincloudservers.com/dispatcherv2
 ```
-Fill in values for BRAINCLOUD_APP_ID and BRAINCLOUD_APP_SECRET.
-
-If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
+Fill in values for AppId and SecretKey. You can find this information on the brainCloud portal. If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
 
 https://portal.braincloudservers.com/
 
@@ -39,19 +51,34 @@ https://portal.braincloudservers.com/
 
 Required for some examples: add the VaREST plugin to your engine from Epic Launcher or download to Plugins folder.
 
-Open the uproject file in Unreal Engine. It will inform that the BCClient module is missing or unbuilt. Click YES to build. Click Show Log to see progress.
+Open the .uproject file in Unreal Engine. It will inform that the BCClient module is missing or unbuilt. Click YES to build. Click Show Log to see progress.
 
-#### Upgrading Engine Version
+To generate project files, use the built in menu option or UE command:
 
-1. Clean intermediate and build folders.
-2. Download the appropriate version of VaRest for the engine version (or add to engine in marketplace).
-3. The BCClient plugin will work as-is for any engine version.
-4. Choose the new engine version: Use the right-click menu on the .uproject file OR use the terminal command UnrealVersionSelector.exe OR modify "EngineAssociation" in .uproject file.
-5. Re-generate code project files (eg. visual studio or xcode).
+```angular2html
+Mac: "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/Mac/GenerateProjectFiles.sh" -projectfiles -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -game -rocket -progress
+Windows: "%UE_INSTALL_PATH%\Engine\Binaries\DotNet\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -game -rocket -progress 
+```
+
+To package refer to script autobuild/makebuild.sh and autobuild\makebuild.bat.
+
+```angular2html
+export UE_VERSION=5.1
+export UE_EDITOR_CMD='UnrealEditor-Cmd'
+export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
+```
+
+#### UE 4 Examples
+
+There is a separate branch for working in Unreal Engine 4. It will work with the same/latest plugin. To switch, you will need to clean build directories and copy new ids files.
+
+```angular2html
+git checkout ue4-examples
+```
 
 ### Run:
 
-Play in editor or launch standalone game.
+Play in editor or launch standalone game. Examples can be packaged for Mac or Windows PC, IOS or Android.
 
 ## Standalone Client Lib
 
@@ -98,7 +125,9 @@ Based on Unreal's' demo. Shows
 * User Entities
 
 ## ScriptTestApp (blueprint only)
-Implements [CloudCode Tutorial](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) 1 Your First Script and 6 S2S Scripts.
+Implements [CloudCode Tutorial 1 and 6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/):
+- #1 Your First Script and 
+- #6 S2S Scripts.
 
 Requires a script on the server for App ID (included).
 
@@ -114,7 +143,13 @@ cp StarterContent.upack MobileStarterContent.upack
 ```
 
 ## Leaderboard
-Implements tutorials 2 Making API Calls and 4 Pre and Post Hooks.
+Implements [CloudCode Tutorial 2 and 4](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/): 
+- #2 Making API Calls and
+- #4 Pre and Post Hooks.
 
 ## Groups
-Implements tutorials 3 Working with Global and User Entities 4 Pre and Post Hooks 5 External Web Services and 6 S2S Scripts.
+Implements [CloudCode Tutorial 3-6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) :
+- #3 Working with Global and User Entities 
+- #4 Pre and Post Hooks 
+- #5 External Web Services and 
+- #6 S2S Scripts.

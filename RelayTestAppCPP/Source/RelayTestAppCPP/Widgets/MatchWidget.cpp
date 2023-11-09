@@ -14,6 +14,7 @@ void UMatchWidget::NativeConstruct()
 	GameAreaButton->OnHovered.AddDynamic(this, &UMatchWidget::GameButtonHovered);
 	GameAreaButton->OnUnhovered.AddDynamic(this, &UMatchWidget::GameButtonUnhovered);
 	GameAreaButton->OnClicked.AddDynamic(this, &UMatchWidget::GameButtonClicked);
+	EndMatchButton->OnClicked.AddDynamic(this, &UMatchWidget::EndMatchButtonClicked);
 	bIsMouseInGameButton = false;
 	RelayPlayerController = Cast<ARelayPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
@@ -52,6 +53,16 @@ void UMatchWidget::LeaveButtonClicked()
 {
 	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(ReturnMenuLoadingMessage), false);
 	GameInstance->Interface->DisconnectEverything();
+}
+
+void UMatchWidget::EndMatchButtonClicked()
+{
+	GameInstance->Interface->EndMatch();
+}
+
+void UMatchWidget::AdjustVisibilityForEndMatchButton(bool in_bIsUserHost)
+{
+	EndMatchButton->SetVisibility(in_bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 }
 
 FVector2D UMatchWidget::CalculateInputPosition()

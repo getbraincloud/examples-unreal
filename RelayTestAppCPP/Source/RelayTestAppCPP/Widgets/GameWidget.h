@@ -62,4 +62,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UMatchWidget* MatchWidget;
+
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UTextBlock* AppID_Text;
+	
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UTextBlock* LobbyID_Text;
+
+	UPROPERTY()
+	URelayGameInstance* RelayGameInstance;
 };

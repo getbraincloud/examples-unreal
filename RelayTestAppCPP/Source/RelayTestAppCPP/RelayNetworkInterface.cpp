@@ -8,7 +8,6 @@
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
 #include "Widgets/WidgetAddOns/OtherMatchUserWidget.h"
-#include "ids.h"
 
 // Sets default values
 ARelayNetworkInterface::ARelayNetworkInterface()
@@ -46,6 +45,7 @@ void ARelayNetworkInterface::LoginUniversalBC()
 
 void ARelayNetworkInterface::FindOrCreateLobby()
 {
+	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForJoinButton(false);
 	bIsHost = false;
 	bIsReady = false;
 	
@@ -56,12 +56,14 @@ void ARelayNetworkInterface::FindOrCreateLobby()
 void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 {
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonStringForColorIndex(in_colorIndex), Callback);
+	GameInstance->SaveGameInstance->ArrowColorIndex = in_colorIndex;
+	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonExtraString(), Callback);
 }
 
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
 {
-	if(BrainCloudWrapper->getClient()->getRelayService()->isConnected())
+	bool isConnected = BrainCloudWrapper->getClient()->getRelayService()->isConnected();
+	if(isConnected)
 	{
 		//Making json FString to convert to bytes
 		const FString beginningString = TEXT("{\"op\":") + in_operation + TEXT("\"data\":{");
@@ -114,12 +116,12 @@ void ARelayNetworkInterface::FindLobby()
 	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
 	
 	TArray<FString> otherUserCxIds;
-	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
+	FString extraJson = MakeJsonExtraString();
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
 	
 	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
 		(
-			"CursorPartyV2",
+			GameInstance->LobbyType,
 			76,
 			1,
 			AlgoJson,
@@ -183,9 +185,22 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 	{
 		//Match screen is ready to be loaded in + set up important relay functions
 		GameInstance->bIsLoading = false;
-		BrainCloudWrapper->getClient()->getRelayService()->registerRelayCallback(this);
-		BrainCloudWrapper->getClient()->getRelayService()->registerSystemCallback(this);
-		ConnectToRelay(jsonPacket);
+		TSharedPtr<FJsonObject> lobbyObject = jsonPacket->GetObjectField(TEXT("data"));
+		Address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
+		Port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(GameInstance->RelayProtocolString);
+		Passcode = lobbyObject->GetStringField(TEXT("passcode"));
+		if(bPresentAfterRelayStarted)
+		{
+			BrainCloudWrapper->getClient()->getRelayService()->registerRelayCallback(this);
+			BrainCloudWrapper->getClient()->getRelayService()->registerSystemCallback(this);
+			ConnectToRelay();
+		}
+		else
+		{
+			GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForJoinButton(true);
+			GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(false);
+		}
+		bPresentAfterRelayStarted = false;
 	}
 }
 
@@ -258,6 +273,29 @@ void ARelayNetworkInterface::relaySystemCallback(const FString& jsonResponse)
 			GameInstance->RemoveUserFromList(profileId);
 			GameInstance->GameWidget->MatchWidget->RemoveUserFromList(profileId);
 		}
+		else if(operation.Equals(TEXT("CONNECT")))
+		{
+			GameInstance->bIsLoading = false;
+			SendUpdateReady();
+		}
+		else if(operation.Equals(TEXT("END_MATCH")))
+		{
+			if(!bEndMatchRequested)
+			{
+				GameInstance->SetUpLoadingScreen(3, FText::FromString(TEXT("Game Ended, Returning to Lobby...")), false);
+			}
+			BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();
+			BrainCloudWrapper->getClient()->getRelayService()->deregisterSystemCallback();
+			BrainCloudWrapper->getClient()->getRelayService()->disconnect();
+			//Start timer?
+			GetWorld()->GetTimerManager().SetTimer
+			(
+				DelayTimerForEndMatchHandle,
+				this,
+				&ARelayNetworkInterface::DelayToFinishEndMatchLoading,
+				EndMatchLoadingTime
+			);
+		}
 	}
 }
 
@@ -271,9 +309,17 @@ void ARelayNetworkInterface::relayConnectFailure(const FString& errorMessage)
 
 void ARelayNetworkInterface::SendUpdateReady()
 {
-	FString extraJson = MakeJsonStringForColorIndex(GameInstance->SaveGameInstance->ArrowColorIndex);
 	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, extraJson, Callback);
+	BrainCloudWrapper->getClient()->getLobbyService()->updateReady(LobbyID, true, MakeJsonExtraString(), Callback);
+}
+
+void ARelayNetworkInterface::JoinMatch()
+{
+	bIsReady = true;
+	bPresentAfterRelayStarted = true;
+	BrainCloudWrapper->getRelayService()->registerRelayCallback(this);
+	BrainCloudWrapper->getRelayService()->registerSystemCallback(this);
+	ConnectToRelay();
 }
 
 void ARelayNetworkInterface::InitBrainCloud()
@@ -281,9 +327,19 @@ void ARelayNetworkInterface::InitBrainCloud()
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
     
-//    if(ServerURL.IsEmpty() && SecretKey.IsEmpty() && AppID.IsEmpty())
-//        BrainCloudWrapper->initialize(BRAINCLOUD_SERVER_URL, BRAINCLOUD_APP_SECRET, BRAINCLOUD_APP_ID, "1.0");
-//    else
+    // this will be loaded from BrainCloudSettings.ini
+    FString ConfigPath = FConfigCacheIni::NormalizeConfigIniPath(
+            FPaths::ProjectConfigDir() + TEXT("BrainCloudSettings.ini"));
+
+    if (GConfig) {
+        FString Section = "Credentials";
+        FConfigSection *ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
+        FConfigFile *ConfigFile = GConfig->FindConfigFile(*ConfigPath);
+        
+        AppID = ConfigSection->FindRef(TEXT("AppId")).GetValue();
+        SecretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
+		ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
+    }
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
 	BrainCloudWrapper->getClient()->enableLogging(true);
@@ -312,12 +368,17 @@ void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_j
 			break;
 		}
 	}
-	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
+	if(!ensure(GameInstance != nullptr))
+	{
+		GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForStartButton(bIsHost);
+	}
+	
 	bIsReady = !bIsHost;
 }
 
 void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
+	if(!BrainCloudWrapper->getRTTService()->isRTTEnabled()) return;
 	//Clearing Lists to then repopulate members that are in lobby
 	GameInstance->ListOfUserObjects.Empty();
 	GameInstance->GameWidget->LobbyWidget->Lobby_ListView->ClearListItems();
@@ -372,18 +433,25 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_json
 
 void ARelayNetworkInterface::UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPacket)
 {
-	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return; 
+	if(!in_jsonPacket->HasField(TEXT("lobbyId"))) return;
 		
 	LobbyID = in_jsonPacket->GetStringField("lobbyId");
+	FString stringForLobbyID = TEXT("Lobby ID: ");
+	if(!ensure(GameInstance != nullptr))
+	{
+		GameInstance->GameWidget->LobbyID_Text->SetText(FText::FromString(stringForLobbyID + LobbyID));
+	}
 	auto lobbyObject = in_jsonPacket->GetObjectField(TEXT("lobby"));
 	OwnerID = GetProfileIdFromCxId(lobbyObject->GetStringField(TEXT("ownerCxId")));
 }
 
-FString ARelayNetworkInterface::MakeJsonStringForColorIndex(int colorIndex)
+FString ARelayNetworkInterface::MakeJsonExtraString() const
 {
 	const FString beginningString = TEXT("{\"colorIndex\":");
-	const FString colorIndexString = FString::FromInt(colorIndex) + TEXT("}");
-	FString returnValue = beginningString + colorIndexString;
+	const FString colorIndexValue = FString::FromInt(GameInstance->SaveGameInstance->ArrowColorIndex) + TEXT(",");
+	const FString userPresentString = TEXT("\"presentSinceStart\":");
+	FString userPresentValue = bPresentAfterRelayStarted ? TEXT("\"true\"")  : TEXT("\"false\"");
+	FString returnValue = beginningString + colorIndexValue + userPresentString + userPresentValue + TEXT("}");
 	return returnValue;
 }
 
@@ -400,21 +468,16 @@ void ARelayNetworkInterface::DisconnectEverything()
 	StartLoadingTimer();
 }
 
-void ARelayNetworkInterface::ConnectToRelay(const TSharedPtr<FJsonObject>& in_jsonPacket)
+void ARelayNetworkInterface::ConnectToRelay()
 {
-	TSharedPtr<FJsonObject> lobbyObject = in_jsonPacket->GetObjectField(TEXT("data"));
-	FString address = lobbyObject->GetObjectField(TEXT("connectData"))->GetStringField(TEXT("address"));
-	
-	int port = lobbyObject->GetObjectField(TEXT("connectData"))->GetObjectField(TEXT("ports"))->GetNumberField(TEXT("ws"));
-	FString passcode = lobbyObject->GetStringField(TEXT("passcode"));
-
+	bEndMatchRequested = false;
 	//Connect to Relay with connect info provided above
 	BrainCloudWrapper->getClient()->getRelayService()->connect
 		(
-			BCRelayConnectionType::WEBSOCKET,
-			address,
-			port,
-			passcode,
+			GameInstance->RelayProtocol,
+			Address,
+			Port,
+			Passcode,
 			LobbyID,
 			this
 		);
@@ -433,10 +496,25 @@ FString ARelayNetworkInterface::GetBrainCloudVersion()
 	return Client->getBrainCloudClientVersion();
 }
 
+bool ARelayNetworkInterface::IsUserAuthenticated()
+{
+	if(BrainCloudWrapper)
+	{
+		return BrainCloudWrapper->getClient()->isAuthenticated();
+	}
+	return false;
+}
+
 void ARelayNetworkInterface::DelayToFinishLoadingScreen()
 {
 	GameInstance->bIsLoading = false;
 	GetWorld()->GetTimerManager().ClearTimer(DelayTimerHandle);
+}
+
+void ARelayNetworkInterface::DelayToFinishEndMatchLoading()
+{
+	GameInstance->bIsLoading = false;
+	GetWorld()->GetTimerManager().ClearTimer(DelayTimerForEndMatchHandle);
 }
 
 void ARelayNetworkInterface::StartLoadingTimer()
@@ -448,4 +526,13 @@ void ARelayNetworkInterface::StartLoadingTimer()
 				&ARelayNetworkInterface::DelayToFinishLoadingScreen,
 				LoadingTime
 			);
+}
+
+void ARelayNetworkInterface::EndMatch()
+{
+	GameInstance->SetUpLoadingScreen(3, FText::FromString(TEXT("Game Ended, Returning to Lobby...")), false);
+	bEndMatchRequested = true;
+	FString payload = TEXT("{\"op\":\"END_MATCH\"}");
+	BrainCloudWrapper->getClient()->getRelayService()->endMatch(payload);
+	UE_LOG(LogTemp, Log, TEXT("End Match request sent"));
 }

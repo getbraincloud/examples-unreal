@@ -52,6 +52,8 @@ public:
 
 	// Called from Start button enabled only for Host in LobbyWidget
 	void SendUpdateReady();
+
+	void JoinMatch();
 	
 //Callbacks
 	void AuthenticateCallback();
@@ -83,32 +85,39 @@ private:
 
 	void UpdateIDs(const TSharedPtr<FJsonObject>& in_jsonPacket);
 
-	void ConnectToRelay(const TSharedPtr<FJsonObject>& in_jsonPacket);
+	void ConnectToRelay();
 public:
 //Helper Functions
 	FString GetBrainCloudVersion();
 
+	bool IsUserAuthenticated();
+
 	UFUNCTION()
 	void DelayToFinishLoadingScreen();
 
+	UFUNCTION()
+	void DelayToFinishEndMatchLoading();
+
 	void StartLoadingTimer();
+
+	void EndMatch();
 
 private:
 	FString GetProfileIdFromCxId(FString in_data);
 
-	static FString MakeJsonStringForColorIndex(int colorIndex);
+	FString MakeJsonExtraString() const;
 
 public:
-//Exposed Properties to set in Editor
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString ServerURL;
-	
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString SecretKey;
-	
-	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
-	FString AppID;
-	
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString ServerURL;
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString AppID;
+
+    UPROPERTY(Config, BlueprintReadOnly, Category = "Credentials")
+    FString SecretKey;
+    
 	UPROPERTY(Category="Braincloud", BlueprintReadWrite, EditAnywhere)
 	FString AlgoJson;
 	
@@ -137,10 +146,21 @@ private:
 	UPROPERTY()
 	FTimerHandle DelayTimerHandle;
 
+	UPROPERTY()
+	FTimerHandle DelayTimerForEndMatchHandle;
+
+	//Relay Connection References
+	FString Address;
+	int Port;
+	FString Passcode;
+
 	class GameRelayCallback* Callback;
 	bool bIsHost;
 	bool bIsReady;
+	bool bPresentAfterRelayStarted;
 	bool bRTTConnectionIsLive;
+	bool bEndMatchRequested;
 	int64 ToAllPlayersNetID = 1099511627775;
 	const float LoadingTime = 2.5;
+	const float EndMatchLoadingTime = 1.0;
 };

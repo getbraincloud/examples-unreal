@@ -46,6 +46,9 @@
 SourceArt/**/*.png
 SourceArt/**/*.tga
 
+# copied engine certs
+**/Content/Certificates/*
+
 # Whitelist PakBlacklist-<BuildConfiguration>.txt files
 !Build/*/
 Build/*/**
@@ -85,3 +88,5 @@ BCFPS/DevBuild/
 
 #Exported packages
 **Exports/
+artifacts/
+
