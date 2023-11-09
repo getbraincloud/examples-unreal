@@ -23,6 +23,5 @@
     url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
 	branch = develop
 [submodule "BCChat/Plugins/BCClient"]
-    path = BCChat/Plugins/BCClient
-    url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
-	branch = develop
+	path = BCChat/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin-src.git
