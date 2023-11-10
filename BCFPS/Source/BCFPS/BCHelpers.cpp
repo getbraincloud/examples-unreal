@@ -5,7 +5,6 @@
 #include "BCFPS.h"
 #include "BrainCloudClient.h"
 #include "BrainCloudWrapper.h"
-#include "ids.h"
 
 UBCHelpers::UBCHelpers(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -15,11 +14,6 @@ UBCHelpers::UBCHelpers(const FObjectInitializer& ObjectInitializer)
 FBrainCloudInitParams UBCHelpers::InitializeFromHeader()
 {
 	FBrainCloudInitParams params;
-
-	params.ServerUrl = BRAINCLOUD_SERVER_URL;
-	params.Secret = BRAINCLOUD_APP_SECRET;
-	params.AppId = BRAINCLOUD_APP_ID;
-	params.Version = BRAINCLOUD_APP_VERSION;
 
 	return params;
 }
