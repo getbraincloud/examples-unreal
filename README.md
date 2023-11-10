@@ -40,10 +40,10 @@ $ git submodule set-branch --branch develop RelayTestApp/Plugins/BCClient
 ```
 [Credentials]
 AppId=12345
-AppSecret=foo123ba-12f4-1o34-o234-r123foo1
+AppSecret=[from portal]
 ServerUrl=https://api.internal.braincloudservers.com/dispatcherv2
 ```
-Fill in values for AppId and SecretKey. You can find this information on the brainCloud portal. If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
+Fill in values for AppId and AppSecret. You can find this information on the brainCloud portal. If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
 
 https://portal.braincloudservers.com/
 
