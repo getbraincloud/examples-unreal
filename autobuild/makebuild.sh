@@ -19,9 +19,14 @@ if [[ $UE_VERSION == "4.27" ]];
 then
 	UE4String='-ue4exe="${UE_INSTALL_PATH}/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor"'
 fi
-if [[ "$2" ==  "IOS" ]];
+if [[ "$TARGET" ==  "IOS" ]];
 then
 	ModeString='-distribution'
 fi
 
- "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_${TARGET}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs  ${ModeString}  -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output
+if [-z ${TARGET} ];
+then
+  "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -build -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject"
+else
+   "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_${TARGET}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs  ${ModeString}  -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output
+fi
