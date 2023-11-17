@@ -42,6 +42,8 @@ ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Config -p TappyChicken -x in
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT 
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o MobileTestApp/Config -p clientapp -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCChat/Config -p BCChat -x ini -s $SERVER_ENVIRONMENT
 
 if [[ $2 != -nodev ]];
 then
@@ -52,6 +54,8 @@ then
     git update-index --assume-unchanged Leaderboard/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged ScriptTestApp/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged Groups/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged MobileTestApp/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged BCChat/Config/BrainCloudSettings.ini
     echo "Secret config files have been excluded from git worktree."
 fi
 
