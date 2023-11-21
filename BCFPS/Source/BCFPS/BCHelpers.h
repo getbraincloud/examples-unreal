@@ -170,9 +170,6 @@ struct FLobbySetting
 	int MapSelection = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
-	int MaxPlayers = 2;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
 	int Region = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Lobby Setting")
