@@ -96,9 +96,6 @@ struct FBrainCloudPlayerData
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Data")
 		FLobbyMemberData LobbyMemberData;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Data")
-		FString ProfileID = "";
 };
 
 USTRUCT(BlueprintType)
