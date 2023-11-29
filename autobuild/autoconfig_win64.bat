@@ -11,7 +11,7 @@ pushd %~dp0\..
 set WORKSPACE=%CD%
 echo WORKSPACE is %WORKSPACE%
 
-::call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat BCFPS\Config DedicatedDemo ini %SERVER_ENVIRONMENT%
+call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat BCFPS\Config DedicatedDemo ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Config RelayTestApp ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Config TappyChicken ini %SERVER_ENVIRONMENT%
@@ -20,7 +20,7 @@ call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Leaderboard\Config Leaderboard ini %SER
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Groups\Config Groups ini %SERVER_ENVIRONMENT%
 
 if "%1" NEQ "-nodev" (
-::    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged RelayTestApp/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged RelayTestAppCPP/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged TappyChicken/Config/BrainCloudSettings.ini
