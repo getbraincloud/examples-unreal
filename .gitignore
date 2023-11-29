@@ -82,11 +82,12 @@ DerivedDataCache/*
 **/Saved/*
 **/.idea/*
 **/RiderLink/*
+**/.vsconfig
+
 # Builds
 **/Build/*
 BCFPS/DevBuild/
 
 #Exported packages
-**Exports/
 artifacts/
 

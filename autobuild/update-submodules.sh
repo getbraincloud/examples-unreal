@@ -15,7 +15,7 @@ fi
 
 needspush=0
 
-for i in BCFPS/Plugins/BCClient RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient Groups/Plugins/BCClient Leaderboard/Plugins/BCClient
+for i in BCFPS/Plugins/BCClient MobileTestApp/Plugins/BCClient BCChat/Plugins/BCClient RelayTestAppCPP/Plugins/BCClient RelayTestApp/Plugins/BCClient TappyChicken/Plugins/BCClient ScriptTestApp/Plugins/BCClient Groups/Plugins/BCClient Leaderboard/Plugins/BCClient
 do
     echo
     git submodule status $i
