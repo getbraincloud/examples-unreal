@@ -184,9 +184,6 @@ public:
 	UBCHelpers(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintCallable, Category = "BC Init Helpers")
-		static FBrainCloudInitParams InitializeFromFile();
-
-	UFUNCTION(BlueprintCallable, Category = "BC Init Helpers")
 		static FBrainCloudInitParams InitializeFromHeader();
 
 	UFUNCTION(BlueprintCallable, Category = "Conversion Helpers")
