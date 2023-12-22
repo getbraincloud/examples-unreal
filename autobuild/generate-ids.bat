@@ -1,4 +1,4 @@
-@echo OFF
+@ echo OFF
 
 set PROJECT_NAME=%1
 set APP_ID=%2
