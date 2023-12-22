@@ -18,6 +18,8 @@ call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Config TappyChicken ini %S
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat ScriptTestApp\Config ScriptTestApp ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Leaderboard\Config Leaderboard ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat Groups\Config Groups ini %SERVER_ENVIRONMENT%
+call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat BCChat\Config BCChat ini %SERVER_ENVIRONMENT%
+call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat MobileTestApp\Config clientapp ini %SERVER_ENVIRONMENT%
 
 if "%1" NEQ "-nodev" (
 ::    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
@@ -27,6 +29,8 @@ if "%1" NEQ "-nodev" (
     git update-index --assume-unchanged ScriptTestApp/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged Leaderboard/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged Groups/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged MobileTestApp/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged BCChat/Config/BrainCloudSettings.ini
     echo Secret config files have been excluded from git worktree.
 )
 
