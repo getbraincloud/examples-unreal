@@ -35,7 +35,7 @@ cd "`dirname "$0"`"/..
 export WORKSPACE=$PWD
 echo "WORKSPACE is $WORKSPACE"
 
-#${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCFPS/Config -p DedicatedDemo -x ini -s $SERVER_ENVIRONMENT
+${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCFPS/Config -p DedicatedDemo -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Config -p TappyChicken -x ini -s $SERVER_ENVIRONMENT
@@ -47,7 +47,7 @@ ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCChat/Config -p BCChat -x ini -s $SERVER
 
 if [[ $2 != -nodev ]];
 then
-#    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged RelayTestApp/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged RelayTestAppCPP/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged TappyChicken/Config/BrainCloudSettings.ini
