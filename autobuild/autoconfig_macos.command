@@ -35,38 +35,32 @@ cd "`dirname "$0"`"/..
 export WORKSPACE=$PWD
 echo "WORKSPACE is $WORKSPACE"
 
+for j in BCChat RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+do
+  ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o $j/Config -p $j -x ini -s $SERVER_ENVIRONMENT
+done
+
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCFPS/Config -p DedicatedDemo -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestApp/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o RelayTestAppCPP/Config -p RelayTestApp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o TappyChicken/Config -p TappyChicken -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Leaderboard/Config -p LeaderBoard -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o ScriptTestApp/Config -p ScriptTestApp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o Groups/Config -p Groups -x ini -s $SERVER_ENVIRONMENT 
 ${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o MobileTestApp/Config -p clientapp -x ini -s $SERVER_ENVIRONMENT
-${BRAINCLOUD_TOOLS}/bin/copy-ids.sh -o BCChat/Config -p BCChat -x ini -s $SERVER_ENVIRONMENT
 
 if [[ $2 != -nodev ]];
 then
-    git update-index --assume-unchanged BCFPS/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged RelayTestApp/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged RelayTestAppCPP/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged TappyChicken/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged Leaderboard/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged ScriptTestApp/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged Groups/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged MobileTestApp/Config/BrainCloudSettings.ini
-    git update-index --assume-unchanged BCChat/Config/BrainCloudSettings.ini
-    echo "Secret config files have been excluded from git worktree."
+  for j in BCFPS MobileTestApp BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+  do
+    git update-index --assume-unchanged $j/Config/BrainCloudSettings.ini
+  done
+  echo "Secret config files have been excluded from git worktree."
 fi
 
 echo "Copying certificates for RTT"
+for j in BCFPS MobileTestApp BCChat RelayTestAppCPP RelayTestApp
+do
 
-cd RelayTestApp
-rsync -a "$UE_INSTALL_PATH/Engine/Content/Certificates/ThirdParty/cacert.pem" Content/Certificates/
-cd ..
+  cd $j
+  rsync -a "$UE_INSTALL_PATH/Engine/Content/Certificates/ThirdParty/cacert.pem" Content/Certificates/
+  cd ..
 
-cd RelayTestAppCpp
-rsync -a "$UE_INSTALL_PATH/Engine/Content/Certificates/ThirdParty/cacert.pem" Content/Certificates/
-cd ..
+done
 
 echo "Done setup examples"
