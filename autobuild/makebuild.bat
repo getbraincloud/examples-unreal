@@ -28,7 +28,7 @@ set CultureString=-CookCultures=en
 
 ::set CookString=-cookflavor=ECS2
 
-call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -rocket -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Shipping -serverconfig=Shipping -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -CrashReporter -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Win64_%UE_VERSION%"
+call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -rocket -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Shipping -serverconfig=Shipping -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -CrashReporter -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\artifacts\%PROJECTNAME%_Win64_%UE_VERSION%"
 
 
 :: zip this: ${PROJECTNAME}_Win64
