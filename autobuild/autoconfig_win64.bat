@@ -6,20 +6,22 @@
 
 set SERVER_ENVIRONMENT=internal
   
-pushd %~dp0
+pushd %~dp0\..
 
-set WORKSPACE=%CD%
-echo WORKSPACE is %WORKSPACE%
+::set WORKSPACE=%CD%
+::echo WORKSPACE is %WORKSPACE%
 
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestApp\Config RelayTestApp ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat RelayTestAppCPP\Config RelayTestApp ini %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat TappyChicken\Source\TappyChicken ue_tappychicken h %SERVER_ENVIRONMENT%
 call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat ScriptTestApp\Config ScriptTestApp ini %SERVER_ENVIRONMENT%
+call %BRAINCLOUD_TOOLS%\bin\copy-ids.bat MobileTestApp\Config clientapp ini %SERVER_ENVIRONMENT%
 if "%1" NEQ "-nodev" (
     git update-index --assume-unchanged RelayTestApp/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged RelayTestAppCPP/Config/BrainCloudSettings.ini
     git update-index --assume-unchanged TappyChicken/Source/TappyChicken/ids.h
     git update-index --assume-unchanged ScriptTestApp/Config/BrainCloudSettings.ini
+    git update-index --assume-unchanged MobileTestApp/Config/BrainCloudSettings.ini
     echo Secret config files have been excluded from git worktree.
 )
 
