@@ -1,7 +1,10 @@
-for D in ./*; do
-    if [ -d "$D" ]; then
-        cd "$D"
-        cleanupunreal.sh
+#!/bin/bash
+
+for i in BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp
+do
+    if [ -d "$i" ]; then
+        cd "$i"
+        "`dirname "$0"`"/cleanupunreal.sh
         cd ..
     fi
 done
