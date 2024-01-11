@@ -1,10 +1,12 @@
 @ echo OFF
 
-for /d %%a in ("BCChat","RelayTestAPP") do (
+for /d %%a in (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, Leaderboard) do (
 	setlocal enableDelayedExpansion
 	cd %%a
 	echo !CD!
-	CALL ..\autobuild\cleanupunreal.bat
+	pushd ..
+
+	CALL %~dp0\cleanupunreal.bat
 	cd ..
 )
 exit /b %errorlevel%

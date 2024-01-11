@@ -4,7 +4,7 @@ for i in BCFPS MobileTestApp BCChat RelayTestAppCPP RelayTestApp TappyChicken Sc
 do
     if [ -d "$i" ]; then
         cd "$i"
-        ../autobuild/cleanupunreal.sh
+        "`dirname "$0"`"/cleanupunreal.sh
         cd ..
     fi
 done
