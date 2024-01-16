@@ -4,7 +4,6 @@ for /d %%a in (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, Tapp
 	setlocal enableDelayedExpansion
 	cd %%a
 	echo !CD!
-	pushd ..
 
 	CALL %~dp0\cleanupunreal.bat
 	cd ..
