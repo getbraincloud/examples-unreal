@@ -54,7 +54,7 @@ esac
 #"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildPlugin -plugin="$WORKSPACE/braincloud-unreal-plugin/BCClient.uplugin"  -nop4 -utf8output -pak -compile -package="$WORKSPACE/$PROJECTNAME/Plugins/BCClient" -TargetPlatforms=${TARGET} -CreateSubFolder -Rocket
 
 
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -rocket -noP4 -nocompile -utf8output -nocompileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_Unreal_MacOSBuild"
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -rocket -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_Unreal_MacOSBuild"
 
 if [[ $TARGET == "IOS" ]];
 then
