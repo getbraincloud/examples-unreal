@@ -5,7 +5,7 @@ FOR %%G IN (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyCh
 if exist "%%G\Plugins\BCClient" (
 
     set SUBMODULE=%%G\Plugins\BCClient
-    set BRANCH=%2
+    set BRANCH=%1
 
     if [%BRANCH%]==[] (
         for /f %%i in ('git config -f .gitmodules --get submodule.%SUBMODULE:\=/%.branch') do (set BRANCH=%%i)
