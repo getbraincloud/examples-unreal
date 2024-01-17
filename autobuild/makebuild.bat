@@ -7,8 +7,6 @@
 
 if not defined UE_INSTALL_PATH goto Path_Error
 
-set WORKSPACE=%CD%
-
 set TARGET=%~2
 
 set PROJECTNAME=%~1
