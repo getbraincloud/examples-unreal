@@ -1,29 +1,26 @@
 @echo OFF
+set LIST=%2
+if ["%LIST%"]==[""] (
+    set LIST=BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, Leaderboard
+)
+set BRANCH=%1
+        if ["%BRANCH%"]==[""] (
+            set BRANCH=develop
+        )
 
-FOR %%G IN (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, Leaderboard) DO (
+::setlocal enabledelayedexpansion
 
-if exist "%%G\Plugins\BCClient" (
+FOR %%G IN (%LIST%) DO (
 
-    set SUBMODULE=%%G\Plugins\BCClient
-    set BRANCH=%1
+    if exist "%%G\Plugins\BCClient" (
 
-    if [%BRANCH%]==[] (
-        for /f %%i in ('git config -f .gitmodules --get submodule.%SUBMODULE:\=/%.branch') do (set BRANCH=%%i)
-    )
+        pushd %%G\Plugins\BCClient
 
-    if [%BRANCH%]==[] (
-        set BRANCH=master
-    )
+        echo Checking out %BRANCH% to %%G\Plugins\BCClient
+        git checkout %BRANCH%
+        git pull
 
+        popd
 
-    pushd %SUBMODULE:/=\%
-
-    echo Checking out %BRANCH% to %SUBMODULE:/=\%
-    git fetch
-    git checkout %BRANCH%
-    git pull
-
-    popd
-
-) else (echo Folder not exists)
+    ) else (echo Folder not exists)    
 )
