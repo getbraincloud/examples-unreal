@@ -1,11 +1,19 @@
 #!/bin/bash
-for i in MobileTestApp RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp
+
+PROJECT_LIST=$2
+
+if [ -z ${PROJECT_LIST} ];
+then
+  PROJECT_LIST="BCChat BCFPS MobileTestApp RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard"
+fi
+
+for i in $PROJECT_LIST
 do
   if [[ -d $i/Plugins/BCClient ]];
   then
 
-  SUBMODULE=$1/Plugins/BCClient
-  BRANCH=$2
+  SUBMODULE=$i/Plugins/BCClient
+  BRANCH=$1
 
   if [[ -d ${SUBMODULE}  ]];
   then
@@ -31,6 +39,7 @@ do
      git pull
     fi
     popd
+  fi
   else
     echo "Folder not exists"
   fi
