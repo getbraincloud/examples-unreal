@@ -29,7 +29,7 @@ set CultureString=
 
 ::set CookString=-cookflavor=ECS2
 
-call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -rocket -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_WindowsBuild"
+call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_${TARGET}Build"
 
 
 :: zip this: ${PROJECTNAME}_Win64

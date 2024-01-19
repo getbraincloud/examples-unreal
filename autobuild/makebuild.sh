@@ -21,9 +21,9 @@ CultureString=
 # specify path to UE editor command
 if [[ $UE_VERSION == "4.27" ]];
 then
-	UE4String='-ue4exe='\""${UE_INSTALL_PATH}/Engine/Binaries/Mac/UE4Editor.app/Contents/MacOS/UE4Editor"\"
+	UE4String='-ue4exe='\""${UE_INSTALL_PATH}/Engine/Binaries/Mac/UE4Editor.app/Contents/${TARGET}/UE4Editor"\"
 else
-  UE4String='-unrealexe='\""${UE_INSTALL_PATH}/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor"\"
+  UE4String='-unrealexe='\""${UE_INSTALL_PATH}/Engine/Binaries/Mac/UnrealEditor.app/Contents/${TARGET}/UnrealEditor"\"
 fi
 
 # platform specific parameters: IOS, Mac, Android
@@ -41,9 +41,9 @@ case "$TARGET" in
 esac
 
 # package for target platform
-# command from UE:  -ScriptsForProject="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" Turnkey -command=VerifySdk -platform=Android -UpdateIfNeeded -EditorIO -EditorIOPort=63206  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject"  -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor" -platform=Android  -cookflavor=ETC2 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory="/Volumes/Project/bcUnreal/working-usethis" -nocompile -nocompileuat
-# -ScriptsForProject=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject Turnkey -command=VerifySdk -platform=IOS -UpdateIfNeeded -EditorIO -EditorIOPort=63206 -project=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor" -platform=IOS -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory=/Volumes/Project/bcUnreal/working-usethis -nodebuginfo -nocompile -nocompileuat
-# -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject"  -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/MacOS/UnrealEditor" -platform=IOS -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory="/Volumes/Project/bcUnreal/working-usethis/artifacts/newpkg" -distribution -CrashReporter -nodebuginfo -nocompile -nocompileuat
+# command from UE:  -ScriptsForProject="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" Turnkey -command=VerifySdk -platform=Android -UpdateIfNeeded -EditorIO -EditorIOPort=63206  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject"  -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/${TARGET}/UnrealEditor" -platform=Android  -cookflavor=ETC2 -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory="/Volumes/Project/bcUnreal/working-usethis" -nocompile -nocompileuat
+# -ScriptsForProject=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject Turnkey -command=VerifySdk -platform=IOS -UpdateIfNeeded -EditorIO -EditorIOPort=63206 -project=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook -project=/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/${TARGET}/UnrealEditor" -platform=IOS -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory=/Volumes/Project/bcUnreal/working-usethis -nodebuginfo -nocompile -nocompileuat
+# -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject" BuildCookRun -nop4 -utf8output -nocompileeditor -skipbuildeditor -cook  -project="/Volumes/Project/bcUnreal/working-usethis/MobileTestApp/MobileTestApp.uproject"  -unrealexe="/Users/Shared/Epic Games/UE_5.3/Engine/Binaries/Mac/UnrealEditor.app/Contents/${TARGET}/UnrealEditor" -platform=IOS -installed -stage -archive -package -build -pak -iostore -compressed -prereqs -archivedirectory="/Volumes/Project/bcUnreal/working-usethis/artifacts/newpkg" -distribution -CrashReporter -nodebuginfo -nocompile -nocompileuat
 
 # old command commented out: "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject" -cook -stage -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_${TARGET}" -package  -compressed -SkipCookingEditorContent -clientconfig=Development -clean -pak -prereqs  ${ModeString}  -nodebuginfo ${UE4String} -targetplatform=${TARGET} -build -target=${PROJECTNAME} -utf8output
 
@@ -54,19 +54,19 @@ esac
 #"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildPlugin -plugin="$WORKSPACE/braincloud-unreal-plugin/BCClient.uplugin"  -nop4 -utf8output -pak -compile -package="$WORKSPACE/$PROJECTNAME/Plugins/BCClient" -TargetPlatforms=${TARGET} -CreateSubFolder -Rocket
 
 
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -rocket -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_Unreal_MacOSBuild"
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="$WORKSPACE/${PROJECTNAME}_Unreal_${TARGET}Build"
 
 if [[ $TARGET == "IOS" ]];
 then
-  archive=$(ls -td -- $WORKSPACE/${PROJECTNAME}_Unreal_MacOSBuild/IOS/${PROJECTNAME}* | head -n 1)
-  xcodebuild -exportArchive -archivePath "$archive" -exportPath "$WORKSPACE/${PROJECTNAME}_Unreal_MacOSBuild/IOS/" -allowProvisioningUpdates -exportOptionsPlist "$WORKSPACE/autobuild/ExportOptions.plist"
+  archive=$(ls -td -- $WORKSPACE/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/${PROJECTNAME}* | head -n 1)
+  xcodebuild -exportArchive -archivePath "$archive" -exportPath "$WORKSPACE/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/" -allowProvisioningUpdates -exportOptionsPlist "$WORKSPACE/autobuild/ExportOptions.plist"
 fi
 
 retcode=$?
 
 if [[ $retcode -eq 0 ]];
   then
-    echo Package install: ${PROJECTNAME}_Unreal_MacOSBuild/${PlatformPackageName}
+    echo Package install: ${PROJECTNAME}_Unreal_${TARGET}Build/${PlatformPackageName}
   else
     echo Packaging failed.
 fi
