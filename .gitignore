@@ -91,3 +91,5 @@ BCFPS/DevBuild/
 #Exported packages
 artifacts/
 *_Unreal_*Build
+
+**/Config/BrainCloudSettings.ini

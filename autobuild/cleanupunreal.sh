@@ -1,11 +1,9 @@
 #!/bin/bash
+rm -rf $1/Binaries
+rm -rf $1/Intermediate
+rm -rf $1/Saved
+rm -rf $1/DerivedDataCache
+rm -rf $1/Plugins/BCClient/Binaries
+rm -rf $1/Plugins/BCClient/Intermediate
 
-rm -rf Binaries
-rm -rf Intermediate
-rm -rf Saved
-rm -rf DerivedDataCache
-rm -rf Plugins/BCClient/Binaries
-rm -rf Plugins/BCClient/Intermediate
-if [ -z $1 ] ; then
-	echo Done $PWD
-fi
+echo Done $1
