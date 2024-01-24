@@ -13,6 +13,12 @@ if "%TARGET%" == "" set TARGET=Win64
 set PROJECTNAME=%~1
 if "%PROJECTNAME%" == "" goto Proj_Error
 
+set ARTIFACTS=%~3
+if "%ARTIFACTS%" == "" set ARTIFACTS=%WORKSPACE%\artifacts
+
+echo --- BRAINCLOUD Commencing Build %PROJECTNAME% for %TARGET% ---
+echo --- BRAINCLOUD Archiving to %ARTIFACTS% ---
+
 ::set CultureString=-CookCultures=en
 set CultureString=
 
@@ -24,7 +30,7 @@ set CultureString=
 
 ::call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\Build.bat" %PROJECTNAME% Win64 Development -Project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -WaitMutex -FromMsBuild
 
-call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_%TARGET%Build"
+call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%ARTIFACTS%\%PROJECTNAME%_Unreal_%TARGET%Build"
 
 :: return code for build
 exit /B %errorlevel%
