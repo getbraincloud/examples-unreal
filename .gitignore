@@ -89,3 +89,5 @@ DerivedDataCache/*
 **Exports/
 artifacts/
 
+#App Secret Data
+Config/BrainCloudSettings.ini

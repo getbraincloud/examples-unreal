@@ -7,17 +7,29 @@
 
 if not defined UE_INSTALL_PATH goto Path_Error
 
+set TARGET=%~2
+if "%TARGET%" == "" set TARGET=Win64
+
 set PROJECTNAME=%~1
 if "%PROJECTNAME%" == "" goto Proj_Error
 
 set ARTIFACTS=%~3
 if "%ARTIFACTS%" == "" set ARTIFACTS=artifacts
 
+::set CultureString=-CookCultures=en
+set CultureString=
+
+::set ModeString=-distribution
+
+::set CookString=-cookflavor=ECS2
+
 ::call "%UE_INSTALL_PATH%\Engine\Binaries\DotNet\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -game -rocket -progress
 
 ::call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\Build.bat" %PROJECTNAME% Win64 Development -Project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -WaitMutex -FromMsBuild
 
-call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -cook -stage -archive -archivedirectory="%WORKSPACE%\%ARTIFACTS%\%PROJECTNAME%_Win64" -package -clientconfig=Development -pak -prereqs -distribution -nodebuginfo -targetplatform=Win64 -build -utf8output
+::call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -cook -stage -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_%TARGET%Build" -package -clientconfig=Development -pak -prereqs -distribution -nodebuginfo -targetplatform=%TARGET% -build -utf8output
+
+call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_${TARGET}Build"
 
 
 :: zip this: ${PROJECTNAME}_Win64
