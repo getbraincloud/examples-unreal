@@ -13,9 +13,6 @@ if "%TARGET%" == "" set TARGET=Win64
 set PROJECTNAME=%~1
 if "%PROJECTNAME%" == "" goto Proj_Error
 
-set ARTIFACTS=%~3
-if "%ARTIFACTS%" == "" set ARTIFACTS=artifacts
-
 ::set CultureString=-CookCultures=en
 set CultureString=
 
@@ -27,16 +24,9 @@ set CultureString=
 
 ::call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\Build.bat" %PROJECTNAME% Win64 Development -Project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -WaitMutex -FromMsBuild
 
-::call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -rocket -nocompile -compileeditor -installed -nop4 -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -cook -stage -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_%TARGET%Build" -package -clientconfig=Development -pak -prereqs -distribution -nodebuginfo -targetplatform=%TARGET% -build -utf8output
+call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_%TARGET%Build"
 
-call "%UE_INSTALL_PATH%\Engine\Build\BatchFiles\RunUAT.bat" BuildCookRun -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -noP4 -nocompile -utf8output -compileeditor -platform=%TARGET% %ModeString% -clientconfig=Development -build -cook %CultureString% %CookString% -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="%WORKSPACE%\%PROJECTNAME%_Unreal_${TARGET}Build"
-
-
-:: zip this: ${PROJECTNAME}_Win64
-:: archive that: ${PROJECTNAME}_Win64.zip
-
-
-:: return code for tests
+:: return code for build
 exit /B %errorlevel%
 
 :Proj_Error
