@@ -1,11 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BCGameInstance.h"
+#include <BrainCloudFunctionLibrary.h>
 
 void UBCGameInstance::Init()
 {
     InitializeBrainCloud();
 
+    //Run callbacks on a timer that loops
     GetWorld()->GetTimerManager().SetTimer(
         bcCallbacksTimerHandle,
         this,
@@ -36,23 +38,15 @@ void UBCGameInstance::InitializeBrainCloud()
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
 	BrainCloudWrapper->AddToRoot();
 
-    FString ConfigPath = FConfigCacheIni::NormalizeConfigIniPath(
-        FPaths::ProjectConfigDir() + TEXT("BrainCloudSettings.ini"));
+    FBrainCloudAppDataStruct appData = UBrainCloudFunctionLibrary::GetBCAppData();
 
-    if (GConfig) {
-        FString Section = "Credentials";
-        FConfigSection* ConfigSection = GConfig->GetSectionPrivate(*Section, false, true, ConfigPath);
-        FConfigFile* ConfigFile = GConfig->FindConfigFile(*ConfigPath);
+    AppID = appData.AppId;
+    SecretKey = appData.AppSecret;
+    ServerURL = appData.ServerUrl;
 
-        AppID = ConfigSection->FindRef(TEXT("AppId")).GetValue();
-        SecretKey = ConfigSection->FindRef(TEXT("AppSecret")).GetValue();
-        ServerURL = ConfigSection->FindRef(TEXT("ServerUrl")).GetValue();
-    }
-    BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
+    BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, BrainCloudWrapper->getClient()->getBrainCloudClientVersion());
 
     BrainCloudWrapper->getClient()->enableLogging(true);
-
-    //Run callbacks on a timer that loops
 }
 
 void UBCGameInstance::BC_CallbackTick()
