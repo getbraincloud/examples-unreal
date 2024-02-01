@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ids.h"
 #include "TappyChicken.generated.h"
 
 USTRUCT(BlueprintType)
@@ -10,12 +11,12 @@ struct FAppIds
 {
 
     GENERATED_BODY()
-
+    
     FAppIds()
     {
-        serverUrl = "";
-        secretKey = "";
-        appId = "";
+        serverUrl = BRAINCLOUD_SERVER_URL;
+        secretKey = BRAINCLOUD_APP_SECRET;
+        appId = BRAINCLOUD_APP_ID;
     }
 
     UPROPERTY(BlueprintReadWrite)

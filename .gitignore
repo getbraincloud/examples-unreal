@@ -41,6 +41,9 @@
 *.sdf
 *.VC.db
 *.VC.opendb
+**/*.code-workspace
+**/*.vsconfig
+**/*.ignore/
 
 # Precompiled Assets
 SourceArt/**/*.png
