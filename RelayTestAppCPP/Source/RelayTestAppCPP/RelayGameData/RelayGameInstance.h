@@ -20,6 +20,9 @@ public:
 	/*********** Functions **************/
 
 	URelayGameInstance();
+
+//Logout user on shutdown
+	virtual void Shutdown() override;
 	
 //Loading Screen functions
 	

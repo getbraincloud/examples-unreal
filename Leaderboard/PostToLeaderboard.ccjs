@@ -1,0 +1,42 @@
+"use strict";
+
+function main() {
+  var response = {};
+  var accuracy = parseFloat(data.accuracy);
+  var leaderboardId = data.id;
+  var playerData = { "nickname": data.playerName };
+
+// Grab the leaderboard service proxy from the bridge
+  var leaderboardService = bridge.getLeaderboardServiceProxy();
+// Prepare the leaderboard paramaters.
+  var leaderboardType = "HIGH_VALUE";
+  var rotationType = "NEVER";
+  var rotationReset = new Date("2016-01-01");  // Unused because rotationType is NEVER
+  var retainedCount = 1; // Just keep the current leaderboard
+
+  var scoreResult = leaderboardService.postScoreToLeaderboard(
+    leaderboardId,
+    accuracy,
+    playerData);
+
+if (scoreResult.status == 200) {
+    response.success = true;
+}else{
+    response.success = false;
+}
+
+  return response;
+}
+
+main();
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"PostToLeaderboard",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\n  \\\"id\\\": \\\"value1\\\",\\n  \\\"playerName\\\": \\\"value2\\\",\\n  \\\"accuracy\\\": \\\"90\\\"\\n}",
+// "version":10,
+// "updatedAt":1700971083478

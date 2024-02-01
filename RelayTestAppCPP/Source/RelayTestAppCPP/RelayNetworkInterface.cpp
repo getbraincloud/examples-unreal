@@ -464,6 +464,7 @@ void ARelayNetworkInterface::DisconnectEverything()
 	BrainCloudWrapper->getClient()->getRelayService()->disconnect();
 	BrainCloudWrapper->getClient()->getRTTService()->disableRTT();
 	BrainCloudWrapper->getClient()->getRTTService()->deregisterRTTLobbyCallback();
+	BrainCloudWrapper->logout(true, nullptr);
 
 	StartLoadingTimer();
 }

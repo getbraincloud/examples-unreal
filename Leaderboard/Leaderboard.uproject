@@ -1,14 +1,9 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "5.3",
+	"EngineAssociation": "5.1",
 	"Category": "",
 	"Description": "",
 	"Plugins": [
-		{
-			"Name": "VaRest",
-			"Enabled": true,
-			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/e47be161e7a24e928560290abd5dcc4f"
-		},
 		{
 			"Name": "BCClient",
 			"Enabled": true
@@ -21,7 +16,11 @@
 			]
 		},
 		{
-			"Name": "XRBase",
+			"Name": "HDRIBackdrop",
+			"Enabled": true
+		},
+		{
+			"Name": "JsonBlueprintUtilities",
 			"Enabled": true
 		}
 	]
