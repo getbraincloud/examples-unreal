@@ -7,6 +7,7 @@ void UBCGameInstance::Init()
 {
     InitializeBrainCloud();
 
+    //Run callbacks on a timer that loops
     GetWorld()->GetTimerManager().SetTimer(
         bcCallbacksTimerHandle,
         this,
@@ -46,8 +47,6 @@ void UBCGameInstance::InitializeBrainCloud()
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, BrainCloudWrapper->getClient()->getBrainCloudClientVersion());
 
     BrainCloudWrapper->getClient()->enableLogging(true);
-
-    //Run callbacks on a timer that loops
 }
 
 void UBCGameInstance::BC_CallbackTick()
