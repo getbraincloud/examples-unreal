@@ -34,3 +34,11 @@
 	path = MobileTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
     branch = develop
+[submodule "MobileTestAppUE4/Plugins/VaRest"]
+	path = MobileTestAppUE4/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "TappyChicken/Plugins/VaRest"]
+	path = TappyChicken/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
