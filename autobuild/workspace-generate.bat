@@ -2,6 +2,6 @@
 :: usage:
 ::      autobuild\workspace-generate.bat project_name
 
-PROJECTNAME=%1
+set PROJECTNAME=%1
 echo %PROJECTNAME%
 call "%UE_INSTALL_PATH%\Engine\Binaries\DotNet\UnrealBuildTool\UnrealBuildTool.exe" -projectfiles -project="%WORKSPACE%\%PROJECTNAME%\%PROJECTNAME%.uproject" -game -rocket -progress
