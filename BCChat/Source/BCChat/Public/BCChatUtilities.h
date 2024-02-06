@@ -16,5 +16,7 @@ class BCCHAT_API UBCChatUtilities : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
 	static FDateTime UTCToDateTime(int64 utcMSeconds);
-	
+
+	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
+	static void SelectFile(const FString& DialogTitle, const FString& DefaultPath, const FString& FileTypes, TArray<FString>& OutFileNames);
 };

@@ -13,7 +13,7 @@ public class BCChat : ModuleRules
 															"Engine", 
 															"InputCore", 
 															"BCClientPlugin", 
-															"Sockets" });
+															"Sockets","HeadMountedDisplay","SlateCore" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "Json" });
 

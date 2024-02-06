@@ -2,6 +2,7 @@
 
 #include "BCGameInstance.h"
 #include <BrainCloudFunctionLibrary.h>
+#include <BCClientPlugin/Private/BlueprintProxies/BCWrapperProxy.h>
 
 void UBCGameInstance::Init()
 {
