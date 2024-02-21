@@ -1,0 +1,32 @@
+"use strict";
+
+function main() {
+  
+  var leaderboardId = data.id;
+  var sortOrder = "HIGH_TO_LOW";
+
+  var beforeCount = 3;
+  var afterCount = 4;
+  var leaderboardProxy = bridge.getLeaderboardServiceProxy();
+
+  var postResult = leaderboardProxy.getGlobalLeaderboardView(leaderboardId, sortOrder, beforeCount, afterCount);
+  if (postResult.status == 200) {
+     // Success!  
+    return postResult.data;
+  }else{
+    return false;
+  }
+}
+
+main();
+
+//*** ------------- brainCloud meta-data begins now - do not hand-edit -----------------
+// "scriptName":"GetLeaderboard",
+// "clientCallable":true,
+// "s2sCallable":false,
+// "peerCallable":false,
+// "scriptTimeout":20,
+// "description":"",
+// "parms":"{\\n  \\\"id\\\": \\\"\\\",\\n  \\\"EndIndex\\\": 9\\n}",
+// "version":4,
+// "updatedAt":1700892332268

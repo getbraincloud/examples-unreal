@@ -10,9 +10,25 @@
 [submodule "ScriptTestApp/Plugins/BCClient"]
 	path = ScriptTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+[submodule "BCFPS/Plugins/BCClient"]
+	path = BCFPS/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 [submodule "Groups/Plugins/BCClient"]
     path = Groups/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 [submodule "Leaderboard/Plugins/BCClient"]
     path = Leaderboard/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+[submodule "BCChat/Plugins/BCClient"]
+	path = BCChat/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+[submodule "MobileTestApp/Plugins/BCClient"]
+	path = MobileTestApp/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+[submodule "MobileTestAppUE4/Plugins/VaRest"]
+	path = MobileTestAppUE4/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27
+[submodule "MobileTestAppUE4/Plugins/BCClient"]
+	path = MobileTestAppUE4/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git

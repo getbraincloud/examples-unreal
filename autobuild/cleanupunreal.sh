@@ -1,8 +1,9 @@
-rm -rf Binaries
-rm -rf Intermediate
-rm -rf Plugins/BCClient/Binaries
-rm -rf Plugins/BCClient/Intermediate
-rm -rf Plugins/VaRest/Binaries
-rm -rf Plugins/VaRest/Intermediate
-echo Unreal build file have been removed.
+#!/bin/bash
+rm -rf $1/Binaries
+rm -rf $1/Intermediate
+rm -rf $1/Saved
+rm -rf $1/DerivedDataCache
+rm -rf $1/Plugins/BCClient/Binaries
+rm -rf $1/Plugins/BCClient/Intermediate
 
+echo Done $1
