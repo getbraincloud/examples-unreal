@@ -2,6 +2,8 @@
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
 
+Read the latest [brainCloud Docs](https://docs.braincloudservers.com/) on developing with brainCloud  - including feature overviews, how-to's, [API references](https://docs.braincloudservers.com/learn/api-reference/) and [video tutorials](https://bootcamp.braincloudservers.com/).
+
 ## Instructions
 
 ### Clone:
