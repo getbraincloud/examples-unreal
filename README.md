@@ -70,7 +70,7 @@ export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 
 #### UE 4 Examples
 
-There is a separate branch for working in Unreal Engine 4. It will work with the same/latest plugin. To switch, you will need to clean build directories and copy new ids files.
+There is one example working in Unreal Engine 4. It will work with the same/latest plugin. Legacy versions of examples can also be found in
 
 ```angular2html
 git checkout ue4-examples
