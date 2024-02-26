@@ -1,6 +1,8 @@
-# Unreal Examples
+# brainCloud Unreal Examples
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
+
+Read the latest [brainCloud Docs](https://docs.braincloudservers.com/) on developing with brainCloud  - including feature overviews, how-to's, [API references](https://docs.braincloudservers.com/learn/api-reference/) and [video tutorials](https://bootcamp.braincloudservers.com/).
 
 ## Instructions
 
@@ -70,7 +72,7 @@ export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 
 #### UE 4 Examples
 
-There is a separate branch for working in Unreal Engine 4. It will work with the same/latest plugin. To switch, you will need to clean build directories and copy new ids files.
+There is one example working in Unreal Engine 4. It will work with the same/latest plugin. Legacy versions of examples can also be found in
 
 ```angular2html
 git checkout ue4-examples
@@ -83,6 +85,10 @@ Play in editor or launch standalone game. Examples can be packaged for Mac or Wi
 ## Standalone Client Lib
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
+
+# The Examples
+
+Refer to README.md file in each game project folder. There are useful build scripts located in autobuild folder. Also, see LICENSE.md in the main folder.
 
 ## Relay Test App (Blueprint) Relay Test App CPP (C++ Only)
 
@@ -117,8 +123,19 @@ If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
 
 In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
 
+## BCChat
+
+A demonstration of a cross-platform multi-channel RTT chat app.
+
+## BCFPS
+
+A demonstration of integration of real-time websocket network technology for multi-player gameplay in a first person shooter.
+
+## Mobile Test App
+Lightweight app to install on devices (Mobile, Console, etc) and set up to run user defined code/blueprint. There are versions for UE 5.3 and for UE 4.27.
+
 ## Tappy Chicken
-Based on Unreal's' demo. Shows 
+2D scroller based on Unreal's' demo. Shows 
 
 * Achievements
 * Leaderboards
