@@ -1,4 +1,4 @@
-# Unreal Examples
+# brainCloud Unreal Examples
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
 
@@ -86,7 +86,7 @@ Play in editor or launch standalone game. Examples can be packaged for Mac or Wi
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
 
-# brainCloud Example Projects
+# The Examples
 
 Refer to README.md file in each game project folder. There are useful build scripts located in autobuild folder. Also, see LICENSE.md in the main folder.
 
