@@ -1,6 +1,6 @@
 # Unreal Examples
 
-The branch ue4-examples is no longer being maintained. It is being kept for legacy purposes. The examples should work with the latest plugin but have not been officially tested with such.
+The branch ue4-examples is no longer being maintained. It is being kept for legacy purposes. The examples should work with the latest plugin but have not been officially tested with such. There is a UE4 example maintained in the regular examples develop branch.
 
 This repository contains example Unreal projects that use the brainCloud client. This is a good place to start learning how the various brainCloud APIs can be used.
 
