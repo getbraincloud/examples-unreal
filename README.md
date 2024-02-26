@@ -84,6 +84,10 @@ Play in editor or launch standalone game. Examples can be packaged for Mac or Wi
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
 
+# brainCloud Example Projects
+
+Refer to README.md file in each game project folder. There are useful build scripts located in autobuild folder. Also, see LICENSE.md in the main folder.
+
 ## Relay Test App (Blueprint) Relay Test App CPP (C++ Only)
 
 ### Summary
@@ -117,8 +121,19 @@ If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
 
 In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
 
+## BCChat
+
+A demonstration of a cross-platform multi-channel RTT chat app.
+
+## BCFPS
+
+A demonstration of integration of real-time websocket network technology for multi-player gameplay in a first person shooter.
+
+## Mobile Test App
+Lightweight app to install on devices (Mobile, Console, etc) and set up to run user defined code/blueprint. There are versions for UE 5.3 and for UE 4.27.
+
 ## Tappy Chicken
-Based on Unreal's' demo. Shows 
+2D scroller based on Unreal's' demo. Shows 
 
 * Achievements
 * Leaderboards
