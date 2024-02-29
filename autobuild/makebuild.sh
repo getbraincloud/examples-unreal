@@ -53,6 +53,9 @@ esac
 # KEEP: to install pre-built plugin:
 #"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildPlugin -plugin="$WORKSPACE/braincloud-unreal-plugin/BCClient.uplugin"  -nop4 -utf8output -pak -compile -package="$WORKSPACE/$PROJECTNAME/Plugins/BCClient" -TargetPlatforms=${TARGET} -CreateSubFolder -Rocket
 
+#flags for testing PCH
+# -noPCH -NoSharedPCH -DisableUnity
+
 "${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="${ARTIFACTS}/${PROJECTNAME}_Unreal_${TARGET}Build"
 
 if [[ $TARGET == "IOS" ]];
