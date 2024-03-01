@@ -2,66 +2,39 @@
 
 # USAGE:
 #   ./autobuild/build-all.sh
-#   ./autobuild/build-all.sh "/Users/<myusername>/Library/CloudStorage/GoogleDrive-<myuseremail>/Shared drives/<BuildFolder>"
+#   ./autobuild/build-all.sh "/Users/<myusername>/Library/CloudStorage/GoogleDrive-<myuseremail>/My Drive/<BuildFolder>"
 #   ./autobuild/build-all.sh NewBuildFolder
 
-export archive=${1}
-if [ -z "${1}" ];
-then
-  export archive="."
-  else
-    export archive=${1}
-fi
 
-if [ -d "$archive" ];
+export archive=${1}
+
+if [ ! -d "$archive" ];
 then
-  echo Writing ZIP files to $archive
-  else
-    echo Creating folder for ZIP files at $archive
     mkdir "$archive"
 fi
 
-for i in BCFPS MobileTestApp BCChat RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+for j in Mac Android IOS
+#for j in Mac
 do
-  export target=Mac
-	export proj=$i
-	autobuild/makebuild.sh ${proj} ${target}
-	if [ -d ${proj}_Unreal_${target}Build ];
-	then
-    cd artifacts
-  	cp ../../../data/quarantine.command ${proj}_Unreal_${target}Build
-	  zip -r ${proj}_Unreal_${target}Build.zip ${proj}_Unreal_${target}Build
-  	cd ..
-  	mv ${proj}_Unreal_${target}Build.zip "$archive"
-	fi
-done
-
-for i in MobileTestApp BCChat RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
-do
-  export target=Android
-	export proj=$i
-	autobuild/makebuild.sh ${proj} ${target}
-	if [ -d ${proj}_Unreal_${target}Build ];
-	then
-    cd artifacts
-  	cp ../../../data/quarantine.command ${proj}_Unreal_${target}Build
-	  zip -r ${proj}_Unreal_${target}Build.zip ${proj}_Unreal_${target}Build
-  	cd ..
-  	mv ${proj}_Unreal_${target}Build.zip "$archive"
-	fi
-done
-
-for i in MobileTestApp BCChat RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
-do
-	export proj=$i
-  export target=IOS
-	autobuild/makebuild.sh ${proj} ${target}
-	if [ -d ${proj}_Unreal_${target}Build ];
-	then
-    cd artifacts
-  	cp ../../../data/quarantine.command ${proj}_Unreal_${target}Build
-	  zip -r ${proj}_Unreal_${target}Build.zip ${proj}_Unreal_${target}Build
-  	cd ..
-  	mv ${proj}_Unreal_${target}Build.zip "$archive"
-	fi
+  export target=$j
+  for i in BCFPS MobileTestApp BCChat RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+  #for i in TappyChicken
+  do
+    export proj=$i
+    autobuild/makebuild.sh ${proj} ${target}
+    if [ -d artifacts/${proj}_Unreal_${target}Build ];
+    then
+      cd artifacts
+      if [ $target == Mac ];
+      then
+        cp ${BRAINCLOUD_TOOLS}/data/quarantine.command ${proj}_Unreal_${target}Build
+      fi
+      zip -r ${proj}_Unreal_${target}Build.zip ${proj}_Unreal_${target}Build
+      cd ..
+      if [ ! -z "$archive" ];
+      then
+        mv artifacts/${proj}_Unreal_${target}Build.zip "$archive"
+      fi
+    fi
+  done
 done
