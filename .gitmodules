@@ -42,3 +42,7 @@
 	path = MobileTestAppUE4/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
+[submodule "Cropout/Plugins/brainCloud"]
+	path = Cropout/Plugins/brainCloud
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+	branch = develop
