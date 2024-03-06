@@ -34,7 +34,8 @@ fi
 # platform specific parameters: IOS, Mac, Android
 case "$TARGET" in
   IOS)
-	  ModeString='-distribution -specifiedarchitecture=arm64+x86_64'
+	  ModeString='-distribution'
+	  #ModeString='-distribution -specifiedarchitecture=arm64'
  	  PlatformPackageName="IOS/${PROJECTNAME}-IOS-Shipping.ipa"
   ;;
   MAC)
@@ -68,7 +69,7 @@ retcode=$?
 if [[ $TARGET == "IOS" ]];
 then
   archive=$(ls -td -- $ARTIFACTS/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/${PROJECTNAME}* | head -n 1)
-  if [ ! -n $archive ];
+  if [[ ! -z $archive ]];
   then
     xcodebuild -exportArchive -archivePath "$archive" -exportPath "${ARTIFACTS}/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/" -allowProvisioningUpdates -exportOptionsPlist "$WORKSPACE/autobuild/ExportOptions.plist"
   fi
