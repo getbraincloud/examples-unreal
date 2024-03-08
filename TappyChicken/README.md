@@ -10,7 +10,7 @@
 
 ## Playable builds
 
-| [Windows]() | [MacOS]() | [Android]() | [IOS]() |
+| [Windows]() | [MacOS](https://drive.google.com/file/d/17ByMzCSRaXM_WsnGt1Xn5oKbHpxr6FK6/view?usp=drive_link) | [Android](https://drive.google.com/file/d/17FLVo09OTogiKqwIlFno3CkcAiPEsB9Y/view?usp=drive_link) | [IOS](https://drive.google.com/file/d/17JPZ3ZGWkFQPjgdMtCOq3hegRDSYgbCX/view?usp=drive_link) |
 
 ## How to play
 Login to brainCloud with any username and a password. A new account will be created or existing account will be used.
