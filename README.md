@@ -72,7 +72,7 @@ export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 
 #### UE 4
 
-There is one example ready-to-build in Unreal Engine 4.27. brainCloud buleprint and c++ code are consisten between all engine versions so all examples are still applicable. Legacy versions of examples can also be found in
+There is one example ready-to-build in Unreal Engine 4.27. Note that brainCloud blueprint and c++ code are consistent between all engine versions so all examples are still applicable. Legacy versions of examples can also be found in
 
 ```angular2html
 git checkout ue4-examples
@@ -84,7 +84,7 @@ Play in editor or launch standalone game. Examples can be packaged for Mac or Wi
 
 ## Installing brainCloud Plugin
 
-Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
+Find our latest releases of our Unreal client library [here on GitHub](https://github.com/getbraincloud/braincloud-unreal-plugin).
 
 # The Examples
 
