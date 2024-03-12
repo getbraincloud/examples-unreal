@@ -46,3 +46,7 @@
 	path = Cropout/Plugins/brainCloud
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
+[submodule "Cropout/Plugins/BCClient"]
+	path = Cropout/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+	branch = develop
