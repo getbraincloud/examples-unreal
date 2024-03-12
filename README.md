@@ -70,9 +70,9 @@ export UE_EDITOR_CMD='UnrealEditor-Cmd'
 export UE_INSTALL_PATH='/Users/Shared/Epic Games/UE_5.1'
 ```
 
-#### UE 4 Examples
+#### UE 4
 
-There is one example working in Unreal Engine 4. It will work with the same/latest plugin. Legacy versions of examples can also be found in
+There is one example ready-to-build in Unreal Engine 4.27. brainCloud buleprint and c++ code are consisten between all engine versions so all examples are still applicable. Legacy versions of examples can also be found in
 
 ```angular2html
 git checkout ue4-examples
@@ -82,7 +82,7 @@ git checkout ue4-examples
 
 Play in editor or launch standalone game. Examples can be packaged for Mac or Windows PC, IOS or Android.
 
-## Standalone Client Lib
+## Installing brainCloud Plugin
 
 Find our latest releases of our Unreal client library [here](https://github.com/getbraincloud/braincloud-unreal-plugin-src).
 
@@ -90,83 +90,43 @@ Find our latest releases of our Unreal client library [here](https://github.com/
 
 Refer to README.md file in each game project folder. There are useful build scripts located in autobuild folder. Also, see LICENSE.md in the main folder.
 
-## Relay Test App (Blueprint) Relay Test App CPP (C++ Only)
+## [Relay Test App Blueprint](RelayTestApp) and [C++ Version](RelayTestAppCPP)
 
-### Summary
+The simple "game" Cursor Party is used to demonstrate how to integrate with brainCloud's relay server.
 
-This simple "game" is used to demonstrate how to integrate with brainCloud's relay server. It is a simple multiplayer game where players can see each other's mouse move on the screen and create little shockwaves by clicking.
-
-The game can be played by right clicking the RelayTestApp.uproject and Launch Game.
-
-The mouse movement are sent using unreliable, ordered messages. The shockwaves are sent using reliable, unordered messages.
-
-In Unreal Engine, the implementation uses WebSockets. Therefore, the unreliable messages are guaranteed reliable. But, the application can crossplay with other APIs (C#, Unity, Java, etc) which support unreliable UDP protocol.
-
-### BP_RelayNetworkInterface.uasset (Blueprint) / RelayNetworkInterface class (C++)
-
-BP_RelayNetworkInterface.uasset holds all the logic to communicate with brainCloud server and how to utilize the blueprint nodes with the brainCloud plugin. This includes the following (C++ follows the same workflow): 
-
-- Initialize brainCloud.
-- Universal Authentication.
-- Workflow to look for/create a lobby.
-- Lobby callbacks.
-- Users in lobby changing colour preference.
-- Host can start the game for the lobby.
-- Handling inputs from members both local and network members. 
-- Handling a user leaving a match or lobby.
-
-### Possible Errors
-
-If you are running on MacOS with xCode 13 and Unreal 4.27, you may see:
-
- error: unknown warning option '-Wno-unused-but-set-variable'; did you mean '-Wno-unused-const-variable'? [-Werror,-Wunknown-warning-option]
-
-In that case, remove the command from the files RelayTestApp.Target.cs and RelayTestAppEditor.Target.cs
-
-## BCChat
+## [brainCloud Chat](BCChat)
 
 A demonstration of a cross-platform multi-channel RTT chat app.
 
-## BCFPS
+## [brainCloud Relay Blast](BCFPS)
 
 A demonstration of integration of real-time websocket network technology for multi-player gameplay in a first person shooter.
 
-## Mobile Test App
+[![BCFPS-GamePlay.png](BCFPS%2F%2FScreenshots%2F%2FBCFPS-GamePlay.png)](https://getbraincloud.com/demos/#unreal-section)
+
+[Play live now!](https://getbraincloud.com/demos/#unreal-section)
+
+## [Hello brainCloud!](MobileTestApp) and [UE 4.27 Version](MobileTestAppUE4)
+
 Lightweight app to install on devices (Mobile, Console, etc) and set up to run user defined code/blueprint. There are versions for UE 5.3 and for UE 4.27.
 
-## Tappy Chicken
-2D scroller based on Unreal's' demo. Shows 
+## [Tappy Chicken](TappyChicken)
 
-* Achievements
-* Leaderboards
-* User Entities
+2D scroller based on the Epic original demonstrating a lot of brainCloud features in blueprint.
 
-## ScriptTestApp (blueprint only)
-Implements [CloudCode Tutorial 1 and 6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/):
-- #1 Your First Script and 
-- #6 S2S Scripts.
+[![TappyChicken-GamePlay.png](TappyChicken%2F%2FScreenshots%2F%2FTappyChicken-GamePlay.png)](https://getbraincloud.com/demos/#unreal-section)
 
-Requires a script on the server for App ID (included).
+[Play live now!](https://getbraincloud.com/demos/#unreal-section)
 
-Uses MobileStarterContent. If you load in UE 5 + you may see an error similar to: 
+## [Script Test App](ScriptTestApp)
+Implements [CloudCode Tutorial 1 and 6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/)
 
-Failed to import '/Users/Shared/Epic Games/UE_5.1/FeaturePacks/MobileStarterContent.upack'. Failed to create asset '/Game/MobileStarterContent'. Please see Output Log for details.
+## [brainCloud Target Practice](Leaderboard)
+Implements [CloudCode Tutorial 2 and 4](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/)
 
-Workaround: copy the installed upack file. 
+[![Leaderboard-GamePlay.png](Leaderboard%2F%2FScreenshots%2F%2FLeaderboard-GamePlay.png)](https://getbraincloud.com/demos/#unreal-section)
 
-```
-cd "$UE_INSTALL_PATH"
-cp StarterContent.upack MobileStarterContent.upack
-```
-
-## Leaderboard
-Implements [CloudCode Tutorial 2 and 4](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/): 
-- #2 Making API Calls and
-- #4 Pre and Post Hooks.
+[Play live now!](https://getbraincloud.com/demos/#unreal-section)
 
 ## Groups
-Implements [CloudCode Tutorial 3-6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/) :
-- #3 Working with Global and User Entities 
-- #4 Pre and Post Hooks 
-- #5 External Web Services and 
-- #6 S2S Scripts.
+Implements [CloudCode Tutorial 3-6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/)

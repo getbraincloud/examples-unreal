@@ -48,7 +48,7 @@ case "$TARGET" in
   ;;
 Android)
     #CookString='-cookflavor=ECS2'
-    PlatformPackageName="Android/${PROJECTNAME}-Android-Shipping-arm64.apk"
+    PlatformPackageName="Android/${PROJECTNAME}-arm64.apk"
 esac
 
 # package for target platform
