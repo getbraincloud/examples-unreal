@@ -35,21 +35,21 @@ $ git submodule set-branch --branch release/5.0 RelayTestApp/Plugins/BCClient
 $ git submodule set-branch --branch develop RelayTestApp/Plugins/BCClient
 ```
 
-### Configure:
+### 1. Configure
 
 **Important** Requires configuration of **BrainCloudSettings.ini** file in the project folder under Config/, which defines the server url, app id and app secret. Initializing and connecting will fail without it.
 
 ```
 [Credentials]
 AppId=12345
-AppSecret=[from portal]
+AppSecret=[GUID from Portal]
 ServerUrl=https://api.braincloudservers.com/dispatcherv2
 ```
 Fill in values for AppId and AppSecret. You can find this information on the brainCloud portal. If you haven't signed up or you want to log into the brainCloud portal, you can do that here:
 
 https://portal.braincloudservers.com/
 
-### Build:
+### 2. Build
 
 Required for some examples: add the VaREST plugin to your engine from Epic Launcher or download to Plugins folder.
 
@@ -78,7 +78,7 @@ There is one example ready-to-build in Unreal Engine 4.27. Note that brainCloud 
 git checkout ue4-examples
 ```
 
-### Run:
+### 3 Run
 
 Play in editor or launch standalone game. Examples can be packaged for Mac or Windows PC, IOS or Android.
 
@@ -128,5 +128,14 @@ Implements [CloudCode Tutorial 2 and 4](https://getbraincloud.com/apidocs/cloud-
 
 [Play live now!](https://getbraincloud.com/demos/#unreal-section)
 
-## Groups
+## [Groups](Groups)
+
 Implements [CloudCode Tutorial 3-6](https://getbraincloud.com/apidocs/cloud-code-central/cloud-code-tutorials/)
+
+## Another github repo: [braincloud Blast](https://github.com/getbraincloud/braincloud-roomserver-unreal)
+
+A project containing both Client and Server for a dedicated server demo real-time multiplayer game. Requires source build of Unreal Engine.
+
+## Another github repo: [Space Shooters](https://github.com/getbraincloud/bootcamp-unreal)
+
+The video tutorial project showing step by step how to integrate most of brainCloud's features.
