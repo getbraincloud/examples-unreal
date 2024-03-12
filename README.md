@@ -6,7 +6,7 @@ Read the latest [brainCloud Docs](https://docs.braincloudservers.com/) on develo
 
 ## Instructions
 
-### Clone:
+### 1. Clone
 
 The examples include the required plugins as git submodules.
 
@@ -35,7 +35,7 @@ $ git submodule set-branch --branch release/5.0 RelayTestApp/Plugins/BCClient
 $ git submodule set-branch --branch develop RelayTestApp/Plugins/BCClient
 ```
 
-### 1. Configure
+### 2. Configure
 
 **Important** Requires configuration of **BrainCloudSettings.ini** file in the project folder under Config/, which defines the server url, app id and app secret. Initializing and connecting will fail without it.
 
@@ -49,7 +49,7 @@ Fill in values for AppId and AppSecret. You can find this information on the bra
 
 https://portal.braincloudservers.com/
 
-### 2. Build
+### 3. Build
 
 Required for some examples: add the VaREST plugin to your engine from Epic Launcher or download to Plugins folder.
 
@@ -78,7 +78,7 @@ There is one example ready-to-build in Unreal Engine 4.27. Note that brainCloud 
 git checkout ue4-examples
 ```
 
-### 3 Run
+### 4. Run
 
 Play in editor or launch standalone game. Examples can be packaged for Mac or Windows PC, IOS or Android.
 
@@ -86,7 +86,7 @@ Play in editor or launch standalone game. Examples can be packaged for Mac or Wi
 
 Find our latest releases of our Unreal client library [here on GitHub](https://github.com/getbraincloud/braincloud-unreal-plugin).
 
-# The Examples
+# About the examples
 
 Refer to README.md file in each game project folder. There are useful build scripts located in autobuild folder. Also, see LICENSE.md in the main folder.
 
