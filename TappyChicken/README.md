@@ -1,6 +1,6 @@
 # Tappy Chicken
 
-![Leaderboard-GamePlay.png](Icons%2F%2FTappyChicken-MacOS.png)
+![TappyChicken-GamePlay.png](Screenshots%2F%2FTappyChicken-GamePlay.png)
 
 2D scroller based on Unreal's' demo. Demonstrates brainCloud's
 - Leaderboards
@@ -10,7 +10,10 @@
 
 ## Playable builds
 
-| [Windows]() | [MacOS](https://drive.google.com/file/d/17ByMzCSRaXM_WsnGt1Xn5oKbHpxr6FK6/view?usp=drive_link) | [Android](https://drive.google.com/file/d/17FLVo09OTogiKqwIlFno3CkcAiPEsB9Y/view?usp=drive_link) | [IOS](https://drive.google.com/file/d/17JPZ3ZGWkFQPjgdMtCOq3hegRDSYgbCX/view?usp=drive_link) |
+| [Windows]() 
+| [MacOS]() 
+| [Android]() 
+| [IOS]() |
 
 ## How to play
 Login to brainCloud with any username and a password. A new account will be created or existing account will be used.

@@ -52,13 +52,20 @@ SourceArt/**/*.tga
 # copied engine certs
 **/Content/Certificates/*
 
-# Whitelist PakBlacklist-<BuildConfiguration>.txt files
-!Build/*/
-Build/*/**
-!Build/*/PakBlacklist*.txt
+# Builds
+BCFPS/DevBuild/
 
 # Don't ignore icon files in Build
-!Build/**/*.ico
+!**/Build/**/*.png
+!**/Build/**/*.icns
+!**/Build/**/PakBlacklist*.txt
+!**/Build/**/*.ico
+**/Build/**/*.log
+**/Build/**/*.properties
+**/Build/**/*.java
+**/Build/**/*.plist
+**/Build/**/*.entitlements
+**/Build/**/*.PackageVersionCounter
 
 # Built data for maps
 *_BuiltData.uasset
@@ -83,9 +90,6 @@ Plugins/*/Intermediate/*
 **/RiderLink/*
 **/.vsconfig
 
-# Builds
-**/Build/*
-BCFPS/DevBuild/
 
 #Exported packages
 artifacts/

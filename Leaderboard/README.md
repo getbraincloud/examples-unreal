@@ -1,6 +1,6 @@
-# Target Practice
+# brainCloud Target Practice
 
-![Leaderboard-GamePlay.png](Icons%2F%2FLeaderboard-GamePlay.png)
+![Leaderboard-GamePlay.png](Screenshots%2F%2FLeaderboard-GamePlay.png)
 
 This example demonstrates the use of brainCloud's
 - integrating Cloud Code scripts
