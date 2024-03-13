@@ -36,11 +36,7 @@ case "$TARGET" in
   IOS)
 	  ModeString='-distribution'
 	  #ModeString='-distribution -specifiedarchitecture=arm64'
- 	  PlatformPackageName="IOS/${PROJECTNAME}-IOS-Shipping.ipa"
-  ;;
-  MAC)
-    ModeString='-specifiedarchitecture=arm64+x86_64'
- 	  PlatformPackageName="Mac/${PROJECTNAME}/"
+ 	  PlatformPackageName="IOS/${PROJECTNAME}.ipa"
   ;;
   Mac)
     ModeString='-specifiedarchitecture=arm64+x86_64'
