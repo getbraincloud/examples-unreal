@@ -89,7 +89,8 @@ Plugins/*/Intermediate/*
 **/.idea/*
 **/RiderLink/*
 **/.vsconfig
-
+**./CMakeLists.txt
+**/cmake-build-debug/
 
 #Exported packages
 artifacts/
