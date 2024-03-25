@@ -49,6 +49,6 @@ TSharedPtr<FJsonObject> UBCHelpers::GetJsonData(FString json)
 	TSharedRef<TJsonReader<>> reader = TJsonReaderFactory<>::Create(json);
 		TSharedPtr<FJsonObject> jsonValue = MakeShareable(new FJsonObject());
 	FJsonSerializer::Deserialize(reader, jsonValue);
-	TSharedPtr<FJsonObject> data = jsonValue->GetObjectField("data");
+	TSharedPtr<FJsonObject> data = jsonValue->GetObjectField(TEXT("data"));
 	return data;
 }
