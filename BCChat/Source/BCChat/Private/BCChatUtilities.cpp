@@ -27,3 +27,23 @@ void UBCChatUtilities::SelectFile(const FString& DialogTitle, const FString& Def
 		}
 	}
 }
+
+FString UBCChatUtilities::GetUserLanguageWindows()
+{
+	return FInternationalization::Get().GetCurrentLocale()->GetTwoLetterISOLanguageName();
+}
+
+FString UBCChatUtilities::GetUserCountryWindows()
+{
+#if PLATFORM_WINDOWS
+	int geoId = GetUserGeoID(16);
+	int lcid = GetUserDefaultLCID();
+	wchar_t locationBuffer[3];
+	GetGeoInfo(geoId, 4, locationBuffer, 3, lcid);
+
+	return FString(locationBuffer);
+#else
+	UE_LOG(LogTemp, Warning, TEXT("App is not running on windows, cannot get user country from Windows platform."));
+	return FString();
+#endif
+}
