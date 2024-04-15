@@ -8,11 +8,10 @@ public class BCFPS : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HTTP", "BCClientPlugin", "OnlineSubsystem", "OnlineSubsystemUtils", "Sockets" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HTTP", "BCClientPlugin", "Sockets" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "Json", "OnlineSubsystem" });
+		PrivateDependencyModuleNames.AddRange(new string[] { "Json", "JsonUtilities" });
 
-        DynamicallyLoadedModuleNames.Add("OnlineSubsystemBrainCloud");
 
         // Uncomment if you are using Slate UI
         // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

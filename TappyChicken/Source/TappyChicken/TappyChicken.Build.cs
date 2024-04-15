@@ -7,12 +7,12 @@ public class TappyChicken : ModuleRules
 	public TappyChicken(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "BCClientPlugin", "OnlineSubsystem", "OnlineSubsystemUtils", "Sockets" });
 
-		PrivateDependencyModuleNames.AddRange(new string[] { "Json", "OnlineSubsystem" });
-		
-		DynamicallyLoadedModuleNames.Add("OnlineSubsystemBrainCloud");
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "BCClientPlugin" });
+
+		PrivateDependencyModuleNames.AddRange(new string[] { });
+
+        //bUseRTTI = true;
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
