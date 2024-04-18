@@ -22,10 +22,6 @@
     path = Groups/Plugins/BCClient
     url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
-[submodule "Leaderboard/Plugins/BCClient"]
-    path = Leaderboard/Plugins/BCClient
-    url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "BCChat/Plugins/BCClient"]
 	path = BCChat/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
@@ -42,3 +38,7 @@
 	path = UE4TestApp/Plugins/VaRest
 	url = https://github.com/ufna/VaRest.git
 	branch = 4.27
+[submodule "TargetPractice/Plugins/BCClient"]
+	path = TargetPractice/Plugins/BCClient
+	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
+	branch = develop
