@@ -16,7 +16,7 @@ then
 fi
 
 needspush=0
-for j in BCFPS MobileTestApp UE4TestApp BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+for j in BCFPS MobileTestApp UE4TestApp BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups TargetPractice
 do
     i=$j/Plugins/BCClient
     echo
