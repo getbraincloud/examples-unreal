@@ -29,16 +29,16 @@
 [submodule "BCChat/Plugins/BCClient"]
 	path = BCChat/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
+    branch = develop
 [submodule "MobileTestApp/Plugins/BCClient"]
 	path = MobileTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
-[submodule "MobileTestAppUE4/Plugins/VaRest"]
-	path = MobileTestAppUE4/Plugins/VaRest
-	url = https://github.com/ufna/VaRest.git
-	branch = 4.27
-[submodule "MobileTestAppUE4/Plugins/BCClient"]
-	path = MobileTestAppUE4/Plugins/BCClient
+    branch = develop
+[submodule "UE4TestApp/Plugins/BCClient"]
+	path = UE4TestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
+[submodule "UE4TestApp/Plugins/VaRest"]
+	path = UE4TestApp/Plugins/VaRest
+	url = https://github.com/ufna/VaRest.git
+	branch = 4.27

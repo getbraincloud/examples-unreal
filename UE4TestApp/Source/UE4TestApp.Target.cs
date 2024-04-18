@@ -3,13 +3,13 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class MobileTestAppTarget : TargetRules
+public class UE4TestAppTarget : TargetRules
 {
-	public MobileTestAppTarget(TargetInfo Target) : base(Target)
+	public UE4TestAppTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "MobileTestApp" } );
+		ExtraModuleNames.AddRange( new string[] { "UE4TestApp" } );
 	}
 }

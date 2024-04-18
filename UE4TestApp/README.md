@@ -1,6 +1,6 @@
 # Hello brainCloud!
 
-![MobileTestApp-GamePlay.png](Screenshots%2F%2FMobileTestApp-GamePlay.png)
+![UE4TestApp-GamePlay.png](Screenshots%2F%2FUE4TestApp-GamePlay.png)
 
 Lightweight app to install on devices (Mobile, Console, etc) and set up to run user defined code/blueprint. There are versions for UE 5.3 and for UE 4.27.
 

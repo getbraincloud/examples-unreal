@@ -10,8 +10,11 @@
  * 
  */
 UCLASS()
-class MOBILETESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
+    UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString RunCppFunction();
+
 };
