@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class MobileTestApp : ModuleRules
+public class UE4TestApp : ModuleRules
 {
-	public MobileTestApp(ReadOnlyTargetRules Target) : base(Target)
+	public UE4TestApp(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
