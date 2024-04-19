@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-    "EngineAssociation": "{CA1158D3-4971-D0D1-9EA1-CC90EAFC2EBC}",
+	"EngineAssociation": "4.27",
 	"Category": "",
 	"Description": "",
 	"Modules": [
@@ -17,6 +17,11 @@
 		{
 			"Name": "BCClient",
 			"Enabled": true
+		},
+        {
+            "Name": "VaRest",
+            "Enabled": true,
+            "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/e47be161e7a24e928560290abd5dcc4f"
 		}
 	]
 }
