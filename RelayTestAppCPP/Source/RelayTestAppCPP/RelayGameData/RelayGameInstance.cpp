@@ -21,10 +21,10 @@ URelayGameInstance::URelayGameInstance()
 	RelayProtocolString = TEXT("ws");
 }
 
-// void URelayGameInstance::Shutdown()
-// {
-// 	//Interface->DisconnectEverything();
-// }
+void URelayGameInstance::Shutdown()
+{
+	Interface->DisconnectEverything();
+}
 
 void URelayGameInstance::SetUpLoadingScreen(int in_widgetIndex, FText in_message, bool in_bCancelButtonEnabled)
 {

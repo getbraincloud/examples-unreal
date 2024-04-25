@@ -22,7 +22,7 @@ public:
 	URelayGameInstance();
 
 //Logout user on shutdown
-	//virtual void Shutdown() override;
+	virtual void Shutdown() override;
 	
 //Loading Screen functions
 	
