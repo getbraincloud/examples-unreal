@@ -10,7 +10,9 @@ void UGameWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	ClosePopUp_Button->OnClicked.AddDynamic(this, &UGameWidget::ClosePopUp);
+	AcceptLogoutPopUp_Button->OnClicked.AddDynamic(this, &UGameWidget::LogoutConfirm);
 	PopUpWindow->SetVisibility(ESlateVisibility::Hidden);
+	ConfirmLogoutWindow->SetVisibility(ESlateVisibility::Hidden);
 	RelayGameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	const FText Blank;
 	LobbyID_Text->SetText(Blank);
@@ -40,4 +42,16 @@ void UGameWidget::ClosePopUp()
 	{
 		RelayGameInstance->bErrorOccurred = false;
 	}
+}
+
+void UGameWidget::OpenLogoutConfirmWindow()
+{
+	ConfirmLogoutWindow->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UGameWidget::LogoutConfirm()
+{
+	ConfirmLogoutWindow->SetVisibility(ESlateVisibility::Hidden);
+	RelayGameInstance->ClearSaveData();
+	RelayGameInstance->Interface->LogoutUser();
 }

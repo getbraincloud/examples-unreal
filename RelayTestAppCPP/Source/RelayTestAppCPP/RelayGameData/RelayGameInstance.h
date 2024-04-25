@@ -22,7 +22,7 @@ public:
 	URelayGameInstance();
 
 //Logout user on shutdown
-	virtual void Shutdown() override;
+	//virtual void Shutdown() override;
 	
 //Loading Screen functions
 	
@@ -37,6 +37,8 @@ public:
 	void SaveGameUserColor(FLinearColor in_Color,int in_ArrowColorIndex);
 	
 	void SaveGameUserSignInEntry(FText in_Username,FText in_Password);
+
+	void ClearSaveData();
 
 	UFUNCTION(BlueprintCallable,Category="RelayGameInstance")
 	void LoadGame();
@@ -55,6 +57,8 @@ public:
 
 	bool IsUsernameNew() const
 	{
+		if(SaveGameInstance == nullptr) return true;
+		if(SaveGameInstance->LocalUsername.IsEmpty()) return true;
 		return SaveGameInstance->LocalUsername.ToString() == LocalUser->Username.ToString();
 	}
 
@@ -81,6 +85,9 @@ public:
 	bool bIsOrdered;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	bool bIsReliable;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bRememberMe;
+	bool IsReconnecting = false;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	class UGameWidget* GameWidget;

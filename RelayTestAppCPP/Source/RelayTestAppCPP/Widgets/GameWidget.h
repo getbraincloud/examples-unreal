@@ -32,6 +32,12 @@ public:
 
 	UFUNCTION()
 	void ClosePopUp();
+
+	UFUNCTION(BlueprintCallable)
+	void OpenLogoutConfirmWindow();
+
+	UFUNCTION()
+	void LogoutConfirm();
 	
 //Variables
 	//Note: using meta=(BindWidget) attach the variable to the Widget in Editor automatically as long as the variable name is the same.
@@ -42,8 +48,14 @@ public:
 	UPROPERTY(BlueprintReadWrite,meta=(BindWidget))
 	UCanvasPanel* PopUpWindow;
 
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
+	UCanvasPanel* ConfirmLogoutWindow;	
+
 	UPROPERTY(meta=(BindWidget))
 	UButton* ClosePopUp_Button;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* AcceptLogoutPopUp_Button;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UWidgetSwitcher* WidgetSwitcher;

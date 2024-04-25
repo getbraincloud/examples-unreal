@@ -35,6 +35,10 @@ public:
 	
 //Button related Event brainCloud functions
 	void LoginUniversalBC();
+
+	void ReconnectBC();
+
+	bool CheckReconnectStatus();
 	
 	void FindOrCreateLobby();
 
@@ -54,6 +58,8 @@ public:
 	void SendUpdateReady();
 
 	void JoinMatch();
+
+	void LogoutUser();
 	
 //Callbacks
 	void AuthenticateCallback();
@@ -101,6 +107,8 @@ public:
 	void StartLoadingTimer();
 
 	void EndMatch();
+
+	void ResetBCProfileID();
 
 private:
 	FString GetProfileIdFromCxId(FString in_data);

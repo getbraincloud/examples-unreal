@@ -4,6 +4,8 @@
 #include "RelayNetworkInterface.h"
 #include "BrainCloudClient.h"
 #include <ConvertUtilities.h>
+
+#include "Components/EditableTextBox.h"
 #include "Kismet/GameplayStatics.h"
 #include "RelayGameData/RelayGameInstance.h"
 #include "Widgets/GameWidget.h"
@@ -41,6 +43,18 @@ void ARelayNetworkInterface::LoginUniversalBC()
 
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 	BrainCloudWrapper->authenticateUniversal(userId, password, true, Callback);
+}
+
+void ARelayNetworkInterface::ReconnectBC()
+{
+	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(TEXT("Logging in...")), false);
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	BrainCloudWrapper->reconnect(Callback);
+}
+
+bool ARelayNetworkInterface::CheckReconnectStatus()
+{
+	return BrainCloudWrapper->canReconnect();
 }
 
 void ARelayNetworkInterface::FindOrCreateLobby()
@@ -322,6 +336,14 @@ void ARelayNetworkInterface::JoinMatch()
 	ConnectToRelay();
 }
 
+void ARelayNetworkInterface::LogoutUser()
+{
+	BrainCloudWrapper->logout(true, nullptr);
+	GameInstance->GameWidget->SignInWidget->Username_EditableText->SetText(FText::AsCultureInvariant(TEXT("")));
+	GameInstance->GameWidget->SignInWidget->Password_EditableText->SetText(FText::AsCultureInvariant(TEXT("")));
+	GameInstance->GameWidget->WidgetSwitcher->SetActiveWidgetIndex(1);
+}
+
 void ARelayNetworkInterface::InitBrainCloud()
 {
 	BrainCloudWrapper = NewObject<UBrainCloudWrapper>();
@@ -458,13 +480,16 @@ FString ARelayNetworkInterface::MakeJsonExtraString() const
 void ARelayNetworkInterface::DisconnectEverything()
 {
 	bRTTConnectionIsLive = false;
-	BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();
-	BrainCloudWrapper->getClient()->getRelayService()->deregisterSystemCallback();
-	BrainCloudWrapper->getClient()->getRTTService()->deregisterAllRTTCallbacks();
-	BrainCloudWrapper->getClient()->getRelayService()->disconnect();
-	BrainCloudWrapper->getClient()->getRTTService()->disableRTT();
-	BrainCloudWrapper->getClient()->getRTTService()->deregisterRTTLobbyCallback();
-	BrainCloudWrapper->logout(true, nullptr);
+	if(BrainCloudWrapper->getClient()->isAuthenticated())
+	{
+		BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();
+		BrainCloudWrapper->getClient()->getRelayService()->deregisterSystemCallback();
+		BrainCloudWrapper->getClient()->getRTTService()->deregisterAllRTTCallbacks();
+		BrainCloudWrapper->getClient()->getRelayService()->disconnect();
+		BrainCloudWrapper->getClient()->getRTTService()->disableRTT();
+		BrainCloudWrapper->getClient()->getRTTService()->deregisterRTTLobbyCallback();
+		BrainCloudWrapper->logout(false, nullptr);
+	}
 
 	StartLoadingTimer();
 }
@@ -536,4 +561,9 @@ void ARelayNetworkInterface::EndMatch()
 	FString payload = TEXT("{\"op\":\"END_MATCH\"}");
 	BrainCloudWrapper->getClient()->getRelayService()->endMatch(payload);
 	UE_LOG(LogTemp, Log, TEXT("End Match request sent"));
+}
+
+void ARelayNetworkInterface::ResetBCProfileID()
+{
+	BrainCloudWrapper->resetStoredProfileId();
 }
