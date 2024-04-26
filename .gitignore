@@ -66,6 +66,7 @@ BCFPS/DevBuild/
 **/Build/**/*.plist
 **/Build/**/*.entitlements
 **/Build/**/*.PackageVersionCounter
+**/Build/PS4/**
 
 # Built data for maps
 *_BuiltData.uasset

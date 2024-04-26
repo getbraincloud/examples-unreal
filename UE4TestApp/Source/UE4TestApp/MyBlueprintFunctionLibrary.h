@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Runtime/Launch/Resources/Version.h"
+#include "BrainCloudWrapper.h"
+
 #include "MyBlueprintFunctionLibrary.generated.h"
 
 /**
@@ -12,9 +15,18 @@
 UCLASS()
 class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
-    GENERATED_BODY()
+	GENERATED_BODY()
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
-    static FString RunCppFunction();
+    static FString RunCppFunction(UBrainCloudWrapper* wrapper);
 
+	UFUNCTION(BlueprintCallable, Category = "System Information")
+	static FString GetMyLanguageCode();
+
+	UFUNCTION(BlueprintCallable, Category = "System Information")
+	static FString GetMyCountryCode();
+
+	UFUNCTION(BlueprintCallable, Category = "System Information")
+	static float GetMyTimeZone();
+	
 };
