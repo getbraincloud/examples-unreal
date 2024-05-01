@@ -1,6 +1,6 @@
 @ echo OFF
 
-for /d %%a in (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, TargetPractice) do (
+for /d %%a in (BCChat, BCFPS, MobileTestApp, RelayTestApp, RelayTestAppCPP, TappyChicken, ScriptTestApp, Groups, Leaderboard) do (
 	setlocal enableDelayedExpansion
 	cd %%a
 	echo !CD!
