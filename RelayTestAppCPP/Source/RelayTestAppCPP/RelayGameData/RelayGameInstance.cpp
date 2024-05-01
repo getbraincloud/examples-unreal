@@ -72,6 +72,16 @@ void URelayGameInstance::SaveGameUserSignInEntry(FText in_Username, FText in_Pas
 	UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
 }
 
+void URelayGameInstance::ClearSaveData()
+{
+	SaveGameInstance->LocalUserColor = FLinearColor::Black;
+	SaveGameInstance->ArrowColorIndex = 0;
+	SaveGameInstance->LocalUsername = FText::AsCultureInvariant(TEXT(""));
+	SaveGameInstance->LocalPassword = FText::AsCultureInvariant(TEXT(""));
+	UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
+}
+
+//Called from Game Level Blueprint Begin Play
 void URelayGameInstance::LoadGame()
 {
 	SaveGameInstance = Cast<URelaySaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName,UserIndex));
@@ -80,8 +90,15 @@ void URelayGameInstance::LoadGame()
 		SaveGameInstance = Cast<URelaySaveGame>(UGameplayStatics::CreateSaveGameObject(URelaySaveGame::StaticClass()));
 		UGameplayStatics::SaveGameToSlot(SaveGameInstance,SaveSlotName,UserIndex);
 	}
-
-	SetUpSignInScreen();
+	if(Interface->CheckReconnectStatus())
+	{
+		IsReconnecting = true;
+		Interface->ReconnectBC();
+	}
+	else
+	{
+		SetUpSignInScreen();		
+	}
 }
 
 void URelayGameInstance::CreateLocalUser(FText in_LocalUsername)
