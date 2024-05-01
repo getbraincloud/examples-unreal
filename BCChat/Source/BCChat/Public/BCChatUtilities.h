@@ -9,6 +9,8 @@
 #include "Windows/AllowWindowsPlatformTypes.h" // Include this to allow using Windows API
 #include <Windows.h>
 #include "Windows/HideWindowsPlatformTypes.h" // Include this to hide Windows API usa
+#include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
+#include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
 #endif
 
 #include "Internationalization/Culture.h"
@@ -34,4 +36,7 @@ class BCCHAT_API UBCChatUtilities : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
 	static FString GetUserCountryWindows();
+
+	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
+	static FString GetBCCountryCode();
 };
