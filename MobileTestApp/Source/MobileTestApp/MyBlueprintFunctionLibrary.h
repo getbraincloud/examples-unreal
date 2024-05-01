@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime/Launch/Resources/Version.h"
-#include "HAL/PlatformApplicationMisc.h"
+#include "BrainCloudWrapper.h"
 
 #include "MyBlueprintFunctionLibrary.generated.h"
 
@@ -17,7 +17,6 @@ class MOBILETESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionL
 {
 	GENERATED_BODY()
 
-	UFUNCTION(BlueprintCallable, Category = "System Information")
-	static FString RunCppFunction();
-	
+    UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString RunCppFunction(UBrainCloudWrapper* wrapper);
 };
