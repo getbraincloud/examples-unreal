@@ -20,13 +20,10 @@ class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibr
     UFUNCTION(BlueprintCallable, Category = "System Information")
     static FString RunCppFunction(UBrainCloudWrapper* wrapper);
 
-	UFUNCTION(BlueprintCallable, Category = "System Information")
-	static FString GetMyLanguageCode();
+    UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString GetCountryOverride();
 
-	UFUNCTION(BlueprintCallable, Category = "System Information")
-	static FString GetMyCountryCode();
-
-	UFUNCTION(BlueprintCallable, Category = "System Information")
-	static float GetMyTimeZone();
+    UFUNCTION(BlueprintCallable, Category = "System Information")
+    static void RunCppCountryOverride(UBrainCloudWrapper* wrapper);
 	
 };

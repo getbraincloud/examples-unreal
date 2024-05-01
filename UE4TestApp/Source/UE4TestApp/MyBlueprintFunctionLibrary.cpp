@@ -6,31 +6,36 @@
 
 FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
 {
-    // add some developer code here
-	FString Ret;
+	FString Ret("");
 	if(wrapper != nullptr)
 	    Ret = FString::Printf(TEXT("Wrapper initialized"));
+    // add some developer code here
 
 	 return Ret;
 }
-	
-FString UMyBlueprintFunctionLibrary::GetMyLanguageCode()
-{
-	FString LanguageCode;
-	
-	return LanguageCode;
-}	
-FString UMyBlueprintFunctionLibrary::GetMyCountryCode()
-{
-	FString CountryCode;
 
+FString UMyBlueprintFunctionLibrary::GetCountryOverride()
+{
 
+	FString CountryCode("");
+	// add some developer code here
 	return CountryCode;
 }
 
-float UMyBlueprintFunctionLibrary::GetMyTimeZone()
+void UMyBlueprintFunctionLibrary::RunCppCountryOverride(UBrainCloudWrapper* wrapper)
 {
-	float timezoneoffset = 0.0f;
 
-	return timezoneoffset;
+	if (wrapper == nullptr) return;
+
+	FString CountryCode("");
+	// add some developer code here
+
+	if (!CountryCode.IsEmpty()) {
+		wrapper->getClient()->overrideCountryCode(CountryCode);
+	}
+	else if(wrapper->getClient()->getCountryCode().IsEmpty()) {
+		// this is also the brainCloudF client default
+		wrapper->getClient()->overrideCountryCode(FPlatformMisc::GetDefaultLocale());
+	}
 }
+
