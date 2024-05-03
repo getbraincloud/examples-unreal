@@ -12,7 +12,7 @@
  * 
  */
 UCLASS()
-class MOBLIETESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class MOBILETESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
