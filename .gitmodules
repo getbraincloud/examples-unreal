@@ -34,7 +34,7 @@
 	path = UE4TestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
-[submodule "TargetPractice/Plugins/BCClient"]
-	path = TargetPractice/Plugins/BCClient
+[submodule "Leaderboard/Plugins/BCClient"]
+	path = Leaderboard/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
