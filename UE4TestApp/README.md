@@ -5,7 +5,9 @@
 Lightweight app to install on devices (Mobile, Console, etc) and set up to run user defined code/blueprint. There are versions for UE 5.3 and for UE 4.27.
 
 ## How to play
-Run the app and anonymous authentication will occur. Developer can add custom code for testing and log to display console.
+Run the app and brainCloud initialization, anonymous authentication and logout will occur. Developer can add custom code for testing and print to the display console.
+
+On gamepad: Use right face SQUARE button to re-run, TRIANGLE button to edit json input, CIRCLE to exit the app.
 
 ## Code project setup
 
