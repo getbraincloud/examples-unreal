@@ -12,7 +12,7 @@
  * 
  */
 UCLASS()
-class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+class MOBLIETESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
 
