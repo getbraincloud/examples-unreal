@@ -7,12 +7,6 @@
 #include "Runtime/Launch/Resources/Version.h"
 #include "Internationalization/Culture.h"
 #include "BrainCloudWrapper.h"
-#ifdef PLATFORM_PS4
-#if PLATFORM_PS4
-#include <system_service.h>
-#include <np/np_common.h>
-#endif
-#endif
 #include "MyBlueprintFunctionLibrary.generated.h"
 
 /**
