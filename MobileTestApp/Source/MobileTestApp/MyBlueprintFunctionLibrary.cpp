@@ -6,11 +6,11 @@
 
 FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
 {
+	FString Ret("");
+	if (wrapper == nullptr) return Ret;
+	  
     // add some developer code here
-	FString Ret;
-	if(wrapper != nullptr)
-	    Ret = FString::Printf(TEXT("Wrapper initialized"));
-
-	 return Ret;
+    Ret = "Wrapper initialized.";
+	return Ret;
 }
 
