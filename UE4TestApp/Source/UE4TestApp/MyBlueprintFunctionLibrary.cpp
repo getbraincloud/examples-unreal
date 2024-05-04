@@ -12,7 +12,7 @@ FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
     // add some developer code here
 	FString locale = FPlatformMisc::GetDefaultLocale();
 
-	FCulturePtr culture = FInternationalization::Get().GetCulture(locale);
+	FCulturePtr culture = FInternationalization::Get().GetCurrentLocale();
 
 	if (culture.IsValid())
 		Ret = culture->GetRegion();
@@ -28,6 +28,7 @@ FString UMyBlueprintFunctionLibrary::GetCountryOverride()
 
 	FString CountryCode("");
 	// add some developer code here
+
 	return CountryCode;
 }
 
@@ -39,29 +40,7 @@ void UMyBlueprintFunctionLibrary::RunCppCountryOverride(UBrainCloudWrapper* wrap
 	FString CountryCode("");
 	// add some developer code here
 
-	if (CountryCode.IsEmpty() && wrapper->getClient()->getCountryCode().IsEmpty()) {
-		// this is already the default brainCloud client initialization
-		// see FSonyPlatformMisc::GetDefaultLocale()
-		FString locale = FPlatformMisc::GetDefaultLocale();
-		
-		FString language, country;
-		locale.Split(TEXT("-"), &language, &country);
-
-		if (country.IsEmpty())
-			CountryCode = language;
-		else 
-			CountryCode = country;
-		
-		if (CountryCode == "419") {
-			CountryCode = "_LA_";
-		}
-		else if ((CountryCode == "Hans") || (CountryCode == "Hant")) {
-			CountryCode = "CN";
-		}
+	if (!CountryCode.IsEmpty()) {
+		wrapper->getClient()->overrideCountryCode(CountryCode);
 	}
-
-	CountryCode = CountryCode.ToUpper();
-	wrapper->getClient()->overrideCountryCode(CountryCode);
 }
-
-
