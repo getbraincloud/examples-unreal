@@ -18,9 +18,20 @@ FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
 		Ret = culture->GetRegion();
 
 	else
-		Ret = "fooey";
+		Ret = "--";
 
-	return Ret;
+	return FString::Printf(TEXT("region: %s, locale: %s, brainCloud: %s"), *Ret, *UBrainCloudFunctionLibrary::GetCountryCodeFromLocale(locale), *UBrainCloudFunctionLibrary::GetSystemCountryCode());
+}
+
+FString UMyBlueprintFunctionLibrary::GetCurrentRegion()
+{
+	FString CountryCode("");
+	FCulturePtr culture = FInternationalization::Get().GetCurrentLocale();
+
+	if (culture.IsValid())
+		CountryCode = culture->GetRegion();
+
+	return CountryCode;
 }
 
 FString UMyBlueprintFunctionLibrary::GetCountryOverride()
