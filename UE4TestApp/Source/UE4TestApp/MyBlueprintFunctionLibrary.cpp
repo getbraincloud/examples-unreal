@@ -12,24 +12,23 @@ FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
     // add some developer code here
 	FString locale = FPlatformMisc::GetDefaultLocale();
 
+	Ret = "--";
 	FCulturePtr culture = FInternationalization::Get().GetCurrentLocale();
 
 	if (culture.IsValid())
 		Ret = culture->GetRegion();
-
-	else
-		Ret = "--";
 
 	return FString::Printf(TEXT("region: %s, locale: %s, brainCloud: %s"), *Ret, *UBrainCloudFunctionLibrary::GetCountryCodeFromLocale(locale), *UBrainCloudFunctionLibrary::GetSystemCountryCode());
 }
 
 FString UMyBlueprintFunctionLibrary::GetCurrentRegion()
 {
-	FString CountryCode("");
+	FString CountryCode("--");
 	FCulturePtr culture = FInternationalization::Get().GetCurrentLocale();
 
-	if (culture.IsValid())
+	if (culture.IsValid()) {
 		CountryCode = culture->GetRegion();
+	}
 
 	return CountryCode;
 }
