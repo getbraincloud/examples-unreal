@@ -22,6 +22,9 @@ class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibr
     static FString RunCppFunction(UBrainCloudWrapper* wrapper);
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString PrintRegionFromLocale(FString locale);
+
+    UFUNCTION(BlueprintCallable, Category = "System Information")
     static FString GetCurrentRegion();
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
