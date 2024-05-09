@@ -2,7 +2,6 @@
 
 
 #include "BCChatUtilities.h"
-#include "BCGameInstance.h"
 #include "Kismet/GameplayStatics.h"
 
 FDateTime UBCChatUtilities::UTCToDateTime(int64 utcMSeconds)
