@@ -6,70 +6,97 @@
 
 FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
 {
-	FString Ret("");
-	FString Out("");
+    if (wrapper == nullptr) return FString();
 
-	if (wrapper == nullptr) return Out;
-	  
     // add some developer code here
-	Out += "REGION!\n";
-	Out += FString::Printf(TEXT("UBrainCloudFunctionLibrary::GetSystemCountryCode(): [%s]\n"), *UBrainCloudFunctionLibrary::GetSystemCountryCode());
+
+	//todo: how do we make this work?
+    //FInternationalization::Get().LoadAllCultureData();
+
+    FString Ret("");
+    FString Out("");
+
+    Out += "\nREGION!\n";
+    Out += FString::Printf(TEXT("[%s] UBrainCloudFunctionLibrary::GetSystemCountryCode() \n"), *UBrainCloudFunctionLibrary::GetSystemCountryCode());
 
 
-	FString locale = FPlatformMisc::GetDefaultLocale();
-	Out += FString::Printf(TEXT("FPlatformMisc::GetDefaultLocale(): [%s]\n"), *locale);
-	FString code = UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale(locale);
-	Out += FString::Printf(TEXT("UBrainCloudFunctionLibrary::GetCountryCodeFromCulture(): [%s], SplitCountryCodeFromLocale(): [%s], FormatCountryCode(): [%s]\n"), *UBrainCloudFunctionLibrary::GetCountryCodeFromCulture(locale), *UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale(locale), *UBrainCloudFunctionLibrary::FormatCountryCode(code));
+    FString locale = FGenericPlatformMisc::GetDefaultLocale();
+    Out += FString::Printf(TEXT("[%s] FGenericPlatformMisc::GetDefaultLocale()\n"), *locale);
 
-	FCulturePtr culture = FInternationalization::Get().GetCurrentLocale();
+    locale = FPlatformMisc::GetDefaultLocale();
+    Out += FString::Printf(TEXT("[%s] FPlatformMisc::GetDefaultLocale()\n"), *locale);
+    
+	FCulturePtr culture = FInternationalization::Get().GetCulture(locale);
 
-	if (culture.IsValid()) {
+    if (culture.IsValid()) {
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(locale)->GetName()\n[%s] FInternationalization::Get().GetCulture(locale)->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(locale)->GetDisplayName()\n[%s] FInternationalization::Get().GetCulture(locale)->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+    }
+    else {
+        Out += "culture invalid";
+    }
 
-		Out += FString::Printf(TEXT("FInternationalization::Get().GetCurrentLocale()->GetName(): [%s], ->GetRegion(): [%s]\n"), *(culture->GetName()), *(culture->GetRegion()));
-	}
-	else {
-		Out += "culture invalid\n";
-	}
+    culture = FInternationalization::Get().GetCurrentLocale();
 
+    if (culture.IsValid()) {
 
-	Out += "LANGUAGE!\n";
-	Out += FString::Printf(TEXT("UBrainCloudFunctionLibrary::GetSystemLanguageCode() [%s]\n"), *UBrainCloudFunctionLibrary::GetSystemLanguageCode());
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLocale()->GetName()\n[%s] FInternationalization::Get().GetCurrentLocale()->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLocale()->GetDisplayName()\n[%s] FInternationalization::Get().GetCurrentLocale()->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+    }
+    else {
+        Out += "culture invalid\n";
+    }
 
+    Out += "\nLANGUAGE!\n";
+    Out += FString::Printf(TEXT("[%s] UBrainCloudFunctionLibrary::GetSystemLanguageCode()\n"), *UBrainCloudFunctionLibrary::GetSystemLanguageCode());
 
-	FString lang = FPlatformMisc::GetDefaultLanguage();
+    FString lang = FGenericPlatformMisc::GetDefaultLanguage();
+    Out += FString::Printf(TEXT("[%s] FGenericPlatformMisc::GetDefaultLanguage()\n"), *lang);
 
-	Out += FString::Printf(TEXT("FPlatformMisc::GetDefaultLanguage(): [%s]\n"), *lang);
+    lang = FPlatformMisc::GetDefaultLanguage();
 
+    Out += FString::Printf(TEXT("[%s] FPlatformMisc::GetDefaultLanguage()\n"), *lang);
 
-	culture = FInternationalization::Get().GetCurrentLanguage();
+    culture = FInternationalization::Get().GetCulture(lang);
 
-	if (culture.IsValid()) {
+    if (culture.IsValid()) {
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(lang)->GetName()\n[%s] FInternationalization::Get().GetCulture(lang)->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(lang)->GetDisplayName()\n[%s] FInternationalization::Get().GetCulture(lang)->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+    }
+    else {
+        Out += "culture invalid";
+    }
+    culture = FInternationalization::Get().GetCurrentLanguage();
 
-		Out += FString::Printf(TEXT("FInternationalization::Get().GetCurrentLanguage()->GetName(): [%s], ->GetRegion(): [%s]\n"), *(culture->GetName()));
-	}
-	else {
-		Out += "culture invalid\n";
-	}
+    if (culture.IsValid()) {
 
-	return Out;
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLanguage()->GetName()\n[%s] FInternationalization::Get().GetCurrentLanguage()->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLanguage()->GetDisplayName()\n[%s] FInternationalization::Get().GetCurrentLanguage()->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+    }
+    else {
+        Out += "culture invalid\n";
+    }
+    
+    return Out;
 }
 
 FString UMyBlueprintFunctionLibrary::PrintRegionFromLocale(FString locale)
 {
-	FString Out("");
+    FString Out("");
 
-	FCulturePtr culture = FInternationalization::Get().GetCulture(locale);
+    FCulturePtr culture = FInternationalization::Get().GetCulture(locale);
 
-	if (culture.IsValid()) {
+    if (culture.IsValid()) {
 
-		Out += FString::Printf(TEXT("locale: [%s]\nFInternationalization::Get().GetCulture(locale)->GetName(): [%s], ->GetRegion(): [%s]\n"), *locale, *(culture->GetName()), *(culture->GetRegion()));
-		FString code = UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale(locale);
-		Out += FString::Printf(TEXT("UBrainCloudFunctionLibrary::GetCountryCodeFromCulture(): [%s], SplitCountryCodeFromLocale(): [%s], FormatCountryCode(): [%s]"), *UBrainCloudFunctionLibrary::GetCountryCodeFromCulture(locale), *UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale(locale), *UBrainCloudFunctionLibrary::FormatCountryCode(code));
-	}
-	else {
-		Out += "culture invalid";
-	}
-	return Out;
+        Out += FString::Printf(TEXT("[%s] locale input\n[%s] FInternationalization::Get().GetCulture(locale)->GetName()\n[%s] FInternationalization::Get().GetCulture(locale)->GetRegion()\n"), *locale, *(culture->GetName()), *(culture->GetRegion()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(locale)->GetDisplayName()\n[%s] FInternationalization::Get().GetCulture(locale)->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+        FString code = UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale(locale);
+        Out += FString::Printf(TEXT("[%s] UBrainCloudFunctionLibrary::SplitCountryCodeFromLocale()\n[%s] UBrainCloudFunctionLibrary::FormatCountryCode()\n"), *code, *UBrainCloudFunctionLibrary::FormatCountryCode(code));
+    }
+    else {
+        Out += "culture invalid";
+    }
+    return Out;
 }
 
 FString UMyBlueprintFunctionLibrary::GetCurrentRegion()
@@ -86,9 +113,9 @@ FString UMyBlueprintFunctionLibrary::GetCurrentRegion()
 
 FString UMyBlueprintFunctionLibrary::GetCountryOverride()
 {
-
 	FString CountryCode("");
-	// add some developer code here
+
+    // add some developer code here
 
 	return CountryCode;
 }
@@ -99,8 +126,9 @@ void UMyBlueprintFunctionLibrary::RunCppCountryOverride(UBrainCloudWrapper* wrap
 	if (wrapper == nullptr) return;
 
 	FString CountryCode("");
+    
 	// add some developer code here
-
+	
 	if (!CountryCode.IsEmpty()) {
 		wrapper->getClient()->overrideCountryCode(CountryCode);
 	}

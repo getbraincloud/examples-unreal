@@ -32,5 +32,4 @@ class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibr
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
     static void RunCppCountryOverride(UBrainCloudWrapper* wrapper);
-	
 };
