@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Runtime/Launch/Resources/Version.h"
+#include "Internationalization/Culture.h"
 #include "BrainCloudWrapper.h"
 
 #include "MyBlueprintFunctionLibrary.generated.h"
@@ -21,9 +22,14 @@ class UE4TESTAPP_API UMyBlueprintFunctionLibrary : public UBlueprintFunctionLibr
     static FString RunCppFunction(UBrainCloudWrapper* wrapper);
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString PrintRegionFromLocale(FString locale);
+
+    UFUNCTION(BlueprintCallable, Category = "System Information")
+    static FString GetCurrentRegion();
+
+    UFUNCTION(BlueprintCallable, Category = "System Information")
     static FString GetCountryOverride();
 
     UFUNCTION(BlueprintCallable, Category = "System Information")
     static void RunCppCountryOverride(UBrainCloudWrapper* wrapper);
-	
 };
