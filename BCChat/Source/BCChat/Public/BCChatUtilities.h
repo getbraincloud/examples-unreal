@@ -30,13 +30,4 @@ class BCCHAT_API UBCChatUtilities : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
 	static void SelectFile(const FString& DialogTitle, const FString& DefaultPath, const FString& FileTypes, TArray<FString>& OutFileNames);
-
-	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
-	static FString GetUserLanguageWindows();
-
-	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
-	static FString GetUserCountryWindows();
-
-	UFUNCTION(BlueprintCallable, Category = "BCChat Utility")
-	static FString GetBCCountryCode();
 };
