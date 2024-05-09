@@ -57,21 +57,11 @@ FString UMyBlueprintFunctionLibrary::RunCppFunction(UBrainCloudWrapper* wrapper)
 
     Out += FString::Printf(TEXT("[%s] FPlatformMisc::GetDefaultLanguage()\n"), *lang);
 
-    culture = FInternationalization::Get().GetCulture(lang);
-
-    if (culture.IsValid()) {
-        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(lang)->GetName()\n[%s] FInternationalization::Get().GetCulture(lang)->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
-        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCulture(lang)->GetDisplayName()\n[%s] FInternationalization::Get().GetCulture(lang)->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
-    }
-    else {
-        Out += "culture invalid";
-    }
     culture = FInternationalization::Get().GetCurrentLanguage();
 
     if (culture.IsValid()) {
 
-        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLanguage()->GetName()\n[%s] FInternationalization::Get().GetCurrentLanguage()->GetRegion()\n"), *(culture->GetName()), *(culture->GetRegion()));
-        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLanguage()->GetDisplayName()\n[%s] FInternationalization::Get().GetCurrentLanguage()->GetNativeName()\n"), *(culture->GetDisplayName()), *(culture->GetNativeName()));
+        Out += FString::Printf(TEXT("[%s] FInternationalization::Get().GetCurrentLanguage()->GetName()\n"), *(culture->GetName()));
     }
     else {
         Out += "culture invalid\n";
