@@ -35,6 +35,17 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 		{
 			Interface->LocalProfileID = profileId;
 		}
+		if(Interface->GameInstance->IsReconnecting)
+		{
+			Interface->GameInstance->IsReconnecting = false;
+			FString username = data->GetStringField("playerName");
+			Interface->GameInstance->GameWidget->MainMenuWidget->MainMenuUsername_Text_1->SetText(FText::AsCultureInvariant(username));
+			Interface->GameInstance->CreateLocalUser(FText::AsCultureInvariant(username));
+		}
+		if(!Interface->GameInstance->bRememberMe)
+		{
+			Interface->ResetBCProfileID();
+		}
 		Interface->AuthenticateCallback();
 		delete this;
 	}

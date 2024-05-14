@@ -1,4 +1,6 @@
 #!/bin/bash
+git pull
+git submodule update --init
 if [[ $(git diff --compact-summary) ]];
 then
     if [[ $1 != "--force" ]];
@@ -14,7 +16,7 @@ then
 fi
 
 needspush=0
-for j in BCFPS MobileTestApp MobileTestAppUE4 BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
+for j in BCFPS MobileTestApp UE4TestApp BCChat RelayTestAppCPP RelayTestApp TappyChicken ScriptTestApp Groups Leaderboard
 do
     i=$j/Plugins/BCClient
     echo

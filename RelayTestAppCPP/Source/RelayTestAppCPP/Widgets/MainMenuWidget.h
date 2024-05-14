@@ -20,6 +20,9 @@ class RELAYTESTAPPCPP_API UMainMenuWidget : public UUserWidget
 
 	UFUNCTION()
 	void SetUpLoadingLobbyScreen();
+
+	UFUNCTION()
+	void LogoutButtonPressed();
 	
 public:
 	UPROPERTY(BlueprintReadWrite,meta=(BindWidget))
@@ -27,6 +30,9 @@ public:
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* JoinLobbyButton;
+
+	UPROPERTY(meta=(BindWidget))
+	UButton* LogoutButton;
 
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* VersionText;
