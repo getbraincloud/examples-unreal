@@ -2,8 +2,7 @@
 
 
 #include "BCChatUtilities.h"
-#include "Developer/DesktopPlatform/Public/IDesktopPlatform.h"
-#include "Developer/DesktopPlatform/Public/DesktopPlatformModule.h"
+#include "Kismet/GameplayStatics.h"
 
 FDateTime UBCChatUtilities::UTCToDateTime(int64 utcMSeconds)
 {
@@ -12,6 +11,7 @@ FDateTime UBCChatUtilities::UTCToDateTime(int64 utcMSeconds)
 
 void UBCChatUtilities::SelectFile(const FString& DialogTitle, const FString& DefaultPath, const FString& FileTypes, TArray<FString>& OutFileNames)
 {
+#if PLATFORM_WINDOWS
 	if (GEngine)
 	{
 		if (GEngine->GameViewport)
@@ -26,24 +26,5 @@ void UBCChatUtilities::SelectFile(const FString& DialogTitle, const FString& Def
 			}
 		}
 	}
-}
-
-FString UBCChatUtilities::GetUserLanguageWindows()
-{
-	return FInternationalization::Get().GetCurrentLocale()->GetTwoLetterISOLanguageName();
-}
-
-FString UBCChatUtilities::GetUserCountryWindows()
-{
-#if PLATFORM_WINDOWS
-	int geoId = GetUserGeoID(16);
-	int lcid = GetUserDefaultLCID();
-	wchar_t locationBuffer[3];
-	GetGeoInfo(geoId, 4, locationBuffer, 3, lcid);
-
-	return FString(locationBuffer);
-#else
-	UE_LOG(LogTemp, Warning, TEXT("App is not running on windows, cannot get user country from Windows platform."));
-	return FString();
 #endif
 }

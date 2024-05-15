@@ -1,6 +1,0 @@
-<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="33" />
-android.permission.WRITE_EXTERNAL_STORAGE
-android.permission.READ_EXTERNAL_STORAGE
-android.permission.INTERNET
-android.permission.READ_INTERNAL_STORAGE
-android.permission.WRITE_INTERNAL_STORAGE
