@@ -18,10 +18,6 @@
 	path = BCFPS/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
 	branch = develop
-[submodule "Groups/Plugins/BCClient"]
-    path = Groups/Plugins/BCClient
-    url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "BCChat/Plugins/BCClient"]
 	path = BCChat/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
