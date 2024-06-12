@@ -16,10 +16,10 @@ if "%PROJECTNAME%" == "" goto Proj_Error
 set ARTIFACTS=%~3
 if "%ARTIFACTS%" == "" set ARTIFACTS=%WORKSPACE%\artifacts
 
-set SERVERENV = %~4
+set SERVERENV=%~4
 if "%SERVERENV%" == "" set SERVERENV = "Unspecified"
 
-set BUILDNUMBER =%~5
+set BUILDNUMBER=%5
 
 
 echo --- BRAINCLOUD Commencing Build %PROJECTNAME% for %TARGET% ---
