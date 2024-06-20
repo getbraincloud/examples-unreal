@@ -8,7 +8,7 @@ public class RelayTestAppTarget : TargetRules
 	public RelayTestAppTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-		DefaultBuildSettings = BuildSettingsVersion.V4;
+		DefaultBuildSettings = BuildSettingsVersion.Latest;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		ExtraModuleNames.AddRange( new string[] { "RelayTestApp" } );
 	}

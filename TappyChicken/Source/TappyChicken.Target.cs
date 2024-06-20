@@ -8,7 +8,7 @@ public class TappyChickenTarget : TargetRules
 	public TappyChickenTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
-		DefaultBuildSettings = BuildSettingsVersion.V4;
+		DefaultBuildSettings = BuildSettingsVersion.Latest;
         IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 	    bOverrideBuildEnvironment = true;
 		ExtraModuleNames.AddRange( new string[] { "TappyChicken" } );
