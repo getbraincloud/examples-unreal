@@ -13,7 +13,7 @@ float USplatterAnimationLibrary::SplatSizeOverTime(float t, float a, float b)
 
 float USplatterAnimationLibrary::SplatOpacityOverTime(float t, float a) 
 {
-	return std::min(t / a, 0.25f);
+	return std::max(t / a, 0.25f);
 }
 
 float USplatterAnimationLibrary::FadeOpacityOverTime(float t, float a)
