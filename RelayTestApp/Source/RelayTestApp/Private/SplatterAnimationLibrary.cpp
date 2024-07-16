@@ -3,6 +3,8 @@
 
 #include "SplatterAnimationLibrary.h"
 
+using namespace std;
+
 
 float USplatterAnimationLibrary::SplatSizeOverTime(float t, float a, float b) 
 {
@@ -19,4 +21,9 @@ float USplatterAnimationLibrary::SplatOpacityOverTime(float t, float a)
 float USplatterAnimationLibrary::FadeOpacityOverTime(float t, float a)
 {
 	return 1 - pow(t / a, 2);
+}
+
+FColor USplatterAnimationLibrary::HexToColor(FString HexString)
+{
+	return FColor::FromHex(HexString);
 }

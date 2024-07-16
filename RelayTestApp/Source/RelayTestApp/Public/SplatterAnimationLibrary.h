@@ -23,4 +23,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Splatter")
 	static float FadeOpacityOverTime(float t, float a);
+
+	UFUNCTION(BlueprintCallable, Category = "Splatter")
+	static FColor HexToColor(FString HexString);
 };
