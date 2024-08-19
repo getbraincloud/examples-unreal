@@ -15,6 +15,8 @@
 PROJECTNAME=${1}
 TARGET=${2:-Mac}
 ARTIFACTS=${3:-$WORKSPACE/artifacts}
+SERVERENV=${4:-Unspecified}
+BUILDNUMBER=${5}
 
 echo --- BRAINCLOUD Commencing Build ${PROJECTNAME} for ${TARGET} ---
 echo --- BRAINCLOUD Archiving to ${ARTIFACTS} ---
@@ -36,15 +38,15 @@ case "$TARGET" in
   IOS)
 	  ModeString='-distribution'
 	  #ModeString='-distribution -specifiedarchitecture=arm64'
- 	  PlatformPackageName="IOS/${PROJECTNAME}.ipa"
+ 	  PlatformPackageName="IOS/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}.ipa"
   ;;
   Mac)
     ModeString='-specifiedarchitecture=arm64+x86_64'
- 	  PlatformPackageName="Mac/${PROJECTNAME}/"
+ 	  PlatformPackageName="Mac/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}/"
   ;;
 Android)
     #CookString='-cookflavor=ECS2'
-    PlatformPackageName="Android/${PROJECTNAME}-arm64.apk"
+    PlatformPackageName="Android/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}.apk"
 esac
 
 # package for target platform
@@ -58,22 +60,22 @@ esac
 #flags for testing PCH
 # -noPCH -NoSharedPCH -DisableUnity
 
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="${ARTIFACTS}/${PROJECTNAME}_Unreal_${TARGET}Build"
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -nocompile -utf8output -compileeditor -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}"
 
 retcode=$?
 
 if [[ $TARGET == "IOS" ]];
 then
-  archive=$(ls -td -- $ARTIFACTS/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/${PROJECTNAME}* | head -n 1)
+  archive=$(ls -td -- ${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}/IOS/${PROJECTNAME}* | head -n 1)
   if [[ ! -z $archive ]];
   then
-    xcodebuild -exportArchive -archivePath "$archive" -exportPath "${ARTIFACTS}/${PROJECTNAME}_Unreal_${TARGET}Build/IOS/" -allowProvisioningUpdates -exportOptionsPlist "$WORKSPACE/autobuild/ExportOptions.plist"
+    xcodebuild -exportArchive -archivePath "$archive" -exportPath "${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}/IOS/" -allowProvisioningUpdates -exportOptionsPlist "$WORKSPACE/autobuild/ExportOptions.plist"
   fi
 fi
 
 if [[ $retcode -eq 0 ]];
   then
-    echo Package install: $ARTIFACTS/${PROJECTNAME}_Unreal_${TARGET}Build/${PlatformPackageName}
+    echo Package install: ${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}/${PlatformPackageName}
   else
     echo Packaging failed.
 fi
