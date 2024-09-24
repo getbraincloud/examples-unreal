@@ -8,7 +8,7 @@ public class TappyChickenEditorTarget : TargetRules
 	public TappyChickenEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
-		DefaultBuildSettings = BuildSettingsVersion.V4;
+		DefaultBuildSettings = BuildSettingsVersion.Latest;
         IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 	    bOverrideBuildEnvironment = true;
         ExtraModuleNames.AddRange( new string[] { "TappyChicken" } );
