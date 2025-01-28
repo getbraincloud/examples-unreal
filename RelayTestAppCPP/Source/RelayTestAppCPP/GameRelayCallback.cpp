@@ -51,11 +51,18 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	}
 	else if(serviceName == ServiceName::RTTRegistration)
 	{
-		Interface->FindLobby();
+		Interface->GameInstance->bIsLoading = false;
 		//callback will get deleted when RTT is disabled which will be within serverError callback
 	}
 	else if(serviceName == ServiceName::Lobby)
 	{
+		if (serviceOperation == ServiceOperation::FindLobby || 
+			serviceOperation == ServiceOperation::FindOrCreateLobby)
+		{
+			TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
+			FString entryId = data->GetStringField(TEXT("entryId"));
+			Interface->LobbyEntryId = entryId;
+		}
 		if(serviceOperation == ServiceOperation::CancelFindRequest)
 		{
 			Interface->StartLoadingTimer();	
