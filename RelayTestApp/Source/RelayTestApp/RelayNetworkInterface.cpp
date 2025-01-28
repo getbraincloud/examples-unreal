@@ -26,7 +26,7 @@ FString ARelayNetworkInterface::GetBrainCloudVersion(UBrainCloudWrapper* wrapper
 
 FString ARelayNetworkInterface::BCBytesToString(TArray<uint8> in_data)
 {
-	FString parsedMessage = ConvertUtilities::BCBytesToString(in_data.GetData(), in_data.Num());
+	FString parsedMessage = ConvertUtilities::BCBytesToString(in_data);
 	return parsedMessage;
 }
 

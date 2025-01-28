@@ -67,8 +67,9 @@ void ULobbyWidget::JoinButtonClicked()
 
 void ULobbyWidget::LeaveButtonClicked()
 {
+	GameInstance->Interface->LeaveLobby();
 	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(ReturnMenuLoadingMessage), false);
-	GameInstance->Interface->DisconnectEverything();
+	GameInstance->Interface->StartLoadingTimer();
 }
 
 void ULobbyWidget::BlackButtonClicked()
