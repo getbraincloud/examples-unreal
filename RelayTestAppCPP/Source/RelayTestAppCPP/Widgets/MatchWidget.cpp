@@ -51,8 +51,9 @@ void UMatchWidget::GameButtonUnhovered()
 
 void UMatchWidget::LeaveButtonClicked()
 {
+	GameInstance->Interface->LeaveLobby();
 	GameInstance->SetUpLoadingScreen(2, FText::AsCultureInvariant(ReturnMenuLoadingMessage), false);
-	GameInstance->Interface->DisconnectEverything();
+	GameInstance->Interface->StartLoadingTimer();
 }
 
 void UMatchWidget::EndMatchButtonClicked()
