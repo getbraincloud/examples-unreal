@@ -62,9 +62,34 @@ void ARelayNetworkInterface::FindOrCreateLobby()
 	GameInstance->GameWidget->LobbyWidget->AdjustVisibilityForJoinButton(false);
 	bIsHost = false;
 	bIsReady = false;
-	
+
+	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
+
+	TArray<FString> otherUserCxIds;
+	FString extraJson = MakeJsonExtraString();
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-	BrainCloudWrapper->getRTTService()->enableRTT(BCRTTConnectionType::WEBSOCKET, Callback);
+
+	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
+	(
+		GameInstance->LobbyType,
+		76,
+		1,
+		AlgoJson,
+		TEXT("{}"),
+		2,
+		false,
+		extraJson,
+		TEXT("all"),
+		TEXT("{}"),
+		otherUserCxIds,
+		Callback
+	);
+}
+
+void ARelayNetworkInterface::LeaveLobby()
+{
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	BrainCloudWrapper->getLobbyService()->leaveLobby(LobbyID, Callback);
 }
 
 void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
@@ -101,15 +126,10 @@ void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FStr
 
 void ARelayNetworkInterface::JoinLobbyCancelled()
 {
-	if(bRTTConnectionIsLive)
+	if(BrainCloudWrapper->getClient()->getRTTService()->isRTTEnabled())
 	{
-		bRTTConnectionIsLive = false;
 		Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
-		BrainCloudWrapper->getLobbyService()->cancelFindRequest(TEXT("CursorPartyV2"), Callback);
-	}
-	else
-	{
-		DisconnectEverything();
+		BrainCloudWrapper->getLobbyService()->cancelFindRequest(TEXT("CursorPartyV2"), LobbyEntryId, Callback);
 	}
 }
 
@@ -120,34 +140,9 @@ void ARelayNetworkInterface::AuthenticateCallback()
 		Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 		BrainCloudWrapper->getPlayerStateService()->updateUserName(GameInstance->LocalUser->Username.ToString(), Callback);
 	}
-	GameInstance->bIsLoading = false;
-}
 
-void ARelayNetworkInterface::FindLobby()
-{
-	bRTTConnectionIsLive = true;
-	
-	BrainCloudWrapper->getRTTService()->registerRTTLobbyCallback(this);
-	
-	TArray<FString> otherUserCxIds;
-	FString extraJson = MakeJsonExtraString();
-	Callback = new GameRelayCallback(BrainCloudWrapper,Callback,this);
-	
-	BrainCloudWrapper->getLobbyService()->findOrCreateLobby
-		(
-			GameInstance->LobbyType,
-			76,
-			1,
-			AlgoJson,
-			TEXT("{}"),
-			2,
-			false,
-			extraJson,
-			TEXT("all"),
-			TEXT("{}"),
-			otherUserCxIds,
-			Callback
-		);
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	BrainCloudWrapper->getRTTService()->enableRTT(BCRTTConnectionType::WEBSOCKET, Callback);
 }
 
 void ARelayNetworkInterface::rttCallback(const FString& jsonData)
@@ -220,7 +215,7 @@ void ARelayNetworkInterface::rttCallback(const FString& jsonData)
 
 void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes)
 {
-	FString jsonData = ConvertUtilities::BCBytesToString(bytes.GetData(),bytes.Num());
+	FString jsonData = ConvertUtilities::BCBytesToString(bytes);
 	TSharedRef<TJsonReader<TCHAR>> reader = TJsonReaderFactory<TCHAR>::Create(jsonData);
 	TSharedPtr<FJsonObject> jsonPacket = MakeShareable(new FJsonObject());
 	
@@ -479,7 +474,6 @@ FString ARelayNetworkInterface::MakeJsonExtraString() const
 
 void ARelayNetworkInterface::DisconnectEverything()
 {
-	bRTTConnectionIsLive = false;
 	if(BrainCloudWrapper->getClient()->isAuthenticated())
 	{
 		BrainCloudWrapper->getClient()->getRelayService()->deregisterRelayCallback();

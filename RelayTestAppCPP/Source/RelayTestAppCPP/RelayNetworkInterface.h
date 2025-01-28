@@ -42,6 +42,8 @@ public:
 	
 	void FindOrCreateLobby();
 
+	void LeaveLobby();
+
 	//Color buttons main function to swap colors from LobbyWidget
 	void UpdateLocalColor(int in_colorIndex);
 
@@ -137,6 +139,9 @@ public:
 	
 	UPROPERTY()
 	FString LocalProfileID;
+
+	UPROPERTY()
+	FString LobbyEntryId;
 private:
 	
 	UPROPERTY()
@@ -161,7 +166,7 @@ private:
 	FString Address;
 	int Port;
 	FString Passcode;
-
+	
 	class GameRelayCallback* Callback;
 	bool bIsHost;
 	bool bIsReady;
