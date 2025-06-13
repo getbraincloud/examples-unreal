@@ -1,36 +1,27 @@
 [submodule "RelayTestAppCPP/Plugins/BCClient"]
 	path = RelayTestAppCPP/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "RelayTestApp/Plugins/BCClient"]
 	path = RelayTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "TappyChicken/Plugins/BCClient"]
 	path = TappyChicken/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "ScriptTestApp/Plugins/BCClient"]
 	path = ScriptTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "BCFPS/Plugins/BCClient"]
 	path = BCFPS/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "BCChat/Plugins/BCClient"]
 	path = BCChat/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-    branch = develop
 [submodule "MobileTestApp/Plugins/BCClient"]
 	path = MobileTestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-    branch = develop
 [submodule "UE4TestApp/Plugins/BCClient"]
 	path = UE4TestApp/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
 [submodule "Leaderboard/Plugins/BCClient"]
 	path = Leaderboard/Plugins/BCClient
 	url = https://github.com/getbraincloud/braincloud-unreal-plugin.git
-	branch = develop
