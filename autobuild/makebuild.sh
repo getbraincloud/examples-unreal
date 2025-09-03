@@ -59,8 +59,8 @@ esac
 
 #flags for testing PCH
 # -noPCH -NoSharedPCH -DisableUnity
-
-"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -nocompile -utf8output -compileeditor -architecture=arm64 -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}"
+# -nocompile -compileeditor
+"${UE_INSTALL_PATH}/Engine/Build/BatchFiles/RunUAT.sh" BuildCookRun -project=$WORKSPACE/$PROJECTNAME/$PROJECTNAME.uproject -noP4 -utf8output -platform=${TARGET} ${ModeString} -clientconfig=Development -serverconfig=Development -build -cook ${CultureString} ${CookString} -unversionedcookedcontent -pak -compressed -iostore -nodebuginfo -stage -iterate -prereqs -installed -nocompileuat -package -archive -archivedirectory="${ARTIFACTS}/${PROJECTNAME}_${SERVERENV}_${TARGET}_${BUILDNUMBER}"
 
 retcode=$?
 
