@@ -50,7 +50,7 @@ SourceArt/**/*.png
 SourceArt/**/*.tga
 
 # copied engine certs
-**/Content/Certificates/*
+# **/Content/Certificates/*
 
 # Builds
 BCFPS/DevBuild/
