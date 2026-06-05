@@ -197,11 +197,12 @@ void UGameCenterAuthAction::Activate()
 			{
 				FetchVerificationItems(Player);
 			}
-			else
+			else if (AuthError != nil)
 			{
-				FString ErrorMsg = AuthError
-					? FString(UTF8_TO_TCHAR([[AuthError localizedDescription] UTF8String]))
-					: TEXT("GameCenter authentication was cancelled or is unavailable.");
+				// Only fail when GameCenter gives us an explicit error.
+				// ViewController==nil + isAuthenticated==false + no error means auth is still
+				// in progress; the handler will be called again when it resolves.
+				FString ErrorMsg = FString(UTF8_TO_TCHAR([[AuthError localizedDescription] UTF8String]));
 
 				AsyncTask(ENamedThreads::GameThread, [WeakThis, ErrorMsg]()
 				{
@@ -216,20 +217,28 @@ void UGameCenterAuthAction::Activate()
 		};
 
 #elif PLATFORM_MAC
-		// On macOS GameCenter shows its own system-level UI (notification banner / preferences).
-		// No view controller needs to be presented by the app.
+		// On macOS, GameCenter handles the sign-in UI at the system level.
+		// The handler is called several times; only act once the state is resolved.
 		LocalPlayer.authenticateHandler = ^(NSViewController* ViewController, NSError* AuthError)
 		{
+			// A non-nil ViewController means GameCenter is managing auth UI.
+			// Return and wait — the handler fires again once the user resolves it.
+			if (ViewController != nil)
+			{
+				return;
+			}
+
 			GKLocalPlayer* Player = [GKLocalPlayer localPlayer];
 			if (Player && Player.isAuthenticated)
 			{
 				FetchVerificationItems(Player);
 			}
-			else
+			else if (AuthError != nil)
 			{
-				FString ErrorMsg = AuthError
-					? FString(UTF8_TO_TCHAR([[AuthError localizedDescription] UTF8String]))
-					: TEXT("GameCenter authentication was cancelled or is unavailable.");
+				// Only fail on an explicit error from GameCenter.
+				// ViewController==nil + isAuthenticated==false + no error means auth is still
+				// in progress; the handler will be called again when it resolves.
+				FString ErrorMsg = FString(UTF8_TO_TCHAR([[AuthError localizedDescription] UTF8String]));
 
 				AsyncTask(ENamedThreads::GameThread, [WeakThis, ErrorMsg]()
 				{
