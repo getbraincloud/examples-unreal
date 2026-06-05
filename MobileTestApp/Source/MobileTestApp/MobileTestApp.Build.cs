@@ -22,7 +22,12 @@ public class MobileTestApp : ModuleRules
 		if (Target.Platform == UnrealTargetPlatform.IOS || Target.Platform == UnrealTargetPlatform.Mac)
 		{
 			PrivateDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine" });
-			DynamicallyLoadedModuleNames.Add("OnlineSubsystemIOS");
+
+			// OnlineSubsystemIOS is an iOS-only UE module and is not available on Mac.
+			if (Target.Platform == UnrealTargetPlatform.IOS)
+			{
+				DynamicallyLoadedModuleNames.Add("OnlineSubsystemIOS");
+			}
 
 			PublicFrameworks.Add("GameKit");
 			PublicFrameworks.Add("Foundation");
