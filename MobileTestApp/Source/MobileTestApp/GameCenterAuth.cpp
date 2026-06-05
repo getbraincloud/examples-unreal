@@ -28,7 +28,6 @@ void UGameCenterAuthAction::Activate()
 	dispatch_async(dispatch_get_main_queue(), ^{
 
 		GKLocalPlayer* LocalPlayer = [GKLocalPlayer localPlayer];
-		__weak GKLocalPlayer* WeakLocalPlayer = LocalPlayer; // avoids retain cycle in handler block
 
 		// -----------------------------------------------------------------
 		// Inner block: called once we know the player is authenticated.
@@ -193,7 +192,7 @@ void UGameCenterAuthAction::Activate()
 				return; // handler fires again after sign-in completes
 			}
 
-			GKLocalPlayer* Player = WeakLocalPlayer;
+			GKLocalPlayer* Player = [GKLocalPlayer localPlayer];
 			if (Player && Player.isAuthenticated)
 			{
 				FetchVerificationItems(Player);
@@ -221,7 +220,7 @@ void UGameCenterAuthAction::Activate()
 		// No view controller needs to be presented by the app.
 		LocalPlayer.authenticateHandler = ^(NSViewController* ViewController, NSError* AuthError)
 		{
-			GKLocalPlayer* Player = WeakLocalPlayer;
+			GKLocalPlayer* Player = [GKLocalPlayer localPlayer];
 			if (Player && Player.isAuthenticated)
 			{
 				FetchVerificationItems(Player);
