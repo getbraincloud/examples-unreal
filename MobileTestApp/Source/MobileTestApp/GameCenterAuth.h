@@ -10,9 +10,14 @@
 /**
  * All data returned from GameCenter authentication + identity verification.
  *
- * To verify server-side (e.g. with brainCloud authenticateGameCenter):
+ * For modern (non-legacy) server-side verification (e.g. brainCloud authenticateGameCenter):
  *   - Base64-encode Signature and Salt
- *   - Send GamePlayerId, TeamPlayerId, PublicKeyUrl, Signature (B64), Salt (B64), Timestamp
+ *   - Send GamePlayerId, TeamPlayerId, BundleId, PublicKeyUrl,
+ *     Signature (B64), Salt (B64), and Timestamp
+ *
+ * BundleId is required for non-legacy verification: Apple signs the identity payload
+ * over (gamePlayerID + bundleID + timestamp + salt), so the server must know the
+ * bundle ID to reconstruct those bytes and verify the signature.
  */
 USTRUCT(BlueprintType)
 struct FGameCenterAuthResult
@@ -30,6 +35,14 @@ struct FGameCenterAuthResult
 	/** Player's GameCenter display name. */
 	UPROPERTY(BlueprintReadOnly, Category = "GameCenter")
 	FString DisplayName;
+
+	/**
+	 * The app's bundle identifier (e.g. "com.yourcompany.yourgame").
+	 * Required by non-legacy server-side GameCenter verification — include it in the
+	 * token you send to your backend alongside Signature, Salt, and Timestamp.
+	 */
+	UPROPERTY(BlueprintReadOnly, Category = "GameCenter")
+	FString BundleId;
 
 	/** URL to Apple's public key — download and use it on your server to verify Signature. */
 	UPROPERTY(BlueprintReadOnly, Category = "GameCenter")

@@ -75,6 +75,13 @@ void UGameCenterAuthAction::Activate()
 		FString DisplayName  = Player.displayName
 			? FString(UTF8_TO_TCHAR([Player.displayName UTF8String])) : FString();
 
+		// Required for non-legacy server-side verification: Apple signs the identity
+		// payload over (gamePlayerID + bundleID + timestamp + salt), so the backend
+		// needs the bundle ID to reconstruct those bytes and verify the signature.
+		NSString* ObjCBundleId = [[NSBundle mainBundle] bundleIdentifier];
+		FString BundleId = ObjCBundleId
+			? FString(UTF8_TO_TCHAR([ObjCBundleId UTF8String])) : FString();
+
 		void (^FetchCallback)(NSURL*, NSData*, NSData*, uint64_t, NSError*) =
 			^(NSURL* PublicKeyURL, NSData* Signature, NSData* Salt,
 			  uint64_t Timestamp, NSError* FetchError)
@@ -85,7 +92,7 @@ void UGameCenterAuthAction::Activate()
 					UTF8_TO_TCHAR([[FetchError localizedDescription] UTF8String]));
 
 				AsyncTask(ENamedThreads::GameThread,
-					[WeakThis, GamePlayerId, TeamPlayerId, DisplayName, ErrorMsg]()
+					[WeakThis, GamePlayerId, TeamPlayerId, DisplayName, BundleId, ErrorMsg]()
 				{
 					if (UGameCenterAuthAction* Action = WeakThis.Get())
 					{
@@ -93,6 +100,7 @@ void UGameCenterAuthAction::Activate()
 						Result.GamePlayerId = GamePlayerId;
 						Result.TeamPlayerId = TeamPlayerId;
 						Result.DisplayName  = DisplayName;
+						Result.BundleId     = BundleId;
 						Result.ErrorMessage = ErrorMsg;
 						Action->BroadcastFailure(Result);
 					}
@@ -127,7 +135,7 @@ void UGameCenterAuthAction::Activate()
 			int64 TimestampVal = static_cast<int64>(Timestamp);
 
 			AsyncTask(ENamedThreads::GameThread,
-				[WeakThis, GamePlayerId, TeamPlayerId, DisplayName,
+				[WeakThis, GamePlayerId, TeamPlayerId, DisplayName, BundleId,
 				 PublicKeyUrlStr, SigBytes, SaltBytes, TimestampVal]()
 			{
 				if (UGameCenterAuthAction* Action = WeakThis.Get())
@@ -136,6 +144,7 @@ void UGameCenterAuthAction::Activate()
 					Result.GamePlayerId = GamePlayerId;
 					Result.TeamPlayerId = TeamPlayerId;
 					Result.DisplayName  = DisplayName;
+					Result.BundleId     = BundleId;
 					Result.PublicKeyUrl = PublicKeyUrlStr;
 					Result.Signature    = SigBytes;
 					Result.Salt         = SaltBytes;
