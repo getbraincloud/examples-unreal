@@ -83,6 +83,9 @@ public:
 	UFUNCTION(BlueprintCallable,Category="RelayInterface")
 	void InitBrainCloud();
 
+	UFUNCTION(BlueprintCallable, Category="RelayInterface")
+	UBrainCloudWrapper* GetBrainCloudWrapper() { return BrainCloudWrapper; }
+
 	void DisconnectEverything();
 	
 private:
@@ -130,6 +133,9 @@ public:
     
 	UPROPERTY(Category="Braincloud", BlueprintReadWrite, EditAnywhere)
 	FString AlgoJson;
+
+	UPROPERTY(Category="Braincloud", BlueprintReadOnly)
+	FString ServerVersion;
 	
 	UPROPERTY(Category="Braincloud", EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<UOtherMatchUserWidget> OtherCursorWidgetReference;
