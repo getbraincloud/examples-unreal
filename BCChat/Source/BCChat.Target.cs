@@ -12,6 +12,6 @@ public class BCChatTarget : TargetRules
 		//IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		ExtraModuleNames.Add("BCChat");
         bOverrideBuildEnvironment = true;
-        AdditionalCompilerArguments += " -Wno-error=invalid-consteval-if";
+        //AdditionalCompilerArguments += " -Wno-error=invalid-consteval-if";
 	}
 }
