@@ -360,6 +360,10 @@ void ARelayNetworkInterface::InitBrainCloud()
     BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, "1.0");
     
 	BrainCloudWrapper->getClient()->enableLogging(true);
+
+	//Get server version and cache it
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	BrainCloudWrapper->getClient()->getAuthenticationService()->getServerVersion(Callback);
 }
 
 void ARelayNetworkInterface::IsLocalUserHost(const TSharedPtr<FJsonObject>& in_jsonPacket)

@@ -45,9 +45,9 @@ void UBCGameInstance::InitializeBrainCloud()
     SecretKey = appData.AppSecret;
     ServerURL = appData.ServerUrl;
 
-    BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, BrainCloudWrapper->getClient()->getBrainCloudClientVersion());
-
     BrainCloudWrapper->getClient()->enableLogging(true);
+
+    BrainCloudWrapper->initialize(ServerURL, SecretKey, AppID, BrainCloudWrapper->getClient()->getBrainCloudClientVersion()); 
 }
 
 void UBCGameInstance::BC_CallbackTick()

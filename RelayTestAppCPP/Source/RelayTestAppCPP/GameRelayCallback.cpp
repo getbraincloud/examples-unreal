@@ -49,6 +49,12 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 		Interface->AuthenticateCallback();
 		delete this;
 	}
+	else if (serviceOperation == ServiceOperation::GetServerVersion) {
+		TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
+		FString serverVersion = data->GetStringField(TEXT("serverVersion"));
+
+		Interface->ServerVersion = serverVersion;
+	}
 	else if(serviceName == ServiceName::RTTRegistration)
 	{
 		Interface->GameInstance->bIsLoading = false;
@@ -88,7 +94,7 @@ void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation se
 	}
 	//Setting up error message for pop up screen
 	FString middleString = " |||| JSON ERROR: ";
-	FString appendString = serviceOperation.getValue() + middleString + jsonError; 
+	FString appendString = serviceOperation.getValue() + middleString + jsonError;
 	const FText errorMessage = FText::AsCultureInvariant(appendString);
 	if(!ensure(Interface != nullptr))
 	{
@@ -102,6 +108,6 @@ void GameRelayCallback::serverError(ServiceName serviceName, ServiceOperation se
 			Interface->GameInstance->GameWidget->WidgetSwitcher->SetActiveWidgetIndex(1);
 		}
 	}
-	
+
 	delete this;
 }
