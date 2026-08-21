@@ -19,6 +19,17 @@ void UMatchWidget::NativeConstruct()
 	RelayPlayerController = Cast<ARelayPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
+
+	if(LocalCursorWidgetRef == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("UMatchWidget::NativeConstruct - LocalCursorWidgetRef is not set. Assign the same cursor widget used for other players to it in WBP_Match's Class Defaults."));
+	}
+	else
+	{
+		LocalCursorWidget = CreateWidget<UOtherMatchUserWidget>(this, LocalCursorWidgetRef);
+		LocalCursorWidget->Arrow_Image->SetVisibility(ESlateVisibility::Hidden);
+		MouseCursor_CanvasPanel->AddChildToCanvas(LocalCursorWidget);
+	}
 }
 
 void UMatchWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -26,27 +37,45 @@ void UMatchWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 	Super::NativeTick(MyGeometry, InDeltaTime);
 	if(bIsMouseInGameButton)
 	{
-		GameInstance->Interface->LocalUserSendEvent(CalculateInputPosition(), MoveOperation);
+		FVector2D position = CalculateInputPosition();
+		GameInstance->Interface->LocalUserSendEvent(position, MoveOperation);
+
+		if(LocalCursorWidget != nullptr)
+		{
+			if(UCanvasPanelSlot* cursorSlot = Cast<UCanvasPanelSlot>(LocalCursorWidget->Slot))
+			{
+				cursorSlot->SetPosition(position);
+			}
+		}
 	}
 }
 
 void UMatchWidget::GameButtonClicked()
 {
 	FVector2D position = CalculateInputPosition();
-	SpawnMouseShockwave(position, GameInstance->SaveGameInstance->LocalUserColor, true);
+	SpawnPaintSplatter(position, GameInstance->SaveGameInstance->LocalUserColor);
 	GameInstance->Interface->LocalUserSendEvent(position, ShockwaveOperation);
 }
 
 void UMatchWidget::GameButtonHovered()
 {
 	bIsMouseInGameButton = true;
-	RelayPlayerController->ChangeCursorTexture(false);
+	RelayPlayerController->SetNativeCursorHidden(true);
+	if(LocalCursorWidget != nullptr)
+	{
+		LocalCursorWidget->Arrow_Image->SetColorAndOpacity(GameInstance->SaveGameInstance->LocalUserColor);
+		LocalCursorWidget->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
+	}
 }
 
 void UMatchWidget::GameButtonUnhovered()
 {
 	bIsMouseInGameButton = false;
-	RelayPlayerController->ChangeCursorTexture(true);
+	RelayPlayerController->SetNativeCursorHidden(false);
+	if(LocalCursorWidget != nullptr)
+	{
+		LocalCursorWidget->Arrow_Image->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UMatchWidget::LeaveButtonClicked()
@@ -81,19 +110,26 @@ FVector2D UMatchWidget::CalculateInputPosition()
 	return resultPosition;
 }
 
-void UMatchWidget::SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal)
+void UMatchWidget::SpawnPaintSplatter(FVector2D in_position, FLinearColor in_color)
 {
-	//Offsetting position
-	in_position.X = isInputLocal ? in_position.X + -90 : in_position.X + -70;
-	in_position.Y = in_position.Y + -25;
-	
-	//Setting Up widget and add to viewport
-	UShockwaveWidget* shockwave = Cast<UShockwaveWidget>(CreateWidget(this, ShockwaveWidgetRef));
-	shockwave->AddToViewport(1);
-	shockwave->Shockwave_Image->SetColorAndOpacity(in_color);
+	if(PaintSplatterWidgetRef == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("UMatchWidget::SpawnPaintSplatter - PaintSplatterWidgetRef is not set. Assign WBP_PaintSplatter to it in WBP_Match's Class Defaults."));
+		return;
+	}
 
-	//Adding to Shockwave Canvas to then set position
-	UCanvasPanelSlot* widgetSlot = Shockwave_CanvasPanel->AddChildToCanvas(shockwave);
+	//Setting Up widget and add to viewport
+	UPaintSplatterWidget* splatter = Cast<UPaintSplatterWidget>(CreateWidget(this, PaintSplatterWidgetRef));
+	splatter->AddToViewport(1);
+	splatter->Splatter_Image->SetColorAndOpacity(in_color);
+
+	//Adding to Splatter Canvas then centering the splatter's pivot on the click position,
+	//so it lands under the cursor regardless of the sprite's size. Forcing an equal width/height
+	//prevents the sprite from being stretched into a non-uniform shape.
+	UCanvasPanelSlot* widgetSlot = Shockwave_CanvasPanel->AddChildToCanvas(splatter);
+	widgetSlot->SetAutoSize(false);
+	widgetSlot->SetSize(PaintSplatterSize);
+	widgetSlot->SetAlignment(FVector2D(0.5f, 0.5f));
 	widgetSlot->SetPosition(in_position);
 }
 

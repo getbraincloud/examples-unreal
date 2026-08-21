@@ -7,7 +7,7 @@
 #include "Components/ListView.h"
 #include "RelayTestAppCPP/RelayPlayerController.h"
 #include "WidgetAddOns/OtherMatchUserWidget.h"
-#include "WidgetAddOns/ShockwaveWidget.h"
+#include "WidgetAddOns/PaintSplatterWidget.h"
 #include "MatchWidget.generated.h"
 
 /**
@@ -41,8 +41,8 @@ public:
 	void AdjustVisibilityForEndMatchButton(bool in_bIsUserHost);
 
 	FVector2D CalculateInputPosition();
-	
-	void SpawnMouseShockwave(FVector2D in_position, FLinearColor in_color, bool isInputLocal);
+
+	void SpawnPaintSplatter(FVector2D in_position, FLinearColor in_color);
 
 	void MoveOtherUserCursor(FVector2D in_inputPosition, FString in_profileId);
 
@@ -50,6 +50,14 @@ public:
 	
 	UPROPERTY(BlueprintReadWrite)
 	TArray<UOtherMatchUserWidget*> UserCursors;
+
+	//The local player's own on-screen cursor, tinted with their chosen colour; reuses the same
+	//widget class used for other players' cursors instead of an OS hardware cursor (which can't be tinted at runtime)
+	UPROPERTY()
+	UOtherMatchUserWidget* LocalCursorWidget;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UOtherMatchUserWidget> LocalCursorWidgetRef;
 	
 	UPROPERTY(BlueprintReadWrite,meta=(BindVariable))
 	FLinearColor Color;
@@ -79,7 +87,11 @@ public:
 	class UTextBlock* VersionText;
 
 	UPROPERTY(EditAnywhere)
-	TSubclassOf<UShockwaveWidget> ShockwaveWidgetRef;
+	TSubclassOf<UPaintSplatterWidget> PaintSplatterWidgetRef;
+
+	//Forced width/height for spawned paint splatters, so the sprite always renders uniformly regardless of its source aspect ratio
+	UPROPERTY(EditAnywhere)
+	FVector2D PaintSplatterSize = FVector2D(64.f, 64.f);
 
 	UPROPERTY()
 	bool bIsMouseInGameButton;

@@ -6,6 +6,23 @@
 #include "ServiceOperation.h"
 #include "Widgets/GameWidget.h"
 
+namespace
+{
+	//Parses a comma-separated list of hex colour values (e.g. "FF3333,FF8800,FFD700") as stored
+	//in the brainCloud "Colours" global property
+	TArray<FLinearColor> ParseColoursProperty(const FString& in_hexValues)
+	{
+		TArray<FLinearColor> colours;
+		TArray<FString> hexValues;
+		in_hexValues.ParseIntoArray(hexValues, TEXT(","), true);
+		for (FString hex : hexValues)
+		{
+			hex.TrimStartAndEndInline();
+			colours.Add(FLinearColor(FColor::FromHex(hex)));
+		}
+		return colours;
+	}
+}
 
 GameRelayCallback::GameRelayCallback(UBrainCloudWrapper *in_wrapper, IServerCallback *in_callback, class ARelayNetworkInterface *in_interface)
 {
@@ -59,6 +76,16 @@ void GameRelayCallback::serverCallback(ServiceName serviceName, ServiceOperation
 	{
 		Interface->GameInstance->bIsLoading = false;
 		//callback will get deleted when RTT is disabled which will be within serverError callback
+	}
+	else if(serviceName == ServiceName::GlobalApp && serviceOperation == ServiceOperation::ReadSelectedProperties)
+	{
+		TSharedPtr<FJsonObject> data = jsonPacket->GetObjectField(TEXT("data"));
+		if(data->HasField(TEXT("Colours")))
+		{
+			FString hexValues = data->GetObjectField(TEXT("Colours"))->GetStringField(TEXT("value"));
+			Interface->GameInstance->GameWidget->LobbyWidget->PopulateColourOptions(ParseColoursProperty(hexValues));
+		}
+		delete this;
 	}
 	else if(serviceName == ServiceName::Lobby)
 	{

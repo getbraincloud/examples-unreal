@@ -99,6 +99,14 @@ void ARelayNetworkInterface::UpdateLocalColor(int in_colorIndex)
 	BrainCloudWrapper->getLobbyService()->updateReady(LobbyID, bIsReady, MakeJsonExtraString(), Callback);
 }
 
+void ARelayNetworkInterface::ReadColourGlobalProperty()
+{
+	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
+	TArray<FString> propertyIds;
+	propertyIds.Add(TEXT("Colours"));
+	BrainCloudWrapper->getGlobalAppService()->readSelectedProperties(propertyIds, Callback);
+}
+
 void ARelayNetworkInterface::LocalUserSendEvent(FVector2D in_inputPosition, FString in_operation)
 {
 	bool isConnected = BrainCloudWrapper->getClient()->getRelayService()->isConnected();
@@ -143,6 +151,8 @@ void ARelayNetworkInterface::AuthenticateCallback()
 
 	Callback = new GameRelayCallback(BrainCloudWrapper, Callback, this);
 	BrainCloudWrapper->getRTTService()->enableRTT(BCRTTConnectionType::WEBSOCKET, Callback);
+
+	ReadColourGlobalProperty();
 }
 
 void ARelayNetworkInterface::rttCallback(const FString& jsonData)
@@ -260,7 +270,7 @@ void ARelayNetworkInterface::relayCallback(int netId, const TArray<uint8>& bytes
 				FVector2D inputPosition;
 				inputPosition.X = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("x"));
 				inputPosition.Y = jsonPacket->GetObjectField(TEXT("data"))->GetNumberField(TEXT("y"));
-				GameInstance->GameWidget->MatchWidget->SpawnMouseShockwave(inputPosition, user->PlayerColor, false);
+				GameInstance->GameWidget->MatchWidget->SpawnPaintSplatter(inputPosition, user->PlayerColor);
 				break;
 			}
 		}
@@ -443,6 +453,7 @@ void ARelayNetworkInterface::CheckMembers(const TSharedPtr<FJsonObject>& in_json
 		{
 			UUserWidget* widget = CreateWidget(GameInstance->GameWidget->MatchWidget,OtherCursorWidgetReference);
 			UOtherMatchUserWidget* newUserCursor = Cast<UOtherMatchUserWidget>(widget);
+			newUserCursor->Arrow_Image->SetColorAndOpacity(memberColor);
 			newUserCursor->Arrow_Image->SetVisibility(ESlateVisibility::HitTestInvisible);
 			newUserCursor->AddToViewport(50);
 			newUserCursor->UserData = newMember;
