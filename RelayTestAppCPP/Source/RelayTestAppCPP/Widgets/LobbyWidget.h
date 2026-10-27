@@ -4,12 +4,14 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
 #include "Components/ListView.h"
+#include "Components/PanelWidget.h"
 
 #include "RelayTestAppCPP/RelayGameData/RelayGameInstance.h"
+#include "WidgetAddOns/ColourOptionWidget.h"
 #include "LobbyWidget.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class RELAYTESTAPPCPP_API ULobbyWidget : public UUserWidget
@@ -30,38 +32,20 @@ class RELAYTESTAPPCPP_API ULobbyWidget : public UUserWidget
 	void LeaveButtonClicked();
 
 	UFUNCTION()
-	void BlackButtonClicked();
+	void OnColourOptionClicked(int32 in_colourIndex, FLinearColor in_colour);
 
-	UFUNCTION()
-	void BlueButtonClicked();
-
-	UFUNCTION()
-	void GreenButtonClicked();
-
-	UFUNCTION()
-	void GreyButtonClicked();
-
-	UFUNCTION()
-	void OrangeButtonClicked();
-
-	UFUNCTION()
-	void PurpleButtonClicked();
-
-	UFUNCTION()
-	void WhiteCyanButtonClicked();
-
-	UFUNCTION()
-	void YellowButtonClicked();
-	
 public:
 
 	void AdjustVisibilityForStartButton(bool bIsUserHost);
 
 	void AdjustVisibilityForJoinButton(bool bPresentSinceStart);
 
+	//Builds the selectable colour swatches from the colours read from the brainCloud "Colours" global property
+	void PopulateColourOptions(const TArray<FLinearColor>& in_colours);
+
 	UPROPERTY(meta=(BindWidget))
 	UListView* Lobby_ListView;
-	
+
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartMatchButton;
 
@@ -74,48 +58,24 @@ public:
 	UPROPERTY(meta=(BindWidget))
 	class UTextBlock* VersionText;
 
-	//Colors
-	/*
-	 * black = 0
-	 * purple = 1
-	 * grey = 2
-	 * orange = 3
-	 * blue = 4
-	 * green = 5
-	 * yellow = 6
-	 * white cyan = 7
-	 */
+	//Panel that holds the dynamically-created colour swatches (one UColourOptionWidget per available colour)
+	UPROPERTY(meta=(BindWidget))
+	UPanelWidget* ColourOptions_Panel;
+
 	UPROPERTY(EditAnywhere)
+	TSubclassOf<UColourOptionWidget> ColourOptionWidgetRef;
+
+	//How many colour swatches to place per row when ColourOptions_Panel is a Uniform Grid Panel
+	UPROPERTY(EditAnywhere)
+	int32 ColourOptionsPerRow = 8;
+
+	//Colours read from the brainCloud "Colours" global property, in the order a member's colorIndex refers to
+	UPROPERTY(BlueprintReadOnly)
 	TArray<FLinearColor> Colors;
 
 private:
 	UPROPERTY()
 	URelayGameInstance* GameInstance;
-	
-	//Color Buttons	
-	UPROPERTY(meta=(BindWidget))
-	UButton* Black_Button;
-	
-	UPROPERTY(meta=(BindWidget))
-	UButton* Blue_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* Green_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* Grey_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* Orange_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* Purple_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* WhiteCyan_Button;
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* Yellow_Button;
 
 	const FString JoinMatchLoadingMessage = TEXT("Joining a match... ");
 

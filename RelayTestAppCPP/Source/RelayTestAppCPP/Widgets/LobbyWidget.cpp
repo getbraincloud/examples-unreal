@@ -1,5 +1,6 @@
 #include "LobbyWidget.h"
 #include "Components/TextBlock.h"
+#include "Components/UniformGridSlot.h"
 #include "RelayTestAppCPP/RelayNetworkInterface.h"
 
 void ULobbyWidget::NativeConstruct()
@@ -10,15 +11,6 @@ void ULobbyWidget::NativeConstruct()
 	JoinMatchButton->OnClicked.AddDynamic(this, &ULobbyWidget::ULobbyWidget::JoinButtonClicked);
 	LeaveLobbyButton->OnClicked.AddDynamic(this, &ULobbyWidget::LeaveButtonClicked);
 
-	Black_Button->OnClicked.AddDynamic(this, &ULobbyWidget::BlackButtonClicked);
-	Blue_Button->OnClicked.AddDynamic(this, &ULobbyWidget::BlueButtonClicked);
-	Green_Button->OnClicked.AddDynamic(this, &ULobbyWidget::GreenButtonClicked);
-	Grey_Button->OnClicked.AddDynamic(this, &ULobbyWidget::GreyButtonClicked);
-	Orange_Button->OnClicked.AddDynamic(this, &ULobbyWidget::OrangeButtonClicked);
-	Purple_Button->OnClicked.AddDynamic(this, &ULobbyWidget::PurpleButtonClicked);
-	WhiteCyan_Button->OnClicked.AddDynamic(this, &ULobbyWidget::WhiteCyanButtonClicked);
-	Yellow_Button->OnClicked.AddDynamic(this, &ULobbyWidget::YellowButtonClicked);
-	
 	GameInstance = Cast<URelayGameInstance>(GetGameInstance());
 	VersionText->SetText(FText::AsCultureInvariant(GameInstance->Interface->GetBrainCloudVersion()));
 	JoinMatchButton->SetVisibility(ESlateVisibility::Hidden);
@@ -37,7 +29,7 @@ void ULobbyWidget::AdjustVisibilityForStartButton(bool bIsUserHost)
 {
 	if(StartMatchButton->IsValidLowLevel())
 	{
-		StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);	
+		StartMatchButton->SetVisibility(bIsUserHost ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 	}
 }
 
@@ -72,42 +64,33 @@ void ULobbyWidget::LeaveButtonClicked()
 	GameInstance->Interface->StartLoadingTimer();
 }
 
-void ULobbyWidget::BlackButtonClicked()
+void ULobbyWidget::OnColourOptionClicked(int32 in_colourIndex, FLinearColor in_colour)
 {
-	AdjustLocalUserColor(Colors[0], 0);
+	AdjustLocalUserColor(in_colour, in_colourIndex);
 }
 
-void ULobbyWidget::PurpleButtonClicked()
+void ULobbyWidget::PopulateColourOptions(const TArray<FLinearColor>& in_colours)
 {
-	AdjustLocalUserColor(Colors[1], 1);
-}
+	Colors = in_colours;
 
-void ULobbyWidget::GreyButtonClicked()
-{
-	AdjustLocalUserColor(Colors[2], 2);
-}
+	if(ColourOptionWidgetRef == nullptr)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ULobbyWidget::PopulateColourOptions - ColourOptionWidgetRef is not set. Assign WBP_ColourOption to it in WBP_Lobby's Class Defaults."));
+		return;
+	}
 
-void ULobbyWidget::OrangeButtonClicked()
-{
-	AdjustLocalUserColor(Colors[3], 3);
-}
+	ColourOptions_Panel->ClearChildren();
+	for(int32 i = 0; i < Colors.Num(); ++i)
+	{
+		UColourOptionWidget* option = CreateWidget<UColourOptionWidget>(this, ColourOptionWidgetRef);
+		option->SetupColourOption(i, Colors[i]);
+		option->OnColourOptionClicked.AddDynamic(this, &ULobbyWidget::OnColourOptionClicked);
 
-void ULobbyWidget::BlueButtonClicked()
-{
-	AdjustLocalUserColor(Colors[4], 4);
-}
-
-void ULobbyWidget::GreenButtonClicked()
-{
-	AdjustLocalUserColor(Colors[5], 5);
-}
-
-void ULobbyWidget::YellowButtonClicked()
-{
-	AdjustLocalUserColor(Colors[6], 6);
-}
-
-void ULobbyWidget::WhiteCyanButtonClicked()
-{
-	AdjustLocalUserColor(Colors[7], 7);
+		UPanelSlot* panelSlot = ColourOptions_Panel->AddChild(option);
+		if(UUniformGridSlot* gridSlot = Cast<UUniformGridSlot>(panelSlot))
+		{
+			gridSlot->SetRow(i / ColourOptionsPerRow);
+			gridSlot->SetColumn(i % ColourOptionsPerRow);
+		}
+	}
 }

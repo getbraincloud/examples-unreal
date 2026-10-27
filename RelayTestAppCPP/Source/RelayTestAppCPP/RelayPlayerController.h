@@ -4,21 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
-#include "RelayGameData/RelayGameInstance.h"
 #include "RelayPlayerController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class RELAYTESTAPPCPP_API ARelayPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 
-	virtual void BeginPlay() override;
 public:
-	void ChangeCursorTexture(bool in_changeToNormal);
-
-	UPROPERTY()
-	URelayGameInstance* GameInstance;
+	//Hides the native OS cursor while over the game area so the tinted UMatchWidget cursor widget can be shown instead
+	void SetNativeCursorHidden(bool in_bHidden);
 };

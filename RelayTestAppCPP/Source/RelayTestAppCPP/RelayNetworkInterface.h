@@ -47,6 +47,9 @@ public:
 	//Color buttons main function to swap colors from LobbyWidget
 	void UpdateLocalColor(int in_colorIndex);
 
+	//Fetches the "Colours" global property from brainCloud so the Lobby screen can offer it as colour options
+	void ReadColourGlobalProperty();
+
 	/*
 	 * Sending "move" or "shockwave" event operations to other members in match
 	*	Note: Specific Format needed for operation; for example = "\"move\","
