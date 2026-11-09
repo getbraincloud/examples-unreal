@@ -11,7 +11,11 @@ public class BCChatTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.Latest;
 		//IncludeOrderVersion = EngineIncludeOrderVersion.Latest;
 		ExtraModuleNames.Add("BCChat");
-        bOverrideBuildEnvironment = true;
-        AdditionalCompilerArguments += " -Wno-error=invalid-consteval-if";
+        if (Target.Platform == UnrealTargetPlatform.Mac)
+        {
+            // Clang-only flag; MSVC rejects it.
+            bOverrideBuildEnvironment = true;
+            AdditionalCompilerArguments += " -Wno-error=invalid-consteval-if";
+        }
 	}
 }
